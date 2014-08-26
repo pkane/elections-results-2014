@@ -1,7 +1,7 @@
 Elections Results 2014
-====
+----
 
-### Services Help Page
+#### Services Help Page
 [http://www.gannett-cdn.com/ElectionsServices/Elections/help](http://www.gannett-cdn.com/ElectionsServices/Elections/help)
 <pre>
 /{dataFeedVersionId}/AllRaces
@@ -19,5 +19,3 @@ Elections Results 2014
 /WebServiceVersion
 </pre>
 
-
-### Feed Examples
