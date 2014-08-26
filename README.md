@@ -1,6 +1,11 @@
 Elections Results 2014
 ----
 
+#### Debatably Useful Information
+[What is Fips](http://en.wikipedia.org/wiki/Federal_Information_Processing_Standards)
+
+
+
 #### API Help Page
 [http://www.gannett-cdn.com/ElectionsServices/Elections/help](http://www.gannett-cdn.com/ElectionsServices/Elections/help)
 <pre>
@@ -21,16 +26,13 @@ Elections Results 2014
 
 
 
+
 #### API Examples w/ JSONP callback
 
 
 
 ##### Current Version
 [http://www.gannett-cdn.com/ElectionsServices/Elections/CurrentVersion?time=46968955&callback=cb_586_CurrentVersion](http://www.gannett-cdn.com/ElectionsServices/Elections/CurrentVersion?time=46968955&callback=cb_586_CurrentVersion)
-
-
-##### State Results By Count or CD
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00](http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00)
 
 
 ##### DataFeed Versions
@@ -41,5 +43,16 @@ Elections Results 2014
 [http://www.gannett-cdn.com/ElectionsServices/Elections/00/AllRaces?callback=cb_0_00AllRaces](http://www.gannett-cdn.com/ElectionsServices/Elections/00/AllRaces?callback=cb_0_00AllRaces)
 
 
+##### State Results By County or CD
+[http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00](http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00)
+
+
 ##### Race Results by State (Governor)
 [http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/g?callback=cb_0_00RaceResultsByStateg](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/g?callback=cb_0_00RaceResultsByStateg)
+
+
+##### Race Results by State (Senate)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/s?callback=cb_0_00RaceResultsByStates](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/s?callback=cb_0_00RaceResultsByStates)
+
+##### Race Results by State (House)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh)
