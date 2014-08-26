@@ -56,3 +56,9 @@ Elections Results 2014
 
 ##### Race Results by State (House)
 [http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh)
+
+
+##### Ballot Initiatives
+[http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateBallotInitiatives/30?callback=cb_586_00StateBallotInitiatives30](http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateBallotInitiatives/30?callback=cb_586_00StateBallotInitiatives30)
+
+
