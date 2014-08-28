@@ -2,10 +2,10 @@ Elections Results 2014
 ----
 
 #### URL Structure
-/elections-results-2014/
-#/{house|senate|governors}/{embed}
-#/{al-wy}/{embed}
-#/race/{house|senate|governors}-{al-wy|al-wy + fip}/{embed}
+/elections-results-2014/   
+/elections-results-2014/#/{house|senate|governors}/{embed}  
+/elections-results-2014/#/{al-wy}/{embed}  
+/elections-results-2014/#/race/{house|senate|governors}-{al-wy|al-wy + fip}/{embed}   
 
 
 #### Debatably Useful Information
