@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+.tmp
+.sass-cache
+src/bower_components
+dist

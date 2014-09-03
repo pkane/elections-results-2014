@@ -1,0 +1,21 @@
+{
+  "name": "elections-results-2014",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4",
+    "requirejs": "~2.1.9",
+    "d3": "~3.4.11",
+    "momentjs": "~2.8.2",
+    "jquery-hashchange": "",
+    "masonry": "~3.1.5",
+    "respond": "~1.4.2",
+    "bootstrap": "~3.1.1",
+    "typeahead.js": "~0.9.3"
+  },
+  "devDependencies": {},
+  "resolutions": {
+    "jquery": "~2.1.0"
+  }
+}
