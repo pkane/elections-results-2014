@@ -6,12 +6,12 @@ define([
 function ($, _, Backbone) {
     'use strict';
     
-    var AppView = Backbone.Router.extend({
+    var AppView = Backbone.View.extend({
 
         el: '#election-content',
 
         initialize: function () {
-
+            console.log('AppView Initialized');
         },
 
         showView: function (view) {

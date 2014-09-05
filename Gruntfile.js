@@ -103,6 +103,12 @@ module.exports = function (grunt) {
                 '!<%= config.app %>/js/lib/*'
             ]
         },
+        
+        removelogging: {
+            dist: {
+                src: '<%= config.dist %>/js/main.min.js'
+            }
+        },
 
         requirejs: {
             dist: {
@@ -115,7 +121,7 @@ module.exports = function (grunt) {
                     dir: '<%= config.dist %>/js',
                     modules: [
                         {
-                            name: 'common-min',
+                            name: 'common.min',
                             create: true,
                             include: [
                                 'jquery',
@@ -126,10 +132,10 @@ module.exports = function (grunt) {
                             ]
                         },
                         {
-                            name: 'main-min',
+                            name: 'main.min',
                             create: true,
                             exclude: [
-                                'common-min'
+                                'common.min'
                             ],
                             include: [
                                 'main'
@@ -148,15 +154,12 @@ module.exports = function (grunt) {
                         masonry: '../bower_components/masonry/dist/masonry.pkgd',
                         moment: '../bower_components/momentjs/moment',
                         respond: '../bower_components/respond/dest/respond.src',
-                        typeahead: '../bower_components/typeahead.js/dist/typeahead'
+                        typeahead: '../bower_components/typeahead.js/dist/typeahead',
+                        text: '../bower_components/requirejs-text/text'
                     },
                     shim: {
                         'backbone': {
-                            //These script dependencies should be loaded before loading
-                            //backbone.js
                             deps: ['underscore', 'jquery'],
-                            //Once loaded, use the global 'Backbone' as the
-                            //module value.
                             exports: 'Backbone'
                         },
                         'underscore': {
@@ -175,22 +178,10 @@ module.exports = function (grunt) {
                     dir: '<%= config.tmp %>/js',
                     modules: [
                         {
-                            name: 'common',
+                            name: 'main',
                             create: true,
-                            include: [
-                                'api/ads',
-                                'api/analytics'
-                            ]
-                        },
-                        {
-                            name: 'main-local',
-                            create: true,
-                            exclude: [
-                                'common'
-                            ],
-                            include: [
-                                'main'
-                            ]
+                            exclude: [],
+                            include: ['main']
                         }
                     ],
                     paths: {
@@ -205,7 +196,8 @@ module.exports = function (grunt) {
                         masonry: '../bower_components/masonry/dist/masonry.pkgd',
                         moment: '../bower_components/momentjs/moment',
                         respond: '../bower_components/respond/dest/respond.src',
-                        typeahead: '../bower_components/typeahead.js/dist/typeahead'
+                        typeahead: '../bower_components/typeahead.js/dist/typeahead',
+                        text: '../bower_components/requirejs-text/text'
                     },
                     shim: {
                         'backbone': {
@@ -247,48 +239,11 @@ module.exports = function (grunt) {
             }
         },
 
-        uglify: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/js/vendor.min.js': [
-                        'src/bower_components/bootstrap/dist/js/bootstrap.js',
-                        'src/bower_components/d3/d3.js',
-                        'src/bower_components/jquery-hashchange/jquery.ba-hashchange.js',
-                        'src/bower_components/masonry/dist/masonry.pkgd.js',
-                        'src/bower_components/momentjs/moment.js',
-                        'src/bower_components/respond/dest/respond.src.js',
-                        'src/bower_components/typeahead.js/dist/typeahead.js'
-                    ]
-                }
-            },
-            
-            server: {
-                options: {
-                    compress: false,
-                    beautify: true
-                },
-                files: {
-                    '<%= config.tmp %>/js/common.js': [
-                        'src/bower_components/underscore/underscore.js',
-                        'src/bower_components/backbone/backbone.js',
-                        'src/bower_components/jquery/dist/jquery.js'
-                    ]
-                }
-            }
-        },
-
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             js: {
-                files: ['<%= config.app %>/js/{,*/}*.js'],
+                files: ['<%= config.app %>/js/**/*.{js,html}'],
                 tasks: ['jshint', 'requirejs:server'],
-                options: {
-                    livereload: true
-                }
-            },
-            jsLibs: {
-                files: ['<%= config.app %>/bower_components/{,*/}*.js'],
-                tasks: ['uglify:server'],
                 options: {
                     livereload: true
                 }
@@ -297,7 +252,7 @@ module.exports = function (grunt) {
                 files: ['Gruntfile.js']
             },
             sass: {
-                files: ['<%= config.app %>/scss/*.{scss,sass}'],
+                files: ['<%= config.app %>/scss/{,*/}*.{scss,sass}'],
                 tasks: ['sass:server'],
                 options: {
                     livereload: true
@@ -321,13 +276,11 @@ module.exports = function (grunt) {
                     'images/{,*/}*.{gif,jpeg,jpg,png,svg,webp}'
                 ]
             }
-        },
-
+        }
 
     });
 
     // Load the plugins
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -336,12 +289,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-remove-logging');
 
     // Tasks
     grunt.registerTask('build', [
         'clean:dist',
         'sass:dist',
-        'uglify:dist',
+        'requirejs:dist',
+        'removelogging:dist',
         'copy:dist'
     ]);
 
@@ -353,12 +308,11 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'sass:server',
-            'uglify:server',
+            'requirejs:server',
             'connect:livereload',
             'watch'
         ]);
     });
-
 
     // Default task(s).
     grunt.registerTask('default', [

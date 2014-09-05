@@ -10,11 +10,6 @@ require.config({
     }
 });
 
-require(['app', 'underscore'], function (App, us) {
-    'use strict';
-
-    console.log('Yo!');
-    console.dir(us);
-    
+require(['app'], function (App) {
     App.init();
 });

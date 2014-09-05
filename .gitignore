@@ -4,3 +4,4 @@ node_modules
 .sass-cache
 src/bower_components
 dist
+.brackets.json
