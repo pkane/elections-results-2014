@@ -7,6 +7,15 @@ Elections Results 2014
 /elections-results-2014/#/{al-wy}/{embed}  
 /elections-results-2014/#/race/{house|senate|governors}-{al-wy|al-wy + fip}/{embed}   
 
+#### Development Env Setup
+Install Node dependencies: ```npm install```
+
+Install JS Libs: ```bower install```
+
+Run development server: ```grunt serve```
+
+Release Build: ```grunt```
+
 
 #### Debatably Useful Information
 [What is Fips](http://en.wikipedia.org/wiki/Federal_Information_Processing_Standards)
