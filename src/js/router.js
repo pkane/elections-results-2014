@@ -8,12 +8,11 @@ function ($, _, Backbone) {
     var AppRouter = Backbone.Router.extend({
 
         routes: {
-            '': 'index'
+            '': 'index' // /elections-results-2014/
         },
 
         initialize: function() {
             
-            // /elections-results-2014/
             // /elections-results-2014/#/{house|senate|governors}/{embed}
             this.route(/^(house|senate|governors)?\/?(oembed)?\/?/, 'index');
 

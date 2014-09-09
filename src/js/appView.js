@@ -1,9 +1,10 @@
 define([
     'jquery',
     'underscore',
-    'backbone'
+    'backbone',
+    'views/nav/nav'
 ],
-function ($, _, Backbone) {
+function ($, _, Backbone, NavView) {
     'use strict';
     
     var AppView = Backbone.View.extend({
@@ -29,16 +30,13 @@ function ($, _, Backbone) {
             $('#election-content').html(this.currentView.el);
         },
 
-        setNav: function (view) {
-            if (this.currentNav) {
-                this.currentNav.undelegateEvents();
-                this.currentNav.remove();
-                this.currentNav.off();
-            }
+        setNav: function (model) {
 
-            this.currentNav = view;
+            this.currentNav = new NavView(model);
             this.currentNav.render();
 
+            // TODO: Add bindings / listeners to nav
+            
             $('#election-bar-content').html(this.currentNav.el);
         }
 

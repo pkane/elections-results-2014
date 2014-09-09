@@ -6,13 +6,16 @@ define([
     'router',
     'appView',
     'views/index/index',
-    'models/indexModel'
+    'models/indexModel',
+    'models/navModel'
 ],
-function ($, _, Backbone, Router, AppView, IndexView, IndexModel) {
+function ($, _, Backbone, Router, AppView, IndexView, IndexModel, NavModel) {
     var rootView = new AppView(),
+        nav = new NavModel(),
         App = {
             init: function () {
 
+                // FIXME: && if !chromeless
                 if (typeof(siteManager) !== 'undefined') {
                     siteManager.header.setClosedFixed();
                 }
@@ -52,6 +55,8 @@ function ($, _, Backbone, Router, AppView, IndexView, IndexModel) {
                         console.log('Use oembed template');
                     }
                 });
+                
+                rootView.setNav(nav);
 
                 Backbone.history.start();
             }
