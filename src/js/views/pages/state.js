@@ -3,7 +3,7 @@ define([
 	'underscore',
 	'backbone',
     'models/stateModel',
-    'text!views/state/state.html'
+    'text!views/pages/state.html'
 ],
 function ($, _, Backbone, StateModel, templateFile) {
 

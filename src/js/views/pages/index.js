@@ -3,7 +3,7 @@ define([
 	'underscore',
 	'backbone',
     'models/indexModel',
-    'text!views/index/index.html'
+    'text!views/pages/index.html'
 ],
 function ($, _, Backbone, IndexModel, templateFile) {
 

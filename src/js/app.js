@@ -5,9 +5,9 @@ define([
     'backbone',
     'router',
     'appView',
-    'views/index/index',
-    'views/state/state',
-    'views/race/race',
+    'views/pages/index',
+    'views/pages/state',
+    'views/pages/race',
     'models/indexModel',
     'models/navModel'
 ],

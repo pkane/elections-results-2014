@@ -3,7 +3,7 @@ define([
 	'underscore',
 	'backbone',
     'models/navModel',
-    'text!views/nav/nav.html'
+    'text!views/components/nav.html'
 ],
 function ($, _, Backbone, NavModel, templateFile) {
 

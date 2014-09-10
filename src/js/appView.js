@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'views/nav/nav'
+    'views/components/nav'
 ],
 function ($, _, Backbone, NavView) {
     'use strict';
