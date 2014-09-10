@@ -1,31 +1,88 @@
-<div id="elections-bar-nav" class="row elections-bar-nav-mobile">
-    <div class="flex-group-container">
-        <div class="elections-bar-nav-item flex-group">
-        <ul>
-            <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-            <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-            <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-            <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
+<div id="elections-bar" class="pagetype-office elections-bar-mobile">
+  <div class="container">
 
-            <li class="isTablet">
-                <ul>
-                    <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-                    <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-                    <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-                    <li class="election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
-                </ul>
-            </li>
-            
-            <li>
-                <a>State</a>
-                <ul class="state-list">
-                    <% _.each(states, function (state) { %>
-                        <li class="election-results-nav-item election-results-nav-<%= state.abbr %>" data-abbr="<%= state.abbr %>"><a href="#"><%= state.display %></a></li>
-                    <% }) %>
-                </ul>
-            </li>
-            <li class="election-results-nav-item election-results-nav-share"><a>Share</a></li>
-        </ul>
+    <div class="row">
+      <div class="col-lg-12 election-info-container">
+        <div class="page-icon"><span class="icon  icon-lg-usa-mainland"></span></div>
+        <div class="election-info">
+          <div class="election-office-projection-heading">Senate Results</div>
+          <div class="election-state">USA</div>
+          <div class="election-state-subheading">2014 Midterm Election</div>
+          <div class="election-leaning">
+            <span class="leaning-text"></span>
+            <span class="leaning-value "><span class="lean-tossup">Projection TBD</span></span>
+            <a class="election-jump">Jump to Key Races</a>
+          </div>
         </div>
+      </div>
     </div>
+
+  </div>
 </div>
+<div id="elections-bar-nav" class="elections-bar-nav-mobile">
+    <div class="flex-group-container row">
+        <div class="elections-bar-nav-item flex-group col-sm-4">
+          <a class="office-placeholder " href="javascript:void(0)">
+                        Senate
+            <span class="election-icon election-icon-arrow-right-blue"></span></a>     
+        </div>        
+        <div class="item-group">
+          <div class="elections-bar-nav-item col-sm-4">
+            <a class="state-placeholder" href="javascript:void(0)"><span class="election-icon election-icon-state-white"></span></a>
+          </div>
+          
+          <div class="elections-bar-nav-item typeahead col-sm-4">
+            <a class="search-placeholder" href="javascript:void(0)"><span class="election-icon election-icon-search-white"></span></a>
+          </div>
+          <input class="typeahead" type="text" name="search" placeholder="Search for a Candidate or State" id="racesTypeahead">
+
+          <div class="elections-bar-nav-item col-sm-4">
+            <a class="share-placeholder" href="javascript:void(0)"><span class="election-icon election-icon-share-white"></span></a>
+          </div>
+
+          <div class="election-overlay office-overlay">
+            <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+            <div class="overlay-item"><h2 class="overlay-heading">Share</h2></div>
+            <div class="overlay-item"><a class="elections-nav-fb" href="javascript:void(0)">Facebook</a></div>
+            <div class="overlay-item"><a class="elections-nav-tw" href="javascript:void(0)">Twitter</a></div>
+            <div class="overlay-item"><a class="elections-nav-mail" href="javascript:void(0)">Mail</a></div>
+          </div>
+        </div>
+    </div>        
+
+    <li class="election-results-nav-item election-results-nav-share"><a>Share</a></li>
+
+</div>
+
+
+<ul class="col-sm-2 election-overlay office-overlay">
+  <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+    <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
+    <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
+    <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
+    <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
+</ul>
+
+<ul class="col-sm-2 election-overlay office-overlay">
+  <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+    <li class="isTablet">
+        <ul>
+            <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
+            <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
+            <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
+            <li class="election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
+        </ul>
+    </li>
+</ul>
+
+<ul class="col-sm-2 election-overlay office-overlay">
+  <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+    <li>
+        <a>State</a>
+        <ul class="state-list">
+            <% _.each(states, function (state) { %>
+                <li class="election-results-nav-item election-results-nav-<%= state.abbr %>" data-abbr="<%= state.abbr %>"><a href="#"><%= state.display %></a></li>
+            <% }) %>
+        </ul>
+    </li>
+</ul>
