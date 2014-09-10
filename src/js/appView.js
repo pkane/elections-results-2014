@@ -2,7 +2,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'views/nav/nav'
+    'views/components/nav'
 ],
 function ($, _, Backbone, NavView) {
     'use strict';
@@ -25,19 +25,21 @@ function ($, _, Backbone, NavView) {
 
             this.currentView = view;
             this.currentView.render();
-            window.viewInited = true;
+            
+            if (this.currentNav) {
+                this.currentNav.update();
+            }
 
             $('#election-content').html(this.currentView.el);
         },
 
         setNav: function (model) {
 
-            this.currentNav = new NavView(model);
+            this.currentNav = new NavView({model: model});
             this.currentNav.render();
 
-            // TODO: Add bindings / listeners to nav
-            
             $('#election-bar-content').html(this.currentNav.el);
+
         }
 
     });

@@ -3,6 +3,8 @@
 @import "nav.scss";
 
 
+@import "nav.scss";
+
 body {
     background: #fcfcfc;
     color: #333;
@@ -38,15 +40,15 @@ body {
   height: 100%;
 }
 
-.isTablet { display: none; }
-.isDesktop { display: none; }
+.isTablet { visibility: hidden; }
+.isDesktop { visibility: hidden; }
 
 @include tablet() {
-    .isTablet { display: inherit; }
-    .isDesktop { display: none; }
+    .isTablet { visibility: visible; }
+    .isDesktop { visibility: collapse; }
 };
 
 @include desktop() {
-    .isTablet { display: none; }
-    .isDesktop { display: inherit; }
+    .isTablet { visibility: hidden; }
+    .isDesktop { visibility: visible; }
 };

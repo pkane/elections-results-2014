@@ -2,7 +2,9 @@ define(['backbone'], function (Backbone) {
 
     return Backbone.Model.extend({
         
-        race: 'senate'
+        abbr: 'xx',
+        
+        display: 'placeholder'
         
     });
 
