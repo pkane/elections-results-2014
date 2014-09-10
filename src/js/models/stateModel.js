@@ -1,12 +1,10 @@
-define([], function () {
+define(['backbone'], function (Backbone) {
 
     return Backbone.Model.extend({
         
         abbr: 'xx',
         
-        display: 'placeholder',
-        
-        useOembedTemplate: false
+        display: 'placeholder'
         
     });
 

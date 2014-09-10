@@ -13,6 +13,8 @@ function ($, _, Backbone, IndexModel, templateFile) {
         
         template: _.template(templateFile),
         
+        useOembedTemplate: false,
+        
         render: function () {
             
             this.$el.html(this.template(this.model));

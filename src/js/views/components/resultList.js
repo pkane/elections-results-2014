@@ -7,9 +7,7 @@ function ($, _, Backbone) {
 
     var view = Backbone.View.extend({
         
-        template: _.template('<h2>Placeholder for race page</h2>'),
-        
-        useOembedTemplate: false,
+        template: _.template('<h4>Placeholder for result list table</h4>'),
         
         render: function () {
             

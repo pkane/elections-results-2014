@@ -8,10 +8,9 @@ define([
     'views/pages/index',
     'views/pages/state',
     'views/pages/race',
-    'models/indexModel',
     'models/navModel'
 ],
-function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, IndexModel, NavModel) {
+function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, NavModel) {
     var rootView = new AppView(),
         nav = new NavModel(),
         App = {
@@ -23,53 +22,41 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, Index
                 }
 
                 Router.on('route:index', function (indexType, oembed) {
+                    console.log('Nav to full race: ' + indexType);
 
-                    var model = new IndexModel(),
-                        view = new IndexView();
+                    var view = new IndexView({useOembedTemplate: (oembed !== null)});
                     
                     if (!indexType || indexType === 'index') {
                         indexType = 'senate';
                     }
+                                        
+                    view.model.race = indexType;
                     
                     nav.set('currentRace', indexType);
                     nav.set('currentState', '');
-                    
-                    model.race = indexType;
-                    model.useOembedTemplate = (oembed !== null);
 
-                    view.model = model;
-                    
                     rootView.showView(view);
-
                 });
 
                 Router.on('route:state', function (abbr, oembed) {
+                    console.log('Nav to state: ' + abbr);
 
-                    var view = new StateView();
+                    var view = new StateView({useOembedTemplate: (oembed !== null)});
                     
                     nav.set('currentState', abbr);
                     
                     rootView.showView(view);
-                    
-                    if (oembed) {
-                        console.log('Use oembed template');
-                    }
                 });
 
                 Router.on('route:race', function (race, stateAbbr, fip, oembed) {
-
-                    var view = new RaceView();
-                    
                     console.log('Nav to race w/ params: ' + race + '|' + stateAbbr + '|' + fip);
 
+                    var view = new RaceView({useOembedTemplate: (oembed !== null)});
+                    
                     nav.set('currentRace', race);
                     nav.set('currentState', stateAbbr);
                     
                     rootView.showView(view);
-                    
-                    if (oembed) {
-                        console.log('Use oembed template');
-                    }
                 });
                 
                 rootView.setNav(nav);

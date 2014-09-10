@@ -1,10 +1,8 @@
-define([], function () {
+define(['backbone'], function (Backbone) {
 
     return Backbone.Model.extend({
         
-        race: 'senate',
-        
-        useOembedTemplate: false
+        race: 'senate'
         
     });
 
