@@ -1,26 +1,31 @@
+<div id="elections-bar-nav" class="row elections-bar-nav-mobile">
+    <div class="flex-group-container">
+        <div class="elections-bar-nav-item flex-group">
+        <ul>
+            <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
+            <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
+            <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
+            <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
 
-    <ul>
-        <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-        <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-        <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-        <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
-
-        <li class="isTablet">
-            <ul>
-                <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-                <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-                <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-                <li class="election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
-            </ul>
-        </li>
-        
-        <li>
-            <a>State</a>
-            <ul class="state-list">
-                <% _.each(states, function (state) { %>
-                    <li class="election-results-nav-item election-results-nav-<%= state.abbr %>" data-abbr="<%= state.abbr %>"><a href="#"><%= state.display %></a></li>
-                <% }) %>
-            </ul>
-        </li>
-        <li class="election-results-nav-item election-results-nav-share"><a>Share</a></li>
-    </ul>
+            <li class="isTablet">
+                <ul>
+                    <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
+                    <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
+                    <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
+                    <li class="election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
+                </ul>
+            </li>
+            
+            <li>
+                <a>State</a>
+                <ul class="state-list">
+                    <% _.each(states, function (state) { %>
+                        <li class="election-results-nav-item election-results-nav-<%= state.abbr %>" data-abbr="<%= state.abbr %>"><a href="#"><%= state.display %></a></li>
+                    <% }) %>
+                </ul>
+            </li>
+            <li class="election-results-nav-item election-results-nav-share"><a>Share</a></li>
+        </ul>
+        </div>
+    </div>
+</div>
