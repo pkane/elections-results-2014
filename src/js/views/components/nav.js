@@ -1,5 +1,5 @@
 define([
-	'jquery',
+    'jquery',
 	'underscore',
 	'backbone',
     'models/navModel',
@@ -25,14 +25,20 @@ function ($, _, Backbone, NavModel, templateFile) {
         },
         
         update: function () {
+            var race = this.model.get('currentRace'),
+                state = this.model.get('currentState');
             
             this.$('.election-results-nav-item').removeClass('election-results-nav-selected');
             
-            this.$('.election-results-nav-' + this.model.get('currentRace')).addClass('election-results-nav-selected');
+            this.$('.election-results-nav-' + race).addClass('election-results-nav-selected');
             
-            if (this.model.get('currentState') !== '') {
-                console.log('setting active state ' + this.model.get('currentState'));
-                this.$('.election-results-nav-' + this.model.get('currentState')).addClass('election-results-nav-selected');
+            _.forEach(this.$('.state-list .election-results-nav-item'), function (item) {
+                $('a', item).attr('href', '#/' + race + '-' + $(item).data('abbr'));
+            });
+            
+            if (state !== '') {
+                console.log('setting active state ' + state);
+                this.$('.election-results-nav-' + state).addClass('election-results-nav-selected');
             }
         }
         

@@ -21,30 +21,21 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, NavMo
                     siteManager.header.setClosedFixed();
                 }
 
-                Router.on('route:index', function (indexType, oembed) {
+                Router.on('route:index', function (indexType, stateAbbr, oembed) {
                     console.log('Nav to full race: ' + indexType);
 
                     var view = new IndexView({useOembedTemplate: (oembed !== null)});
                     
                     if (!indexType || indexType === 'index') {
                         indexType = 'senate';
+                        stateAbbr = '';
                     }
                                         
                     view.model.race = indexType;
                     
                     nav.set('currentRace', indexType);
-                    nav.set('currentState', '');
+                    nav.set('currentState', stateAbbr);
 
-                    rootView.showView(view);
-                });
-
-                Router.on('route:state', function (abbr, oembed) {
-                    console.log('Nav to state: ' + abbr);
-
-                    var view = new StateView({useOembedTemplate: (oembed !== null)});
-                    
-                    nav.set('currentState', abbr);
-                    
                     rootView.showView(view);
                 });
 
