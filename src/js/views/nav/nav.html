@@ -1,14 +1,14 @@
 
     <ul>
-        <li class="isDesktop"><a href="#/senate">Senate</a></li>
-        <li class="isDesktop"><a href="#/house">House</a></li>
-        <li class="isDesktop"><a href="#/governors">Governors</a></li>
+        <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
+        <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
+        <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
         
         <li class="isTablet">
             <ul>
-                <li><a href="#/senate">Senate</a></li>
-                <li><a href="#/house">House</a></li>
-                <li><a href="#/governors">Governors</a></li>
+                <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
+                <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
+                <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
             </ul>
         </li>
         
@@ -16,10 +16,10 @@
             <a>State</a>
             <ul class="state-list">
                 <% _.each(states, function (state) { %>
-                    <li><a href="#/<%= state.abbr %>"><%= state.display %></a></li>
+                    <li class="election-results-nav-item election-results-nav-<%= state.abbr %>"><a href="#/<%= state.abbr %>"><%= state.display %></a></li>
                 <% }) %>
             </ul>
         </li>
-        <li><a>Search</a></li>
-        <li><a>Share</a></li>
+        <li class="election-results-nav-item election-results-nav-search"><a>Search</a></li>
+        <li class="election-results-nav-item election-results-nav-share"><a>Share</a></li>
     </ul>

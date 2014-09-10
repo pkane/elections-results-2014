@@ -18,12 +18,22 @@ function ($, _, Backbone, NavModel, templateFile) {
         render: function () {
             
             this.$el.html(this.template(this.model));
+
+            this.update();
             
             return this;
         },
         
         update: function () {
-            console.log('TODO: set selected state in nav');
+            
+            this.$('.election-results-nav-item').removeClass('election-results-nav-selected');
+            
+            this.$('.election-results-nav-' + this.model.get('currentRace')).addClass('election-results-nav-selected');
+            
+            if (this.model.get('currentState') !== '') {
+                console.log('setting active state ' + this.model.get('currentState'));
+                this.$('.election-results-nav-' + this.model.get('currentState')).addClass('election-results-nav-selected');
+            }
         }
         
     });

@@ -6,10 +6,12 @@ define([
     'router',
     'appView',
     'views/index/index',
+    'views/state/state',
+    'views/race/race',
     'models/indexModel',
     'models/navModel'
 ],
-function ($, _, Backbone, Router, AppView, IndexView, IndexModel, NavModel) {
+function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, IndexModel, NavModel) {
     var rootView = new AppView(),
         nav = new NavModel(),
         App = {
@@ -29,6 +31,9 @@ function ($, _, Backbone, Router, AppView, IndexView, IndexModel, NavModel) {
                         indexType = 'senate';
                     }
                     
+                    nav.set('currentRace', indexType);
+                    nav.set('currentState', '');
+                    
                     model.race = indexType;
                     model.useOembedTemplate = (oembed !== null);
 
@@ -40,8 +45,12 @@ function ($, _, Backbone, Router, AppView, IndexView, IndexModel, NavModel) {
 
                 Router.on('route:state', function (abbr, oembed) {
 
-                    console.log('Show state: ' + abbr);
-
+                    var view = new StateView();
+                    
+                    nav.set('currentState', abbr);
+                    
+                    rootView.showView(view);
+                    
                     if (oembed) {
                         console.log('Use oembed template');
                     }
@@ -49,8 +58,15 @@ function ($, _, Backbone, Router, AppView, IndexView, IndexModel, NavModel) {
 
                 Router.on('route:race', function (race, stateAbbr, fip, oembed) {
 
+                    var view = new RaceView();
+                    
                     console.log('Nav to race w/ params: ' + race + '|' + stateAbbr + '|' + fip);
 
+                    nav.set('currentRace', race);
+                    nav.set('currentState', stateAbbr);
+                    
+                    rootView.showView(view);
+                    
                     if (oembed) {
                         console.log('Use oembed template');
                     }

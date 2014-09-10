@@ -2,7 +2,8 @@ define([], function () {
 
     return Backbone.Model.extend({
         
-        race: 'senate',
+        currentRace: 'senate',
+        currentState: '',
         
         states: [{ abbr: 'al', display: 'Alabama'},
                     { abbr: 'ak', display: 'Alaska'},
