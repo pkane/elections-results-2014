@@ -1,0 +1,60 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'grunt-contrib-sass',
+1 verbose cli   '--save-dev' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 warn package.json elections-results-2014@0.1.0 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'grunt-contrib-sass', null ]
+7 verbose cache add name=undefined spec="grunt-contrib-sass" args=["grunt-contrib-sass",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'grunt-contrib-sass',
+8 verbose parsed url   path: 'grunt-contrib-sass',
+8 verbose parsed url   href: 'grunt-contrib-sass' }
+9 silly lockFile d7fc68e3-grunt-contrib-sass grunt-contrib-sass
+10 verbose lock grunt-contrib-sass /Users/pkane/.npm/d7fc68e3-grunt-contrib-sass.lock
+11 silly lockFile d7fc68e3-grunt-contrib-sass grunt-contrib-sass
+12 silly lockFile d7fc68e3-grunt-contrib-sass grunt-contrib-sass
+13 verbose addNamed [ 'grunt-contrib-sass', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 5a9e20b6-grunt-contrib-sass grunt-contrib-sass@
+16 verbose lock grunt-contrib-sass@ /Users/pkane/.npm/5a9e20b6-grunt-contrib-sass.lock
+17 silly addNameRange { name: 'grunt-contrib-sass', range: '*', hasData: false }
+18 verbose url raw grunt-contrib-sass
+19 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-contrib-sass' ]
+20 verbose url resolved https://registry.npmjs.org/grunt-contrib-sass
+21 info trying registry request attempt 1 at 15:25:56
+22 http GET https://registry.npmjs.org/grunt-contrib-sass
+23 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=connect EHOSTUNREACH
+24 info trying registry request attempt 2 at 15:26:06
+25 http GET https://registry.npmjs.org/grunt-contrib-sass
+26 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=connect EHOSTUNREACH
+27 info trying registry request attempt 3 at 15:27:06
+28 http GET https://registry.npmjs.org/grunt-contrib-sass
+29 silly lockFile 5a9e20b6-grunt-contrib-sass grunt-contrib-sass@
+30 silly lockFile 5a9e20b6-grunt-contrib-sass grunt-contrib-sass@
+31 error network tunneling socket could not be established, cause=connect EHOSTUNREACH
+31 error network This is most likely not a problem with npm itself
+31 error network and is related to network connectivity.
+31 error network In most cases you are behind a proxy or have bad network settings.
+31 error network
+31 error network If you are behind a proxy, please make sure that the
+31 error network 'proxy' config is set properly.  See: 'npm help config'
+32 error System Darwin 13.3.0
+33 error command "node" "/usr/local/bin/npm" "install" "grunt-contrib-sass" "--save-dev"
+34 error cwd /Users/pkane/Sites/elections-results-2014
+35 error node -v v0.10.28
+36 error npm -v 1.4.9
+37 error code ECONNRESET
+38 verbose exit [ 1, true ]

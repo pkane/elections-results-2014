@@ -1,25 +1,74 @@
+<div id="elections-bar-nav" class="row elections-bar-nav-mobile">
+<div class="flex-group-container">
+    <div class="elections-bar-nav-item flex-group">
+      <a class="office-placeholder" href="javascript:void(0)">
+        
+          Senate
+        
+        <span class="election-icon election-icon-arrow-down-white"></span>
+      </a>
+    </div>
+    <div class="election-overlay office-overlay">
+      <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+      <div class="overlay-item"><h2 class="overlay-heading">2014 Election Outlook</h2></div>
+      <div class="overlay-item selected"><a class="senate" href="#/senate">Senate</a></div>
+      <div class="overlay-item"><a class="house" href="#/house">House</a></div>
+      <div class="overlay-item"><a class="governors" href="#/governors">Governor</a></div>
+    </div>
 
-    <ul>
-        <li class="isDesktop"><a href="#/senate">Senate</a></li>
-        <li class="isDesktop"><a href="#/house">House</a></li>
-        <li class="isDesktop"><a href="#/governors">Governors</a></li>
-        
-        <li class="isTablet">
+    <div class="item-group">
+      <div class="elections-bar-nav-item">
+        <a class="state-placeholder" href="javascript:void(0)"><span class="election-icon election-icon-state-white"></span></a>
+      </div>
+      <div class="election-overlay state-overlay">
+        <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+        <div class="overlay-item"><h2 class="overlay-heading">2014 Election Outlook by State</h2></div>
+        <div class="overlay-item-container">
             <ul>
-                <li><a href="#/senate">Senate</a></li>
-                <li><a href="#/house">House</a></li>
-                <li><a href="#/governors">Governors</a></li>
+                <li class="isDesktop"><a href="#/senate">Senate</a></li>
+                <li class="isDesktop"><a href="#/house">House</a></li>
+                <li class="isDesktop"><a href="#/governors">Governors</a></li>
+                
+                <li class="isTablet">
+                    <ul>
+                        <li><a href="#/senate">Senate</a></li>
+                        <li><a href="#/house">House</a></li>
+                        <li><a href="#/governors">Governors</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a>State</a>
+                    <ul class="state-list">
+                        <% _.each(states, function (state) { %>
+                            <li class="overlay-item"><a class="state-link" href="#/<%= state.abbr %>"><%= state.display %></a></li>
+                        <% }) %>
+                    </ul>
+                </li>
+                <li><a>Search</a></li>
+                <li><a>Share</a></li>
             </ul>
-        </li>
-        
-        <li>
-            <a>State</a>
-            <ul class="state-list">
-                <% _.each(states, function (state) { %>
-                    <li><a href="#/<%= state.abbr %>"><%= state.display %></a></li>
-                <% }) %>
-            </ul>
-        </li>
-        <li><a>Search</a></li>
-        <li><a>Share</a></li>
-    </ul>
+        </div>
+      </div>
+      
+      <div class="elections-bar-nav-item typeahead">
+        <a class="search-placeholder" href="javascript:void(0)"><span class="election-icon election-icon-search-white"></span></a>
+      </div>
+      <input class="typeahead" type="text" name="search" placeholder="Search for a Candidate or State" id="racesTypeahead">
+
+      <div class="elections-bar-nav-item">
+        <a class="share-placeholder" href="javascript:void(0)"><span class="election-icon election-icon-share-white"></span></a>
+      </div>
+      <div class="election-overlay office-overlay">
+        <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
+        <div class="overlay-item"><h2 class="overlay-heading">Share</h2></div>
+        <div class="overlay-item"><a class="elections-nav-fb" href="javascript:void(0)">Facebook</a></div>
+        <div class="overlay-item"><a class="elections-nav-tw" href="javascript:void(0)">Twitter</a></div>
+        <div class="overlay-item"><a class="elections-nav-mail" href="javascript:void(0)">Mail</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
