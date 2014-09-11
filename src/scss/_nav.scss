@@ -6,6 +6,7 @@
   border-bottom: 1px solid $color-stroke;
   padding-top: 60px;
   background-color: #fafafa;
+  display: none;
   a {
     text-decoration: none;
   }
@@ -250,6 +251,7 @@
     }
     .election-info {
       padding-left: 0;
+      float: right;
     }
     .election-office-projection-heading,
     .election-leaning {
@@ -350,6 +352,9 @@
       height: 50px;
       border-right: 1px solid #565656;
     }
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.share-item {
+        border-right: none;
+    }    
     .elections-bar-nav-item.col-xs-2 { 
         width: 10.36666667%;
     }
@@ -523,6 +528,9 @@
   }
   /* Tablet Breakpoint CSS */
   @include tablet {
+    #elections-bar {
+        display: block;
+    }
     .elections-bar-nav-item .search-placeholder {
       border-right: none;
     }
@@ -654,11 +662,13 @@
     width: 100%;
     z-index: 10;
     #elections-bar {
+      display: block;
       @include vendor-prefix(transition, min-height .4s ease);
       min-height: 170px;
       .election-info-container {
         @include vendor-prefix(transition, padding .2s ease);
         padding-top: 30px;
+        width: 380px;        
       }
       .election-leaning {
         @include vendor-prefix(transition, (opacity .2s ease, visibility .4s ease));
@@ -705,6 +715,7 @@
     }
     #elections-bar-nav {
       @include vendor-prefix(transition, padding-top .2s ease);
+      background: none;
       padding-top: 54px;
       .elections-dropdown {
         @include vendor-prefix(transition, top .2s ease);
@@ -714,6 +725,12 @@
         @include vendor-prefix(transition, top .2s ease);
         top: 46px !important;
       }
+    }
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
+        margin-left: 45%;
+    }
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-lg-2 {
+
     }
     &.collapsed {
       #elections-bar {
