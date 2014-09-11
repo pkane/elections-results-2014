@@ -8,26 +8,27 @@ define([
     'views/pages/state',
     'views/pages/race',
     'models/config',
+    'models/dataManager',
     'models/navModel'
 ],
-function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, Config, NavModel) {
+function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, config, dataManager, NavModel) {
     var rootView = new AppView(),
         nav = new NavModel(),
         
         checkFeedVersion = function () {
             console.log('data check');
 
-            $.ajax(Config.api.base + Config.api.op.version, {
+            $.ajax(config.api.base + config.api.op.version, {
                 
                 dataType: 'jsonp',
-                timeout: Config.api.pollFrequency,
+                timeout: config.api.pollFrequency,
             
                 complete: function (xhr, statusCode) {
                     if (statusCode === 'success') {
                         var remoteVersion = parseInt(xhr.responseJSON);
                         
-                        if (remoteVersion > Config.api.dataFeedVersionId) {
-                            Config.api.dataFeedVersionId = remoteVersion;
+                        if (remoteVersion > config.api.dataFeedVersionId) {
+                            config.api.dataFeedVersionId = remoteVersion;
                             App.refresh();
                         } else {
                             console.log('using current data');
@@ -55,7 +56,7 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, Confi
                 if (checkFeedVersionInt > -1) {
                     clearInterval(checkFeedVersionInt);
                 }
-                checkFeedVersionInt = setInterval(checkFeedVersion, Config.api.pollFrequency);
+                checkFeedVersionInt = setInterval(checkFeedVersion, config.api.pollFrequency);
 
                 // Setup routing handlers
                 Router.on('route:index', function (indexType, stateAbbr, oembed) {
@@ -96,6 +97,10 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, Confi
             refresh: function () {
                 
                 console.log('TODO: Load updated data, refresh view');
+                
+                var currentRace = _.findWhere(config.races, { key: nav.get('currentRace') });
+                
+                dataManager.load(currentRace);
                 
             }
         };

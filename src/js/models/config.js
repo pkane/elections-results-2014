@@ -16,10 +16,11 @@ define([], function () {
         },
         
         races: [
-            { id: 'H', value: 'house'},
-            { id: 'S', value: 'senate'},
-            { id: 'G', value: 'governors'},
-            { id: 'I', value: 'iniatives'}
+            { id: 'h', key: 'house', op: 'raceByState'},
+            { id: 's', key: 'senate', op: 'raceByState'},
+            { id: 'g', key: 'governors', op: 'raceByState'},
+            { id: '', key: 'initiatives', op: 'initiatives'},
+            { id: '', key: 'summary', op: 'all'}
         ],
         
         states: [
