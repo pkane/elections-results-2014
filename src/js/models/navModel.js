@@ -5,7 +5,7 @@ define(['backbone', 'models/config'], function (Backbone, Config) {
         currentRace: 'senate',
         currentState: '',
         
-        states: Config.states.all.slice()
+        states: Config.states.slice() // Copy all states
         
     });
     
