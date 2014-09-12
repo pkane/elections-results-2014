@@ -185,7 +185,7 @@
           padding-top: 24%;
         }
       }
-    }
+    }  
     .election-info-container {
       padding-left: 35px;
     }
@@ -288,11 +288,11 @@
     &> a {
       display: inline-block;
       float: left;
-      color: $font-heading-color;
       text-decoration: none;
-      font-family: $font-heading;
-      text-transform: uppercase;
       font-weight: 100;
+      border: 1px solid $color-stroke;
+      border-left: none;
+      border-right: none;      
     }
   }
   /* CSS for making leftmost item flexible while locking the right on mobile */
@@ -350,7 +350,6 @@
     }
     .elections-bar-nav-item {
       height: 50px;
-      border-right: 1px solid #565656;
     }
     #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.share-item {
         border-right: none;
@@ -364,6 +363,9 @@
       padding: 18px 20px;
       box-sizing: border-box;
     }
+    .item-group { 
+      display: none;
+    }         
     .state-placeholder,
     .search-placeholder,
     .share-placeholder {
@@ -546,16 +548,13 @@
         -webkit-border-bottom-left-radius: 4px;
         -moz-border-radius-topleft: 4px;
         -moz-border-radius-bottomleft: 4px;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
+        border-radius: 4px;
       }
       &> a {
         display: inline-block;
         height: 100%;
         padding: 12px 20px;
         color: $font-body-color;
-        background-color: #efefef;
-        border-right: 1px solid $color-stroke;
         text-transform: capitalize;
         @include vendor-prefix(transition, background-color .125s ease);
         &.search-placeholder {
@@ -655,7 +654,7 @@
 }
 
 /* Stick Nav CSS */
-@include desktop-lg {
+@include tablet {
   #election-bar-content {
     position: fixed;
     top: 38px;
@@ -668,14 +667,14 @@
       .election-info-container {
         @include vendor-prefix(transition, padding .2s ease);
         padding-top: 30px;
-        width: 380px;        
+        width: 350px;        
       }
       .election-leaning {
         @include vendor-prefix(transition, (opacity .2s ease, visibility .4s ease));
         visibility: visible;
         position: absolute;
         top: 90px;
-      }
+      }    
       .page-icon {
         @include vendor-prefix(transition, (top .4s ease, visibility .4s ease));
         visibility: visible;
@@ -710,7 +709,7 @@
           width: 1px;
           height: 100%;
           background-color: $color-stroke;
-        }
+        }            
       }
     }
     #elections-bar-nav {
@@ -727,10 +726,7 @@
       }
     }
     #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-        margin-left: 45%;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-lg-2 {
-
+        margin-left: 0;
     }
     &.collapsed {
       #elections-bar {
@@ -755,7 +751,35 @@
         padding-top: 4px;
         .elections-dropdown { top: 50px }
         .twitter-typeahead { top: -4px !important; }
-      }
+      }   
     }
-  }
+  }  
+}
+@media only screen and (min-width: 720px) {
+        .item-group { 
+          display: block !important;
+        }    
+        #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
+          padding: 0;
+          text-align: center;
+        }
+        #elections-bar-nav .elections-bar-nav-item > a {
+          background-color: #EFEFEF !important;
+          border-radius: 4px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          width: 100%;
+          padding: 14px 20px;
+          color: #333;
+        }        
+        .office-placeholder {
+          display: none !important;
+        }            
+}
+
+@media only screen and (min-width: 1200px) {
+      #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
+        margin-left: 45% !important;
+      }
+
 }
