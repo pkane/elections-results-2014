@@ -21,6 +21,8 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, confi
             $.ajax(config.api.base + config.api.op.version, {
                 
                 dataType: 'jsonp',
+                jsonpCallback: 'ping',
+                cache: true,
                 timeout: config.api.pollFrequency,
             
                 complete: function (xhr, statusCode) {
@@ -74,6 +76,8 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, confi
                     nav.set('currentRace', indexType);
                     nav.set('currentState', stateAbbr);
 
+                    dataManager.load(_.findWhere(config.races, { key: indexType }), _.findWhere(config.states, { abbr: stateAbbr }));
+                    
                     rootView.showView(view);
                 });
 
@@ -95,13 +99,18 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, confi
             },
             
             refresh: function () {
+                var currentRace = _.findWhere(config.races, { key: nav.get('currentRace') }),
+                    currentState = _.findWhere(config.states, { abbr: nav.get('currentState') });
                 
-                console.log('TODO: Load updated data, refresh view');
+                dataManager.load(currentRace, currentState);
                 
-                var currentRace = _.findWhere(config.races, { key: nav.get('currentRace') });
-                
-                dataManager.load(currentRace);
-                
+                rootView.listenToOnce(dataManager, 'change:' + nav.get('currentRace'), function () {
+                    
+                    console.log('REFRESH!!');
+                    
+                    rootView.refresh();
+                    
+                });
             }
         };
     

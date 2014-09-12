@@ -2,50 +2,48 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+    'views/components/resultList',
+    'models/dataManager',
     'models/indexModel',
     'text!views/pages/index.html'
 ],
-function ($, _, Backbone, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
 
-    var indexView = Backbone.View.extend({
+    var resultList,
+        resultMap,
+        indexView = Backbone.View.extend({
         
         model: new IndexModel(),
         
         template: _.template(templateFile),
         
         useOembedTemplate: false,
+                
+        initialize: function () {
+            // TODO: Figure out why this isn't working
+            this.listenTo(dataManager, 'change', indexView.refresh);
+        },
         
         render: function () {
             
+            resultList = new ResultList();
+            resultList.model.race = this.model.race;
+            resultList.model.data = dataManager[this.model.race].data;
+            resultList.render();
+            
             this.$el.html(this.template(this.model));
             
-            //this.switchMaps();
+            this.$("#list").html(resultList.el);
             
             return this;
         },
         
-        switchMaps: function () {
-
-            var mapTemplate = _.template('<iframe id="stateMap" src="http://www.gannett-cdn.com/GDContent/2014/elections/maps/<%= mapType %>/" frameborder="0" scrolling="no" width="<%= width %>" height="800"></iframe>'),
-                mapWidth = '100%',
-                isiPad = navigator.userAgent.match(/iPad/i) !== null,
-                isiPhone = navigator.userAgent.match(/iPhone/i) !== null;
+        refresh: function () {
+            console.log('index refresh');
             
-            if (model.race === 'governors')
-            {
-                mapType = 'gov';
-            }
-            else
-            {
-                mapType = model.race;
-            }
-            
-            // FIXME: Android? Shouldn't this be width based or framework (desktop v. mobile)?
-            if (isiPad || isiPhone) {
-                mapWidth = document.body.offsetWidth - 80;
-            }
-            
-            this.$('.map-container').html(mapTemplate({ mapType: mapType, width: mapWidth }));
+            resultList.model.race = this.model.race;
+            resultList.model.data = dataManager[this.model.race].data;
+            resultList.render();
         }
     });
     

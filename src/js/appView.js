@@ -40,6 +40,11 @@ function ($, _, Backbone, NavView) {
 
             $('#election-bar-content').html(this.currentNav.el);
 
+        },
+        
+        refresh: function () {
+            console.log('appView refresh');
+            this.currentView.refresh();
         }
 
     });

@@ -14,9 +14,12 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         return config.api.base + opUri;
     },
+    settingsCount = 0,
     getSettings = function (completeHandler) {
         return {
             dataType: 'jsonp',
+            jsonpCallback: 'usat_' + settingsCount++,
+            cache: true,
             complete: completeHandler,
             error: errorHandler
         };
@@ -44,7 +47,10 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         senate: {
             data: [],
             loaded: false,
-            required: false
+            required: false,
+            forState: function (stateId) {
+                return _.filter(instance.senate.data, function (obj) { return obj.id.substr(0, 2) === stateId; });
+            }
         },
         
         governors: {
@@ -59,15 +65,23 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             required: false
         },
         
-        load: function (race) {
+        load: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
                         
             $.ajax(
-                getOpUri(race.op, { raceId: race.id }),
+                getOpUri(race.op, { raceId: (race) ? race.id : '', stateId: (state) ? state.id : '00' }),
                 getSettings(function (xhr, statusCode) {
                     if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
                         instance[race.key].loaded = true;
-                        instance[race.key].data = xhr.responseJSON;
+                        
+                        if (race.key === 'senate' || race.key === 'governors' || race.key === 'house') {
+                            instance[race.key].data = _.groupBy(xhr.responseJSON, function (obj) { return obj.id.substr(0, 2); });
+                        } else {
+                            instance[race.key].data = xhr.responseJSON;
+                        }
+                        
+                        console.log('trigger change:' + race.key);
+                        instance.trigger('change:' + race.key);
                     }
                 })
             );

@@ -1,20 +1,23 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
+	'backbone',
+    'text!views/components/resultList.html'
 ],
-function ($, _, Backbone) {
+function ($, _, Backbone, resultTemplate) {
 
     var view = Backbone.View.extend({
         
-        template: _.template('<h4>Placeholder for result list table</h4>'),
+        model: new (Backbone.Model.extend({ data: [], race: '' }))(),
+        
+        template: _.template(resultTemplate),
         
         render: function () {
             
-            this.$el.html(this.template());
+            this.$el.html(this.template(this.model));
             
             return this;
-        },
+        }
         
     });
     

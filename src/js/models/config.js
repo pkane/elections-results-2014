@@ -11,14 +11,15 @@ define([], function () {
                 version: 'CurrentVersion',
                 all: '{dataFeedVersionId}/AllRaces',
                 initiatives: '{dataFeedVersionId}/BallotInitiativesByState',
-                raceByState: '{dataFeedVersionId}/RaceResultsByState/{raceId}'
+                raceByState: '{dataFeedVersionId}/RaceResultsByState/{raceId}',
+                raceByCounty: '{dataFeedVersionId}/StateResultsByCountyOrCd/{raceId}/{stateId}'
             }
         },
         
         races: [
-            { id: 'h', key: 'house', op: 'raceByState'},
-            { id: 's', key: 'senate', op: 'raceByState'},
-            { id: 'g', key: 'governors', op: 'raceByState'},
+            { id: 'h', key: 'house', op: 'raceByCounty'},
+            { id: 's', key: 'senate', op: 'raceByCounty'},
+            { id: 'g', key: 'governors', op: 'raceByCounty'},
             { id: '', key: 'initiatives', op: 'initiatives'},
             { id: '', key: 'summary', op: 'all'}
         ],
