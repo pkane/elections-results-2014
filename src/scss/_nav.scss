@@ -290,7 +290,6 @@
       float: left;
       text-decoration: none;
       font-weight: 100;
-      border: 1px solid $color-stroke;
       border-left: none;
       border-right: none;      
     }
@@ -348,19 +347,16 @@
     &> a {
       height: 50px;
     }
-    .elections-bar-nav-item {
-      height: 50px;
+    .elections-bar-nav-item.col-xs-2 { 
+        width: 8.36666667%;
     }
     #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.share-item {
-        border-right: none;
+      width: 7%;
     }    
-    .elections-bar-nav-item.col-xs-2 { 
-        width: 10.36666667%;
-    }
     .office-placeholder {
       display: inline-block;
       width: 100%;
-      padding: 18px 20px;
+      padding: 24px 20px;
       box-sizing: border-box;
     }
     .item-group { 
@@ -748,6 +744,23 @@
     }
   }  
 }
+@media only screen and (max-width: 720px) {
+  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
+    clear: both;
+    margin: -34px 20px;
+    display: none;
+  }
+  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 > a {
+    color: white;
+  }  
+  #elections-bar-nav.elections-bar-nav-mobile .item-group {
+    display: block;
+  }  
+  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2.active-item {
+    display: inline-block;
+  }  
+}
+
 @media only screen and (min-width: 720px) {
         .item-group { 
           display: block !important;
@@ -761,7 +774,12 @@
           width: 100%;
           padding: 14px 20px;
           color: #333;
+          border-top: 1px solid #DADADA;
+          border-bottom: 1px solid #DADADA;
         }
+        #elections-bar-nav .elections-bar-nav-item.share-item > a {
+          padding: 2px 0 3px;
+        }        
         #elections-bar-nav .elections-bar-nav-item:first-child > a {
           border-left: 1px solid #DADADA;
           border-radius: 4px;
@@ -777,11 +795,23 @@
         .office-placeholder {
           display: none !important;
         }            
+        #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
+          margin-left: -250px;
+        }        
+}
+
+@media only screen and (min-width: 768px) {
+        #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
+          margin-left: 0;
+        }
 }
 
 @media only screen and (min-width: 1200px) {
       #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: 45% !important;
       }
+      #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
+        margin-left: -60px;
+      }      
 
 }
