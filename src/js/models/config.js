@@ -18,8 +18,8 @@ define([], function () {
         
         races: [
             { id: 'h', key: 'house', op: 'raceByCounty'},
-            { id: 's', key: 'senate', op: 'raceByCounty'},
-            { id: 'g', key: 'governors', op: 'raceByCounty'},
+            { id: 's', key: 'senate', op: 'raceByState'},
+            { id: 'g', key: 'governors', op: 'raceByState'},
             { id: '', key: 'initiatives', op: 'initiatives'},
             { id: '', key: 'summary', op: 'all'}
         ],

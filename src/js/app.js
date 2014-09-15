@@ -76,6 +76,7 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, confi
                     nav.set('currentRace', indexType);
                     nav.set('currentState', stateAbbr);
 
+                    // TODO: If not cached / most current version
                     dataManager.load(_.findWhere(config.races, { key: indexType }), _.findWhere(config.states, { abbr: stateAbbr }));
                     
                     rootView.showView(view);
@@ -104,13 +105,9 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, confi
                 
                 dataManager.load(currentRace, currentState);
                 
-                rootView.listenToOnce(dataManager, 'change:' + nav.get('currentRace'), function () {
-                    
-                    console.log('REFRESH!!');
-                    
-                    rootView.refresh();
-                    
-                });
+                console.log('dm in root');
+                console.dir(dataManager);
+                
             }
         };
     

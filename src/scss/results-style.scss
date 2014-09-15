@@ -25,3 +25,13 @@ body {
     .isTablet { visibility: hidden; }
     .isDesktop { visibility: visible; }
 };
+
+
+#list table {
+    width: 100%;
+    border: 1px solid #333;
+    
+    th {
+        border-bottom: 1px solid #333;
+    }
+}

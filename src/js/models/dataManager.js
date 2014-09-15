@@ -67,24 +67,28 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         load: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
-                        
-            $.ajax(
-                getOpUri(race.op, { raceId: (race) ? race.id : '', stateId: (state) ? state.id : '00' }),
-                getSettings(function (xhr, statusCode) {
-                    if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
-                        instance[race.key].loaded = true;
-                        
-                        if (race.key === 'senate' || race.key === 'governors' || race.key === 'house') {
-                            instance[race.key].data = _.groupBy(xhr.responseJSON, function (obj) { return obj.id.substr(0, 2); });
-                        } else {
+            
+            if (config.api.dataFeedVersionId === 0) {
+                return; // Ignore initial 0 state? queue request until version updates?
+            } else {
+                $.ajax(
+                    getOpUri(race.op, { raceId: (race) ? race.id : '', stateId: (state) ? state.id : '00' }),
+                    getSettings(function (xhr, statusCode) {
+                        if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
+                            instance[race.key].loaded = true;
+
+                            //if (race.key === 'senate' || race.key === 'governors' || race.key === 'house') {
+                                //instance[race.key].data = _.groupBy(xhr.responseJSON, function (obj) { return obj.id.substr(0, 2); });
+                            //} else {
                             instance[race.key].data = xhr.responseJSON;
+                            //}
+
+                            console.log('trigger change:' + race.key);
+                            instance.trigger('change:' + race.key);
                         }
-                        
-                        console.log('trigger change:' + race.key);
-                        instance.trigger('change:' + race.key);
-                    }
-                })
-            );
+                    })
+                );
+            }
         }
         
     }))();

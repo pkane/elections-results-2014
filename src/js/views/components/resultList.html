@@ -4,9 +4,9 @@
 <table>
 
     <% _.each(data, function(item) { %>
-        <th>
-            <td><%= item.name %></td>
-        </th>
+        <tr>
+            <th><%= item.name %></th>
+        </tr>
         
         <% _.each(item.initiatives, function(item) { %>
             <tr>
@@ -17,22 +17,41 @@
     <% }); %>
 
 </table>
-<% } else if (race === 'senate' || race === 'governors' || race == 'house') { %>
+<% } else if (race == 'house') { %>
 <table>
     <col /><col width="25"><col width="25">
-    <% _.each(data, function(value, key) { %>
-        <th>
-            <td colspan="3">State: <%= key %></td>
-        </th>
+    <% _.each(data, function(value) { %>
+        <tr>
+            <th colspan="3">ID: <%= value.id %></th>
+        </tr>
 
-        <% _.each(value, function(item) {
-                _.each(item.results, function(candidate) { %>
+        <% _.each(value.results, function(item) { %>
             <tr>
-                <td><%= candidate.name %></td>
-                <td><%= candidate.votes %></td>
-                <td><%= candidate.win %></td>
+                <td><%= item.name %> <%= item.party.charAt(0) %></td>
+                <td><%= item.votes %></td>
+                <td><%= item.win %></td>
             </tr>
-        <% }) }); %>    
+        <% }); %>
+    
+    <% }); %>
+
+</table>         
+            
+<% } else if (race === 'senate' || race === 'governors') { %>
+<table>
+    <col /><col width="25"><col width="25">
+    <% _.each(data, function(value) { %>
+        <tr>
+            <th colspan="3"><%= value.name %></th>
+        </tr>
+
+        <% _.each(value.results, function(item) { %>
+            <tr>
+                <td><%= item.name %> <%= item.party.charAt(0) %></td>
+                <td><%= item.votes %></td>
+                <td><%= item.win %></td>
+            </tr>
+        <% }); %>
     
     <% }); %>
 

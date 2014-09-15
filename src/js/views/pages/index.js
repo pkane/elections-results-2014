@@ -18,10 +18,12 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
         template: _.template(templateFile),
         
         useOembedTemplate: false,
-                
+        
         initialize: function () {
-            // TODO: Figure out why this isn't working
-            this.listenTo(dataManager, 'change', indexView.refresh);
+            this.listenTo(dataManager, 'change:senate', this.refresh);
+            this.listenTo(dataManager, 'change:house', this.refresh);
+            this.listenTo(dataManager, 'change:governors', this.refresh);
+            this.listenTo(dataManager, 'change:initiatives', this.refresh);
         },
         
         render: function () {
