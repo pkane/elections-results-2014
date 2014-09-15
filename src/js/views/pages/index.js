@@ -13,6 +13,8 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
         resultMap,
         indexView = Backbone.View.extend({
         
+        el: '#election-content',
+            
         model: new IndexModel(),
         
         template: _.template(templateFile),
@@ -24,14 +26,15 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
             this.listenTo(dataManager, 'change:house', this.refresh);
             this.listenTo(dataManager, 'change:governors', this.refresh);
             this.listenTo(dataManager, 'change:initiatives', this.refresh);
+            
+            $('#election-content').html(this.el);
         },
         
         render: function () {
             
             resultList = new ResultList();
-            resultList.model.race = this.model.race;
-            resultList.model.data = dataManager[this.model.race].data;
-            resultList.render();
+            
+            this.refresh();
             
             this.$el.html(this.template(this.model));
             
@@ -44,7 +47,9 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
             console.log('index refresh');
             
             resultList.model.race = this.model.race;
+            resultList.model.state = this.model.state;
             resultList.model.data = dataManager[this.model.race].data;
+            resultList.model.detail = (this.model.state) ? dataManager[this.model.race].detail[this.model.state.id] : [];
             resultList.render();
         }
     });

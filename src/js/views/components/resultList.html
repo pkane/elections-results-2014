@@ -22,7 +22,8 @@
     <col /><col width="25"><col width="25">
     <% _.each(data, function(value) { %>
         <tr>
-            <th colspan="3">ID: <%= value.id %></th>
+            <th><%= formatId(value.id) %></th>
+            <th colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
         </tr>
 
         <% _.each(value.results, function(item) { %>
@@ -42,7 +43,7 @@
     <col /><col width="25"><col width="25">
     <% _.each(data, function(value) { %>
         <tr>
-            <th colspan="3"><%= value.name %></th>
+            <th colspan="3"><a href='#/<%= race %>-<%= getAbbrByName(value.name) %>'><%= value.name %></a></th>
         </tr>
 
         <% _.each(value.results, function(item) { %>
@@ -55,6 +56,22 @@
     
     <% }); %>
 
+    <% _.each(detail, function(value) { %>
+        <tr>
+            <th colspan="3"><%= getCountyByFips(value.id) %></a></th>
+        </tr>
+
+        <% _.each(value.results, function(item) { %>
+            <tr>
+                <td><%= item.name %> <%= item.party.charAt(0) %></td>
+                <td><%= item.votes %></td>
+                <td><%= item.win %></td>
+            </tr>
+        <% }); %>
+    
+    <% }); %>    
+        
+        
 </table>         
             
 <% } else { %>

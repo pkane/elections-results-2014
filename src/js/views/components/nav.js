@@ -15,6 +15,12 @@ function ($, _, Backbone, NavModel, templateFile) {
         
         template: _.template(templateFile),
         
+        initialize: function () {
+            
+            $('#election-bar-content').html(this.el);
+            
+        },  
+        
         render: function () {
             
             this.$el.html(this.template(this.model));

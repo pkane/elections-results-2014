@@ -3,20 +3,17 @@ define([
     'underscore',
     'backbone',
     'router',
-    'appView',
     'views/pages/index',
-    'views/pages/state',
-    'views/pages/race',
+    'views/components/nav',
     'models/config',
-    'models/dataManager',
-    'models/navModel'
+    'models/dataManager'
 ],
-function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, config, dataManager, NavModel) {
-    var rootView = new AppView(),
-        nav = new NavModel(),
+function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
+    var rootView = new IndexView(),
+        navView = new NavView(),
         
         checkFeedVersion = function () {
-            console.log('data check');
+            console.log('data version check');
 
             $.ajax(config.api.base + config.api.op.version, {
                 
@@ -64,50 +61,55 @@ function ($, _, Backbone, Router, AppView, IndexView, StateView, RaceView, confi
                 Router.on('route:index', function (indexType, stateAbbr, oembed) {
                     console.log('Nav to full race: ' + indexType);
 
-                    var view = new IndexView({useOembedTemplate: (oembed !== null)});
+                    var state = _.findWhere(config.states, { abbr: stateAbbr });
+                    
+                    rootView.useOembedTemplate = (oembed !== null);
                     
                     if (!indexType || indexType === 'index') {
                         indexType = 'senate';
                         stateAbbr = '';
                     }
                                         
-                    view.model.race = indexType;
+                    rootView.model.race = indexType;
+                    rootView.model.state = state;
                     
-                    nav.set('currentRace', indexType);
-                    nav.set('currentState', stateAbbr);
+                    navView.model.set('currentRace', indexType);
+                    navView.model.set('currentState', stateAbbr);
 
                     // TODO: If not cached / most current version
-                    dataManager.load(_.findWhere(config.races, { key: indexType }), _.findWhere(config.states, { abbr: stateAbbr }));
+                    dataManager.load(_.findWhere(config.races, { key: indexType }), state);
                     
-                    rootView.showView(view);
+                    rootView.refresh();
                 });
 
                 Router.on('route:race', function (race, stateAbbr, fip, oembed) {
                     console.log('Nav to race w/ params: ' + race + '|' + stateAbbr + '|' + fip);
 
-                    var view = new RaceView({useOembedTemplate: (oembed !== null)});
+                    var state = _.findWhere(config.states, { abbr: stateAbbr });
                     
-                    nav.set('currentRace', race);
-                    nav.set('currentState', stateAbbr);
+                    rootView.useOembedTemplate = (oembed !== null);
                     
-                    rootView.showView(view);
+                    rootView.model.race = race;
+                    rootView.model.state = state;
+                    rootView.model.fip = fip;
+                    
+                    navView.model.set('currentRace', race);
+                    navView.model.set('currentState', stateAbbr);
+                    
+                    rootView.refresh();
                 });
                 
-                rootView.setNav(nav);
+                rootView.render();
+                navView.render();
 
                 Backbone.history.start();
-                
             },
             
             refresh: function () {
-                var currentRace = _.findWhere(config.races, { key: nav.get('currentRace') }),
-                    currentState = _.findWhere(config.states, { abbr: nav.get('currentState') });
+                var currentRace = _.findWhere(config.races, { key: navView.model.get('currentRace') }),
+                    currentState = _.findWhere(config.states, { abbr: navView.model.get('currentState') });
                 
                 dataManager.load(currentRace, currentState);
-                
-                console.log('dm in root');
-                console.dir(dataManager);
-                
             }
         };
     

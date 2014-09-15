@@ -6,7 +6,7 @@ define([], function () {
             base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
             dataFeedVersionId: 0,
             lastChecked: 0,
-            pollFrequency: 5 * 60 * 1000,
+            pollFrequency: 5 * 60 * 1000, // TBD
             op: {
                 version: 'CurrentVersion',
                 all: '{dataFeedVersionId}/AllRaces',
@@ -18,10 +18,10 @@ define([], function () {
         
         races: [
             { id: 'h', key: 'house', op: 'raceByCounty'},
-            { id: 's', key: 'senate', op: 'raceByState'},
-            { id: 'g', key: 'governors', op: 'raceByState'},
-            { id: '', key: 'initiatives', op: 'initiatives'},
-            { id: '', key: 'summary', op: 'all'}
+            { id: 's', key: 'senate', op: 'raceByState', detail: 'raceByCounty'},
+            { id: 'g', key: 'governors', op: 'raceByState', detail: 'raceByCounty'},
+            { id: 'i', key: 'initiatives', op: 'initiatives'},
+            { id: 's', key: 'summary', op: 'all'}
         ],
         
         states: [
