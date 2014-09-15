@@ -642,6 +642,9 @@
 }
 
 @media only screen and (max-width: 400px) {
+  .elections-bar-nav-item.flex-group.col-xs-10 {
+  width: 76.333333%;
+  }  
   #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
     clear: both;
     margin: -34px 20px;
