@@ -641,8 +641,26 @@
   // background-color: rgba(0,0,255,0.25);
 }
 
+@media only screen and (max-width: 400px) {
+  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
+    clear: both;
+    margin: -34px 20px;
+    display: none;
+  }
+  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 > a {
+    color: white;
+  }  
+  #elections-bar-nav.elections-bar-nav-mobile .item-group {
+    display: block;
+  }  
+  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2.active-item {
+    display: inline-block;
+  }  
+}
+
+@media only screen and (min-width: 401px) {
+
 /* Stick Nav CSS */
-@include tablet {
   #election-bar-content {
     position: fixed;
     top: 38px;
@@ -741,33 +759,19 @@
         .twitter-typeahead { top: -4px !important; }
       }   
     }
-  }  
-}
-@media only screen and (max-width: 720px) {
-  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
-    clear: both;
-    margin: -34px 20px;
-    display: none;
-  }
-  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 > a {
-    color: white;
-  }  
-  #elections-bar-nav.elections-bar-nav-mobile .item-group {
-    display: block;
-  }  
-  #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2.active-item {
-    display: inline-block;
-  }  
-}
-
-@media only screen and (min-width: 720px) {
+  }    
         .item-group { 
           display: block !important;
         }    
         #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
           padding: 0;
           text-align: center;
+          display: none;
         }           
+        #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item:first-child,
+        #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item:last-child {
+          display: inline-block;
+        }
         #elections-bar-nav .elections-bar-nav-item > a {
           background-color: #EFEFEF !important;
           width: 100%;
@@ -795,7 +799,7 @@
           display: none !important;
         }            
         #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-          margin-left: -250px;
+          margin-left: -100px;
         }        
 }
 
@@ -803,6 +807,9 @@
         #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
           margin-left: 0;
         }
+        #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
+          display: inline-block;
+        }                
 }
 
 @media only screen and (min-width: 1200px) {
@@ -811,6 +818,6 @@
       }
       #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: -60px;
-      }      
+      }               
 
 }
