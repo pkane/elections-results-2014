@@ -4,7 +4,7 @@
   min-height: 160px;
   margin-bottom: 40px;
   border-bottom: 1px solid $color-stroke;
-  padding-top: 60px;
+  padding-top: 40px;
   background-color: #fafafa;
   display: none;
   a {
@@ -174,7 +174,6 @@
   /* Tablet Breakpoint CSS */
   @include tablet {
     min-height: 150px;
-    padding-top: 40px;
     .page-icon {
       height: 120px;
       width: 120px;
