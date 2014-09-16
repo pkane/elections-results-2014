@@ -9,7 +9,7 @@ function ($, _, Backbone, NavModel, templateFile) {
 
     var indexView = Backbone.View.extend({
         
-        className: 'tmp',
+        className: 'election-navigation',
         
         model: new NavModel(),
         
@@ -31,13 +31,17 @@ function ($, _, Backbone, NavModel, templateFile) {
         },
         
         refresh: function () {
-            var race = this.model.currentRace;
+            var race = this.model.currentRace,
+                state = this.model.currentState;
             
             this.$('.election-office-projection-heading').text(race.display + ' Results');
             
             this.$('.elections-bar-nav-item').removeClass('active-item');
             
             this.$('.elections-bar-nav-item-' + race.key).addClass('active-item');
+            
+            this.$('.page-icon .icon').removeClass().addClass('icon ' + this.model.getStateIcon());
+            
         }
         
     });
