@@ -1,0 +1,17 @@
+#election-app #list table {
+	border: none;
+}
+#election-app td,
+#election-app th {
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+}
+#list table th {
+	background: #EFEFEF;
+	margin: 10px 0 0;
+	width: 100%;
+}
+tr.entry-spacer {
+	float: left;
+	margin: 10px;
+}

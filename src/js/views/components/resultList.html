@@ -4,6 +4,7 @@
 <table>
 
     <% _.each(data, function(item) { %>
+        <tr class="entry-spacer"></tr>        
         <tr>
             <th><%= item.name %></th>
         </tr>
@@ -21,6 +22,7 @@
 <table>
     <col /><col width="25"><col width="25">
     <% _.each(data, function(value) { %>
+        <tr class="entry-spacer"></tr>        
         <tr>
             <th><%= formatId(value.id) %></th>
             <th colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
@@ -44,7 +46,7 @@
     <% _.each(data, function(value) { %>
         
         <% if (!state || state.display.toLowerCase() === value.name.toLowerCase()) { %>
-        
+            <tr class="entry-spacer"></tr>    
             <tr>
                 <th colspan="3"><a href='#/<%= race.key %>-<%= getAbbrByName(value.name) %>'><%= value.name %></a></th>
             </tr>
@@ -63,6 +65,7 @@
 <table>
     <col /><col width="25"><col width="25">
     <% _.each(detail, function(value) { %>
+        <tr class="entry-spacer"></tr>    
         <tr>
             <th colspan="3"><%= getCountyByFips(value.id) %></a></th>
         </tr>
