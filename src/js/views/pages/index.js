@@ -49,7 +49,7 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
             resultList.model.race = this.model.race;
             resultList.model.state = this.model.state;
             resultList.model.data = dataManager[this.model.race.key].data;
-            resultList.model.detail = (this.model.state) ? dataManager[this.model.race].detail[this.model.state.id] : [];
+            resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
             resultList.render();
         }
     });

@@ -46,7 +46,7 @@
         <% if (!state || state.display.toLowerCase() === value.name.toLowerCase()) { %>
         
             <tr>
-                <th colspan="3"><a href='#/<%= race %>-<%= getAbbrByName(value.name) %>'><%= value.name %></a></th>
+                <th colspan="3"><a href='#/<%= race.key %>-<%= getAbbrByName(value.name) %>'><%= value.name %></a></th>
             </tr>
 
             <% _.each(value.results, function(item) { %>
