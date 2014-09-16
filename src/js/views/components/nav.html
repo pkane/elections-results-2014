@@ -2,10 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 election-info-container">
-        <div class="page-icon"><span class="icon <%= getStateIcon() %>"></span></div>
+        <div class="page-icon"><span class="icon"></span></div>
         <div class="election-info">
           <div class="election-office-projection-heading">Senate Results</div>
-          <div class="election-state"><%= getStateDisplay() %></div>
+          <div class="election-state"></div>
           <div class="election-state-subheading">2014 Midterm Election</div>
           <div class="election-leaning">
             <span class="leaning-text"></span>
@@ -39,7 +39,7 @@
           </div>
 
           <div class="elections-bar-nav-item elections-bar-nav-item-iniatiatives col-xs-2 col-sm-2 col-md-1 col-lg-1">
-            <a href="#/iniatives">Initiatives</a>
+            <a href="#/initiatives">Initiatives</a>
           </div>
 
           <div class="elections-bar-nav-item share-item col-xs-2 col-sm-2 col-md-1 col-lg-1">
@@ -49,52 +49,14 @@
         </div>    
       
         <div class="col-xs-1">
-              <div class="election-results-nav-item election-results-nav-share"><a><span class="election-icon election-icon-share-white">Share</span></a>
+              <div class="election-results-nav-item election-results-nav-share"><a><span class="election-icon election-icon-share-white">Share</span></a></div>
         </div>
-
         <div class="election-overlay office-overlay">
           <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
           <div class="overlay-item"><h2 class="overlay-heading">Share</h2></div>
           <div class="overlay-item"><a class="elections-nav-fb" href="javascript:void(0)">Facebook</a></div>
           <div class="overlay-item"><a class="elections-nav-tw" href="javascript:void(0)">Twitter</a></div>
           <div class="overlay-item"><a class="elections-nav-mail" href="javascript:void(0)">Mail</a></div>
-        </div>            
-                  
-    </div>        
-
-
+        </div>        
+    </div>
 </div>
-
-
-<ul class="col-sm-2 election-overlay office-overlay">
-  <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
-    <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-    <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-    <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-    <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
-</ul>
-
-<ul class="col-sm-2 election-overlay office-overlay">
-  <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
-    <li class="isTablet">
-        <ul>
-            <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-            <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-            <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-            <li class="election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
-        </ul>
-    </li>
-</ul>
-
-<ul class="col-sm-2 election-overlay office-overlay">
-  <div class="election-overlay-button-close"><a href="javascript:void(0)"><span class="election-icon election-icon-remove-white"></span></a></div>
-    <li>
-        <a>State</a>
-        <ul class="state-list">
-            <% _.each(states, function (state) { %>
-                <li class="election-results-nav-item election-results-nav-<%= state.abbr %>" data-abbr="<%= state.abbr %>"><a href="#"><%= state.display %></a></li>
-            <% }) %>
-        </ul>
-    </li>
-</ul>
-

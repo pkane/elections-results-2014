@@ -33,6 +33,7 @@ define([], function () {
             { id: '08', abbr: 'co', display: 'Colorado'},
             { id: '09', abbr: 'ct', display: 'Connecticut'},
             { id: '10', abbr: 'de', display: 'Delaware'},
+            { id: '11', abbr: 'dc', display: 'District of Columbia'},
             { id: '12', abbr: 'fl', display: 'Florida'},
             { id: '13', abbr: 'ga', display: 'Georgia'},
             { id: '15', abbr: 'hi', display: 'Hawaii'},
@@ -76,7 +77,6 @@ define([], function () {
             { id: '55', abbr: 'wi', display: 'Wisconsin'},
             { id: '56', abbr: 'wy', display: 'Wyoming'}
         ]
-        // {'id': '11', abbr: 'dc', display: 'District of Columbia'
     };
 
 });
