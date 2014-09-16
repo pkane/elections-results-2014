@@ -58,47 +58,47 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
                 checkFeedVersionInt = setInterval(checkFeedVersion, config.api.pollFrequency);
 
                 // Setup routing handlers
-                Router.on('route:index', function (indexType, stateAbbr, oembed) {
-                    console.log('Nav to full race: ' + indexType);
+                Router.on('route:index', function (raceKey, stateAbbr, oembed) {
+                    console.log('Nav to full race: ' + raceKey);
 
-                    var race = _.findWhere(config.races, { key: indexType }),
+                    if (!raceKey || raceKey === 'index') {
+                        raceKey = 'senate';
+                        stateAbbr = '';
+                    }
+                    
+                    var race = _.findWhere(config.races, { key: raceKey }),
                         state = _.findWhere(config.states, { abbr: stateAbbr });
                     
                     rootView.useOembedTemplate = (oembed !== null);
-                    
-                    if (!indexType || indexType === 'index') {
-                        indexType = 'senate';
-                        stateAbbr = '';
-                    }
-                                        
-                    rootView.model.race = indexType;
+                    rootView.model.race = race;
                     rootView.model.state = state;
+                    rootView.refresh();
                     
-                    navView.model.set('currentRace', indexType);
-                    navView.model.set('currentState', stateAbbr);
-
+                    navView.model.currentRace = race;
+                    navView.model.currentState = state;
+                    navView.refresh();
+                    
                     // TODO: If not cached / most current version
                     // FIXME: Request both detail and full if no data exists
                     dataManager.load(race, state);
-                    
-                    rootView.refresh();
                 });
 
-                Router.on('route:race', function (race, stateAbbr, fip, oembed) {
-                    console.log('Nav to race w/ params: ' + race + '|' + stateAbbr + '|' + fip);
+                Router.on('route:race', function (raceKey, stateAbbr, fip, oembed) {
+                    console.log('Nav to race w/ params: ' + raceKey + '|' + stateAbbr + '|' + fip);
 
-                    var state = _.findWhere(config.states, { abbr: stateAbbr });
+                    var race = _.findWhere(config.races, { key: raceKey }),
+                        state = _.findWhere(config.states, { abbr: stateAbbr });
                     
                     rootView.useOembedTemplate = (oembed !== null);
                     
                     rootView.model.race = race;
                     rootView.model.state = state;
                     rootView.model.fip = fip;
-                    
-                    navView.model.set('currentRace', race);
-                    navView.model.set('currentState', stateAbbr);
-                    
                     rootView.refresh();
+                    
+                    navView.model.currentRace = race;
+                    navView.model.currentState = state;
+                    navView.refresh();
                 });
                 
                 rootView.render();
@@ -108,10 +108,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
             },
             
             refresh: function () {
-                var currentRace = _.findWhere(config.races, { key: navView.model.get('currentRace') }),
-                    currentState = _.findWhere(config.states, { abbr: navView.model.get('currentState') });
-                
-                dataManager.load(currentRace, currentState);
+                dataManager.load(navView.model.currentRace, navView.model.currentState);
             }
         };
     

@@ -9,7 +9,7 @@ function ($, _, Backbone, NavModel, templateFile) {
 
     var indexView = Backbone.View.extend({
         
-        className: 'election-results-nav',
+        className: 'tmp',
         
         model: new NavModel(),
         
@@ -25,27 +25,19 @@ function ($, _, Backbone, NavModel, templateFile) {
             
             this.$el.html(this.template(this.model));
 
-            this.update();
+            this.refresh();
             
             return this;
         },
         
-        update: function () {
-            var race = this.model.get('currentRace'),
-                state = this.model.get('currentState');
+        refresh: function () {
+            var race = this.model.currentRace;
             
-            this.$('.election-results-nav-item').removeClass('election-results-nav-selected');
+            this.$('.election-office-projection-heading').text(race.display + ' Results');
             
-            this.$('.election-results-nav-' + race).addClass('election-results-nav-selected');
+            this.$('.elections-bar-nav-item').removeClass('active-item');
             
-            _.forEach(this.$('.state-list .election-results-nav-item'), function (item) {
-                $('a', item).attr('href', '#/' + race + '-' + $(item).data('abbr'));
-            });
-            
-            if (state !== '') {
-                console.log('setting active state ' + state);
-                this.$('.election-results-nav-' + state).addClass('election-results-nav-selected');
-            }
+            this.$('.elections-bar-nav-item-' + race.key).addClass('active-item');
         }
         
     });
