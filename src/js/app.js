@@ -61,7 +61,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
                 Router.on('route:index', function (indexType, stateAbbr, oembed) {
                     console.log('Nav to full race: ' + indexType);
 
-                    var state = _.findWhere(config.states, { abbr: stateAbbr });
+                    var race = _.findWhere(config.races, { key: indexType }),
+                        state = _.findWhere(config.states, { abbr: stateAbbr });
                     
                     rootView.useOembedTemplate = (oembed !== null);
                     
@@ -77,7 +78,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
                     navView.model.set('currentState', stateAbbr);
 
                     // TODO: If not cached / most current version
-                    dataManager.load(_.findWhere(config.races, { key: indexType }), state);
+                    // FIXME: Request both detail and full if no data exists
+                    dataManager.load(race, state);
                     
                     rootView.refresh();
                 });
