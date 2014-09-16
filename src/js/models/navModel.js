@@ -1,11 +1,9 @@
-define(['backbone', 'models/config'], function (Backbone, Config) {
+define(['backbone'], function (Backbone) {
 
     return Backbone.Model.extend({
         
         currentRace: {},
         currentState: {},
-        
-        states: Config.states.slice(), // Copy all states
         
         getStateDisplay: function () {
             return (this.currentState && this.currentState.display) ? this.currentState.display : 'USA';
