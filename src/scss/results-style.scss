@@ -1,27 +1,15 @@
+@import "../bower_components/bootstrap/dist/css/bootstrap.min.css";
 
 @import "base.scss";
-
 @import "nav.scss";
+@import "overlay.scss";
 
-body {
-    background: #fcfcfc;
-    color: #333;
-}
 
-#election-app {
+#list table {
     width: 100%;
-    height: 100%;
+    border: 1px solid #333;
+    
+    th {
+        border-bottom: 1px solid #333;
+    }
 }
-
-.isTablet { visibility: hidden; }
-.isDesktop { visibility: hidden; }
-
-@include tablet() {
-    .isTablet { visibility: visible; }
-    .isDesktop { visibility: collapse; }
-};
-
-@include desktop() {
-    .isTablet { visibility: hidden; }
-    .isDesktop { visibility: visible; }
-};

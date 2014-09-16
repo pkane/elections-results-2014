@@ -1,0 +1,86 @@
+
+
+<% if (race.key === 'initiatives') { %>
+<table>
+
+    <% _.each(data, function(item) { %>
+        <tr>
+            <th><%= item.name %></th>
+        </tr>
+        
+        <% _.each(item.initiatives, function(item) { %>
+            <tr>
+                <td><%= item.name %></td>
+            </tr>
+        <% }); %>
+
+    <% }); %>
+
+</table>
+<% } else if (race.key == 'house') { %>
+<table>
+    <col /><col width="25"><col width="25">
+    <% _.each(data, function(value) { %>
+        <tr>
+            <th><%= formatId(value.id) %></th>
+            <th colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
+        </tr>
+
+        <% _.each(value.results, function(item) { %>
+            <tr>
+                <td><%= item.name %> <%= item.party.charAt(0) %></td>
+                <td><%= item.votes %></td>
+                <td><%= item.win %></td>
+            </tr>
+        <% }); %>
+    
+    <% }); %>
+
+</table>         
+            
+<% } else if (race.key === 'senate' || race.key === 'governors') { %>
+<table>
+    <col /><col width="25"><col width="25">
+    <% _.each(data, function(value) { %>
+        
+        <% if (!state || state.display.toLowerCase() === value.name.toLowerCase()) { %>
+        
+            <tr>
+                <th colspan="3"><a href='#/<%= race.key %>-<%= getAbbrByName(value.name) %>'><%= value.name %></a></th>
+            </tr>
+
+            <% _.each(value.results, function(item) { %>
+                <tr>
+                    <td><%= item.name %> <%= item.party.charAt(0) %></td>
+                    <td><%= item.votes %></td>
+                    <td><%= item.win %></td>
+                </tr>
+            <% }); %>
+        <% } %>
+    <% }); %>
+
+</table>
+<table>
+    <col /><col width="25"><col width="25">
+    <% _.each(detail, function(value) { %>
+        <tr>
+            <th colspan="3"><%= getCountyByFips(value.id) %></a></th>
+        </tr>
+
+        <% _.each(value.results, function(item) { %>
+            <tr>
+                <td><%= item.name %> <%= item.party.charAt(0) %></td>
+                <td><%= item.votes %></td>
+                <td><%= item.win %></td>
+            </tr>
+        <% }); %>
+    
+    <% }); %>    
+        
+        
+</table>         
+            
+<% } else { %>
+    <% console.dir(data) %>
+    TODO: Build list template for <%= race %>
+<% } %>

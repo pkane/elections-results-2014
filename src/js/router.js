@@ -13,11 +13,11 @@ function ($, _, Backbone) {
 
         initialize: function() {
             
-            // /elections-results-2014/#/{house|senate|governors|iniatives}-{al-wy}/{embed}
-            this.route(/^(house|senate|governors|iniatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/, 'index');
+            // /elections-results-2014/#/{house|senate|governors|initiatives}-{al-wy}/{embed}
+            this.route(/^(house|senate|governors|initiatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/, 'index');
 
-            // /elections-results-2014/#/race/{house|senate|governors}-{al-wy|al-wy + fip}/{embed}
-            this.route(/^race\/(house|senate|governors|iniatives)-([a-zA-Z]{2})([0-9]*)\/?(oembed)?\/?/, 'race');
+            // /elections-results-2014/#/race/{house|senate|governors|initiatives}-{al-wy|al-wy + fip}/{embed}
+            this.route(/^race\/(house|senate|governors|initiatives)-([a-zA-Z]{2})([0-9]*)\/?(oembed)?\/?/, 'race');
             
             console.log('Router initialized');
         },
