@@ -36,9 +36,9 @@ function ($, _, Backbone, NavModel, templateFile) {
             
             this.$('.election-office-projection-heading').text(race.display + ' Results');
             
-            this.$('.elections-bar-nav-item').removeClass('selected');
+            this.$('.elections-bar-nav-item').removeClass('active-item');
             
-            this.$('.elections-bar-nav-item-' + race.key).addClass('selected');
+            this.$('.elections-bar-nav-item-' + race.key).addClass('active-item');
             
             this.$('.page-icon .icon').removeClass().addClass('icon ' + this.model.getStateIcon());
             
