@@ -668,18 +668,18 @@
     .elections-bar-nav-item.flex-group.col-xs-10 {
         width: 76.333333%;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1 {
         clear: both;
         margin: -34px 20px;
         display: none;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 > a {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1 > a {
         color: white;
     }
     #elections-bar-nav.elections-bar-nav-mobile .item-group {
         display: block;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2.active-item {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1.active-item {
         display: inline-block;
     }
 }
