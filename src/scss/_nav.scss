@@ -457,8 +457,9 @@
                     color: $color-usat-blue;
                     pointer-events: none;
                     cursor: default;
+
                 }
-            }
+            }          
         }
         .state .election-icon {
             float: right;
@@ -678,7 +679,7 @@
     #elections-bar-nav.elections-bar-nav-mobile .item-group {
         display: block;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1.active-item {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1.selected {
         display: inline-block;
     }
     #elections-bar {
@@ -803,13 +804,17 @@
         display: inline-block;
     }
     #elections-bar-nav .elections-bar-nav-item > a {
-        background-color: #EFEFEF !important;
+        background-color: #EFEFEF;
         width: 100%;
         padding: 14px 20px;
         color: #333;
         border-top: 1px solid #DADADA;
         border-bottom: 1px solid #DADADA;
     }
+    #elections-bar-nav .elections-bar-nav-item.selected > a {
+        background-color: #FFF;
+        color: #009BFF;
+    }    
     #elections-bar-nav .elections-bar-nav-item.share-item > a {
         padding: 2px 0 3px;
     }
