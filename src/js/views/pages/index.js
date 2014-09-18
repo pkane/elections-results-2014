@@ -3,11 +3,12 @@ define([
 	'underscore',
 	'backbone',
     'views/components/resultList',
+    'views/components/resultMap',
     'models/dataManager',
     'models/indexModel',
     'text!views/pages/index.html'
 ],
-function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, ResultMap, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
@@ -33,12 +34,16 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
         render: function () {
             
             resultList = new ResultList();
+
+            resultMap = new ResultMap();
             
             this.refresh();
             
             this.$el.html(this.template(this.model));
             
             this.$("#list").html(resultList.el);
+
+            this.$("#map").html(resultMap.el);
             
             return this;
         },
@@ -51,6 +56,12 @@ function ($, _, Backbone, ResultList, dataManager, IndexModel, templateFile) {
             resultList.model.data = dataManager[this.model.race.key].data;
             resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
             resultList.render();
+
+            //resultMap.model.race = this.model.race;
+            //resultMap.model.state = this.model.state;
+            //resultMap.model.data = dataManager[this.model.race.key].data;
+            //resultMap.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
+            resultMap.render();
         }
     });
     

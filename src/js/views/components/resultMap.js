@@ -1,13 +1,16 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
+	'backbone',
+    'models/config',
+    'models/fips',
+    'text!views/components/resultMap.html'
 ],
-function ($, _, Backbone) {
+function ($, _, Backbone, config, fipsMap, resultMap) {
 
     var view = Backbone.View.extend({
         
-        template: _.template('<h4>Placeholder for result map</h4>'),
+        template: _.template(resultMap),
         
         render: function () {
             
