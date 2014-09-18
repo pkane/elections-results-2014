@@ -1,0 +1,116 @@
+
+#bar-chart {
+    width: 70%;
+    height: 200px;
+    padding: 12px;
+    padding-top: 10px;
+}
+
+ul.progress-stat-bar {
+    width: 100%;
+    background: rgb(152, 152, 152);
+    
+    &.progress-stat-bar-slim li { 
+        height: 10px;
+    }
+    
+    li {
+        width: 0;
+        height: 50px;
+        text-align: right;
+        
+        transition: width 1s;
+        
+        &.dem {
+            background: #235468;
+            text-align: left;
+        }
+
+        &.rep {
+            background: #742b31;
+            text-align: right;
+        }        
+    }
+}
+
+
+.bar {
+    clear: both;
+    position: relative;
+    font-family: "Futura Today", "arial";
+}
+
+.bar-previous {
+    
+    font-size: smaller;
+    
+    ul.progress-stat-bar { 
+        margin-top: 5px;
+    }
+    
+    .num {
+        font-size: 2em;
+    }
+    
+    .rep {
+        text-align: right;
+    }
+}
+
+.bar-num {
+
+    text-transform: uppercase;
+    
+    .num {
+        font-size: 4em;
+    }
+
+    .rep {
+        color: #742b31;
+    }
+}
+
+.fifty-line {
+    position: absolute;
+    width: 1px;
+    height: 60px;
+    display: block;
+    background: #6B6B6B;
+    top: 0;
+    left: 50%;
+    margin: 0 0 0 -1px;
+    z-index: 9999;
+}
+
+.progress-stat-bar {
+    padding-left: 0px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: block;
+}
+
+// ---- COPIED ----
+
+/*
+icons */
+
+span.icon-dem-right {
+    font-size: 32px;
+    color: #547A8A;
+    position: absolute;
+    margin-top: 9px;
+    margin-left: 9px;
+    left: 0;
+}
+
+span.icon-rep-left {
+    font-size: 32px;
+    color: #8F6468;
+    position: absolute;
+    margin-left: 474px;
+    margin-top: 9px;
+    right: 10px;
+}
+

@@ -63,10 +63,10 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         summary: {
             data: [],
             loaded: false,
-            required: false
+            required: true
         },
         
-        load: function (race, state) {
+        loadRace: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
             
             if (config.api.dataFeedVersionId === 0) {
