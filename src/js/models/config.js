@@ -7,11 +7,13 @@ define([], function () {
     return {
         isMobile: isMobile,
         pageInfo: staticInfo,
-        ssts: 'news/politics/elections_results',
+        ssts: 'news/politics/elections/results',
 
         ads: {
             sizes: (function() { return isMobile ? [[320, 50]]: [[300, 250]];  })(),
-            unit: (function() { return isMobile ? 'mobileweb-banner_top/': 'poster/'; })()
+            unit: (function() {
+                return ((isMobile ? 'mobileweb-banner_top/': 'poster/') + 'news/politics/elections_results');
+            })()
         },
 
         api: {
