@@ -17,6 +17,8 @@ $font-heading-color2: #666666;
 $font-heading-color3: #333333;
 $font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-body-color: #111;
+$font-dir: 'http://www.gannett-cdn.com/GDContent/global/events/elections/icon-fonts/fonts/';
+
 
 /* Mixins */
 @mixin border-radius($radius) {
@@ -256,68 +258,15 @@ only screen and (                min-resolution: 2dppx) {
 	box-sizing: border-box;
 }
 
-/* Election Icon fonts */
-
-@font-face {
-	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-llhkjl');
-	src:url('fonts/icomoon.eot?#iefix-llhkjl') format('embedded-opentype'),
-		url('fonts/icomoon.woff?-llhkjl') format('woff'),
-		url('fonts/icomoon.ttf?-llhkjl') format('truetype'),
-		url('fonts/icomoon.svg?-llhkjl#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-	font-family: 'icomoon';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.icon-rep-right:before {
-	content: "\e600";
-}
-.icon-rep-left:before {
-	content: "\e601";
-}
-.icon-dem-right:before {
-	content: "\e602";
-}
-.icon-dem-left:before {
-	content: "\e603";
-}
-.icon-Republican-right:before {
-	content: "\e600";
-}
-.icon-Republican-left:before {
-	content: "\e601";
-}
-.icon-Democratic-right:before {
-	content: "\e602";
-}
-.icon-Democratic-left:before {
-	content: "\e603";
-}
-
-
 /* States Icon styling */
 
 @font-face {
 	font-family: 'us_states';
-	src:url('fonts/us_states.eot?-ue998k');
-	src:url('fonts/us_states.eot?#iefix-ue998k') format('embedded-opentype'),
-		url('fonts/us_states.woff?-ue998k') format('woff'),
-		url('fonts/us_states.ttf?-ue998k') format('truetype'),
-		url('fonts/us_states.svg?-ue998k#us_states') format('svg');
+	src:url($font-dir + 'us_states.eot?-ue998k');
+	src:url($font-dir + 'us_states.eot?#iefix-ue998k') format('embedded-opentype'),
+		url($font-dir + 'us_states.woff?-ue998k') format('woff'),
+		url($font-dir + 'us_states.ttf?-ue998k') format('truetype'),
+		url($font-dir + 'us_states.svg?-ue998k#us_states') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -487,15 +436,78 @@ only screen and (                min-resolution: 2dppx) {
 	content: "\e531";
 }
 
+
+/* Election Icon fonts */
+
+@font-face {
+	font-family: 'icomoon';
+	src:url($font-dir + 'icomoon.eot?-llhkjl');
+	src:url($font-dir + 'icomoon.eot?#iefix-llhkjl') format('embedded-opentype'),
+		url($font-dir + 'icomoon.woff?-llhkjl') format('woff'),
+		url($font-dir + 'icomoon.ttf?-llhkjl') format('truetype'),
+		url($font-dir + 'icomoon.svg?-llhkjl#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-rep"], [class*=" icon-rep"], [class^="icon-dem"], [class*=" icon-dem"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-rep-right:before {
+    font-family: 'icomoon';
+	content: "\e600";
+}
+.icon-rep-left:before {
+    font-family: 'icomoon';
+	content: "\e601";
+}
+.icon-dem-right:before {
+    font-family: 'icomoon';
+	content: "\e602";
+}
+.icon-dem-left:before {
+    font-family: 'icomoon';
+	content: "\e603";
+}
+.icon-Republican-right:before {
+    font-family: 'icomoon';
+	content: "\e600";
+}
+.icon-Republican-left:before {
+    font-family: 'icomoon';
+	content: "\e601";
+}
+.icon-Democratic-right:before {
+    font-family: 'icomoon';
+	content: "\e602";
+}
+.icon-Democratic-left:before {
+    font-family: 'icomoon';
+	content: "\e603";
+}
+
+
+
 /* USA Icon styling */
 
 @font-face {
 	font-family: 'usa_all';
-	src:url('fonts/usa_all.eot?-o1x1ph');
-	src:url('fonts/usa_all.eot?#iefix-o1x1ph') format('embedded-opentype'),
-		url('fonts/usa_all.woff?-o1x1ph') format('woff'),
-		url('fonts/usa_all.ttf?-o1x1ph') format('truetype'),
-		url('fonts/usa_all.svg?-o1x1ph#usa_all') format('svg');
+	src:url($font-dir + 'fonts/usa_all.eot?-o1x1ph');
+	src:url($font-dir + 'usa_all.eot?#iefix-o1x1ph') format('embedded-opentype'),
+		url($font-dir + 'usa_all.woff?-o1x1ph') format('woff'),
+		url($font-dir + 'usa_all.ttf?-o1x1ph') format('truetype'),
+		url($font-dir + 'usa_all.svg?-o1x1ph#usa_all') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -522,3 +534,4 @@ only screen and (                min-resolution: 2dppx) {
 }
 
 /* USA Icon styling */
+

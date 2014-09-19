@@ -4,6 +4,7 @@
 @import "nav.scss";
 @import "overlay.scss";
 
+@import "balanceChart.scss";
 
 #list table {
     width: 100%;
@@ -12,4 +13,8 @@
     th {
         border-bottom: 1px solid #333;
     }
+}
+
+#election-app {
+    margin-top: 275px;
 }
