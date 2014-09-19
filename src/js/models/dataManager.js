@@ -36,37 +36,42 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
         
         house: {
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
         
         senate: {
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
         
         governors: {
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
 
         summary: {
             data: [],
             loaded: false,
-            required: false
+            required: true,
+            updateTime: new Date()
         },
         
-        load: function (race, state) {
+        loadRace: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
             
             if (config.api.dataFeedVersionId === 0) {
@@ -84,6 +89,8 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                                 instance[race.key].data = xhr.responseJSON;
                             }
 
+                            instance[race.key].updateTime = new Date();
+                            
                             instance.trigger('change:' + race.key);
                         }
                     })
