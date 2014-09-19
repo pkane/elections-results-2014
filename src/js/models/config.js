@@ -1,7 +1,7 @@
 define([], function () {
 
     return {
-        
+        adUnit: 'news/politics/elections_results',
         api: {
             base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
             dataFeedVersionId: 0,
@@ -15,7 +15,9 @@ define([], function () {
                 raceByCounty: '{dataFeedVersionId}/StateResultsByCountyOrCd/{raceId}/{stateId}'
             }
         },
-        
+
+        pageInfo: JSON.parse($('.staticinfo').html()),
+
         races: [
             { id: 'h', key: 'house', display: 'House', op: 'raceByCounty'},
             { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCounty'},

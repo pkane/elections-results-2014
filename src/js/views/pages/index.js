@@ -5,7 +5,7 @@ define([
     'views/components/resultList',
     'views/components/balanceChart',
     'models/dataManager',
-    'models/indexModel',
+    'models/indexModel',    
     'text!views/pages/index.html'
 ],
 function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, templateFile) {
@@ -61,7 +61,7 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
         },
         
         refreshResults: function () {
-            console.log('index refresh');
+            console.log('index refresh ', this.model.race);
             
             resultList.model.race = this.model.race;
             resultList.model.state = this.model.state;
