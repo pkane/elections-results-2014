@@ -26,6 +26,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, Inde
         
         initialize: function () {
             balanceChart = new BalanceChart();
+            resultMap = new ResultMap();
             resultList = new ResultList();
             
             this.listenTo(dataManager, 'change:senate', this.refreshResults);
