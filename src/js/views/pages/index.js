@@ -4,15 +4,17 @@ define([
 	'backbone',
     'views/components/resultList',
     'views/components/balanceChart',
+    'views/components/ads',
     'models/dataManager',
     'models/indexModel',    
     'text!views/pages/index.html'
 ],
-function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, BalanceChart, AdView, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
         balanceChart,
+        adView,
         indexView = Backbone.View.extend({
         
         el: '#election-content',
@@ -45,7 +47,9 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
             
             this.$('#balanceOfPower').html(balanceChart.el);
             this.$('#list').html(resultList.el);
-            
+
+            adView = new AdView();
+
             return this;
         },
             
@@ -58,6 +62,9 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
                 this.$('#balanceOfPower').show();
                 this.refreshSummary();
             }
+
+            if (adView)
+                adView.refresh();
         },
         
         refreshResults: function () {

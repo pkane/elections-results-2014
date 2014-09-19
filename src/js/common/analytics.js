@@ -11,7 +11,6 @@ define([
             trackEvent: function (trackLabel, destinationUrl) {
                 // console.log('Register click event: ' + trackLabel);
                 console.log('fake tracking of ', trackLabel);
-
             },
 
             trackPageView: function (infoObj) {

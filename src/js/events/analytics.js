@@ -5,8 +5,8 @@ define(['jquery', 'underscore', 'backbone', 'api/analytics', 'models/config'], f
 	events.on({
 		'track:pageview': function(pageViewName) {
 			analytics.trackPageView({
-				ssts: config.adUnit,
-				cst: config.adUnit,
+				ssts: config.ssts,
+				cst: config.ssts,
 				contentType : 'interactives',
 				pathName: window.location.pathname + pageViewName
 			});

@@ -1,7 +1,19 @@
 define([], function () {
 
+    var staticInfo = JSON.parse($('.staticinfo').html()),
+        isMobile = staticInfo.platform === 'mobile'
+        ;
+
     return {
-        adUnit: 'news/politics/elections_results',
+        isMobile: isMobile,
+        pageInfo: staticInfo,
+        ssts: 'news/politics/elections_results',
+
+        ads: {
+            sizes: (function() { return isMobile ? [[320, 50]]: [[320, 50]];  })(),
+            unit: (function() { return isMobile ? 'mobileweb-banner_top/': 'poster/'; })()
+        },
+
         api: {
             base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
             dataFeedVersionId: 0,
@@ -15,8 +27,6 @@ define([], function () {
                 raceByCounty: '{dataFeedVersionId}/StateResultsByCountyOrCd/{raceId}/{stateId}'
             }
         },
-
-        pageInfo: JSON.parse($('.staticinfo').html()),
 
         races: [
             { id: 'h', key: 'house', display: 'House', op: 'raceByCounty'},
