@@ -1,17 +1,40 @@
-#election-app #list table {
-	border: none;
-}
-#election-app td,
-#election-app th {
-	padding: 5px 10px;
-	border: 1px solid #ccc;
-}
-#list table th {
-	background: #EFEFEF;
-	margin: 10px 0 0;
-	width: 100%;
-}
-tr.entry-spacer {
+#list table.result-item {
 	float: left;
-	margin: 10px;
+    width: 48%;
+    min-height: 150px;
+    border: 1px solid #dadada;
+    margin: 10px 10px 10px 0;
+
+    tbody {
+    	display: block;
+		padding: 20px;
+    }
+    
+    th {
+		margin: 10px 0 0;
+		width: 100%;
+		background: none;
+	}
+
+	tr {
+		width: 100%;
+		font: 14px/2em normal 'futura today', helvetica, arial, sans-serif;		
+	}
+
+	.first-row th:first-child {
+		text-transform: uppercase;
+		font: 13px bold 'futura today', arial, sans-serif;
+	}
+
+	.first-row th:last-child {
+		font-size: 11px;
+		color: #808080;
+		font-weight: 100;
+		text-align: right;
+	}	
+
+}
+
+#list table.result-item:nth-child(2n) {
+	margin: 10px 0 10px 10px;
 }
