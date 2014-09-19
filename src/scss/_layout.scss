@@ -68,7 +68,7 @@
 		width: 50%;
 		right: 0;
 		top: 3px;
-		background: #D4DDE1;
+		background: #D4DDE1;		
 	}	
 
 }
@@ -76,3 +76,18 @@
 #list table.result-item:nth-child(2n) {
 	margin: 10px 0 10px 10px;
 }
+
+	#list table.result-item:after {
+		content: "";
+		position: absolute;
+		z-index: -1;		
+		-webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+		box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+		bottom: 0px;
+		width: 80%;
+		height: 50%;
+		-moz-border-radius: 100%;
+		border-radius: 100%;
+		left: 10%;
+		right: 10%;
+	};
