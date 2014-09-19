@@ -28,10 +28,10 @@
         </tr>
 
         <% _.each(value.results, function(item) { %>
-            <tr>
-                <td><%= item.name %> <%= item.party.charAt(0) %></td>
-                <td><%= item.votes %></td>
-                <td><%= item.win %></td>
+            <tr class="candidate">
+                <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
+                <td class="result-win"><%= item.win %></td>
+                <td class="result-votes"><%= item.votes %></td>                
             </tr>
         <% }); %>
     </table>
