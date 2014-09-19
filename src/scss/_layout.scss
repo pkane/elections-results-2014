@@ -4,6 +4,8 @@
     min-height: 150px;
     border: 1px solid #dadada;
     margin: 10px 10px 10px 0;
+    background: #fff;
+    position: relative;
 
     tbody {
     	display: block;
@@ -25,7 +27,7 @@
 
 	.result-first-row th:first-child {
 		text-transform: uppercase;
-		font: bold 13px 'futura today', arial, sans-serif;
+		font: bold 12px 'futura today', arial, sans-serif;
 		width: 50%;
 	}
 
@@ -50,6 +52,7 @@
 		position: relative;
 		z-index: 1;
 		width: 12%;
+		font-size: 12px;
 	}
 
 	.result-votes {
@@ -58,6 +61,7 @@
 		text-align: right;
 		float: right;
 		margin-right: 30px;
+		font-size: 12px;		
 	}
 
 	.candidate:after {
@@ -81,8 +85,8 @@
 		content: "";
 		position: absolute;
 		z-index: -1;		
-		-webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-		box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+		-webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+		box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
 		bottom: 0px;
 		width: 80%;
 		height: 50%;
@@ -91,3 +95,12 @@
 		left: 10%;
 		right: 10%;
 	};
+
+@media only screen and (max-width: 768px) {
+		#list table.result-item {
+		    width: 100%;
+		}
+		#list table.result-item:nth-child(2n) {
+		    margin: 10px 10px 10px 0;
+		}		
+}	
