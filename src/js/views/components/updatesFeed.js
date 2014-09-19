@@ -21,9 +21,34 @@ function ($, _, Backbone, Moment, config, componentTemplate) {
                 var moment = new Moment(parseInt(timestamp)*1000);
                 return moment.format('h:mm:ss A M/D/YY');
             },
-            formatFips: function (fips) {
-                console.log('TODO: parse fips into state / district');
-                return 'TODO' + fips;
+            formatRaceResult: function (item) {
+                var formatted = '',
+                    state,
+                    race;
+                
+                formatted = item.name + ' wins the race in ';
+                
+                if (item.fips.indexOf('-') > -1) {
+                    state = _.findWhere(config.states, { id: item.fips.split('-')[0] });
+                } else {
+                    state = _.findWhere(config.states, { id: item.fips });
+                }
+                
+                formatted += '<span class="update-location">' + state.display + '</span>';
+                
+                race = _.findWhere(config.races, { id: item.race.toLowerCase() });
+                
+                if (race) {
+                    formatted += ' for ' + race.display;
+                } else {
+                    console.log(item.race);
+                }
+                
+                if (item.fips.indexOf('-') > -1) {
+                    formatted += ' ' + item.fips.split('-')[1];
+                }
+                
+                return formatted + '.';
             },
             getPartyForItem: function (item) {
                 return (Math.random() > 0.5) ? 'rep' : (Math.random() > 0.1) ? 'dem' : 'other';

@@ -25,7 +25,13 @@
     width: 300px;
     height: 250px;
     text-align: center;
-    font-size: 100px;
-    color: #aaa;
     padding-top: 100px;
+}
+#adView::after {
+    -webkit-transform: rotate(150deg);
+    content: 'Ad!';
+    display: block;
+    color: #333;
+    font-weight: bold;
+    font-size: 3em;
 }

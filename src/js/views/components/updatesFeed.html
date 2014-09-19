@@ -9,7 +9,7 @@
     <div class="update-cards">
     <% _.each(item.changes.win, function (item) { %>
         <div class="update-card-item <%= getPartyForItem(item) %>">
-            <%= item.name %> wins the race in <span class="update-location"><%= formatFips(item.fips) %></span> for <%= item.race %>.
+            <%= formatRaceResult(item) %>
         </div>
     <% }); %>
     </div>
