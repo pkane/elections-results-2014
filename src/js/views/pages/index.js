@@ -4,15 +4,17 @@ define([
 	'backbone',
     'views/components/resultList',
     'views/components/balanceChart',
+    'views/components/updatesFeed',
     'models/dataManager',
     'models/indexModel',
     'text!views/pages/index.html'
 ],
-function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
         balanceChart,
+        updatesFeed,
         indexView = Backbone.View.extend({
         
         el: '#election-content',
@@ -26,6 +28,7 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
         initialize: function () {
             balanceChart = new BalanceChart();
             resultList = new ResultList();
+            updatesFeed = new UpdatesFeed();
             
             this.listenTo(dataManager, 'change:senate', this.refreshResults);
             this.listenTo(dataManager, 'change:house', this.refreshResults);
@@ -33,6 +36,8 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
             this.listenTo(dataManager, 'change:initiatives', this.refreshResults);
             
             this.listenTo(dataManager, 'change:summary', this.refreshSummary);
+            
+            this.listenTo(dataManager, 'change:updates', this.refreshUpdateFeed);
 
             $('#election-content').html(this.el);
         },
@@ -45,12 +50,15 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
             
             this.$('#balanceOfPower').html(balanceChart.el);
             this.$('#list').html(resultList.el);
+            this.$('#updatesFeed').html(updatesFeed.el);
             
             return this;
         },
             
         refresh: function () {
             this.refreshResults();
+            
+            this.refreshUpdateFeed();
             
             if (this.model.race.id === 'i') {
                 this.$('#balanceOfPower').hide();
@@ -78,7 +86,14 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
             balanceChart.model.updateTime = dataManager.summary.updateTime;
 
             balanceChart.render();
-        }
+        },
+            
+        refreshUpdateFeed: function () {
+            console.log('Feed refresh');
+            
+            updatesFeed.model.data = dataManager.updates.data;
+            updatesFeed.render();
+        },
     });
     
     return indexView;

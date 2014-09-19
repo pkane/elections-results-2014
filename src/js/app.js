@@ -104,6 +104,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
             
             refresh: function () {
                 dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
+                dataManager.loadRace(_.findWhere(config.races, { key: 'updates' }));
+
                 dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
             }
         };
