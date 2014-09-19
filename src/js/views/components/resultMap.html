@@ -1,0 +1,42 @@
+
+<div class="column" id="main-map" style="height:500px; width: 100%; background-color:rgb(200,200,200); margin:200px 0 30px">
+		<div>Result Map!</div>
+          <div class="big-load"></div>
+          <div class="container">
+
+            <!--to be displayed when a region is not up for re-election-->
+            <div class='non-year'></div>
+
+            <div class="box">
+                <div class="header">
+                    <h3></h3>
+                    <ul id="map-mode" class="nav-buttons unstyled">
+                        <li><a href="#states">States</a></li>
+                        <li class="noie"><a href="#counties">Counties</a></li>
+                    </ul>
+                </div>
+                <div class="cta">
+                	<span>Hover for results and click to zoom</span>
+                </div>
+                <div class="fade" id="mapbox"></div>
+                <div class="map"></div>
+                <!--map Legend-->
+                <ul class='legend'>
+                  <li class='leading'>
+                    <span class='key'></span>
+                    <span class='text'>Leading</span>
+                  </li>
+                  <li class='win'>
+                    <span class='key'></span>
+                    <span class='text'>Win</span>
+                  </li>
+                </ul>
+                <a href='#' class='button fade' id='nation-view'>Back to Nation</a>
+                <a href='#' class='button fade' id='state-view'>Back to State</a>
+                <small class='attribution'>
+                <div id="osm-attribution" class="hidden">Map data from <a href="http://www.openstreetmap.org/">OpenStreetMap</a>.</div>
+                <div id="cd-attribution" class="hidden">Boundary data from <a href="http://www.azavea.com/">Azavea</a>.</div>
+                </small>
+
+            </div></div>
+        </div>

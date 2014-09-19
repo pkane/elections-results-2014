@@ -14,9 +14,12 @@ function ($, _, Backbone, config, fipsMap, resultMap) {
         
         render: function () {
             
-            this.$el.html(this.template());
-            
-            return this;
+            //if (JSON.parse($(".staticinfo").html()).platform == 'mobile') {
+            //} else {
+                this.$el.html(this.template());
+                
+                return this;
+            //}
         },
         
     });
