@@ -1,7 +1,7 @@
 Elections Results 2014
 ----
 
-[[http://thedailydose.com/lll/externals/vote_quimby.jpg]]
+![Vote Quimby](http://thedailydose.com/lll/externals/vote_quimby.jpg)
 
 #### URL Structure
 /elections-results-2014/   

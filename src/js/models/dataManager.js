@@ -36,34 +36,39 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
         
         house: {
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
         
         senate: {
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
         
         governors: {
             data: [],
             loaded: false,
             required: false,
-            detail: []
+            detail: [],
+            updateTime: new Date()
         },
 
         summary: {
             data: [],
             loaded: false,
-            required: true
+            required: true,
+            updateTime: new Date()
         },
         
         loadRace: function (race, state) {
@@ -84,6 +89,8 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                                 instance[race.key].data = xhr.responseJSON;
                             }
 
+                            instance[race.key].updateTime = new Date();
+                            
                             instance.trigger('change:' + race.key);
                         }
                     })

@@ -8,10 +8,10 @@
 
 ul.progress-stat-bar {
     width: 100%;
-    background: rgb(152, 152, 152);
+    background: #e6e6e6;
     
     &.progress-stat-bar-slim li { 
-        height: 10px;
+        height: 4px;
     }
     
     li {
@@ -22,12 +22,12 @@ ul.progress-stat-bar {
         transition: width 1s;
         
         &.dem {
-            background: #235468;
+            background: #6d8c99;
             text-align: left;
         }
 
         &.rep {
-            background: #742b31;
+            background: #732c32;
             text-align: right;
         }        
     }
@@ -45,7 +45,7 @@ ul.progress-stat-bar {
     font-size: smaller;
     
     ul.progress-stat-bar { 
-        margin-top: 5px;
+        margin-top: 2px;
     }
     
     .num {
@@ -62,7 +62,7 @@ ul.progress-stat-bar {
     text-transform: uppercase;
     
     .num {
-        font-size: 4em;
+        font-size: 3em;
     }
 
     .rep {
@@ -73,13 +73,13 @@ ul.progress-stat-bar {
 .fifty-line {
     position: absolute;
     width: 1px;
-    height: 60px;
+    height: 56px;
     display: block;
     background: #6B6B6B;
     top: 0;
     left: 50%;
     margin: 0 0 0 -1px;
-    z-index: 9999;
+    z-index: 2;
 }
 
 .progress-stat-bar {
@@ -89,6 +89,11 @@ ul.progress-stat-bar {
     padding: 0;
     position: relative;
     display: block;
+    font-size: smaller;
+}
+
+.updated {
+    font-size: smaller;
 }
 
 // ---- COPIED ----

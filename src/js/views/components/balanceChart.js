@@ -2,9 +2,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-    'text!views/components/balanceChart.html'
+    'text!views/components/balanceChart.html',
+    'moment'
 ],
-function ($, _, Backbone, chartTemplate) {
+function ($, _, Backbone, chartTemplate, Moment) {
 
     var isRendered = false,
         seatsHeld = { 
@@ -20,7 +21,8 @@ function ($, _, Backbone, chartTemplate) {
         
         model: new (Backbone.Model.extend({ 
             data: [],
-            race: {}
+            race: {},
+            updateTime: new Date()
         }))(),
         
         render: function () {
@@ -32,13 +34,12 @@ function ($, _, Backbone, chartTemplate) {
             
             if (this.model.data.length > 0 && this.model.race.id !== 'i') {
 
-                console.log('BoP for ' + this.model.race.display);
-
                 var results = _.findWhere(this.model.data, { id: this.model.race.id.toUpperCase() }),
                     held = seatsHeld[this.model.race.id],
                     dem = _.findWhere(results.results, { party: 'Democratic' }),
                     rep = _.findWhere(results.results, { party: 'Republican' }),
-                    other = _.findWhere(results.results, { party: 'Other' });
+                    other = _.findWhere(results.results, { party: 'Other' }),
+                    updateTime = new Moment(this.model.updateTime);
                 
                 this.$('.bar-results .progress-stat-bar .dem').css('width', ((dem.seats + other.seats + held.dem) / held.total)*100 + '%');
                 this.$('.bar-results .progress-stat-bar .rep').css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
@@ -51,6 +52,8 @@ function ($, _, Backbone, chartTemplate) {
                 
                 this.$('.bar-previous .dem .num').text(held.was.dem);
                 this.$('.bar-previous .rep .num').text(held.was.rep);
+                
+                this.$('.updated').text('updated ' + updateTime.format('h:mm a'));
             }
             
             return this;

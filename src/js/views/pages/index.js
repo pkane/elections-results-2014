@@ -75,6 +75,7 @@ function ($, _, Backbone, ResultList, BalanceChart, dataManager, IndexModel, tem
             
             balanceChart.model.data = dataManager.summary.data;
             balanceChart.model.race = this.model.race;
+            balanceChart.model.updateTime = dataManager.summary.updateTime;
 
             balanceChart.render();
         }
