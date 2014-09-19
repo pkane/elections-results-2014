@@ -10,7 +10,7 @@ define([], function () {
         ssts: 'news/politics/elections_results',
 
         ads: {
-            sizes: (function() { return isMobile ? [[320, 50]]: [[320, 50]];  })(),
+            sizes: (function() { return isMobile ? [[320, 50]]: [[300, 250]];  })(),
             unit: (function() { return isMobile ? 'mobileweb-banner_top/': 'poster/'; })()
         },
 
