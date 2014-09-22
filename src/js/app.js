@@ -6,9 +6,10 @@ define([
     'views/pages/index',
     'views/components/nav',
     'models/config',
-    'models/dataManager'
+    'models/dataManager',
+    'events/analytics'
 ],
-function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
+function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analytics) {
     var rootView = new IndexView(),
         navView = new NavView(),
         
@@ -44,6 +45,28 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
         },
         checkFeedVersionInt,
         
+        updateView = function (raceKey, stateAbbr, fip, oembed) {
+            console.log('update view ', raceKey);
+
+            var race = _.findWhere(config.races, { key: raceKey }),
+                state = _.findWhere(config.states, { abbr: stateAbbr });
+
+            rootView.useOembedTemplate = (oembed !== null);
+            rootView.model.race = race;
+            rootView.model.state = state;
+
+            navView.model.currentRace = race;
+            navView.model.currentState = state;
+            navView.refresh();
+
+            // TODO: If not cached / most current version
+            // FIXME: Request both detail and full if no data exists
+            dataManager.loadRace(race, state);
+            
+            rootView.refresh();
+            analytics.trigger('track:pageview', raceKey);
+        },
+        
         App = {
             
             init: function () {
@@ -59,47 +82,23 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
 
                 // Setup routing handlers
                 Router.on('route:index', function (raceKey, stateAbbr, oembed) {
-                    console.log('Nav to full race: ' + raceKey);
+                    console.log('Nav to full race: ', raceKey);
 
                     if (!raceKey || raceKey === 'index') {
                         raceKey = 'senate';
                         stateAbbr = '';
                     }
                     
-                    var race = _.findWhere(config.races, { key: raceKey }),
-                        state = _.findWhere(config.states, { abbr: stateAbbr });
-                    
-                    rootView.useOembedTemplate = (oembed !== null);
-                    rootView.model.race = race;
-                    rootView.model.state = state;
-                    rootView.refresh();
-                    
-                    navView.model.currentRace = race;
-                    navView.model.currentState = state;
-                    navView.refresh();
-                    
-                    // TODO: If not cached / most current version
-                    // FIXME: Request both detail and full if no data exists
-                    dataManager.load(race, state);
+                    updateView(raceKey, stateAbbr, '', oembed);
                 });
 
                 Router.on('route:race', function (raceKey, stateAbbr, fip, oembed) {
                     console.log('Nav to race w/ params: ' + raceKey + '|' + stateAbbr + '|' + fip);
 
-                    var race = _.findWhere(config.races, { key: raceKey }),
-                        state = _.findWhere(config.states, { abbr: stateAbbr });
-                    
-                    rootView.useOembedTemplate = (oembed !== null);
-                    
-                    rootView.model.race = race;
-                    rootView.model.state = state;
-                    rootView.model.fip = fip;
-                    rootView.refresh();
-                    
-                    navView.model.currentRace = race;
-                    navView.model.currentState = state;
-                    navView.refresh();
+                    updateView(raceKey, stateAbbr, fip, oembed);
                 });
+                
+                dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
                 
                 rootView.render();
                 navView.render();
@@ -108,7 +107,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager) {
             },
             
             refresh: function () {
-                dataManager.load(navView.model.currentRace, navView.model.currentState);
+                dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
+                dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
             }
         };
     
