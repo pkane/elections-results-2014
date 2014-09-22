@@ -7,9 +7,10 @@ define([
     'views/components/balanceChart',
     'models/dataManager',
     'models/indexModel',
-    'text!views/pages/index.html'
+    'text!views/pages/index.html',
+    'mapbox'
 ],
-function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, IndexModel, templateFile, Mapbox) {
 
     var resultList,
         resultMap,
@@ -48,6 +49,8 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, Inde
             this.$('#balanceOfPower').html(balanceChart.el);
             this.$("#map").html(resultMap.el);
             this.$('#list').html(resultList.el);
+            L.mapbox.accessToken = 'pk.eyJ1IjoidHJlYmxla2lja2VyIiwiYSI6IjRKTXZtUUEifQ.VBdcmyofyon7L2RFAuGsXQ';
+            var map = L.mapbox.map('mapbox', 'treblekicker.jiojdl2a');
             
             return this;
         },
@@ -66,16 +69,11 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, Inde
         refreshResults: function () {
             console.log('index refresh');
             
-            resultList.model.race = this.model.race;
-            resultList.model.state = this.model.state;
-            resultList.model.data = dataManager[this.model.race.key].data;
-            resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
+            resultList.model.race = resultMap.model.race = this.model.race;
+            resultList.model.state = resultMap.model.state = this.model.state;
+            resultList.model.data = resultMap.model.data = dataManager[this.model.race.key].data;
+            resultList.model.detail = resultMap.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
             resultList.render();
-
-            //resultMap.model.race = this.model.race;
-            //resultMap.model.state = this.model.state;
-            //resultMap.model.data = dataManager[this.model.race.key].data;
-            //resultMap.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
             resultMap.render();
         },
         
