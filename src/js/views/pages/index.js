@@ -5,15 +5,17 @@ define([
     'views/components/resultList',
     'views/components/resultMap',
     'views/components/balanceChart',
+    'views/components/ads',
     'models/dataManager',
-    'models/indexModel',
+    'models/indexModel',    
     'text!views/pages/index.html'
 ],
-function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
         balanceChart,
+        adView,
         indexView = Backbone.View.extend({
         
         el: '#election-content',
@@ -48,7 +50,9 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, Inde
             this.$('#balanceOfPower').html(balanceChart.el);
             this.$("#map").html(resultMap.el);
             this.$('#list').html(resultList.el);
-            
+
+            adView = new AdView();
+
             return this;
         },
             
@@ -61,10 +65,13 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, dataManager, Inde
                 this.$('#balanceOfPower').show();
                 this.refreshSummary();
             }
+
+            if (adView)
+                adView.refresh();
         },
         
         refreshResults: function () {
-            console.log('index refresh');
+            console.log('index refresh ', this.model.race);
             
             resultList.model.race = this.model.race;
             resultList.model.state = this.model.state;
