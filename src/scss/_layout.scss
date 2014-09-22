@@ -25,13 +25,13 @@
 		position: relative;	
 	}
 
-	.result-first-row th:first-child {
+	.result-first-row th.district-name {
 		text-transform: uppercase;
 		font: bold 12px 'futura today', arial, sans-serif;
 		width: 50%;
 	}
 
-	.result-first-row th:last-child {
+	.result-first-row th.reporting {
 		font-size: 11px;
 		color: #808080;
 		font-weight: 100;
@@ -75,6 +75,10 @@
 		background: #D4DDE1;		
 	}	
 
+}
+
+#election-content .result-item a {
+	color: #000;
 }
 
 #list table.result-item:nth-child(2n) {
