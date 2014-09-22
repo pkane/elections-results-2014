@@ -1,10 +1,9 @@
-@import "../bower_components/bootstrap/dist/css/bootstrap.min.css";
+@import "../bower_components/bootstrap/dist/css/bootstrap.min";
 
-@import "base.scss";
-@import "nav.scss";
-@import "overlay.scss";
-
-@import "balanceChart.scss";
+@import "base";
+@import "nav";
+@import "overlay";
+@import "balanceChart";
 
 #list table {
     width: 100%;
