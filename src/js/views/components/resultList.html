@@ -1,9 +1,9 @@
 <% if (race.key === 'initiatives') { %>
 
     <% if (!state) { %>
-    
+    <div class="row house-card-deck">    
         <% _.each(data, function(s) { %>
-            <p><a href="#/<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %></a> Count: <%= s.initiatives.length %></p>
+            <div class="col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %></a><span class="num-races"><%= s.initiatives.length %></span> initiatives</div>
         <% }); %>
     
     <% } else { %>
@@ -11,20 +11,21 @@
         <h1><%= state.display %></h1>
 
         <% _.each(_.findWhere(data, {id: state.id}).initiatives, function(item) { %>
-            <table>
-                <tr>
-                    <th colspan="3"><%= item.name %></th>
+            <table class="result-item house-item col-lg-5">        
+                <tr class="result-first-row">
+                    <th class="district-name" colspan="3"><%= item.name %></th>
                 </tr>
 
                 <% _.each(item.results, function(item) { %>
                     <tr>
-                        <td><%= item.name %></td>
-                        <td><%= item.votes %></td>
-                        <td><%= item.win %></td>
+                        <td class="result-name"><%= item.name %></td>
+                        <td class="result-win"><%= item.win %></td>
+                        <td class="result-votes"><%= item.votes %></td>
                     </tr>
                 <% }); %>
             </table>
         <% }); %>
+    </div>
     <% } %>
 
 <% } else if (race.key === 'house') { %>
