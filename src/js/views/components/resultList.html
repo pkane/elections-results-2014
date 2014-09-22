@@ -30,9 +30,9 @@
 <% } else if (race.key === 'house') { %>
 
     <% if (!state) { %>
-    <div class="row">
+    <div class="row house-card-deck">
         <% _.each(data, function(races, stateId) { %>
-            <p><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %></a> Count: <%= data[stateId].length %></p>
+            <div class="col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %></a><span class="num-races"><%= data[stateId].length %></span>races</div>
         <% }); %>
     
     <% } else { %>
