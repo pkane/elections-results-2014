@@ -55,12 +55,12 @@ function ($, _, Backbone, ResultList, BalanceChart, AdView, dataManager, IndexMo
             
         refresh: function () {
             this.refreshResults();
+            this.refreshSummary();
             
             if (this.model.race.id === 'i') {
-                this.$('#balanceOfPower').hide();
+                this.$('#map').hide();
             } else {
-                this.$('#balanceOfPower').show();
-                this.refreshSummary();
+                this.$('#map').show();
             }
 
             if (adView)
@@ -80,11 +80,17 @@ function ($, _, Backbone, ResultList, BalanceChart, AdView, dataManager, IndexMo
         refreshSummary: function () {
             console.log('BoP refresh');
             
-            balanceChart.model.data = dataManager.summary.data;
-            balanceChart.model.race = this.model.race;
-            balanceChart.model.updateTime = dataManager.summary.updateTime;
+            if (this.model.race.id === 'i') {
+                this.$('#balanceOfPower').hide();
+            } else {
+            
+                balanceChart.model.data = dataManager.summary.data;
+                balanceChart.model.race = this.model.race;
+                balanceChart.model.updateTime = dataManager.summary.updateTime;
 
-            balanceChart.render();
+                balanceChart.render();
+                this.$('#balanceOfPower').show();
+            }
         }
     });
     
