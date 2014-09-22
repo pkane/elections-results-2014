@@ -30,7 +30,7 @@
 <% } else if (race.key === 'house') { %>
 
     <% if (!state) { %>
-    
+    <div class="row">
         <% _.each(data, function(races, stateId) { %>
             <p><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %></a> Count: <%= data[stateId].length %></p>
         <% }); %>
@@ -40,7 +40,7 @@
         <h1><%= state.display %></h1>
 
         <% _.each(data[state.id], function(value) { %>
-            <table class="result-item house-item">        
+            <table class="result-item house-item col-lg-5">        
                 <tr class="result-first-row">
                     <th class="district-name"><%= formatHouseId(value.id) %></th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
@@ -55,14 +55,15 @@
                 <% }); %>
             </table>
         <% }); %>      
+    </div>
     <% } %>
 <% } else if (race.key === 'senate' || race.key === 'governors') { %>
-<div>
+<div class="row">
     <% _.each(data, function(value) { %>
         
         <% if (!state || state.display.toLowerCase() === value.name.toLowerCase()) { %>
 
-        <table class="result-item senate-item">        
+        <table class="result-item senate-item col-lg-5">        
     
             <tr class="result-first-row">
                 <th class="district-name" colspan="3"><a href='#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'><%= value.name %></a></th>

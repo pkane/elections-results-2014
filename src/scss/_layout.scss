@@ -1,6 +1,5 @@
 #list table.result-item {
 	float: left;
-    width: 48%;
     min-height: 150px;
     border: 1px solid #dadada;
     margin: 10px 10px 10px 0;
@@ -81,8 +80,12 @@
 	color: #000;
 }
 
-#list table.result-item:nth-child(2n) {
+/*#list table.result-item:nth-child(2n) {
 	margin: 10px 0 10px 10px;
+}*/
+
+#list table.result-item:nth-child(2n+3) {
+	clear: left;
 }
 
 	#list table.result-item:after {
