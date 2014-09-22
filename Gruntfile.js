@@ -14,6 +14,7 @@ module.exports = function (grunt) {
 
         // Empties folders to start fresh
         clean: {
+            deploy: 'css',
             options: {
                 force: true
             },
@@ -31,6 +32,17 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            deploy: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= config.dist %>',
+                    dest: '',
+                    src: [
+                        'css/*.css'
+                    ]
+                }]
+            },
             tmp: {
                 files: [{
                     expand: true,
@@ -87,6 +99,19 @@ module.exports = function (grunt) {
                     open: true,
                     base: '<%= config.dist %>',
                     livereload: false
+                }
+            }
+        },
+
+        ftp: {
+            options: {
+                host: 'usatoday.upload.akamai.com',
+                user: 'gdcontent',
+                pass: 'gdcontent1'
+            },
+            upload: {
+                files: {
+                    '/17200/GDContent/2014/election-results/': 'css/*'
                 }
             }
         },
@@ -289,6 +314,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-remove-logging');
+    grunt.loadNpmTasks('grunt-ftp');
 
     // Tasks
     grunt.registerTask('build', [
@@ -297,6 +323,13 @@ module.exports = function (grunt) {
         'requirejs:dist',
         'removelogging:dist',
         'copy:dist'
+    ]);
+
+    grunt.registerTask('deploy', [
+        'build',
+        'copy:deploy',
+        'ftp',
+        'clean:deploy'
     ]);
 
     grunt.registerTask('serve', function (target) {
