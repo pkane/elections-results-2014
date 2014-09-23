@@ -131,7 +131,7 @@ module.exports = function (grunt) {
         
         removelogging: {
             dist: {
-                src: '<%= config.app %>/js/main.min.js'
+                src: '<%= config.dist %>/js/main.min.js'
             }
         },
 
