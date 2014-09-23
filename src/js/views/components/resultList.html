@@ -11,7 +11,7 @@
         <h1><%= state.display %></h1>
 
         <% _.each(_.findWhere(data, {id: state.id}).initiatives, function(item) { %>
-            <table class="result-item house-item col-lg-5">        
+            <table class="result-item house-item col-sm-5 col-lg-5">        
                 <tr class="result-first-row">
                     <th class="district-name" colspan="3"><%= item.name %></th>
                 </tr>
@@ -41,7 +41,7 @@
         <h1><%= state.display %></h1>
 
         <% _.each(data[state.id], function(value) { %>
-            <table class="result-item house-item col-lg-5">        
+            <table class="result-item house-item col-sm-5 col-lg-5">        
                 <tr class="result-first-row">
                     <th class="district-name"><%= formatHouseId(value.id) %></th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
@@ -64,7 +64,7 @@
         
         <% if (!state || state.display.toLowerCase() === value.name.toLowerCase()) { %>
 
-        <table class="result-item senate-item col-lg-5">        
+        <table class="result-item senate-item col-sm-5 col-lg-5">        
     
             <tr class="result-first-row">
                 <th class="district-name" colspan="3"><a href='#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'><%= value.name %></a></th>
