@@ -5,17 +5,18 @@ define([
     'views/components/resultList',
     'views/components/resultMap',
     'views/components/balanceChart',
+    'views/components/updatesFeed',
     'views/components/ads',
     'models/dataManager',
     'models/indexModel',    
-    'text!views/pages/index.html',
-    'mapbox'
+    'text!views/pages/index.html'
 ],
-function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManager, IndexModel, templateFile, Mapbox) {
+function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdView, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
         balanceChart,
+        updatesFeed,
         adView,
         indexView = Backbone.View.extend({
         
@@ -26,44 +27,12 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManag
         template: _.template(templateFile),
         
         useOembedTemplate: false,
-
-        data: {
-                geo: {
-                    states: {
-                        simp: [],
-                        zoom: [],
-                        centroids: []
-                    },
-                    counties: {
-                        zoom: {}, // lazy load. properties for state fips
-                        simp: []
-                    },
-                    cds: {
-                        zoom: {}, // lazy load. properties for state fips
-                        simp: []
-                    },
-                    places: []
-                },
-
-                results: {
-                    house: {}, // level => state fips => results
-                    senate: {},
-                    governor: {}
-                },
-
-                totals: {
-                    house: {},
-                    senate: {},
-                    governor: {}
-                },
-
-                initiatives: {}
-            },
         
         initialize: function () {
             balanceChart = new BalanceChart();
             resultMap = new ResultMap();
             resultList = new ResultList();
+            updatesFeed = new UpdatesFeed();
             
             this.listenTo(dataManager, 'change:senate', this.refreshResults);
             this.listenTo(dataManager, 'change:house', this.refreshResults);
@@ -71,28 +40,25 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManag
             this.listenTo(dataManager, 'change:initiatives', this.refreshResults);
             
             this.listenTo(dataManager, 'change:summary', this.refreshSummary);
+            
+            this.listenTo(dataManager, 'change:updates', this.refreshUpdateFeed);
 
             $('#election-content').html(this.el);
         },
         
         render: function () {
 
-            this.refresh();
-            
             this.$el.html(this.template(this.model));
             
             this.$('#balanceOfPower').html(balanceChart.el);
             this.$("#map").html(resultMap.el);
             this.$('#list').html(resultList.el);
 
-            adView = new AdView();
+            this.$('#updatesFeed').html(updatesFeed.el);
 
-            L.mapbox.accessToken = 'pk.eyJ1IjoidHJlYmxla2lja2VyIiwiYSI6IjRKTXZtUUEifQ.VBdcmyofyon7L2RFAuGsXQ';
-            var map = L.mapbox.map('map', 'usatoday.map-hdtne5p8', {
-                scrollWheelZoom: false,
-                zoomControl: false
-            }).setView([38.00, -98.00], 4);
-            //this.stateBorders();
+            this.refresh();
+            
+            adView = new AdView();
             
             return this;
         },
@@ -100,13 +66,19 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManag
         refresh: function () {
             this.refreshResults();
             
+            this.refreshUpdateFeed();
+            
             if (this.model.race.id === 'i') {
                 this.$('#balanceOfPower').hide();
+                this.$('#map').hide();
             } else {
                 this.$('#balanceOfPower').show();
+                this.$('#map').show();
                 this.refreshSummary();
             }
 
+            resultMap.render();
+            
             if (adView)
                 adView.refresh();
         },
@@ -119,7 +91,6 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManag
             resultList.model.data = resultMap.model.data = dataManager[this.model.race.key].data;
             resultList.model.detail = resultMap.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
             resultList.render();
-            resultMap.render();
         },
         
         refreshSummary: function () {
@@ -131,72 +102,13 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, AdView, dataManag
 
             balanceChart.render();
         },
-
-        stateBorders: function (){
-                console.log('stateBorders');
-                var features = this.data.geo.states.zoom;
-
-                /*if (IE) {
-                    var set = view.svg.append('set');
-                    set.selectAll('path')
-                        .this.data(features).enter().append('path')
-                            .attr('class', 'states')
-                            .attr('fill', colorize)
-                            .attr('stroke-width', function(d) {
-                                if (d.id === state) return 2;
-                                return 1;
-                            })
-                            .attr("d", path)
-                            .attr('fill-opacity', function(d) {
-                                if (d.id === state) return 0;
-                                if (!state) return 0;
-                                return 0.25;
-                            })
-                            .attr('stroke', '#ffffff')
-                            .on('click', click);
-                    return undefined;
-                }*/
-
-                // If no state layer exists
-                if (!view.svg.shapes.selectAll('path.states')[0].length) {
-
-                    // Add it
-                    view.svg.shapes.selectAll('path.states')
-                        .this.data(features).enter().append('path')
-                            .attr('class', 'states')
-                            .attr('fill', colorize)
-                            .attr('pointer-events', 'painted')
-                            .attr('stroke-width', function(d) {
-                                if (d.id === state) return 2;
-                                return 1;
-                            })
-                            .attr("d", path)
-                            .attr('fill-opacity', function(d) {
-                                if (race !== 'house' && d.id !== state) return 1;
-                                return 0;
-                            });
-                } else {
-                    view.svg.shapes.selectAll('path.states').each(function(d) {
-                            this.parentNode.appendChild(this);
-                    });
-                }
-
-                // Colorize state layer
-                view.svg.shapes.selectAll('path.states')
-                    .attr('stroke', '#ffffff')
-                    .on('touchstart', touch)
-                    .on('click', click)
-                    .transition().ease(ease).duration(timer)
-                    .attr('stroke-width', function(d) {
-                        if (d.id === state) return 2;
-                        return 1;
-                    })
-                    .attr("d", path)
-                    .attr('fill', colorize)
-                    .attr('fill-opacity', 0.25);
-            }
-
-
+ 
+        refreshUpdateFeed: function () {
+            console.log('Feed refresh');
+            
+            updatesFeed.model.data = dataManager.updates.data;
+            updatesFeed.render();
+        }
     });
     
     return indexView;
