@@ -682,13 +682,21 @@
     #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1.active-item {
         display: inline-block;
     }
+    .election-info-container {
+        width: 350px;
+    }    
+}
+
+@media only screen and (max-width: 768px) {
+    
     #elections-bar {
       padding-top: 130px;
     }
+
 }
 
-@media only screen and (min-width: 401px) {
-    
+@media only screen and (min-width: 768px) {
+
     #election-app {
         margin-top: 275px;
     }
@@ -840,15 +848,16 @@
     #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: -100px;
     }
-}
 
-@media only screen and (min-width: 768px) {
     #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: 0;
     }
     #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
         display: inline-block;
     }
+    #election-bar-content #elections-bar .election-info-container {
+        width: 360px;
+    }        
 }
 
 @media only screen and (min-width: 1200px) {
@@ -858,4 +867,7 @@
     #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: -60px;
     }
+    #election-bar-content #elections-bar .election-info-container {
+        width: 390px;
+    }    
 }
