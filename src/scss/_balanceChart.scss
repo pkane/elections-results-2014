@@ -8,7 +8,7 @@
 
 ul.progress-stat-bar {
     width: 100%;
-    background: #e6e6e6;
+    background: $color-other;
     
     &.progress-stat-bar-slim li { 
         height: 4px;
@@ -22,12 +22,12 @@ ul.progress-stat-bar {
         transition: width 1s;
         
         &.dem {
-            background: #6d8c99;
+            background: $color-dem;
             text-align: left;
         }
 
         &.rep {
-            background: #732c32;
+            background: $color-rep;
             text-align: right;
         }        
     }

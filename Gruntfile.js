@@ -131,7 +131,7 @@ module.exports = function (grunt) {
         
         removelogging: {
             dist: {
-                src: '<%= config.dist %>/js/main.min.js'
+                src: '<%= config.app %>/js/**/*.js'
             }
         },
 
@@ -144,6 +144,10 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     generateSourceMaps: false,
                     dir: '<%= config.dist %>/js',
+                    uglify: {
+                        "beautify": false,
+                        "toplevel": true
+                    },
                     modules: [
                         {
                             name: 'common.min',
@@ -320,8 +324,8 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'sass:dist',
-        'requirejs:dist',
-        'removelogging:dist',
+        // 'removelogging:dist',
+        'requirejs:dist',        
         'copy:dist'
     ]);
 
