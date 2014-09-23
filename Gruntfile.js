@@ -1,8 +1,6 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var loggingTask = require("./node_modules/grunt-remove-logging/tasks/lib/removelogging").init(grunt);
-
     // Project configuration.
     grunt.initConfig({
 
@@ -133,7 +131,7 @@ module.exports = function (grunt) {
         
         removelogging: {
             dist: {
-                src: '<%= config.app %>/js/**/*.js'
+                src: '<%= config.app %>/js/main.min.js'
             }
         },
 
