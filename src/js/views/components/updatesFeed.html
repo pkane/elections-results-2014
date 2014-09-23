@@ -1,0 +1,18 @@
+<h3>Updates</h3>
+<% _.each(filterData(data), function (item) { %>
+
+<div class="update-card update-card-<%= item.id %>">
+    <div class="update-card-header">
+        Races Called
+        <span class="updateTime"><%= formatTimestamp(item.timestamp) %></span>
+    </div>
+    <div class="update-cards">
+    <% _.each(item.changes.win, function (item) { %>
+        <div class="update-card-item <%= getPartyForItem(item) %>">
+            <%= formatRaceResult(item) %>
+        </div>
+    <% }); %>
+    </div>
+</div>
+    
+<% }); %>
