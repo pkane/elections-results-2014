@@ -10,6 +10,8 @@ define([
 function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap) {
 
     var view = Backbone.View.extend({
+        
+        mapboxInitialized: false,
 
         model: new (Backbone.Model.extend({}))(),
         
@@ -21,7 +23,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap) {
             console.log('init');
             
             this.listenTo(dataManager, 'change:states', function () { 
-                console.log('State Geo Data Changed');
+                this.stateBorders();
             });
             
             dataManager.loadGeo('states', 'simp');
@@ -35,19 +37,22 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap) {
             this.$el.html(this.template(this.model));
             //var map = Mapbox.map('mapbox', null, null, null).center({ lon: -98, lat: 38 }).zoom(6);
             
-            L.mapbox.accessToken = 'pk.eyJ1IjoidHJlYmxla2lja2VyIiwiYSI6IjRKTXZtUUEifQ.VBdcmyofyon7L2RFAuGsXQ';
-            var map = L.mapbox.map('map', 'usatoday.map-hdtne5p8', {
-                scrollWheelZoom: false,
-                zoomControl: false
-            }).setView([38.00, -98.00], 4);
-            //this.stateBorders();
+            if (!this.mapboxInitialized) {
+                L.mapbox.accessToken = 'pk.eyJ1IjoidHJlYmxla2lja2VyIiwiYSI6IjRKTXZtUUEifQ.VBdcmyofyon7L2RFAuGsXQ';
+                var map = L.mapbox.map('map', 'usatoday.map-hdtne5p8', {
+                    scrollWheelZoom: false,
+                    zoomControl: false
+                }).setView([38.00, -98.00], 4);
+                
+                this.mapboxInitialized = true;
+            }
             
             return this;
         },
         
         stateBorders: function (){
             console.log('stateBorders');
-            var features = this.data.geo.states.zoom;
+            var features = dataManager.geo.states.zoom;
 
             /*if (IE) {
                 var set = view.svg.append('set');

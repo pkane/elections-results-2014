@@ -30,9 +30,10 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
         
         initialize: function () {
             balanceChart = new BalanceChart();
-            resultMap = new ResultMap();
             resultList = new ResultList();
             updatesFeed = new UpdatesFeed();
+
+            resultMap = new ResultMap();
             
             this.listenTo(dataManager, 'change:senate', this.refreshResults);
             this.listenTo(dataManager, 'change:house', this.refreshResults);
