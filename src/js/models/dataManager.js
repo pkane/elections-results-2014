@@ -96,6 +96,48 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                     })
                 );
             }
+        },
+        
+        geo: {
+            states: {
+                simp: [],
+                zoom: [],
+                centroids: []
+            },
+            counties: {
+                zoom: {}, // lazy load. properties for state fips
+                simp: []
+            },
+            cds: {
+                zoom: {}, // lazy load. properties for state fips
+                simp: []
+            },
+            places: []
+        },
+        
+        loadGeo: function (level, type) {
+            var url = '';
+            
+            if (type === 'simp' || type === 'centroids') {
+                url = 'data/geo/' + level + '.' + type + '.js';
+            } else if (type) {
+                url = 'data/geo/' + level + '/' + type + '.js';
+            } else if (level === 'places') {
+                url = 'data/geo/places.js';
+            } else {
+                url = 'data/geo/' + level + '.js';
+            }
+            
+            $.getJSON(url, function (data) {
+                if (type === 'simp' || type === 'centroids') {
+                    instance.geo[level][type] = data;
+                } else if (type) {
+                    instance.geo[level].zoom[type] = data;
+                } else {
+                    instance.geo[level] = data;
+                }
+                instance.trigger('change:' + level);
+            });
         }
         
     }))();
