@@ -14,6 +14,7 @@ module.exports = function (grunt) {
 
         // Empties folders to start fresh
         clean: {
+            deploy: 'css',
             options: {
                 force: true
             },
@@ -31,6 +32,17 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            deploy: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= config.dist %>',
+                    dest: '',
+                    src: [
+                        'css/*.css'
+                    ]
+                }]
+            },
             tmp: {
                 files: [{
                     expand: true,
@@ -91,6 +103,19 @@ module.exports = function (grunt) {
             }
         },
 
+        ftp: {
+            options: {
+                host: 'usatoday.upload.akamai.com',
+                user: 'gdcontent',
+                pass: 'gdcontent1'
+            },
+            upload: {
+                files: {
+                    '/17200/GDContent/2014/election-results/': 'css/*'
+                }
+            }
+        },
+
         // Make sure code styles are up to par and there are no obvious mistakes
         jshint: {
             options: {
@@ -113,12 +138,20 @@ module.exports = function (grunt) {
         requirejs: {
             dist: {
                 options: {
+                    consoleReplace: new RegExp("(" + [ "console", "window.console" ].join("|") + ")" + ".(?:" + "log info warn error assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception".split(" ").join("|") + ")\\s{0,}\\([^;]*\\)(?!\\s*[;,]?\\s*\\/\\*\\s*RemoveLogging:skip\\s*\\*\\/)\\s{0,};?", "gi"),
                     baseUrl: '<%= config.app %>/js',
                     mainConfigFile: '<%= config.app %>/js/main.js',
+                    onBuildWrite: function( moduleName, path, contents ) {
+                        return contents.replace(this.consoleReplace, "");                        
+                    },
                     optimize: 'uglify',
                     findNestedDependencies: true,
                     generateSourceMaps: false,
                     dir: '<%= config.dist %>/js',
+                    uglify: {
+                        "beautify": false,
+                        "toplevel": true
+                    },
                     modules: [
                         {
                             name: 'common.min',
@@ -289,14 +322,20 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-remove-logging');
+    grunt.loadNpmTasks('grunt-ftp');
 
     // Tasks
     grunt.registerTask('build', [
         'clean:dist',
         'sass:dist',
-        'requirejs:dist',
-        'removelogging:dist',
+        'requirejs:dist',        
         'copy:dist'
+    ]);
+
+    grunt.registerTask('deploy', [
+        'copy:deploy',
+        'ftp',
+        'clean:deploy'
     ]);
 
     grunt.registerTask('serve', function (target) {

@@ -71,6 +71,13 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             updateTime: new Date()
         },
         
+        updates: {
+            data: [],
+            loaded: false,
+            required: false,
+            updateTime: new Date()
+        },
+        
         loadRace: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
             
