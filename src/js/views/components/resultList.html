@@ -17,7 +17,7 @@
                 </tr>
 
                 <% _.each(item.results, function(item) { %>
-                    <tr>
+                    <tr class="candidate <%= item.party %>">
                         <td class="result-name"><%= item.name %></td>
                         <td class="result-win"><%= item.win %></td>
                         <td class="result-votes"><%= item.votes %></td>
@@ -77,7 +77,7 @@
                     <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
                     <td class="result-win"><%= item.win %></td>  
                     <td class="result-votes"><%= item.votes %></td>
-                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
+                    <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
                 </tr>
             <% }); %>
         </table>
