@@ -159,7 +159,7 @@
 		#list table.result-item:nth-child(2n) {
 		    margin: 10px 10px 10px 0;
 		}		
-		#list table.result-item:after {
+		#list table.result-item tbody:after {
 			-webkit-box-shadow: none;
 			box-shadow: none;
 		}
