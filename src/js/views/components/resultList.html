@@ -21,6 +21,7 @@
                         <td class="result-name"><%= item.name %></td>
                         <td class="result-win"><%= item.win %></td>
                         <td class="result-votes"><%= item.votes %></td>
+                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
                     </tr>
                 <% }); %>
             </table>
@@ -51,7 +52,8 @@
                     <tr class="candidate">
                         <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
                         <td class="result-win"><%= item.win %></td>
-                        <td class="result-votes"><%= item.votes %></td>                
+                        <td class="result-votes"><%= item.votes %></td>   
+                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
                     </tr>
                 <% }); %>
             </table>
@@ -74,7 +76,8 @@
                 <tr class="candidate">
                     <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
                     <td class="result-win"><%= item.win %></td>  
-                    <td class="result-votes"><%= item.votes %></td>                                      
+                    <td class="result-votes"><%= item.votes %></td>
+                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
                 </tr>
             <% }); %>
         </table>
