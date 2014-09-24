@@ -55,12 +55,19 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             rootView.model.race = race;
             rootView.model.state = state;
 
-            navView.model.currentRace = race;
-            navView.model.currentState = state;
-            navView.refresh();
+            if (oembed) {
+                $('#election-app').addClass('oembed');
+                $(navView.el).hide();
+            } else {
+                $('#election-app').removeClass('oembed');
+                navView.model.currentRace = race;
+                navView.model.currentState = state;
+                navView.refresh();
+                $(navView.el).show();
+            }
 
             // TODO: If not cached / most current version
-            // FIXME: Request both detail and full if no data exists
+            // FIXME: If detail and no data, Request both detail and full
             dataManager.loadRace(race, state);
             
             rootView.refresh();
@@ -70,6 +77,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         App = {
             
             init: function () {
+                
+                rootView.model.isMobile = config.isMobile;
                 
                 // Initial data version
                 checkFeedVersion();

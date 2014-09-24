@@ -54,6 +54,8 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 this.$('.bar-previous .rep .num').text(held.was.rep);
                 
                 this.$('.updated').text('updated ' + updateTime.format('h:mm a'));
+            } else {
+                console.log('Build placeholder loading state for BoP');
             }
             
             return this;

@@ -16,8 +16,19 @@
     }
 }
 
+.asset {
+    width: 100%;
+    padding: 0;
+    background: none;
+    background-color: white;
+}
+
 #election-app {
     margin-top: 275px;
+}
+
+#election-app.oembed {
+    margin-top: 0px;
 }
 
 #ad-desktop {
