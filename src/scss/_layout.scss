@@ -1,33 +1,43 @@
 #list table.result-item {
-	float: left;
-    min-height: 150px;
-    border: 1px solid #dadada;
-    margin: 10px 10px 10px 0;
-    background: #fff;
-    position: relative;
+	border: none;
+	margin: 10px 0 0;
 
     tbody {
-    	display: block;
-		padding: 20px;
+		float: left;
+	    min-height: 150px;
+	    border: 1px solid #dadada;
+	    margin: 20px 10px 10px 0;
+	    padding: 0 20px 20px;
+	    background: #fff;
+	    position: relative;
     }
     
     th {
 		margin: 10px 0 0;
 		width: 100%;
 		background: none;
+		border: none;
+		position: relative;
 	}
 
 	tr {
 		width: 100%;
 		display: inline-table;
-		font: normal 14px/2em 'futura today', helvetica, arial, sans-serif;
+		font: normal 12px/3.2em 'futura today', helvetica, arial, sans-serif;
 		position: relative;	
+		margin-top: -10px;
+	}
+
+	.result-first-row {
+		top: -30px;
+		margin: 0;
 	}
 
 	.result-first-row th.district-name {
 		text-transform: uppercase;
 		font: bold 12px 'futura today', arial, sans-serif;
 		width: 50%;
+		left: -15px;
 	}
 
 	.result-first-row th.reporting {
@@ -35,6 +45,7 @@
 		color: #808080;
 		font-weight: 100;
 		text-align: right;
+		right: -15px;
 	}	
 
 	.result-name {
@@ -43,6 +54,8 @@
 		position: relative;
 		width: 50%;
 		text-overflow: clip;
+		padding: 0 10px 0 0;
+		text-align: right;
 	}
 
 	.result-win {
@@ -67,10 +80,10 @@
 		content: '';
 		display: block;
 		position: absolute;
-		padding: 10px;
-		width: 50%;
-		right: 0;
-		top: 3px;
+		padding: 16px;
+		max-width: 50%;
+		left: 50%;
+		top: -1px;
 		background: #D4DDE1;		
 	}	
 
@@ -78,6 +91,10 @@
 
 #election-content .result-item a {
 	color: #000;
+}
+
+#election-content h1.race-state {
+	font: 100 20px 'futura today', helvetica, arial, sans-serif;
 }
 
 /*#list table.result-item:nth-child(2n) {
@@ -88,7 +105,7 @@
 	clear: left;
 }
 
-#list table.result-item:after {
+#list table.result-item tbody:after {
 	content: "";
 	position: absolute;
 	z-index: -1;		
