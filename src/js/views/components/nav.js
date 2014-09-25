@@ -17,6 +17,7 @@ function ($, _, Backbone, NavModel, templateFile) {
 
         events: {
             "click .elections-bar-nav-item .office-placeholder"             : "openOverlay",
+            "click .share-link"                                             : "openOverlay",            
             "click .close-nav"                                              : "closeOverlay"
         },        
         
@@ -70,6 +71,32 @@ function ($, _, Backbone, NavModel, templateFile) {
             var overlay = this.$el.find(".election-overlay");
             overlay.removeClass("clicked");
         },             
+
+        // Drawer Functions
+        openDrawer: function(e) {
+            e.preventDefault()
+            this.$el.find("#elections-bar-nav").css({
+                'right': '0px',
+                'opacity': '1',
+                'z-index': '99'
+            })
+            this.$el.find('.elections-jumbo-click-zone.tablet').css({
+                'display': 'block',
+                'z-index': '98'
+            })
+        },
+        closeDrawer: function(e) {
+            e.preventDefault()
+            this.$el.find("#elections-bar-nav").css({
+                'right': '-40px',
+                'opacity': '0',
+                'z-index': '-2'
+            })
+            this.$el.find('.elections-jumbo-click-zone').css({
+                'display': 'none',
+                'z-index': '-2'
+            })
+        },        
 
         toggleDropdown: function(e) {
             e.preventDefault()
