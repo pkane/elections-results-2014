@@ -6,7 +6,6 @@
     border-bottom: 1px solid $color-stroke;
     padding-top: 40px;
     background-color: #fafafa;
-    display: none;
     a {
         text-decoration: none;
     }
@@ -21,8 +20,8 @@
             display: block;
             width: 100%;
             height: 100%;
-            padding-top: 7%;
-            font-size: 80px;
+            padding-top: 20%;
+            font-size: 60px;
             text-align: center;
         }
         &:after {
@@ -350,7 +349,7 @@
             text-align: center;
             padding: 14px 0;
         }
-        .overlay-item.selected > a {
+        .overlay-item.active-item > a {
             color: $color-usat-blue;
         }
     }
@@ -366,9 +365,9 @@
         & > a {
             height: 50px;
         }
-        .elections-bar-nav-item.col-xs-2 {
+/*        .elections-bar-nav-item.col-xs-2 {
             width: 8.36666667%;
-        }
+        }*/
         #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.share-item {
             width: 7%;
         }
@@ -453,13 +452,14 @@
                 color: $font-body-color;
                 font-family: $font-heading;
             }
-            &.selected {
+            &.active-item {
                 a {
                     color: $color-usat-blue;
                     pointer-events: none;
                     cursor: default;
+
                 }
-            }
+            }          
         }
         .state .election-icon {
             float: right;
@@ -602,7 +602,7 @@
                     background-size: 57px 171px;
                 }
             }
-            &.selected > a {
+            &.active-item > a {
                 background-color: white;
                 color: $color-usat-blue;
                 &:hover, &:focus {
@@ -664,27 +664,42 @@
     // background-color: rgba(0,0,255,0.25);
 }
 
-@media only screen and (max-width: 400px) {
+
+@media only screen and (max-width: 768px) {
+
+    .election-info-container {
+        width: 350px;
+    }        
+
     .elections-bar-nav-item.flex-group.col-xs-10 {
         width: 76.333333%;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1 {
         clear: both;
         margin: -34px 20px;
         display: none;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 > a {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1 > a {
         color: white;
     }
     #elections-bar-nav.elections-bar-nav-mobile .item-group {
         display: block;
     }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2.active-item {
+    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-1.active-item {
         display: inline-block;
+    }    
+    
+    #elections-bar {
+      padding-top: 130px;
     }
+
 }
 
-@media only screen and (min-width: 401px) {
+@media only screen and (min-width: 768px) {
+
+    #election-app {
+        margin-top: 275px;
+    }
     /* Stick Nav CSS */
     #election-bar-content {
         position: fixed;
@@ -692,7 +707,6 @@
         width: 100%;
         z-index: 10;
         #elections-bar {
-            display: block;
             @include vendor-prefix(transition, min-height 0.4s ease);
             min-height: 170px;
             .election-info-container {
@@ -802,13 +816,17 @@
         display: inline-block;
     }
     #elections-bar-nav .elections-bar-nav-item > a {
-        background-color: #EFEFEF !important;
+        background-color: #EFEFEF;
         width: 100%;
         padding: 14px 20px;
         color: #333;
         border-top: 1px solid #DADADA;
         border-bottom: 1px solid #DADADA;
     }
+    #elections-bar-nav .elections-bar-nav-item.active-item > a {
+        background-color: #FFF;
+        color: #009BFF;
+    }    
     #elections-bar-nav .elections-bar-nav-item.share-item > a {
         padding: 2px 0 3px;
     }
@@ -830,15 +848,22 @@
     #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: -100px;
     }
-}
 
-@media only screen and (min-width: 768px) {
     #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: 0;
     }
     #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
         display: inline-block;
     }
+    #election-bar-content #elections-bar .election-info-container {
+        width: 360px;
+    }        
+}
+
+@media only screen and (min-width: 1080px) {
+    #election-bar-content #elections-bar .election-info-container {
+        width: 380px;
+    }        
 }
 
 @media only screen and (min-width: 1200px) {
@@ -848,4 +873,7 @@
     #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
         margin-left: -60px;
     }
+    #election-bar-content #elections-bar .election-info-container {
+        width: 390px;
+    }    
 }
