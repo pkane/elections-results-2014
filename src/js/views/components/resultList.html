@@ -3,7 +3,7 @@
     <% if (!state) { %>
     <div class="row house-card-deck">    
         <% _.each(data, function(s) { %>
-            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %></a><span class="num-races"><%= s.initiatives.length %></span> initiatives</div>
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %><span class="num-races"><%= s.initiatives.length %></span> initiatives</a></div>
         <% }); %>
     
     <% } else { %>
