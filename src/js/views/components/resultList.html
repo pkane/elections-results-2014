@@ -34,7 +34,7 @@
     <% if (!state) { %>
     <div class="row house-card-deck">
         <% _.each(data, function(races, stateId) { %>
-            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %></a><span class="num-races"><%= data[stateId].length %></span>races</div>
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %><span class="num-races"><%= data[stateId].length %></span>races</a></div>
         <% }); %>
     
     <% } else { %>
