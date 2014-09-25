@@ -80,11 +80,20 @@
 		content: '';
 		display: block;
 		position: absolute;
-		padding: 16px;
+		padding: 14px 4px;
 		max-width: 50%;
 		left: 50%;
-		top: -1px;
-		background: #D4DDE1;		
+		top: 3px;
+		background: $color-other;		
+		opacity: .4;
+	}	
+
+	.democratic .candidate-after {
+        background: $color-dem;
+	}
+
+	.republican .candidate-after {
+        background: $color-rep;
 	}	
 
 }
