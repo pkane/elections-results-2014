@@ -51,7 +51,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             var race = _.findWhere(config.races, { key: raceKey }),
                 state = _.findWhere(config.states, { abbr: stateAbbr });
 
-            rootView.useOembedTemplate = (oembed !== null);
+            rootView.useOembedTemplate = (!!oembed);
             rootView.model.race = race;
             rootView.model.state = state;
 
@@ -112,14 +112,16 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 rootView.render();
                 navView.render();
 
-                Backbone.history.start();
+                Router.initialize();
             },
             
             refresh: function () {
                 dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
                 dataManager.loadRace(_.findWhere(config.races, { key: 'updates' }));
-
-                dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
+                
+                if (navView.model.currentRace) {
+                    dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
+                }
             }
         };
     
