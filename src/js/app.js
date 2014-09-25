@@ -14,7 +14,6 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         navView = new NavView(),
         
         checkFeedVersion = function () {
-            console.log('data version check');
 
             $.ajax(config.api.base + config.api.op.version, {
                 
@@ -30,8 +29,6 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                         if (remoteVersion > config.api.dataFeedVersionId) {
                             config.api.dataFeedVersionId = remoteVersion;
                             App.refresh();
-                        } else {
-                            console.log('using current data');
                         }
                     }
                 },
@@ -55,19 +52,24 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             rootView.model.race = race;
             rootView.model.state = state;
 
+            navView.model.currentRace = race;
+            navView.model.currentState = state;
+            
             if (oembed) {
                 $('#election-app').addClass('oembed');
                 $(navView.el).hide();
             } else {
                 $('#election-app').removeClass('oembed');
-                navView.model.currentRace = race;
-                navView.model.currentState = state;
                 navView.refresh();
                 $(navView.el).show();
             }
 
             // TODO: If not cached / most current version
             // FIXME: If detail and no data, Request both detail and full
+            
+            dataManager.updates.required = !oembed;
+            dataManager.summary.required = (race.key !== 'i');
+            
             dataManager.loadRace(race, state);
             
             rootView.refresh();
@@ -116,10 +118,15 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             },
             
             refresh: function () {
-                dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
-                dataManager.loadRace(_.findWhere(config.races, { key: 'updates' }));
+                if (dataManager.summary.required) {
+                    dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
+                }
                 
-                if (navView.model.currentRace) {
+                if (dataManager.updates.required) {
+                    dataManager.loadRace(_.findWhere(config.races, { key: 'updates' }));
+                }
+                
+                if (navView.model.currentRace.key) {
                     dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
                 }
             }

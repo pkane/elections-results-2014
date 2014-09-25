@@ -51,9 +51,9 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
         refresh: function () {
             
             var isReady = (this.model.race.key !== ''),
-                needsBoP = (this.useOembedTemplate || this.model.race.id !== 'i'),
+                needsBoP = (this.model.race.id !== 'i'),
                 needsMap = (!this.useOembedTemplate && !this.model.isMobile && this.model.race.id !== 'i'),
-                needsResultList = (!this.useOembedTemplate),
+                needsResultList = (!this.useOembedTemplate || this.model.race.id === 'i'),
                 needsUpdateFeed = (!this.useOembedTemplate),
                 needsAds = (!this.useOembedTemplate);
             

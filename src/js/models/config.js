@@ -25,6 +25,7 @@ define([], function () {
                 version: 'CurrentVersion',
                 all: '{dataFeedVersionId}/AllRaces',
                 initiatives: '{dataFeedVersionId}/BallotInitiativesByState',
+                initiativesDetail: '{dataFeedVersionId}/StateBallotInitiatives/{stateId}',
                 raceByState: '{dataFeedVersionId}/RaceResultsByState/{raceId}',
                 raceByCounty: '{dataFeedVersionId}/StateResultsByCountyOrCd/{raceId}/{stateId}',
                 raceByCountyDetail: '{dataFeedVersionId}/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
@@ -36,7 +37,7 @@ define([], function () {
             { id: 'h', key: 'house', display: 'House', op: 'raceByCounty', detail: 'raceByCountyDetail'},
             { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCounty'},
             { id: 'g', key: 'governors', display: 'Governor', op: 'raceByState', detail: 'raceByCounty'},
-            { id: 'i', key: 'initiatives', display: 'Initiatives', op: 'initiatives'},
+            { id: 'i', key: 'initiatives', display: 'Initiatives', op: 'initiatives', detail: 'initiativesDetail'},
             { id: 's', key: 'summary', op: 'all'},
             { id: 'u', key: 'updates', op: 'updates'}
         ],

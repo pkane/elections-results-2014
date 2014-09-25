@@ -1,5 +1,4 @@
 
-
 <% if (race.key === 'initiatives') { %>
 <table>
 
@@ -17,6 +16,13 @@
     <% }); %>
 
 </table>
+
+<table>
+    <% _.each(detail, function(value) { %>
+        <tr><td>Got one</td></tr>
+    <% }); %>
+</table>
+
 <% } else if (race.key == 'house') { %>
 <table>
     <col /><col width="25"><col width="25">
@@ -75,9 +81,7 @@
             </tr>
         <% }); %>
     
-    <% }); %>    
-        
-        
+    <% }); %>
 </table>         
             
 <% } else { %>
