@@ -2,16 +2,29 @@
 define([
     'jquery',
     'underscore',
-    'backbone'
+    'backbone',
+    'models/config',
 ],
-    function ($, _, Backbone) {
+    function ($, _, Backbone, config) {
         'use strict';
         
         return {
             registerAd: function (domId, adUnit, adSizes, targetingObj) {
                 console.log('Ad: ' + domId + ' - ' + adUnit);
+	   
+                var $node = $('#' + domId);
 
-                $('#' + domId).html(adUnit);
+                if (config.pageInfo.platform === 'mobile') {
+                    
+                    $node.css({ background: '#FF0000', width: '320px', height: '50px', textAlign: 'center', margin: '0 auto' });
+
+                } else {
+
+                    $node.css({ background: '#FF0000', width: '300px', height: '250px', textAlign: 'center', paddingTop: '100px' });
+
+                }
+
+                $node.html(adUnit);
             }
         };
     });
