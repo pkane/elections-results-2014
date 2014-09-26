@@ -95,7 +95,9 @@
 	.republican .candidate-after {
         background: $color-rep;
 	}	
-
+    .initiative-name {
+        text-align: left;
+    }
 }
 
 #election-content .result-item a {

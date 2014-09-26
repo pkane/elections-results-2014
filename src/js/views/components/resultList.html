@@ -5,44 +5,45 @@
         <% _.each(data, function(s) { %>
             <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %><span class="num-races"><%= s.initiatives.length %></span> initiatives</a></div>
         <% }); %>
-    
+    </div>
     <% } else { %>
 
         <h1><%= state.display %></h1>
 
-        <% _.each(_.findWhere(data, {id: state.id}).initiatives, function(item) { %>
-            <table class="result-item house-item col-sm-5 col-lg-5">        
+        <div class="row-fluid">
+        <% _.each(detail, function(value) { %>
+            <table class="result-item col-sm-5 col-lg-5">        
                 <tr class="result-first-row">
-                    <th class="district-name" colspan="3"><%= item.name %></th>
+                    <th class="district-name" colspan="3"><%= value.name %></th>
                 </tr>
 
-                <% _.each(item.results, function(item) { %>
-                    <tr class="candidate <%= item.party.toLowerCase() %>">
-                        <td class="result-name"><%= item.name %></td>
-                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%</td>
+                <% _.each(value.results, function(item) { %>
+                    <tr class="initiatives">
+                        <td class="initiative-name"><%= item.name %></td>
                         <td class="result-votes"><%= item.votes %></td>
-                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
+                        <td class="result-pct"><%= Math.round(item.pct) %>%</td>
                     </tr>
                 <% }); %>
             </table>
         <% }); %>
-    </div>
+        </div>
     <% } %>
 
 <% } else if (race.key === 'house') { %>
 
     <% if (!state) { %>
-    <div class="row house-card-deck">
-        <% _.each(data, function(races, stateId) { %>
-            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %><span class="num-races"><%= data[stateId].length %></span>races</a></div>
-        <% }); %>
-    
+        <div class="row house-card-deck">
+            <% _.each(data, function(races, stateId) { %>
+                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %><span class="num-races"><%= data[stateId].length %></span>races</a></div>
+            <% }); %>
+        </div>
     <% } else { %>
     
         <h1 class="race-state"><%= state.display %></h1>
 
-        <% _.each(data[state.id], function(value) { %>
-            <table class="result-item house-item col-sm-5 col-lg-5">        
+        <div class="row-fluid">
+        <% _.each(detail, function(value) { %>
+            <table class="result-item house-item col-sm-6 col-lg-6">        
                 <tr class="result-first-row">
                     <th class="district-name"><%= formatHouseId(value.id) %></th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
@@ -58,49 +59,51 @@
                 <% }); %>
             </table>
         <% }); %>      
-    </div>
+        </div>
     <% } %>
 <% } else if (race.key === 'senate' || race.key === 'governors') { %>
 <div class="row">
-    <% _.each(data, function(value) { %>
-        
-        <% if (!state || state.display.toLowerCase() === value.name.toLowerCase()) { %>
-
-        <table class="result-item senate-item col-sm-5 col-lg-5">        
     
-            <tr class="result-first-row">
-                <th class="district-name" colspan="3"><a href='#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'><%= value.name %></a></th>
-            </tr>
+    <% if (!state) { %>
 
-            <% _.each(value.results, function(item) { %>
-                <tr class="candidate <%= item.party.toLowerCase() %>">
-                    <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
-                    <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%</td>  
-                    <td class="result-votes"><%= item.votes %></td>
-                    <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
+        <% _.each(data, function(value) { %>
+            <table class="result-item senate-item col-sm-6 col-lg-6">        
+
+                <tr class="result-first-row">
+                    <th class="district-name" colspan="3"><a href='#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'><%= value.name %></a></th>
                 </tr>
-            <% }); %>
-        </table>
-        <% } %>
-    <% }); %>
+
+                <% _.each(value.results, function(item) { %>
+                    <tr class="candidate <%= item.party.toLowerCase() %>">
+                        <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
+                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%</td>  
+                        <td class="result-votes"><%= item.votes %></td>
+                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
+                    </tr>
+                <% }); %>
+            </table>
+        <% }); %>
+    <% } else { %>
+        
+        <% _.each(detail, function(value) { %>
+            <table class="result-item senate-item col-sm-6 col-lg-6">        
+
+                <tr class="result-first-row">
+                    <th class="district-name" colspan="3"><%= value.name %></th>
+                </tr>
+
+                <% _.each(value.results, function(item) { %>
+                    <tr class="candidate <%= item.party.toLowerCase() %>">
+                        <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>
+                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%</td>  
+                        <td class="result-votes"><%= item.votes %></td>
+                        <td class="candidate-after" style="width: <%= Math.round(parseFloat(item.votes/value.votes)/2*100) %>%"></td>             
+                    </tr>
+                <% }); %>
+            </table>
+        <% }); %>
+    <% } %>
 
 </div>
-<table>
-    <% _.each(detail, function(value) { %>    
-        <tr>
-            <th colspan="3"><%= getCountyByFips(value.id) %></a></th>
-        </tr>
 
-        <% _.each(value.results, function(item) { %>
-            <tr>
-                <td><%= item.name %> <%= item.party.charAt(0) %></td>
-                <td><%= item.votes %></td>
-                <td><%= item.win %></td>
-            </tr>
-        <% }); %>
-    
-
-    <% }); %>    
-
-</table>
 <% } %>

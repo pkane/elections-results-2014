@@ -17,26 +17,26 @@ define([], function () {
         },
 
         api: {
-            base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
-            dataFeedVersionId: 0,
+            base: 'http://10.189.4.141/ElectionsServices/Elections/',
+            dataFeedVersionId: -100,
             lastChecked: 0,
             pollFrequency: 5 * 60 * 1000, // TBD
             op: {
                 version: 'CurrentVersion',
-                all: '{dataFeedVersionId}/AllRaces',
-                initiatives: '{dataFeedVersionId}/BallotInitiativesByState',
-                initiativesDetail: '{dataFeedVersionId}/StateBallotInitiatives/{stateId}',
-                raceByState: '{dataFeedVersionId}/RaceResultsByState/{raceId}',
-                raceByCounty: '{dataFeedVersionId}/StateResultsByCountyOrCd/{raceId}/{stateId}',
-                raceByCountyDetail: '{dataFeedVersionId}/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
+                all: '2012/AllRaces',
+                initiatives: '2012/BallotInitiativesByState',
+                initiativesDetail: '2012/StateBallotInitiatives/{stateId}',
+                raceByState: '2012/RaceResultsByState/{raceId}',
+                raceByCounty: '2012/StateResultsByCountyOrCd/{raceId}/{stateId}',
+                raceByCountyDetail: '2012/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
                 updates: 'DataFeedVersions/00'
             }
         },
 
         races: [
             { id: 'h', key: 'house', display: 'House', op: 'raceByCounty', detail: 'raceByCountyDetail'},
-            { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCounty'},
-            { id: 'g', key: 'governors', display: 'Governor', op: 'raceByState', detail: 'raceByCounty'},
+            { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCountyDetail'},
+            { id: 'g', key: 'governors', display: 'Governor', op: 'raceByState', detail: 'raceByCountyDetail'},
             { id: 'i', key: 'initiatives', display: 'Initiatives', op: 'initiatives', detail: 'initiativesDetail'},
             { id: 's', key: 'summary', op: 'all'},
             { id: 'u', key: 'updates', op: 'updates'}
