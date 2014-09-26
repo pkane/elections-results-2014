@@ -1,13 +1,13 @@
-@import "../bower_components/bootstrap/dist/css/bootstrap.min.css";
+@import "../bower_components/bootstrap/dist/css/bootstrap.css";
 
-@import "base";
-@import "nav";
-@import "overlay";
-@import "balanceChart";
+@import "base.scss";
+@import "nav.scss";
+@import "overlay.scss";
+@import "layout.scss";
+@import "balanceChart.scss";
 @import "updatesFeed";
 
 #list table {
-    width: 100%;
     border: 1px solid #333;
     
     th {

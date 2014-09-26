@@ -42,7 +42,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         },
         checkFeedVersionInt,
         
-        updateView = function (raceKey, stateAbbr, fip, oembed) {
+        updateView = function (raceKey, stateAbbr, fips, oembed) {
             console.log('update view ', raceKey);
 
             var race = _.findWhere(config.races, { key: raceKey }),
@@ -51,6 +51,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             rootView.useOembedTemplate = (!!oembed);
             rootView.model.race = race;
             rootView.model.state = state;
+            rootView.model.fips = fips;
 
             navView.model.currentRace = race;
             navView.model.currentState = state;

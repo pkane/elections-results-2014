@@ -138,7 +138,7 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
                 balanceChart.model.race = this.model.race;
                 balanceChart.model.updateTime = dataManager.summary.updateTime;
             }
-            
+
             balanceChart.render();
         },
             
@@ -152,7 +152,7 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
             }
             
             updatesFeed.render();
-        },
+        }
     });
     
     return indexView;

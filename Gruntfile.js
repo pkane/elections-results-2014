@@ -138,19 +138,19 @@ module.exports = function (grunt) {
         requirejs: {
             dist: {
                 options: {
-                    consoleReplace: new RegExp("(" + [ "console", "window.console" ].join("|") + ")" + ".(?:" + "log info warn error assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception".split(" ").join("|") + ")\\s{0,}\\([^;]*\\)(?!\\s*[;,]?\\s*\\/\\*\\s*RemoveLogging:skip\\s*\\*\\/)\\s{0,};?", "gi"),
+                    consoleReplace: new RegExp('(' + [ 'console', 'window.console' ].join('|') + ')' + '.(?:' + 'log info warn error assert count clear group groupEnd groupCollapsed trace debug dir dirxml profile profileEnd time timeEnd timeStamp table exception'.split(' ').join('|') + ')\\s{0,}\\([^;]*\\)(?!\\s*[;,]?\\s*\\/\\*\\s*RemoveLogging:skip\\s*\\*\\/)\\s{0,};?', 'gi'),
                     baseUrl: '<%= config.app %>/js',
                     mainConfigFile: '<%= config.app %>/js/main.js',
                     onBuildWrite: function( moduleName, path, contents ) {
-                        return contents.replace(this.consoleReplace, "");                        
+                        return contents.replace(this.consoleReplace, '');
                     },
                     optimize: 'uglify',
                     findNestedDependencies: true,
                     generateSourceMaps: false,
                     dir: '<%= config.dist %>/js',
                     uglify: {
-                        "beautify": false,
-                        "toplevel": true
+                        'beautify': false,
+                        'toplevel': true
                     },
                     modules: [
                         {
@@ -328,7 +328,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'sass:dist',
-        'requirejs:dist',        
+        'requirejs:dist',
         'copy:dist'
     ]);
 
