@@ -112,8 +112,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             if (!IE) view.svg.shapes = view.svg.shapes || view.svg.append('g').attr('class', 'shapes');
             if (!IE) view.svg.labels = view.svg.labels || view.svg.append('g').attr('class', 'labels');
 
-            this.$el.append(view.svg);
-            //this.$el.append($(view.svg).html());
+            //this.$el.append(view.svg);
+            this.$el.append($(view.svg).html());
             //this.$el.append(XMLSerializer.serializeToString(view.svg));
 
             remove('.places');
