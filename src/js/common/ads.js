@@ -16,11 +16,11 @@ define([
 
                 if (config.pageInfo.platform === 'mobile') {
                     
-                    $node.css({ background: '#FF0000', width: '320px', height: '50px', textAlign: 'center', margin: '0 auto' });
+                    $node.css({ background: '#ccc', width: '320px', height: '50px', textAlign: 'center', margin: '0 auto' });
 
                 } else {
 
-                    $node.css({ background: '#FF0000', width: '300px', height: '250px', textAlign: 'center', paddingTop: '100px' });
+                    $node.css({ background: '#ccc', width: '300px', height: '250px', textAlign: 'center', paddingTop: '100px' });
 
                 }
 

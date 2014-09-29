@@ -29,11 +29,16 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
         events: {
             'click .share-icon': 'toggleShare',
+            'click .dd-nav-link' : "navLinkClicked",
             'click .navbar-race .nav-item.selected': 'toggleRaceSelect',            
             'click .close-nav' : "close",
             'click #facebook-share': 'shareFacebook',
             'click #twitter-share': 'shareTwitter',
             'click #mail-share': 'shareEmail',
+        },
+
+        navLinkClicked: function() {
+            this.close();
         },
 
         shareFacebook: function(e) {
@@ -76,8 +81,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },
 
         toggleRaceSelect: function(e) {
-            this.$(".elections-share-dropdown").hide();
-            this.$(".elections-bar-dropdown").toggle();    
+            if (window.innerWidth < 992) {
+                this.$(".elections-share-dropdown").hide();
+                this.$(".elections-bar-dropdown").toggle();
+            }
         },  
         
         initialize: function () {
@@ -99,8 +106,6 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 ;
 
             this.$('.election-office-projection-heading').text(race.display + ' Results');
-            
-            console.log('selected ', '.' + race.key + '-item');
 
             this.$('.nav-item').removeClass('selected');            
             this.$('.' + race.key + '-nav-item').addClass('selected');
