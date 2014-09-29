@@ -1,12 +1,21 @@
+#election-bar-content {
+    border-bottom: 1px solid #dadada;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 30;
+}
+
 #elections-bar {
-    
-    border-bottom: 1px solid red;
+    height: 100px;    
     margin-bottom: 20px;
 
     .page-icon {
         background: white;
         border: 1px solid #dadada;
         position: absolute;
+        width: 150px;
+        height: 150px;
+        padding: 10px;
 
         .icon {
             display: block;            
@@ -25,15 +34,16 @@
     }
 
     .election-state-subheading {
-
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+        color: #009bff;
     }
 
     .election-office-projection-heading {
         font-family: $font-heading;
         font-weight: 100;
-        font-size: 24px;
-        line-height: 24px;
-        margin-bottom: 4px;        
+        font-size: 28px;
     }
 
     .elections-bar-nav .nav-item.selected > a {
@@ -70,18 +80,34 @@
     }
 
     @include mobile { 
-        .elections-bar-nav { 
-            background: black;
+        .navbar-nav {
+            margin: 0;
+        }
+
+        .dropdown-menu {
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0, 0.7);
             position: fixed;
-            top: 80px;
+        }
+
+        .elections-bar-nav { 
+            background: #2c2c2c;
+            position: fixed;
+            top: 50px;
             left: 0px;
             width: 100%;
+        }
+
+        .election-icon.election-icon-share {
+            background-position-x: -30px;
         }
 
         .elections-bar-nav .nav-item {
             display: none;
         } 
-        
+
         .elections-bar-nav .nav-item > a {
             background: none;
             border: none;
@@ -93,7 +119,20 @@
         }
 
         .elections-bar-nav .nav-item.selected {
-            width: calc(100% - 70px);
+            width: calc(100% - 70px);            
+        }
+
+        .elections-bar-nav .nav-item.selected > a {
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .elections-bar-nav .nav-item:first-child > a {
+            border: none;
+        }
+
+        .elections-bar-nav .nav-item:last-child > a {
+            border: none;
         }
 
     }

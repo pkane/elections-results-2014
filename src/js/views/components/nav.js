@@ -29,9 +29,8 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
         events: {
             'click .share-icon': 'toggleShare',
-            'click .election-overlay-button-close': 'toggleShare',
-            'click .race-mobile-select'             : "toggleRaceSelect",
-            'click .close-nav'                                              : "close",
+            'click .navbar-race .nav-item.selected': 'toggleRaceSelect',            
+            'click .close-nav' : "close",
             'click #facebook-share': 'shareFacebook',
             'click #twitter-share': 'shareTwitter',
             'click #mail-share': 'shareEmail',
@@ -67,18 +66,18 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },
 
         shareEmail: function(e) {
-            console.log('share email');
             analytics.trigger('track:event', "elections2014email");
             this.shareToggle();            
         },
         
         toggleShare: function () {
-            console.log('toggle share');
-            this.$(".share-overlay").toggle();
+            this.$(".elections-bar-dropdown").hide();
+            this.$(".elections-share-dropdown").toggle();
         },
 
         toggleRaceSelect: function(e) {
-            this.$(".race-select-overlay").toggle();    
+            this.$(".elections-share-dropdown").hide();
+            this.$(".elections-bar-dropdown").toggle();    
         },  
         
         initialize: function () {
@@ -113,31 +112,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             this.$('#twitter-share').attr('href', this.text.twitter({ message: message }).replace(/#url#/g, url));
         },
 
-        toggleOverlay: function(target) {
-            var overlay = $('.election-overlay');
-            if (overlay.hasClass("clicked")) {
-                overlay.removeClass("clicked");
-            } else {
-                overlay.addClass("clicked");
-            }
-        },        
-
-         
-
         close: function(e) {
-            var overlay = this.$el.find(".election-overlay");
-            overlay.removeClass("clicked");
-        },             
-
-        toggleDropdown: function(e) {
-            e.preventDefault()
-            var tar = $(e.currentTarget).next('.elections-dropdown')
-            if (tar.hasClass("clicked")) {
-                tar.removeClass("clicked")
-            } else {
-                tar.addClass("clicked")
-            }
-        }        
+            this.$(".elections-bar-dropdown").hide();
+            this.$(".elections-share-dropdown").hide();
+        }          
         
     });
     
