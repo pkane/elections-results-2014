@@ -155,7 +155,7 @@ module.exports = function (grunt) {
                         respond: '../bower_components/respond/dest/respond.src',
                         typeahead: '../bower_components/typeahead.js/dist/typeahead',
                         text: '../bower_components/requirejs-text/text',
-                        mapbox: '../bower_components/mapbox.js/mapbox'
+                        mapbox: '../bower_components/mapbox.js/mapbox.uncompressed'
                     },
                     shim: {
                         'backbone': {
@@ -197,7 +197,7 @@ module.exports = function (grunt) {
                         respond: '../bower_components/respond/dest/respond.src',
                         typeahead: '../bower_components/typeahead.js/dist/typeahead',
                         text: '../bower_components/requirejs-text/text',
-                        mapbox: '../bower_components/mapbox.js/mapbox'
+                        mapbox: '../bower_components/mapbox.js/mapbox.uncompressed'
                     },
                     shim: {
                         'backbone': {
@@ -206,6 +206,9 @@ module.exports = function (grunt) {
                         },
                         'underscore': {
                             exports: '_'
+                        },
+                        'mapbox': {
+                            exports: 'L'
                         }
                     }
                 }

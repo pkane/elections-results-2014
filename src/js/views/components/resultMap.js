@@ -23,6 +23,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             
             this.listenTo(dataManager, 'change:states', function () { 
                 console.log('State Geo Data Changed');
+                this.drawMap();
             });
             
             dataManager.loadGeo('states', 'simp');
@@ -32,15 +33,19 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
         
         render: function () {
             
-            console.log('render');
+            console.log('render map');
+
             this.$el.html(this.template(this.model));
             //var map = Mapbox.map('mapbox', null, null, null).center({ lon: -98, lat: 38 }).zoom(6);
-            
-            L.mapbox.accessToken = 'pk.eyJ1IjoidHJlYmxla2lja2VyIiwiYSI6IjRKTXZtUUEifQ.VBdcmyofyon7L2RFAuGsXQ';
+
+            this.pMap = this.pMap || L.map('mapbox', null, null, null)
+            //this.mbMap = this.mbMap || L.map('mapbox', null, null, null)
+
+            /* L.mapbox.accessToken = 'pk.eyJ1IjoidHJlYmxla2lja2VyIiwiYSI6IjRKTXZtUUEifQ.VBdcmyofyon7L2RFAuGsXQ';
             var map = L.mapbox.map('mapbox', 'usatoday.map-hdtne5p8', {
                 scrollWheelZoom: false,
                 zoomControl: false
-            }).setView([38.00, -98.00], 4);
+            }).setView([38.00, -98.00], 4); */
 
             //map settings
 
@@ -83,9 +88,9 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
 
             */
 
-            var //results = (res === 'simp') ? data.results[race][level] :
-                //                             data.results[race][level][state],
-                path = view.path = reproject(),
+            /*/var results = (res === 'simp') ? dataManager[this.model.race.key].data[level] :
+                                            dataManager[race].data[level][state], */
+                var path = view.path = reproject(),
                 projection = view.albers,
                 shapes;
 
@@ -102,10 +107,14 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             }
 
             view.svg = view.svg || d3.select(view.el).append('svg')
-                .attr("width",  /*(!IE) ? '100%' : */$('#main-map .map').width())
-                .attr("height", /*(!IE) ? '100%' : */$('#main-map .map').height());
+                .attr("width",  (!IE) ? '100%' : $('#main-map .map').width())
+                .attr("height", (!IE) ? '100%' : $('#main-map .map').height());
             if (!IE) view.svg.shapes = view.svg.shapes || view.svg.append('g').attr('class', 'shapes');
             if (!IE) view.svg.labels = view.svg.labels || view.svg.append('g').attr('class', 'labels');
+
+            this.$el.append(view.svg);
+            //this.$el.append($(view.svg).html());
+            //this.$el.append(XMLSerializer.serializeToString(view.svg));
 
             remove('.places');
 
@@ -276,7 +285,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                 console.log('reproject');
                 console.log(dataManager.geo.states.simp);
                 var mercator = function(x) {
-                            var point = view.pMap.locationPoint({ lat: x[1], lon: x[0] });
+                            var point = this.pMap.locationPoint({ lat: x[1], lon: x[0] });
                             return [point.x, point.y];
                         },
                     currentFeature = _(dataManager.geo.states.simp).find(function(f) {
@@ -343,6 +352,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             }
 
             function stateBorders() {
+
 
                 var features = dataManager.geo.states.zoom;
 
