@@ -2,11 +2,12 @@
 define([
     'jquery',
     'underscore',
-    'backbone',
-    'models/config',
+    'backbone'
 ],
-    function ($, _, Backbone, config) {
+    function ($, _, Backbone) {
         'use strict';
+
+        var staticInfo = JSON.parse($('.staticinfo').html());
         
         return {
             registerAd: function (domId, adUnit, adSizes, targetingObj) {
@@ -14,7 +15,7 @@ define([
 	   
                 var $node = $('#' + domId);
 
-                if (config.pageInfo.platform === 'mobile') {
+                if (staticInfo.platform === 'mobile') {
                     
                     $node.css({ background: '#ccc', width: '320px', height: '50px', textAlign: 'center', margin: '0 auto' });
 
