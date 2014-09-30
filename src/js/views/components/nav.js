@@ -29,9 +29,9 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
         events: {
             'click .share-icon': 'toggleShare',
-            'click .dd-nav-link' : "navLinkClicked",
+            'click .dd-nav-link' : 'navLinkClicked',
             'click .navbar-race .nav-item.selected': 'toggleRaceSelect',            
-            'click .close-nav' : "close",
+            'click .close-nav' : 'close',
             'click #facebook-share': 'shareFacebook',
             'click #twitter-share': 'shareTwitter',
             'click #mail-share': 'shareEmail',
@@ -41,8 +41,16 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             this.close();
         },
 
+        hideShare: function() {
+            this.$('.elections-bar-dropdown').hide();
+        },
+
+        hideRaceSelect: function() {
+            this.$('.elections-share-dropdown').hide();
+        },
+
         shareFacebook: function(e) {
-            analytics.trigger('track:event', "elections2014facebook");
+            analytics.trigger('track:event', 'elections2014facebook');
 
             if (window.FB) {
 
@@ -60,7 +68,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },
 
         shareTwitter: function(e) {
-            analytics.trigger('track:event', "elections2014twitter");
+            analytics.trigger('track:event', 'elections2014twitter');
 
             if (!config.isMobile) {
                 e.preventDefault();
@@ -71,19 +79,19 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },
 
         shareEmail: function(e) {
-            analytics.trigger('track:event', "elections2014email");
+            analytics.trigger('track:event', 'elections2014email');
             this.shareToggle();            
         },
         
         toggleShare: function () {
-            this.$(".elections-bar-dropdown").hide();
-            this.$(".elections-share-dropdown").toggle();
+            this.hideRaceSelect();
+            this.$('.elections-share-dropdown').toggle();
         },
 
         toggleRaceSelect: function(e) {
             if (window.innerWidth < 992) {
-                this.$(".elections-share-dropdown").hide();
-                this.$(".elections-bar-dropdown").toggle();
+                this.hideShare();
+                this.$('.elections-bar-dropdown').toggle();
             }
         },  
         
@@ -118,8 +126,8 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },
 
         close: function(e) {
-            this.$(".elections-bar-dropdown").hide();
-            this.$(".elections-share-dropdown").hide();
+            this.hideShare();
+            this.hideRaceSelect();
         }          
         
     });
