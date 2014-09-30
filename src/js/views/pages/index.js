@@ -16,7 +16,7 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
         resultMap,
         balanceChart,
         updatesFeed,
-        adView,
+        adView,        
         indexView = Backbone.View.extend({
         
         el: '#election-content',

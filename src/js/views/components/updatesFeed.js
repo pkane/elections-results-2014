@@ -19,7 +19,7 @@ function ($, _, Backbone, Moment, config, componentTemplate) {
             },
             formatTimestamp: function (timestamp) {
                 var moment = new Moment(parseInt(timestamp)*1000);
-                return moment.format('h:mm:ss A M/D/YY');
+                return moment.format('h:mm A M/D/YY');
             },
             formatRaceResult: function (item) {
                 var formatted = '',
@@ -53,9 +53,6 @@ function ($, _, Backbone, Moment, config, componentTemplate) {
                 }
                 
                 return formatted + '.';
-            },
-            getPartyForItem: function (item) {
-                return (Math.random() > 0.5) ? 'rep' : (Math.random() > 0.1) ? 'dem' : 'other';
             }
         }))(),
         
