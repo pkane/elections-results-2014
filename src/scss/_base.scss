@@ -97,6 +97,12 @@ $desktop-xl: 1600;
 	}
 }
 
+@mixin tablet-min {
+	@include breakpoint($tablet-min) {
+		@content;
+	}
+}
+
 @mixin desktop {
 	@include breakpoint($desktop) {
 		@content;

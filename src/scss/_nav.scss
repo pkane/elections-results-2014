@@ -175,6 +175,35 @@
 
         .elections-bar-nav .nav-item.selected, .elections-bar-nav .share-nav-item {
             display: block;
+        }        
+    }
+
+    @include tablet-min {
+        .elections-share-dropdown {
+            
+            min-width: 50px;
+            padding-left: 3px;
+
+            .dd-nav-link {
+                height: 40px;
+                width: 40px;
+                background-image: url("../img/spritesheet-social.png");
+                background-size: 114px 152px;
+                text-indent: -10000px;
+            }
+
+            #facebook-share {
+                background-position: 0px -38px;
+            }
+
+            #twitter-share {
+                background-position: -76px -76px;
+            }
+
+            #mail-share {
+                background-position: -76px -114px;
+            }
+
         }
     }
 
