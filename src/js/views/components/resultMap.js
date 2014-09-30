@@ -28,6 +28,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             
             dataManager.loadGeo('states', 'simp');
             dataManager.loadGeo('states', 'centroids');
+            dataManager.loadGeo('states', 'zoom');
+            dataManager.loadGeo('cds', 'simp');
 
         },
         
@@ -54,8 +56,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             view = this,
             race = 'house', //this.options.race || app.get('race'), //hardcode for now
             state = '00' //app.get('state') || '00',
-            level = (race === 'house') ? 'cds' :
-                    (state !== '00' || mapMode === 'counties' || mapMode === 'popular') ? 'counties' : 'states',
+            level = 'states' //(race === 'house') ? 'cds' :
+                    //(state !== '00' || mapMode === 'counties' || mapMode === 'popular') ? 'counties' : 'states',
             res = (state !== '00') ? 'zoom' : 'simp',
             data = view.data,
             width = view.$el.width(),
@@ -106,17 +108,21 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                 view.svg = undefined;
             }
 
-            view.svg = view.svg || d3.select(view.el).append('svg')
+            view.svg = view.svg || d3.select('#election-content').append('svg')
                 .attr("width",  (!IE) ? '100%' : $('#main-map .map').width())
                 .attr("height", (!IE) ? '100%' : $('#main-map .map').height());
             if (!IE) view.svg.shapes = view.svg.shapes || view.svg.append('g').attr('class', 'shapes');
             if (!IE) view.svg.labels = view.svg.labels || view.svg.append('g').attr('class', 'labels');
 
             //this.$el.append(view.svg);
-            this.$el.append($(view.svg).html());
-            //this.$el.append(XMLSerializer.serializeToString(view.svg));
+            console.log('append svg');
 
+            //D3.select("#main-map").append(view.svg);
+
+            //this.$el.append($(view.svg).html());
+            //this.$el.append(XMLSerializer.serializeToString(view.svg));
             remove('.places');
+
 
             // Set up SVGs
             switch (level) {
@@ -129,7 +135,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                     // If no state layer exists
                     if(IE || !view.svg.shapes.selectAll('path.states')[0].length) {
 
-                        features = data.geo[level].zoom;
+                        features = dataManager.geo[level].zoom //data.geo[level].zoom;
 
                         // Add it
                         shapes = (!IE) ? view.svg.shapes.selectAll('path.states') : view.svg.selectAll('path');
@@ -195,6 +201,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                     break;
 
                 case 'cds':
+                    console.log('congressional');
 
                     // Remove counties and CDs
                     remove('.counties, .cds, .centroids');
