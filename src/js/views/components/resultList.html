@@ -3,13 +3,10 @@
     <% if (!state) { %>
     <div class="row house-card-deck">    
         <% _.each(data, function(s) { %>
-            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %><span class="num-races"><%= s.initiatives.length %></span> initiatives</a></div>
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>"><%= s.name %><span class="num-races"><%= s.initiatives.length %></span> initiatives</a></div>
         <% }); %>
     </div>
     <% } else { %>
-
-        <h1><%= state.display %></h1>
-
         <div class="row-fluid">
         <% _.each(detail, function(value) { %>
             <table class="result-item">        
@@ -38,7 +35,7 @@
     <% if (!state) { %>
         <div class="row house-card-deck">
             <% _.each(data, function(races, stateId) { %>
-                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#/<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %><span class="num-races"><%= data[stateId].length %></span>races</a></div>
+                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item"><a href="#<%= race.key %>-<%= getStateById(stateId).abbr %>"><%= getStateById(stateId).display %><span class="num-races"><%= data[stateId].length %></span>races</a></div>
             <% }); %>
         </div>
     <% } else { %>

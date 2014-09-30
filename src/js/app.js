@@ -80,6 +80,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             
             rootView.refresh();
             analytics.trigger('track:pageview', raceKey);
+            window.scroll(0,0);
         },
         
         App = {
