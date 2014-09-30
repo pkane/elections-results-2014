@@ -9,7 +9,7 @@ function ($, _, Backbone) {
             // /elections-results-2014/#/{house|senate|governors|initiatives}-{al-wy}/{embed}
             // /elections-results-2014/#/race/{house|senate|governors|initiatives}-{al-wy|al-wy + fip}/{embed}
         
-            var index = location.hash.match(/^#\/(house|senate|governors|initiatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/),
+            var index = location.hash.match(/^#(house|senate|governors|initiatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/),
                 race = location.hash.match(/^#\/race\/(house|senate|governors|initiatives)-([a-zA-Z]{2})-([a-zA-Z0-9]*)\/?(oembed)?\/?/);
             if (race) {
                 AppRouter.trigger('route:race', race[1], race[2], race[3], race[4]);
