@@ -65,7 +65,10 @@ $font-dir: 'http://www.gannett-cdn.com/GDContent/global/events/elections/icon-fo
 }
 
 // set breakpoints
+$mobile: 768;
 $tablet: 720;
+$tablet-min: 768;
+$tablet-max: 991;
 $desktop: 1024;
 $desktop-lg: 1200;
 $desktop-xl: 1600;
@@ -74,13 +77,30 @@ $desktop-xl: 1600;
 	@media only screen and (min-width: $foo + px) { @content; }
 }
 
-@mixin tablet {
-	@include breakpoint($tablet) {
+@mixin breakpointMax($foo) {
+	@media only screen and (max-width: $foo + px) { @content; }
+}
+
+@mixin breakpointBetween($a, $b) {
+	@media only screen and (min-width : $a + px) and (max-width : $b + px) { @content; }	
+}
+
+@mixin mobile {
+	@include breakpointMax($mobile) {
 		@content;
 	}
-	// .lt-ie9 & {
-	// 	@content;
-	// }
+}
+
+@mixin tablet {
+	@include breakpointBetween($tablet-min, $tablet-max) {
+		@content;
+	}
+}
+
+@mixin tablet-min {
+	@include breakpoint($tablet-min) {
+		@content;
+	}
 }
 
 @mixin desktop {
@@ -259,10 +279,15 @@ only screen and (                min-resolution: 2dppx) {
 		}
 	}
 }
+
+#election-app {
+	margin-top: 85px;
+}
+
 #election-app * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	box-sizing: border-box;	
 }
 #election-app *:before, #election-app *:after {
 	-webkit-box-sizing: border-box;

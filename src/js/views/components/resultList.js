@@ -34,7 +34,7 @@ function ($, _, Backbone, config, fipsMap, resultTemplate) {
         }))(),
         
         template: _.template(resultTemplate),
-        
+									        
         render: function () {
             
             if (this.model.race.id === 'h') {
