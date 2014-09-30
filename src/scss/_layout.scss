@@ -24,9 +24,7 @@
 	tr {
 		width: 100%;
 		display: inline-table;
-		font: normal 12px/3.2em 'futura today', helvetica, arial, sans-serif;
 		position: relative;	
-		margin-top: -10px;
 	}
 
 	.result-first-row {
@@ -36,7 +34,6 @@
 
 	.result-first-row th.district-name {
 		text-transform: uppercase;
-		font: bold 12px 'futura today', arial, sans-serif;
 		width: 50%;
 		left: -15px;
 	}
@@ -49,49 +46,37 @@
 		right: -15px;
 	}	
 
+	.candidate {
+		border-bottom: 1px solid #ddd;		
+	}
+
 	.result-name {
-		width: 150px;
+		width: 160px;
 		padding: 0 10px 0 0;
 		text-align: right;
 	}
 
 	.result-win {
+		width: 50px;
 		text-align: right;
-		float: right;
-		position: relative;
-		z-index: 1;
-		width: 12%;
-		font-size: 12px;
 	}
 
 	.result-votes {
-		position: relative;
-		z-index: 1;
-		text-align: right;
-		float: right;
-		margin-right: 30px;
-		font-size: 12px;		
+		padding: 5px;				
 	}
 
-	.candidate-after {
-		content: '';
-		display: block;
-		position: absolute;
-		padding: 14px 4px;
-		max-width: 50%;
-		left: 50%;
-		top: 3px;
-		background: $color-other;		
-		opacity: .4;
-	}	
-
-	.democratic .candidate-after {
-        background: $color-dem;
+	.democratic .result-votes {
+        background: linear-gradient(to right, $color-dem 0%, $color-dem 100%) no-repeat;
 	}
 
-	.republican .candidate-after {
-        background: $color-rep;
+	.republican .result-votes {        
+		background: linear-gradient(to right, $color-rep 0%, $color-rep 100%) no-repeat;        
 	}	
+
+	.other .result-votes {
+        background: linear-gradient(to right, $color-other 0%, $color-other 100%) no-repeat;
+	}
+
     .initiative-name {
         text-align: left;
     }
