@@ -95,8 +95,28 @@
     }
 
     @include mobile { 
+
+        height: 80px;
+
         .navbar-nav {
             margin: 0;
+        }
+
+        .page-icon {
+            width: 120px;
+            height: 110px;
+            padding: 0px;
+
+            .icon {
+                font-size: 50px;
+                width: 120px;
+                height: 120px;
+                padding-top: 25px;           
+            }
+        }
+
+        .elections-heading {
+            margin-left: 140px;
         }
 
         .dropdown-menu {
