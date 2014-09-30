@@ -135,8 +135,7 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
         },
         
         refreshSummary: function () {
-            console.log('BoP refresh ' + this.model.fips);
-            
+
             if (!balanceChart) return;
             
             if (dataManager.summary.loaded) {
@@ -148,10 +147,16 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
             if (this.model.state && (this.model.race.id === 'g' || this.model.race.id === 's')) {
                 balanceChart.model.detail = _.findWhere(dataManager[this.model.race.key].data, {id: this.model.state.id});
             } else if (this.model.fips) {
-                console.log('Has fips id');
-                // TODO: get race data by id
-                
-                balanceChart.model.detail = {};
+                if (this.model.race.id === 'i') {
+                    var stateData = _.findWhere(dataManager[this.model.race.key].data, {id: this.model.state.id});
+                    if (stateData) {
+                        balanceChart.model.detail = _.findWhere( stateData.initiatives, {id: parseInt(this.model.fips)});
+                    }
+                } else if (this.model.race.id === 'h') {
+                    balanceChart.model.detail = _.findWhere(dataManager[this.model.race.key].data, {id: this.model.state.id + '-District ' + this.model.fips});
+                } else {
+                    balanceChart.model.detail = {};
+                }
             } else {
                 balanceChart.model.detail = {};
             }

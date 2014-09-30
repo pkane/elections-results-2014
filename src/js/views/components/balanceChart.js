@@ -41,49 +41,53 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 
             if (this.model.detail && this.model.detail.id) {
                 
-                var canditates = _.chain(this.model.detail.results).sortBy('votes').last(2).value(); 
+                var candidate = _.chain(this.model.detail.results).sortBy('votes').last(2).value(); 
                 
-                if (canditates[1].party === 'Democratic' || canditates[0].party === 'Republican') {
-                    canditates.reverse();
-                }
-                
-                var pctLeft = Math.round(canditates[0].pct*100)/100,
-                    pctRight = Math.round(canditates[1].pct*100)/100;
-                
-                this.$('.desc-all').hide();
-                this.$('.desc-individual').show();
-                
-                if (canditates[0].party === 'Democratic') {
-                    $(progressLeft).addClass('dem').removeClass('other');
-                    $('icon', progressLeft).addClass('icon-dem-left');
+                if (candidate.length == 2)
+                {
+                    if (candidate[1].party === 'Democratic' || candidate[0].party === 'Republican') {
+                        candidate.reverse();
+                    }
+
+                    var pctLeft = Math.round(candidate[0].pct*100)/100,
+                        pctRight = Math.round(candidate[1].pct*100)/100;
+
+                    this.$('.desc-all').hide();
+                    this.$('.desc-individual').show();
+
+                    if (candidate[0].party === 'Democratic') {
+                        $(progressLeft).addClass('dem').removeClass('other');
+                        $('icon', progressLeft).addClass('icon-dem-left');
+                    } else {
+                        $(progressLeft).removeClass('dem').addClass('other');
+                        $('icon', progressLeft).removeClass('icon-dem-left dem');
+                    }
+
+                    if (candidate[1].party === 'Republican') {
+                        $(progressRight).addClass('rep').removeClass('other');
+                        $('icon', progressRight).addClass('icon-rep-left');
+                    } else {
+                        $(progressRight).removeClass('rep').addClass('other');
+                        $('icon', progressRight).removeClass('icon-rep-left dem');
+                    } 
+
+                    $('.num', numLeft).text(pctLeft + '%');
+                    $('.num', numRight).text(pctRight + '%');
+
+                    $(progressLeft).css('width', pctLeft + '%');
+                    $(progressRight).css('width', pctRight + '%');
+
+                    $('.text-left .name', desc).text(candidate[0].name);
+                    $('.text-right .name', desc).text(candidate[1].name);
+
+                    $('.text-left .votes', desc).text(candidate[0].votes);
+                    $('.text-right .votes', desc).text(candidate[1].votes);
+
+                    $('.bar-progress-left', desc).css('width', '0%');
+                    $('.bar-progress-right', desc).css('width', '0%');
                 } else {
-                    $(progressLeft).removeClass('dem').addClass('other');
-                    $('icon', progressLeft).removeClass('icon-dem-left dem');
+                    console.log('Handle edge case of single candidate');
                 }
-                
-                if (canditates[1].party === 'Republican') {
-                    $(progressRight).addClass('rep').removeClass('other');
-                    $('icon', progressRight).addClass('icon-rep-left');
-                } else {
-                    $(progressRight).removeClass('rep').addClass('other');
-                    $('icon', progressRight).removeClass('icon-rep-left dem');
-                } 
-                
-                $('.num', numLeft).text(pctLeft + '%');
-                $('.num', numRight).text(pctRight + '%');
-                
-                $(progressLeft).css('width', pctLeft + '%');
-                $(progressRight).css('width', pctRight + '%');
-                
-                $('.text-left .name', desc).text(canditates[0].name);
-                $('.text-right .name', desc).text(canditates[1].name);
-                
-                $('.text-left .votes', desc).text(canditates[0].votes);
-                $('.text-right .votes', desc).text(canditates[1].votes);
-                
-                $('.bar-progress-left', desc).css('width', '0%');
-                $('.bar-progress-right', desc).css('width', '0%');
-                
             } else if (this.model.data.length > 0 && this.model.race.id !== 'i') {
 
                 var results = _.findWhere(this.model.data, { id: this.model.race.id.toUpperCase() }),
