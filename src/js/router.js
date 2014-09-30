@@ -11,11 +11,10 @@ function ($, _, Backbone) {
         
             var index = location.hash.match(/^#\/(house|senate|governors|initiatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/),
                 race = location.hash.match(/^#\/race\/(house|senate|governors|initiatives)-([a-zA-Z]{2})-([a-zA-Z0-9]*)\/?(oembed)?\/?/);
-
-            if (index){
-                AppRouter.trigger('route:index', index[1], index[2], index[3]);
-            } else if (race) {
+            if (race) {
                 AppRouter.trigger('route:race', race[1], race[2], race[3], race[4]);
+            } else if (index){
+                AppRouter.trigger('route:index', index[1], index[2], index[3]);
             } else if (location.hash === '') {
                 AppRouter.trigger('route:index', 'senate');
             }

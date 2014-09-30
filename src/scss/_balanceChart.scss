@@ -1,11 +1,4 @@
 
-#bar-chart {
-    width: 70%;
-    height: 200px;
-    padding: 12px;
-    padding-top: 10px;
-}
-
 ul.progress-stat-bar {
     width: 100%;
     background: $color-other;
@@ -21,27 +14,27 @@ ul.progress-stat-bar {
         
         transition: width 1s;
         
-        &.dem {
-            background: $color-dem;
-            text-align: left;
-        }
-
-        &.rep {
-            background: $color-rep;
-            text-align: right;
-        }        
+        &.bar-progress-right { text-align: right; }
+        &.bar-progress-leftt { text-align: left; }
+        
+        &.dem { background: $color-dem; }
+        &.rep { background: $color-rep; }
+        &.other { background: $color-ind; }
     }
 }
 
-
-.bar {
+.bop-group {
     clear: both;
     position: relative;
     font-family: "Futura Today", "arial";
     line-height: 1;
 }
 
-.bar-previous {
+.bar-progress-right, .bop-group-num-right { 
+    float: right;
+}
+
+.bop-group-desc {
     
     font-size: smaller;
     
@@ -49,7 +42,7 @@ ul.progress-stat-bar {
         margin-top: 2px;
     }
     
-    .num {
+    .num, .name {
         font-size: 2em;
     }
     
@@ -58,7 +51,7 @@ ul.progress-stat-bar {
     }
 }
 
-.bar-num {
+.bop-group-num {
 
     text-transform: uppercase;
     
@@ -96,11 +89,6 @@ ul.progress-stat-bar {
 .updated {
     font-size: smaller;
 }
-
-// ---- COPIED ----
-
-/*
-icons */
 
 span.icon-dem-right {
     font-size: 32px;

@@ -14,7 +14,7 @@
         <% _.each(detail, function(value) { %>
             <table class="result-item col-sm-5 col-lg-5">        
                 <tr class="result-first-row">
-                    <th class="district-name" colspan="3"><%= value.name %></th>
+                    <th class="district-name" colspan="3"><a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>"><%= value.name %></a></th>
                 </tr>
 
                 <% _.each(value.results, function(item) { %>
@@ -45,7 +45,7 @@
         <% _.each(detail, function(value) { %>
             <table class="result-item house-item col-sm-6 col-lg-6">        
                 <tr class="result-first-row">
-                    <th class="district-name"><%= formatHouseId(value.id) %></th>
+                    <th class="district-name"><a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= tokenizeHouseId(value.id) %>"><%= formatHouseId(value.id) %></a></th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
                 </tr>
 
@@ -89,7 +89,7 @@
             <table class="result-item senate-item col-sm-6 col-lg-6">        
 
                 <tr class="result-first-row">
-                    <th class="district-name" colspan="3"><%= value.name %></th>
+                    <th class="district-name" colspan="3"><a href="#/<%= race.key %>-<%= state.abbr %>"><%= value.name %></a></th>
                 </tr>
 
                 <% _.each(value.results, function(item) { %>

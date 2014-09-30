@@ -50,8 +50,10 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
             
         refresh: function () {
             
+            console.log('Refresh FIPS ' + this.model.fips);
+            
             var isReady = (this.model.race.key !== ''),
-                needsBoP = (this.model.race.id !== 'i'),
+                needsBoP = (this.model.race.id !== 'i' || this.model.fips),
                 needsMap = (!this.useOembedTemplate && !this.model.isMobile && this.model.race.id !== 'i'),
                 needsResultList = (!this.useOembedTemplate || this.model.race.id === 'i'),
                 needsUpdateFeed = (!this.useOembedTemplate),
@@ -125,11 +127,15 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
                 resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
             }
             
+            if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
+                this.refreshSummary();
+            }
+            
             resultList.render();
         },
         
         refreshSummary: function () {
-            console.log('BoP refresh');
+            console.log('BoP refresh ' + this.model.fips);
             
             if (!balanceChart) return;
             
@@ -138,7 +144,18 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
                 balanceChart.model.race = this.model.race;
                 balanceChart.model.updateTime = dataManager.summary.updateTime;
             }
-
+            
+            if (this.model.state && (this.model.race.id === 'g' || this.model.race.id === 's')) {
+                balanceChart.model.detail = _.findWhere(dataManager[this.model.race.key].data, {id: this.model.state.id});
+            } else if (this.model.fips) {
+                console.log('Has fips id');
+                // TODO: get race data by id
+                
+                balanceChart.model.detail = {};
+            } else {
+                balanceChart.model.detail = {};
+            }
+            
             balanceChart.render();
         },
             

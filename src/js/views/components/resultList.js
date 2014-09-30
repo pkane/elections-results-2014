@@ -30,6 +30,10 @@ function ($, _, Backbone, config, fipsMap, resultTemplate) {
             formatHouseId: function (id) {
                 var split = id.split('-');
                 return split[1];
+            },
+            tokenizeHouseId: function (id) {
+                var split = id.split(' ');
+                return split[1];
             }
         }))(),
         

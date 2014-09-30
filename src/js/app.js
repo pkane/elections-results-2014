@@ -52,6 +52,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             rootView.model.race = race;
             rootView.model.state = state;
             rootView.model.fips = fips;
+            
+            console.log('Setting fips ' + fips);
 
             navView.model.currentRace = race;
             navView.model.currentState = state;
@@ -71,7 +73,10 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             dataManager.updates.required = !oembed;
             dataManager.summary.required = (race.key !== 'i');
             
-            dataManager.loadRace(race, state);
+            dataManager.loadRace(race);
+            if (state) {
+                dataManager.loadRace(race, state);
+            }
             
             rootView.refresh();
             analytics.trigger('track:pageview', raceKey);

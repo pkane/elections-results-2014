@@ -34,14 +34,18 @@ function ($, _, Backbone, Moment, config, componentTemplate) {
                     state = _.findWhere(config.states, { id: item.fips });
                 }
                 
-                formatted += '<span class="update-location">' + state.display + '</span>';
+                if (state) {
+                    formatted += '<span class="update-location">' + state.display + '</span>';
+                } else {
+                    console.log('Failed to find state for fips: ' + item.fips);
+                }
                 
                 race = _.findWhere(config.races, { id: item.race.toLowerCase() });
                 
                 if (race) {
                     formatted += ' for ' + race.display;
                 } else {
-                    console.log(item.race);
+                    //console.log('Failed to find race: ' + item.race);
                 }
                 
                 if (item.fips.indexOf('-') > -1) {
