@@ -133,6 +133,13 @@ $desktop-xl: 1600;
 }
 
 /* Elections Base */
+.asset {
+	width: 100%;
+	padding: 0;
+	background: none;
+	background-color: white;
+}
+
 #election-content {
 	font-family: $font-body;
 	font-weight: 300;
