@@ -4,7 +4,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         var opUri = config.api.op[op];
         
-        opUri = opUri.replace('{dataFeedVersionId}', config.api.dataFeedVersionId);
+        opUri = opUri.replace('{dataFeedVersionId}', '2014'); //config.api.dataFeedVersionId);
         
         if (params) {
             _.each(params, function (value, key) {
