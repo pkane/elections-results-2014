@@ -5,6 +5,10 @@
     z-index: 30;
 }
 
+.elections-overlay {
+    display: none;
+}
+
 @include mobile { 
 
     #election-bar-content {
@@ -55,10 +59,6 @@
         font-size: 28px;
     }
 
-    .elections-bar-nav .nav-item.selected > a {
-        color: #009bff;
-    }
-
     .elections-bar-nav .nav-item > a {
         background-color: #EFEFEF;
         width: 100%;
@@ -66,6 +66,12 @@
         color: #333;
         border: 1px solid #DADADA;
         border-right: none;
+        font-weight: 100;
+    }
+
+    .elections-bar-nav .nav-item.selected > a {
+        color: #009bff;
+        background: white;
     }
 
     .elections-bar-nav .nav-item > a.share-icon {
@@ -141,12 +147,15 @@
         }
 
         .elections-bar-nav .nav-item.selected {
-            width: calc(100% - 70px);            
+            width: calc(100% - 70px); 
+            background: #2c2c2c url("../img/spritesheet.png") no-repeat;
+            background-position: right -144px;                    
         }
 
         .elections-bar-nav .nav-item.selected > a {
             color: white;
             text-transform: uppercase;
+            background: none;
         }
 
         .elections-bar-nav .nav-item:first-child > a {

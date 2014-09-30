@@ -83,15 +83,20 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             this.shareToggle();            
         },
         
+        toggleOverlay: function() {
+            this.$('.elections-overlay').toggle();
+        },
+
         toggleShare: function () {
-            this.hideRaceSelect();
+            console.log('toggle share');
             this.$('.elections-share-dropdown').toggle();
+            this.toggleOverlay();
         },
 
         toggleRaceSelect: function(e) {
             if (window.innerWidth < 992) {
-                this.hideShare();
                 this.$('.elections-bar-dropdown').toggle();
+                this.toggleOverlay();
             }
         },  
         
@@ -128,6 +133,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         close: function(e) {
             this.hideShare();
             this.hideRaceSelect();
+            this.toggleOverlay();
         }          
         
     });
