@@ -41,18 +41,17 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 
             if (this.model.detail && this.model.detail.id) {
                 
-                // FIXME: get by top %
-                var canditates = [this.model.detail.results[0], this.model.detail.results[1]],
-                    pctLeft = Math.round(canditates[0].pct*10)/10,
-                    pctRight = Math.round(canditates[1].pct*10)/10; 
+                var canditates = _.chain(this.model.detail.results).sortBy('votes').last(2).value(); 
+                
+                if (canditates[1].party === 'Democratic' || canditates[0].party === 'Republican') {
+                    canditates.reverse();
+                }
+                
+                var pctLeft = Math.round(canditates[0].pct*100)/100,
+                    pctRight = Math.round(canditates[1].pct*100)/100;
                 
                 this.$('.desc-all').hide();
                 this.$('.desc-individual').show();
-                
-                // TODO: Find two highest, assign to party display as appropriate
-                    // If dem / rep | left / right
-                    // If dem / oth | left / right
-                    // If oth / rep | left / right
                 
                 if (canditates[0].party === 'Democratic') {
                     $(progressLeft).addClass('dem').removeClass('other');
@@ -81,6 +80,9 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 
                 $('.text-left .votes', desc).text(canditates[0].votes);
                 $('.text-right .votes', desc).text(canditates[1].votes);
+                
+                $('.bar-progress-left', desc).css('width', '0%');
+                $('.bar-progress-right', desc).css('width', '0%');
                 
             } else if (this.model.data.length > 0 && this.model.race.id !== 'i') {
 
