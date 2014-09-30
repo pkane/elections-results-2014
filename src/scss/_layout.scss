@@ -1,15 +1,16 @@
 #list table.result-item {
 	border: none;
 	margin: 10px 0 0;
+	width: 100%;
 
     tbody {
 		float: left;
-	    min-height: 150px;
 	    border: 1px solid #dadada;
 	    margin: 20px 10px 10px 0;
 	    padding: 0 20px 20px;
 	    background: #fff;
 	    position: relative;
+	    width: 100%;
     }
     
     th {
@@ -49,11 +50,7 @@
 	}	
 
 	.result-name {
-		float: left;
-		z-index: 1;
-		position: relative;
-		width: 50%;
-		text-overflow: clip;
+		width: 150px;
 		padding: 0 10px 0 0;
 		text-align: right;
 	}

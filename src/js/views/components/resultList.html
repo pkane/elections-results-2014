@@ -12,9 +12,13 @@
 
         <div class="row-fluid">
         <% _.each(detail, function(value) { %>
-            <table class="result-item col-sm-6 col-lg-6">        
+            <table class="result-item">        
                 <tr class="result-first-row">
-                    <th class="district-name" colspan="3"><a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>"><%= value.name %></a></th>
+                    <th class="district-name" colspan="3">
+                        <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>">
+                            <%= value.name %>
+                        </a>
+                    </th>
                 </tr>
 
                 <% _.each(value.results, function(item) { %>
