@@ -4,7 +4,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         var opUri = config.api.op[op];
         
-        opUri = opUri.replace('{dataFeedVersionId}', config.api.dataFeedVersionId);
+        opUri = opUri.replace('{dataFeedVersionId}', '2014'); //config.api.dataFeedVersionId);
         
         if (params) {
             _.each(params, function (value, key) {
@@ -81,27 +81,29 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         loadRace: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
             
+            var isDetail = (state && race.detail),
+                opKey = (isDetail) ? race.detail : race.op,
+                opUri = getOpUri(opKey, { raceId: (race) ? race.id : '', stateId: (state) ? state.id : '00' }),
+                opSettings = getSettings(function (xhr, statusCode) {
+                    if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
+                        instance[race.key].loaded = true;
+
+                        if (isDetail) {
+                            instance[race.key].detail[state.id] = xhr.responseJSON;
+                        } else {
+                            instance[race.key].data = xhr.responseJSON;
+                        }
+
+                        instance[race.key].updateTime = new Date();
+
+                        instance.trigger('change:' + race.key);
+                    }
+                });
+            
             if (config.api.dataFeedVersionId === 0) {
                 return; // Ignore initial 0 state? queue request until version updates?
             } else {
-                $.ajax(
-                    getOpUri((state) ? race.detail : race.op, { raceId: (race) ? race.id : '', stateId: (state) ? state.id : '00' }),
-                    getSettings(function (xhr, statusCode) {
-                        if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
-                            instance[race.key].loaded = true;
-
-                            if (state) {
-                                instance[race.key].detail[state.id] = xhr.responseJSON;
-                            } else {
-                                instance[race.key].data = xhr.responseJSON;
-                            }
-
-                            instance[race.key].updateTime = new Date();
-                            
-                            instance.trigger('change:' + race.key);
-                        }
-                    })
-                );
+                $.ajax(opUri, opSettings);
             }
         },
         

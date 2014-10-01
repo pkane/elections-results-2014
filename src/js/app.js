@@ -14,7 +14,6 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         navView = new NavView(),
         
         checkFeedVersion = function () {
-            console.log('data version check');
 
             $.ajax(config.api.base + config.api.op.version, {
                 
@@ -30,8 +29,6 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                         if (remoteVersion > config.api.dataFeedVersionId) {
                             config.api.dataFeedVersionId = remoteVersion;
                             App.refresh();
-                        } else {
-                            console.log('using current data');
                         }
                     }
                 },
@@ -45,23 +42,41 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         },
         checkFeedVersionInt,
         
-        updateView = function (raceKey, stateAbbr, fip, oembed) {
+        updateView = function (raceKey, stateAbbr, fips, oembed) {
             console.log('update view ', raceKey);
 
             var race = _.findWhere(config.races, { key: raceKey }),
                 state = _.findWhere(config.states, { abbr: stateAbbr });
 
-            rootView.useOembedTemplate = (oembed !== null);
+            rootView.useOembedTemplate = (!!oembed);
             rootView.model.race = race;
             rootView.model.state = state;
+            rootView.model.fips = fips;
+            
+            console.log('Setting fips ' + fips);
 
             navView.model.currentRace = race;
             navView.model.currentState = state;
-            navView.refresh();
+            
+            if (oembed) {
+                $('#election-app').addClass('oembed');
+                $(navView.el).hide();
+            } else {
+                $('#election-app').removeClass('oembed');
+                navView.refresh();
+                $(navView.el).show();
+            }
 
             // TODO: If not cached / most current version
-            // FIXME: Request both detail and full if no data exists
-            dataManager.loadRace(race, state);
+            // FIXME: If detail and no data, Request both detail and full
+            
+            dataManager.updates.required = !oembed;
+            dataManager.summary.required = (race.key !== 'i');
+            
+            dataManager.loadRace(race);
+            if (state) {
+                dataManager.loadRace(race, state);
+            }
             
             rootView.refresh();
             analytics.trigger('track:pageview', raceKey);
@@ -70,6 +85,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         App = {
             
             init: function () {
+                
+                rootView.model.isMobile = config.isMobile;
                 
                 // Initial data version
                 checkFeedVersion();
@@ -103,14 +120,21 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 rootView.render();
                 navView.render();
 
-                Backbone.history.start();
+                Router.initialize();
             },
             
             refresh: function () {
-                dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
-                dataManager.loadRace(_.findWhere(config.races, { key: 'updates' }));
-
-                dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
+                if (dataManager.summary.required) {
+                    dataManager.loadRace(_.findWhere(config.races, { key: 'summary' }));
+                }
+                
+                if (dataManager.updates.required) {
+                    dataManager.loadRace(_.findWhere(config.races, { key: 'updates' }));
+                }
+                
+                if (navView.model.currentRace.key) {
+                    dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
+                }
             }
         };
     

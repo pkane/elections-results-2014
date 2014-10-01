@@ -1,32 +1,28 @@
 .update-card {
+
     margin: 0.5em 0 0.5em 0;
-    width: 300px;
-}
 
-.update-card-header {
-    background: #f2f2f2;
-    padding: 0.2em 0.75em;
-    
-    .updateTime { 
-        display: block;
-        float: right;
+    .update-card-header {
+        background: #f4f4f4 url('../img/spritesheet.png') no-repeat -76px -5px;
+        padding: 0.2em 0.75em 0 2.5em;
+        
+        .updateTime { 
+            display: block;
+            float: right;
+        }
     }
-}
-
-.update-cards {
-    border-bottom: 1px solid #d9d9d9;
-    border-left: 1px solid #d9d9d9;
-    border-right: 1px solid #d9d9d9;
-}
-
-.update-card-item {
-    padding: 1em;
-    border-top: 1px solid #d9d9d9;
     
-    &.dem { border-right: 12px solid $color-dem; }
-    &.rep { border-right: 12px solid $color-rep; }
-    &.other { border-right: 12px solid $color-other; }
-    
-    .update-location { font-weight: bold; }
-}
+    .update-cards {
+        border-bottom: 1px solid #d9d9d9;
+        border-left: 1px solid #d9d9d9;
+        border-right: 1px solid #d9d9d9;
+    }
 
+    .update-card-item {
+        padding: 1em;
+        border-top: 1px solid #d9d9d9;
+        
+        .update-location { font-weight: bold; }
+    }
+
+}

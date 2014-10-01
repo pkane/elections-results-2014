@@ -1,851 +1,231 @@
-#elections-bar {
+#election-bar-content {
+    border-bottom: 1px solid #dadada;
+    margin-bottom: 30px;
     position: relative;
-    z-index: 0;
-    min-height: 160px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid $color-stroke;
-    padding-top: 40px;
-    background-color: #fafafa;
+    z-index: 30;
+}
+
+.elections-overlay {
     display: none;
-    a {
-        text-decoration: none;
+}
+
+@include mobile { 
+
+    #election-bar-content {
+        padding-top: 30px;
     }
+
+}
+
+
+#elections-bar {
+    height: 100px;    
+    margin-bottom: 20px;
+
     .page-icon {
+        background: white;
+        border: 1px solid #dadada;
         position: absolute;
-        float: left;
-        height: 100px;
-        width: 100px;
-        background-color: #ffffff;
-        border: 1px solid $color-stroke;
+        width: 150px;
+        height: 150px;
+        padding: 10px;
+
         .icon {
-            display: block;
-            width: 100%;
-            height: 100%;
-            padding-top: 7%;
+            display: block;            
             font-size: 80px;
-            text-align: center;
-        }
-        &:after {
-            @extend %shadow-circle;
+            text-align: center; 
+            width: 120px;
+            height: 120px;
+            padding-top: 25px;           
         }
     }
-    .election-info {
-        padding-left: 120px;
-        line-height: 180%;
+
+    .elections-heading {
+        margin-left: 170px;
+        padding-bottom: 30px;
+        color: #666;
     }
+
+    .election-state-subheading {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+        color: #009bff;
+    }
+
     .election-office-projection-heading {
         font-family: $font-heading;
         font-weight: 100;
-        font-size: 24px;
-        line-height: 24px;
-        margin-bottom: 4px;
-        display: none;
-    }
-    .election-office-subheading {
-        color: $font-heading-color2;
-    }
-    .election-leaning {
-        display: none;
-    }
-    .election-jump {
-        color: $color-usat-blue;
-    }
-    /* Lean Coloring Classes */
-    .DS, .DL {
-        color: $color-blue;
-    }
-    .RS, .RL {
-        color: $color-red;
-    }
-    .T {
-        color: $color-ind;
-    }
-    /* Mobile Nav Specific CSS */
-    &.elections-bar-mobile {
-        padding-top: 110px;
-        .page-icon {
-            top: 20px;
-            margin-right: 20px;
-        }
-        .election-info-container {
-            padding-top: 20px;
-        }
-        .election-state {
-            display: inline-block;
-            padding: 8px 10px 6px;
-            color: $font-heading-color2;
-            border: 2px solid $font-heading-color2;
-            text-transform: uppercase;
-            font-family: $font-heading;
-            margin-bottom: 4px;
-        }
-        .election-state-subheading {
-            padding-bottom: 10px;
-        }
-        &.pagetype-office {
-            background-color: transparent;
-            border-bottom: none;
-            .page-icon {
-                display: none;
-            }
-        }
-        &.pagetype-race {
-            .leaning-text {
-                display: none;
-            }
-            .election-leaning {
-                padding-bottom: 10px;
-            }
-        }
-    }
-    /* Tablet Bar Specific CSS */
-    &.elections-bar-tablet {
-        .elections-bar-nav-drawer-button-container {
-            margin-top: 30px;
-            height: 50px;
-            border: 1px solid $color-stroke;
-            @include border-radius(4px);
-        }
-        .office-placeholder {
-            position: relative;
-            display: inline-block;
-            padding: 16px 20px;
-            width: 100%;
-            color: $color-usat-blue;
-        }
-        .search-placeholder {
-            padding: 6px;
-            display: inline-block;
-        }
-        .election-icon-arrow-right-blue {
-            position: absolute;
-            top: 4px;
-            right: 8px;
-        }
-        .elections-bar-nav-drawer-dropdown {
-            list-style: none;
-            padding: 0;
-        }
-        .flex-group {
-            vertical-align: top;
-        }
-        .item-group {
-            background-color: #efefef;
-            height: 48px;
-            border-left: 1px solid $color-stroke;
-            -webkit-border-top-right-radius: 4px;
-            -webkit-border-bottom-right-radius: 4px;
-            -moz-border-radius-topright: 4px;
-            -moz-border-radius-bottomright: 4px;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-    }
-    /* Desktop Bar Specific CSS */
-    &.elections-bar-desktop {
-        .elections-social-container {
-            position: fixed;
-            left: 1%;
-            top: 20%;
-            background-color: white;
-            border: 1px solid $color-stroke;
-            padding: 2px 20px;
-            .elections-bar-nav-social {
-                list-style: none;
-                padding: 0;
-            }
-            .elections-bar-nav-drawer-subheading {
-                font-size: 14px;
-                text-transform: uppercase;
-                font-family: $font-heading;
-                color: $color-gray;
-                font-weight: 100;
-            }
-            .elections-bar-nav-drawer-list-item {
-                padding: 6px 0;
-                a {
-                    color: $color-usat-blue;
-                    &:hover, &:focus {
-                        .election-icon-social-fb {
-                            background-position: -76px -38px;
-                            border: 1px solid #3b5998;
-                        }
-                        .election-icon-social-tw {
-                            background-position: -76px -76px;
-                            border: 1px solid #00aced;
-                        }
-                        .election-icon-social-mail {
-                            background-position: -76px -114px;
-                            border: 1px solid #666;
-                        }
-                    }
-                }
-            }
-        }
-        .election-jump {
-            cursor: pointer;
-        }
-    }
-    /* Tablet Breakpoint CSS */
-    @include tablet {
-        min-height: 150px;
-        .page-icon {
-            height: 120px;
-            width: 120px;
-            .icon {
-                font-size: 100px;
-                &.icon-usa-mainland {
-                    font-size: 60px;
-                    padding-top: 24%;
-                }
-            }
-        }
-        .election-info-container {
-            padding-left: 0;
-        }
-        .election-term {
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: 12px;
-            color: $color-usat-blue;
-            display: none;
-        }
-        .election-label {
-            font-size: 24px;
-            font-family: $font-heading;
-            font-weight: 100;
-            color: $font-heading-color2;
-        }
-        .usat-says,
-        .leaning-text,
-        .election-jump {
-            font-size: 12px;
-        }
+        font-size: 28px;
     }
 
-    /* Desktop Breakpoint CSS */
-    @include desktop {
-        min-height: 160px;
-        .page-icon {
-            height: 150px;
-            width: 150px;
-            .icon {
-                padding-top: 14%;
-                font-size: 100px;
-                &.icon-usa-mainland {
-                    font-size: 80px;
-                }
-            }
-        }
-        .election-term {
-            display: block;
-        }
-        .election-label {
-            font-size: 28px;
-        }
-    }
-
-    /* Desktop 1200+ Breakpoint CSS */
-    @include desktop-lg {
-        z-index: 1;
-        padding-top: 16px;
-        .election-info-container {
-            padding-left: 0;
-        }
-        .page-icon {
-            top: 30px;
-        }
-        .leaning-value {
-            font-size: 12px;
-        }
-    }
-
-    /* Office Pages Specific CSS */
-    &.pagetype-office {
-        .election-state,
-        .leaning-value,
-        .election-state-subheading {
-            display: none;
-        }
-        .election-info {
-            padding-left: 0;
-            float: right;
-        }
-        .election-office-projection-heading,
-        .election-leaning {
-            display: block;
-        }
-    }
-    /* Race Page Specific CSS */
-    &.pagetype-race {
-        .election-leaning {
-            display: block;
-        }
-        .election-jump,
-        .leaning-text,
-        .election-state-subheading {
-            display: none;
-        }
-    }
-    /* CSS for making leftmost item flexible while locking the right on mobile */
-    .flex-group {
-        display: table-cell;
+    .elections-bar-nav .nav-item > a {
+        background-color: #EFEFEF;
         width: 100%;
-        float: none;
-        a {
-            position: relative;
-        }
+        padding: 14px 20px;
+        color: #333;
+        border: 1px solid #DADADA;
+        border-right: none;
+        font-weight: 100;
     }
-}
 
-#elections-bar-nav {
-    .elections-bar-nav-item {
-        &:last-child {
-            border-right: none;
-        }
-        & > a {
-            display: inline-block;
-            float: left;
-            text-decoration: none;
-            font-weight: 100;
-            border-left: none;
-            border-right: none;
-        }
+    .elections-bar-nav .nav-item.selected > a {
+        color: #009bff;
+        background: white;
     }
-    /* CSS for making leftmost item flexible while locking the right on mobile */
-    .flex-group {
-        a {
-            position: relative;
-        }
+
+    .elections-bar-nav .nav-item > a.share-icon {
+        padding: 4px;
+        width: 50px;
+        height: 50px;
     }
-    .dropdown-menu {
-        background-color: $color-nav-background;
+
+    .elections-bar-nav .nav-item:first-child > a {
+        border-left: 1px solid #DADADA;
+        border-radius: 4px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
-    /* Overlay */
-    &.elections-bar-nav-mobile .election-overlay {
-        .overlay-item-container {
-            max-height: 340px;
-            overflow-x: hidden;
-            overflow-y: scroll;
+
+    .elections-bar-nav .nav-item:last-child > a {
+        border-right: 1px solid #DADADA;
+        border-radius: 4px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    @include mobile { 
+
+        height: 80px;
+
+        .navbar-nav {
+            margin: 0;
         }
-        .overlay-heading {
-            font-family: $font-heading;
-            font-size: 20px;
-            font-weight: 100;
-            color: $font-heading-color;
-            text-align: center;
-            margin-top: 25%;
-            margin-bottom: 20px;
+
+        .page-icon {
+            width: 120px;
+            height: 110px;
+            padding: 0px;
+
+            .icon {
+                font-size: 50px;
+                width: 120px;
+                height: 120px;
+                padding-top: 25px;           
+            }
         }
-        .overlay-item > a {
+
+        .elections-heading {
+            margin-left: 140px;
+        }
+
+        .dropdown-menu {
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0, 0.9);
+            position: fixed;
+            padding-top: 200px;
+        }
+
+        .dropdown-menu > li > a {
             color: white;
-            text-decoration: none;
             text-transform: uppercase;
-            font-family: $font-heading;
             font-weight: 100;
             letter-spacing: 1px;
             display: block;
             width: 100%;
             text-align: center;
             padding: 14px 0;
+
         }
-        .overlay-item.selected > a {
-            color: $color-usat-blue;
-        }
-    }
-    /* Mobile Specific CSS */
-    &.elections-bar-nav-mobile {
-        position: fixed;
-        top: 50px;
-        left: 0;
-        z-index: 499;
-        width: 100%;
-        height: 50px;
-        background-color: $color-nav-background;
-        & > a {
-            height: 50px;
-        }
-        .elections-bar-nav-item.col-xs-2 {
-            width: 8.36666667%;
-        }
-        #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.share-item {
-            width: 7%;
-        }
-        .office-placeholder {
-            display: inline-block;
-            width: 100%;
-            padding: 24px 20px;
-            box-sizing: border-box;
-        }
-        .item-group {
-            display: none;
-        }
-        .state-placeholder,
-        .search-placeholder,
-        .share-placeholder {
-            padding: 6px 0;
-            width: 100%;
-            text-align: center;
-        }
-        .election-icon-arrow-down-white {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-        }
-    }
-    /* Tablet Nav Specific CSS */
-    &.elections-bar-nav-tablet {
-        position: fixed;
-        right: -40px;
-        top: 0;
-        z-index: -2;
-        width: 260px;
-        height: 100%;
-        padding: 0 30px;
-        padding-top: 30px;
-        box-sizing: border-box;
-        opacity: 0;
-        background-color: white;
-        border-left: 1px solid $color-stroke;
-        @include box-shadow(-2px, 0px, 4px, 0px, rgba(0, 0, 0, 0.075));
-        @include vendor-prefix(transition, (right 0.4s ease, opacity 0.15s ease));
-        .elections-bar-nav-drawer-heading {
-            font-family: $font-heading;
-            font-size: 22px;
-            font-weight: 100;
-            padding: 0 0 24px 0;
-            border-bottom: 1px solid $color-stroke;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            line-height: 1.1;
-            .election-icon {
-                // display: inline-block;
-                float: right;
-                position: relative;
-                top: -10px;
-            }
-        }
-        .elections-bar-nav-drawer-subheading {
-            padding-top: 20px;
-            font-size: 13px;
-            text-transform: uppercase;
-            font-family: $font-heading;
-            font-weight: 100;
-            letter-spacing: 1px;
-            color: $color-gray;
-        }
-        .elections-bar-nav-drawer-list {
-            padding: 0;
-            list-style: none;
-            &.elections-bar-nav-sub {
-                border-bottom: 1px solid $color-stroke;
-                padding-bottom: 20px;
-            }
-        }
-        .elections-bar-nav-drawer-list-item {
-            a {
-                display: block;
-                padding: 10px 0;
-                text-decoration: none;
-                font-size: 16px;
-                font-weight: 100;
-                color: $font-body-color;
-                font-family: $font-heading;
-            }
-            &.selected {
-                a {
-                    color: $color-usat-blue;
-                    pointer-events: none;
-                    cursor: default;
-                }
-            }
-        }
-        .state .election-icon {
-            float: right;
-            position: relative;
-            top: -11px;
-            left: -120px;
-        }
-        .elections-bar-nav-social .elections-bar-nav-drawer-list-item {
-            position: relative;
-            .election-icon {
-                position: absolute;
-                top: 10px;
-                left: 0;
-            }
-            & > a {
-                padding: 20px 0;
-                padding-left: 60px;
-                color: $color-gray;
-            }
-        }
-        .elections-bar-nav-drawer-nav-content {
-            margin-top: 40px;
-            // overflow: hidden;
-            // overflow-y: scroll;
-            @include vendor-prefix(transition, (right 0.4s ease, opacity 0.15s ease));
-        }
-        .elections-bar-nav-drawer-state-content {
-            margin-top: 20px;
+
+        .elections-bar-nav { 
+            background: #2c2c2c;
             position: fixed;
-            top: 0;
-            right: -40px;
-            width: 260px;
-            box-sizing: border-box;
-            padding: 0 30px;
-            padding-top: 30px;
-            padding-bottom: 40px;
-            height: 100%;
-            opacity: 0;
-            z-index: -3;
-            overflow: hidden;
-            overflow-y: scroll;
-            @include vendor-prefix(transition, (right 0.4s ease, opacity 0.15s ease));
-            .state-item {
-                a {
-                    display: block;
-                    padding: 10px 0;
-                    text-decoration: none;
-                    font-size: 16px;
-                    font-weight: 100;
-                    color: $font-body-color;
-                    font-family: $font-heading;
-                }
-            }
-        }
-        .drawer-back {
-            padding-left: 28px;
-            cursor: pointer;
-            &:before {
-                content: "";
-                position: absolute;
-                top: 41px;
-                left: 20px;
-                display: block;
-                width: 38px;
-                height: 38px;
-                background-image: url("../img/spritesheet.png");
-                background-position: 0px 38px;
-                background-size: 114px 342px;
-                // size of non retina spritesheet
-           
-            }
-        }
-        .election-icon-social-close {
-            cursor: pointer;
-        }
-    }
-    /* Desktop Nav Specific CSS */
-    &.elections-bar-nav-desktop {
-        .elections-bar-nav-container {
-            float: right;
-            // background-color: pink;
-            border: 1px solid $color-stroke;
-            @include border-radius(4px);
-        }
-    }
-    /* Tablet Breakpoint CSS */
-    @include tablet {
-        #elections-bar {
-            display: block;
-        }
-        .elections-bar-nav-item .search-placeholder {
-            border-right: none;
-        }
-    }
-
-    /* Large Desktop Breakpoint CSS */
-    @include desktop-lg {
-        padding: 0;
-        padding-top: 40px;
-        @include border-radius(4px);
-        .elections-bar-nav-item {
-            & > a {
-                display: inline-block;
-                height: 100%;
-                padding: 12px 20px;
-                color: $font-body-color;
-                text-transform: capitalize;
-                @include vendor-prefix(transition, background-color 0.125s ease);
-                &.search-placeholder {
-                    padding: 4px;
-                    height: 44px;
-                    -webkit-border-top-right-radius: 4px;
-                    -webkit-border-bottom-right-radius: 4px;
-                    -moz-border-radius-topright: 4px;
-                    -moz-border-radius-bottomright: 4px;
-                    border-top-right-radius: 4px;
-                    border-bottom-right-radius: 4px;
-                }
-                &:hover, &:focus {
-                    background-color: darken(#efefef, 5%);
-                }
-            }
-            &:last-child > a {
-                border-right: none;
-            }
-            .state-placeholder {
-                position: relative;
-                padding-right: 40px;
-                &:after {
-                    content: "";
-                    position: absolute;
-                    top: 13px;
-                    right: 12px;
-                    display: block;
-                    width: 19px;
-                    height: 19px;
-                    background-image: url("../img/spritesheet.png");
-                    background-position: 0px -76px;
-                    // background-size: 114px 342px;
-                    background-size: 57px 171px;
-                }
-            }
-            &.selected > a {
-                background-color: white;
-                color: $color-usat-blue;
-                &:hover, &:focus {
-                    background-color: darken(white, 2.5%);
-                }
-            }
-        }
-    }
-
-    .elections-dropdown-container {
-        position: relative;
-    }
-    .elections-dropdown {
-        display: none;
-        position: absolute;
-        top: 80px;
-        right: 46px;
-        width: 180px;
-        z-index: 9999;
-        height: 260px;
-        overflow: hidden;
-        overflow-y: scroll;
-        @include box-shadow(0px, 2px, 2px, 0, rgba(0, 0, 0, 0.25));
-        .elections-dropdown-item > a {
-            display: block;
-            padding: 14px 0 14px 20px;
+            top: 50px;
+            left: 0px;
             width: 100%;
-            background-color: #efefef;
-            color: $font-body-color;
-            font-family: $font-heading;
-            font-weight: 100;
-            @include vendor-prefix(transition, background-color 0.125s ease);
-            &:hover, &:focus {
-                background-color: darken(#efefef, 5%);
-            }
         }
-        &.clicked {
-            display: block;
-        }
-    }
-    .elections-dropdown-button {
-        .election-icon {
-            position: absolute;
-            top: 4px;
-        }
-    }
-}
 
-.elections-jumbo-click-zone {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: none;
-    height: 100%;
-    width: 100%;
-    z-index: -2;
-    // background-color: rgba(0,0,255,0.25);
-}
-
-@media only screen and (max-width: 400px) {
-    .elections-bar-nav-item.flex-group.col-xs-10 {
-        width: 76.333333%;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 {
-        clear: both;
-        margin: -34px 20px;
-        display: none;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2 > a {
-        color: white;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .item-group {
-        display: block;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.col-xs-2.active-item {
-        display: inline-block;
-    }
-}
-
-@media only screen and (min-width: 401px) {
-    /* Stick Nav CSS */
-    #election-bar-content {
-        position: fixed;
-        top: 38px;
-        width: 100%;
-        z-index: 10;
-        #elections-bar {
-            display: block;
-            @include vendor-prefix(transition, min-height 0.4s ease);
-            min-height: 170px;
-            .election-info-container {
-                @include vendor-prefix(transition, padding 0.2s ease);
-                padding-top: 30px;
-                width: 350px;
-            }
-            .election-leaning {
-                @include vendor-prefix(transition, (opacity 0.2s ease, visibility 0.4s ease));
-                visibility: visible;
-                position: absolute;
-                top: 90px;
-            }
-            .page-icon {
-                @include vendor-prefix(transition, (top 0.4s ease, visibility 0.4s ease));
-                visibility: visible;
-            }
-            .page-icon-small {
-                @include vendor-prefix(transition, opacity 0s ease);
-                @include vendor-prefix(transition-delay, 0.2s);
-                opacity: 0;
-                height: 60px;
-                width: 60px;
-                margin: 0 auto;
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: -1;
-                text-align: center;
-                .icon {
-                    display: block;
-                    padding-top: 10%;
-                    font-size: 50px;
-                    &.icon-usa-mainland {
-                        padding-top: 20%;
-                        font-size: 34px;
-                    }
-                }
-                &:after {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    right: -26px;
-                    width: 1px;
-                    height: 100%;
-                    background-color: $color-stroke;
-                }
-            }
+        .election-icon.election-icon-share {
+            background-position-x: -30px;
         }
-        #elections-bar-nav {
-            @include vendor-prefix(transition, padding-top 0.2s ease);
+
+        .elections-bar-nav .nav-item {
+            display: none;
+        } 
+
+        .elections-bar-nav .nav-item > a {
             background: none;
-            padding-top: 54px;
-            .elections-dropdown {
-                @include vendor-prefix(transition, top 0.2s ease);
-                top: 100px;
-            }
-            .twitter-typeahead {
-                @include vendor-prefix(transition, top 0.2s ease);
-                top: 46px !important;
-            }
+            border: none;
         }
-        #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-            margin-left: 0;
+
+        .elections-bar-nav .nav-item.selected, .elections-bar-nav .share-nav-item {
+            display: inline-block;
+            float: left;
         }
-        &.collapsed {
-            #elections-bar {
-                min-height: 92px;
-                .election-info-container {
-                    padding-top: 0;
-                }
-                .election-leaning {
-                    visibility: hidden;
-                    opacity: 0;
-                }
-                .page-icon {
-                    top: -240px;
-                    visibility: hidden;
-                }
-                .page-icon-small {
-                    @include vendor-prefix(transition, opacity 0.4s ease);
-                    opacity: 1;
-                }
+
+        .elections-bar-nav .nav-item.selected {
+            width: calc(100% - 70px); 
+            background: #2c2c2c url("../img/spritesheet.png") no-repeat;
+            background-position: right -144px;                    
+        }
+
+        .elections-bar-nav .nav-item.selected > a {
+            color: white;
+            text-transform: uppercase;
+            background: none;
+        }
+
+        .elections-bar-nav .nav-item:first-child > a {
+            border: none;
+        }
+
+        .elections-bar-nav .nav-item:last-child > a {
+            border: none;
+        }
+
+    }
+
+    @include tablet {
+        .elections-bar-nav .nav-item {
+            display: none;
+        } 
+
+        .elections-bar-nav .nav-item.selected, .elections-bar-nav .share-nav-item {
+            display: block;
+        }        
+    }
+
+    @include tablet-min {
+        .elections-share-dropdown {
+            
+            min-width: 50px;
+            padding-left: 3px;
+
+            .dd-nav-link {
+                height: 40px;
+                width: 40px;
+                background-image: url("../img/spritesheet-social.png");
+                background-size: 114px 152px;
+                text-indent: -10000px;
             }
-            #elections-bar-nav {
-                padding-top: 4px;
-                .elections-dropdown {
-                    top: 50px;
-                }
-                .twitter-typeahead {
-                    top: -4px !important;
-                }
+
+            #facebook-share {
+                background-position: 0px -38px;
             }
+
+            #twitter-share {
+                background-position: -76px -76px;
+            }
+
+            #mail-share {
+                background-position: -76px -114px;
+            }
+
         }
     }
-    .item-group {
-        display: block !important;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
-        padding: 0;
-        text-align: center;
-        display: none;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item:first-child,
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item:last-child {
-        display: inline-block;
-    }
-    #elections-bar-nav .elections-bar-nav-item > a {
-        background-color: #EFEFEF !important;
-        width: 100%;
-        padding: 14px 20px;
-        color: #333;
-        border-top: 1px solid #DADADA;
-        border-bottom: 1px solid #DADADA;
-    }
-    #elections-bar-nav .elections-bar-nav-item.share-item > a {
-        padding: 2px 0 3px;
-    }
-    #elections-bar-nav .elections-bar-nav-item:first-child > a {
-        border-left: 1px solid #DADADA;
-        border-radius: 4px;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    #elections-bar-nav .elections-bar-nav-item:last-child > a {
-        border-right: 1px solid #DADADA;
-        border-radius: 4px;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-    .office-placeholder {
-        display: none !important;
-    }
-    #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-        margin-left: -100px;
-    }
+
 }
 
-@media only screen and (min-width: 768px) {
-    #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-        margin-left: 0;
-    }
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item {
-        display: inline-block;
-    }
-}
-
-@media only screen and (min-width: 1200px) {
-    #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-        margin-left: 45% !important;
-    }
-    #election-bar-content #elections-bar-nav.elections-bar-nav-mobile .elections-bar-nav-item.flex-group.col-lg-1 {
-        margin-left: -60px;
-    }
-}
