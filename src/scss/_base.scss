@@ -15,12 +15,41 @@ $color-rep: #732c30;
 $color-other: #e6e6e6;
 
 /* Typography */
-$font-heading: 'FuturaTodayT02', sans-serif; 
+@font-face {
+    font-family: 'Futura Today Light';
+    src: url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_light.eot') format('eot');
+    src: url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_light.woff') format('woff'),
+         url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_light.ttf') format('truetype'),
+         url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_light.svg') format('svg');
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: 'Futura Today Normal';
+    src: url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_normal.eot') format('eot');
+    src: url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_normal.woff') format('woff'),
+         url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_normal.ttf') format('truetype');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Futura Today Demibold';
+    src: url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_demibold.eot') format('eot');
+    src: url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_demibold.woff') format('woff'),
+         url('http://www.gannett-cdn.com/GDContent/global/fonts/futura_today_demibold.ttf') format('truetype');
+    font-weight: 500;
+}
+
+$font-heading: 'Futura Today Light';
+$font-heading-normal: 'Futura Today Normal';
+$font-heading-bold: 'Futura Today Demibold';
+
 $font-heading-color: white;
 $font-heading-color2: #666666;
 $font-heading-color3: #333333;
 $font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-body-color: #111;
+
 $font-dir: 'http://www.gannett-cdn.com/GDContent/global/events/elections/icon-fonts/fonts/';
 
 
@@ -30,7 +59,6 @@ $font-dir: 'http://www.gannett-cdn.com/GDContent/global/events/elections/icon-fo
 	-moz-border-radius: $radius;
 	border-radius: $radius;
 }
-
 
 @mixin box-shadow($x, $y, $blur, $distance, $color) {
 	-moz-box-shadow: $x $y $blur $distance $color;

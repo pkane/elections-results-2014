@@ -16,15 +16,17 @@
     <% } else { %>
         <div class="row-fluid">
         <% _.each(detail, function(value) { %>
-            <table class="result-item">        
-                <tr class="result-first-row">
-                    <th class="district-name" colspan="3">
-                        <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>">
-                            <%= value.name %>
-                        </a>
-                    </th>
-                </tr>
-
+            <table class="result-item">
+                <thead>
+                    <tr class="result-first-row">
+                        <th class="district-name" colspan="3">
+                            <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>">
+                                <%= value.name %>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
                 <% _.each(value.results, function(item) { %>
                     <tr class="initiatives">
                         <td class="initiative-name"><%= item.name %></td>
@@ -32,6 +34,7 @@
                         <td class="result-pct"><%= Math.round(item.pct) %>%</td>
                     </tr>
                 <% }); %>
+                </tbody>
             </table>
         <% }); %>
         </div>
@@ -56,8 +59,9 @@
 
         <div class="row-fluid">
         <% _.each(detail, function(value) { %>
-            <table class="result-item house-item">        
-                <tr class="result-first-row">
+            <table class="result-item house-item">
+                <thead>
+                    <tr class="result-first-row">
                     <th class="district-name">
                         <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= tokenizeHouseId(value.id) %>">
                             <%= formatHouseId(value.id) %>
@@ -65,7 +69,8 @@
                     </th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
                 </tr>
-
+                </thead>
+                <tbody>
                 <% _.each(value.results, function(item) { %>
                     <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
                     <tr class="candidate <%= item.party.toLowerCase() %>">
@@ -76,6 +81,7 @@
                         <td class="result-win"><%= parseFloat(item.votes/value.votes)*100 %>%</td>                              
                     </tr>
                 <% }); %>
+                </tbody>
             </table>
         <% }); %>      
         </div>
@@ -84,18 +90,20 @@
 <div class="row">
     <% _.each(!state ? data : detail, function(value) { %>
         <table class="result-item senate-item">
-            <tr class="result-first-row">
-                <th class="district-name" colspan="3" data-href=
-                    <% if (!state) { %>
-                        '#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'
-                    <% } else { %>
-                        '#/<%= race.key %>-<%= state.abbr %>'
-                    <% } %>
-                    >
-                    <%= value.name %>
-                </th>
-            </tr>
-
+            <thead>
+                <tr class="result-first-row">
+                    <th class="district-name" colspan="3" data-href=
+                        <% if (!state) { %>
+                            '#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'
+                        <% } else { %>
+                            '#/<%= race.key %>-<%= state.abbr %>'
+                        <% } %>
+                        >
+                        <%= value.name %>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
             <% _.each(value.results, function(item) { %>
                 <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
                 <tr class="candidate <%= item.party.toLowerCase() %>">
@@ -106,6 +114,7 @@
                     <td class="result-win"><%= pctVotes %>%</td>                              
                 </tr>
             <% }); %>
+            </tbody>
         </table>
     <% }); %>
 </div>
