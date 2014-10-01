@@ -68,7 +68,6 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             //tooltip = view.tooltip,
             //dataQueue = queue(),
             features = [];
-            console.log(dataManager);
             this.drawMap();
 
             return this;
@@ -110,7 +109,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
 
             view.svg = view.svg || d3.select('#mapbox').append('svg')
                 .attr("width",  (!IE) ? '850px' : $('#main-map .map').width()) // '100%' : $('#main-map .map').width())
-                .attr("height", (!IE) ? '685px' : $('#main-map .map').height());//'100%' : $('#main-map .map').height())
+                .attr("height", (!IE) ? '600px' : $('#main-map .map').height());//'100%' : $('#main-map .map').height())
             if (!IE) view.svg.shapes = view.svg.shapes || view.svg.append('g').attr('class', 'shapes');
             if (!IE) view.svg.labels = view.svg.labels || view.svg.append('g').attr('class', 'labels');
 
@@ -148,6 +147,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
 
                     }
 
+                    console.log('basic shapes complete');
+
                     //if (mapMode !== 'electoral') { //comment out conditional. should never be electoral
 
                         // Colorize state layer
@@ -161,9 +162,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                             .attr('fill-opacity', 1)
                             .attr('stroke-width', 1)
                             .attr("d", path);
-                           // .attr('fill', colorize);
-
-                        console.log('shapes complete?');
+                            //.attr('fill', colorize);
 
                     //} else {
 
@@ -446,11 +445,11 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
 
                     // Use state colors for counties
                     if (res === 'zoom' && level === 'counties') {
-                        data = view.data.results[race].states[d.id];
+                        data = dataManager.results[race].states[d.id];
                     }
 
                 } else {
-                    data = view.data.results[race][level][d.id.substr(0, 2)];
+                    data = dataManager[race][level][d.id.substr(0, 2)];
                 }
 
                 result = _(data).find(function(r) {
