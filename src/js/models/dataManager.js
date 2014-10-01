@@ -129,6 +129,8 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             
             if (type === 'simp' || type === 'centroids') {
                 url = 'data/geo/' + level + '.' + type + '.js';
+            } else if (level === 'states' && type === 'zoom') {
+                url = 'data/geo/' + level + '.js';
             } else if (type) {
                 url = 'data/geo/' + level + '/' + type + '.js';
             } else if (level === 'places') {
@@ -141,7 +143,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 if (type === 'simp' || type === 'centroids') {
                     instance.geo[level][type] = data;
                 } else if (type) {
-                    instance.geo[level].zoom[type] = data;
+                    instance.geo[level][type] = data;
                 } else {
                     instance.geo[level] = data;
                 }

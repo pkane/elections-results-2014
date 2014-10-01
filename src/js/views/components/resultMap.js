@@ -1,7 +1,7 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
+    'jquery',
+    'underscore',
+    'backbone',
     'mapbox',
     'models/dataManager',
     'models/fips',
@@ -108,9 +108,9 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                 view.svg = undefined;
             }
 
-            view.svg = view.svg || d3.select('#election-content').append('svg')
-                .attr("width",  (!IE) ? '100%' : $('#main-map .map').width())
-                .attr("height", (!IE) ? '100%' : $('#main-map .map').height());
+            view.svg = view.svg || d3.select('#mapbox').append('svg')
+                .attr("width",  (!IE) ? '850px' : $('#main-map .map').width()) // '100%' : $('#main-map .map').width())
+                .attr("height", (!IE) ? '685px' : $('#main-map .map').height());//'100%' : $('#main-map .map').height())
             if (!IE) view.svg.shapes = view.svg.shapes || view.svg.append('g').attr('class', 'shapes');
             if (!IE) view.svg.labels = view.svg.labels || view.svg.append('g').attr('class', 'labels');
 
@@ -140,9 +140,9 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                         // Add it
                         shapes = (!IE) ? view.svg.shapes.selectAll('path.states') : view.svg.selectAll('path');
                         shapes
-                            .data(features).enter().append('path')
+                            .data(features.features).enter().append('path')
                                 .attr('class', 'states')
-                                .attr('fill', '#ffffff')
+                                .attr('fill', '#cccccc')
                                 .attr('stroke-width', 1)
                                 .attr("d", path);
 
@@ -156,12 +156,14 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                             .attr('stroke', '#ffffff')
                             .on('touchstart', touch)
                             .on('click', click)
-                            .attr('fill', '#ffffff')
+                            .attr('fill', '#cccccc')
                             .transition().ease(ease).duration(timer)
                             .attr('fill-opacity', 1)
                             .attr('stroke-width', 1)
-                            .attr("d", path)
-                            .attr('fill', colorize);
+                            .attr("d", path);
+                           // .attr('fill', colorize);
+
+                        console.log('shapes complete?');
 
                     //} else {
 
