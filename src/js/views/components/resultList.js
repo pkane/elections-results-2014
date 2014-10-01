@@ -42,7 +42,6 @@ function ($, _, Backbone, config, fipsMap, resultTemplate) {
         render: function () {
             
             if (this.model.race.id === 'h') {
-                // TODO: Sort districts by num
                 this.model.data = _.groupBy(this.model.data, function (obj) { return obj.id.substr(0, 2); });
             }
             

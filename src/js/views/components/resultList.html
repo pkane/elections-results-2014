@@ -44,7 +44,7 @@
 
     <% if (!state) { %>
         <div class="row house-card-deck">
-            <% _.each(data, function(races, stateId) { %>
+            <% _.each(_.chain(data).keys().sortBy(function (id) { return parseInt(id); }).value(), function(stateId) { %>
                 <a href="#<%= race.key %>-<%= getStateById(stateId).abbr %>">
                     <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item">
                         <div class='card-item-inner'>
@@ -58,7 +58,7 @@
     <% } else { %>
 
         <div class="row-fluid">
-        <% _.each(detail, function(value) { %>
+        <% _.each(_.sortBy(detail, function (value) { return parseInt(tokenizeHouseId(value.id)); }), function(value) { %>
             <table class="result-item house-item">
                 <thead>
                     <tr class="result-first-row">
