@@ -1,4 +1,11 @@
 
+.election-content-col {
+	@include tablet-min {
+		padding-right: 30px;
+		border-right: 1px solid $color-stroke;
+	}
+}
+
 /* Gradient Color stop positions */
 $result-item-bg-gradient-position-mobile: 139px;
 $result-item-bg-gradient-position-tablet: 179px;
