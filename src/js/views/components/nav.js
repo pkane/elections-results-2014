@@ -35,6 +35,14 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             'click #facebook-share': 'shareFacebook',
             'click #twitter-share': 'shareTwitter',
             'click #mail-share': 'shareEmail',
+            'click a': 'anchorClick'
+        },
+
+        // TODO: REMOVE ME AFTER DESKTOP FIX
+        anchorClick: function(e) {
+            if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
+                window.location = e.target.href;
+            }
         },
 
         navLinkClicked: function() {

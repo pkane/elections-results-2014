@@ -79,6 +79,8 @@
     }
 }
 
+
+
 #election-content .result-item a {
 	color: #000;
 }
@@ -110,7 +112,26 @@
 	right: 10%;
 };
 
-#election-content .house-card-deck .card-item {
+#list .card-item {
+	height: 150px;
+	background: white;		
+	padding: 6px 3px;
+}
+
+#list .card-item-inner {
+	border: 1px solid #DADADA;
+	color: #000;
+	height: 100%;
+	padding-top: 20px;
+	text-align: center;
+}
+
+#list .card-item .num-races {
+	font-size: 38px;
+	padding: 8px 0 12px;
+}
+
+/*#election-content .house-card-deck .card-item {
 	height: 150px;
 	background: #F5F5F5;
 	margin: 4px;
@@ -142,7 +163,7 @@
 		font-size: 11px;
 		padding-top: 24px;
 	}
-}
+}*/
 
 @media only screen and (max-width: 768px) {
 		#list table.result-item {

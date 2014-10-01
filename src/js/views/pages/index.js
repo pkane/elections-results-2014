@@ -27,6 +27,17 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
         
         useOembedTemplate: false,
         
+        events: {
+            'click a': 'anchorClick'
+        },
+
+        // TODO: REMOVE ME AFTER DESKTOP FIX
+        anchorClick: function() {
+            if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
+                window.location = e.target.href;
+            }
+        },
+
         initialize: function () {
             this.listenTo(dataManager, 'change:senate', this.refreshResults);
             this.listenTo(dataManager, 'change:house', this.refreshResults);
