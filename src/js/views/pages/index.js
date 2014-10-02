@@ -50,8 +50,6 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
             
         refresh: function () {
             
-            console.log('Refresh FIPS ' + this.model.fips);
-            
             var isReady = (this.model.race.key !== ''),
                 needsBoP = (this.model.race.id !== 'i' || this.model.fips),
                 needsMap = (!this.useOembedTemplate && !this.model.isMobile && this.model.race.id !== 'i'),
@@ -116,17 +114,18 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
         },
         
         refreshResults: function () {
-            console.log('index refresh ', this.model.race);
-            
             if (!resultList) return;
             
-            if (dataManager[this.model.race.key].loaded) {
-                resultList.model.race = this.model.race;
-                resultList.model.state = this.model.state;
-                resultList.model.data = dataManager[this.model.race.key].data;
-                resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
-            }
+            var dataFeed = dataManager[this.model.race.key],
+                detailFeed = (dataFeed && this.model.state) ? dataFeed.detail[this.model.state.id] : false,
+                hasData = (dataFeed && dataFeed.loaded && !dataFeed.loading),
+                hasDetail = (detailFeed && detailFeed.loaded && !detailFeed.loading);
             
+            resultList.model.race = this.model.race;
+            resultList.model.state = this.model.state;
+            resultList.model.data = hasData ? dataFeed.data : [];
+            resultList.model.detail = hasDetail ? detailFeed.data : [];
+
             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
                 this.refreshSummary();
             }
@@ -143,7 +142,7 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, dataMan
                 balanceChart.model.race = this.model.race;
                 balanceChart.model.updateTime = dataManager.summary.updateTime;
             }
-            
+
             if (this.model.state && (this.model.race.id === 'g' || this.model.race.id === 's')) {
                 balanceChart.model.detail = _.findWhere(dataManager[this.model.race.key].data, {id: this.model.state.id});
             } else if (this.model.fips) {

@@ -133,7 +133,10 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 }
                 
                 if (navView.model.currentRace.key) {
-                    dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
+                    dataManager.loadRace(navView.model.currentRace);
+                    if (navView.model.currentState) {
+                        dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
+                    }
                 }
             }
         };
