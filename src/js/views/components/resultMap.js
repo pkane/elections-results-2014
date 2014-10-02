@@ -70,6 +70,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             features = [];
             this.drawMap();
 
+            console.log('return render');
+
             return this;
         },
 
@@ -199,6 +201,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
 
                     } */
 
+                    console.log('end of states');
+
                     break;
 
                 case 'cds':
@@ -270,7 +274,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             // showTooltips();
 
             // Show place names
-            places();
+            //places();
 
             // Load chart
             /* if (application.views.chart) {
@@ -907,8 +911,10 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
 
             }
 
+            console.log('end drawmap');
+
         } //drawmap
     });
-
+    console.log('return view');
     return view;
 });

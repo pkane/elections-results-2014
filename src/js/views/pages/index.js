@@ -73,16 +73,6 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                     this.$('#balanceOfPower').hide();
                 }
                                
-                if (needsMap) {
-                    if (!resultMap) {
-                        resultMap = new ResultMap();
-                        this.$("#map").html(resultMap.el);
-                    }
-                    resultMap.render();
-                    this.$('#map').show();
-                } else {
-                    this.$('#map').hide();
-                }
                 
                 if (needsResultList) {
                     if (!resultList) {
@@ -114,6 +104,18 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                     adView.refresh();
                 } else {
                     this.$('.adview').hide();
+                }
+
+                if (needsMap) {
+                    if (!resultMap) {
+                        resultMap = new ResultMap();
+                        this.$("#map").html(resultMap.el);
+                    }
+                    resultMap.render();
+                    this.$('#map').show();
+                    console.log('show map');
+                } else {
+                    this.$('#map').hide();
                 }
                 
             } else {
