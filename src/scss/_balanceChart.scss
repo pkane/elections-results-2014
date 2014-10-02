@@ -28,6 +28,42 @@ ul.progress-stat-bar {
     position: relative;
     font-family: "Futura Today", "arial";
     line-height: 1;
+    .text-left,
+    .text-right {
+        padding-top: 10px;
+        p, 
+        .num {
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+        .num {
+            min-width: 34px;
+        }
+    }
+    .text-left {
+        p {
+            float: left; 
+        }
+        .num {
+            float: left;
+        }
+    }
+    .text-right {
+        p {
+            float: right; 
+        }
+        .num {
+            float: right;
+        }
+    }
+    .text-center {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .desc-all {
+        margin-top: 4px;
+        margin-bottom: 20px;
+    }
 }
 
 .bar-progress-right, .bop-group-num-right { 
