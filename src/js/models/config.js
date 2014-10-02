@@ -94,7 +94,19 @@ define([], function () {
             { id: '54', abbr: 'wv', display: 'West Virginia'},
             { id: '55', abbr: 'wi', display: 'Wisconsin'},
             { id: '56', abbr: 'wy', display: 'Wyoming'}
+        ],
+
+        partyColors: [
+            { id: 'democraticWin', color: '#235468'},
+            { id: 'democratic', color: '#64afd4'},
+            { id: 'republicanWin', color: '#742b31'},
+            { id: 'republican', color: '#d88787'},
+            { id: 'otherWin', color: '#33cc80'},
+            { id: 'other', color: '#99e0b6'},
+            { id: 'tieWin', color: '#b8b8b8'},
+            { id: 'tie', color: '#e0e0e0'}
         ]
+
     };
 
 });

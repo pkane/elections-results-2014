@@ -3,12 +3,13 @@ define([
     'underscore',
     'backbone',
     'mapbox',
+    'models/config',
     'models/dataManager',
     'models/fips',
     'text!views/components/resultMap.html',
     'd3'
 ],
-function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
+function ($, _, Backbone, Mapbox, config, dataManager, fipsMap, resultMap, D3) {
     var  IE = $('html').hasClass('lt-ie9'),
         view = Backbone.View.extend({
 
@@ -17,6 +18,10 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
         template: _.template(resultMap),
 
         //el: '#main-map .map',
+
+        getColorById: function (id) {
+                return _.findWhere(config.partyColors, { id: id });
+        },
 
         initialize: function() {
             console.log('init');
@@ -54,7 +59,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             var //app = application.models.app,
             mapMode = 'states' //app.get('mapMode'),
             view = this,
-            race = 'house', //this.options.race || app.get('race'), //hardcode for now
+            race = 'senate', //this.options.race || app.get('race'), //hardcode for now
             state = '00' //app.get('state') || '00',
             level = 'states' //(race === 'house') ? 'cds' :
                     //(state !== '00' || mapMode === 'counties' || mapMode === 'popular') ? 'counties' : 'states',
@@ -163,8 +168,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                             .transition().ease(ease).duration(timer)
                             .attr('fill-opacity', 1)
                             .attr('stroke-width', 1)
-                            .attr("d", path);
-                            //.attr('fill', colorize);
+                            .attr("d", path)
+                            .attr('fill', colorize);
 
                     //} else {
 
@@ -429,6 +434,8 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             }
 
             function colorize(d) {
+                console.log('colorize');
+                return view.getColorById('democratic').color;
                 var data, result, winner, leader, color;
 
                 // id.length === 2:
@@ -476,15 +483,15 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
                 });
 
                 if (winner) {
-                    color = (winner.party.toLowerCase() === 'republican') ? app.get('style').rWin :
-                            (winner.party.toLowerCase() === 'democratic') ? app.get('style').dWin :
-                                                                            app.get('style').oWin;
+                    color = (winner.party.toLowerCase() === 'republican') ? view.getColorById('republicanWin').color : // app.get('style').rWin :
+                            (winner.party.toLowerCase() === 'democratic') ? view.getColorById('democraticWin').color :// app.get('style').dWin :
+                                                                            view.getColorById('otherWin').color; // app.get('style').oWin;
                 } else {
-                    color = (!leader)                                 ? app.get('style').t :
-                        (!leader.party)                               ? app.get('style').o :
-                        (leader.party.toLowerCase() === 'republican') ? app.get('style').r :
-                        (leader.party.toLowerCase() === 'democratic') ? app.get('style').d :
-                                                                        app.get('style').o;
+                    color = (!leader)                                 ? view.getColorById('tie').color : //app.get('style').t :
+                        (!leader.party)                               ? view.getColorById('other').color : // app.get('style').o :
+                        (leader.party.toLowerCase() === 'republican') ? view.getColorById('republican').color : // app.get('style').r :
+                        (leader.party.toLowerCase() === 'democratic') ? view.getColorById('democratic').color : //app.get('style').d :
+                                                                        view.getColorById('other').color; //app.get('style').o;
                 }
 
                 return color;
