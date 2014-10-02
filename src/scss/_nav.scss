@@ -66,11 +66,12 @@
         color: #333;
         border: 1px solid #DADADA;
         border-right: none;
+        font-family: $font-heading;
         font-weight: 100;
     }
 
     .elections-bar-nav .nav-item.selected > a {
-        color: #009bff;
+        color: $color-usat-blue;
         background: white;
     }
 

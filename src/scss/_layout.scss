@@ -30,7 +30,6 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 
 	.result-first-row {
-		// top: -30px;
 		font-family: $font-heading-bold;
 		th {
 			padding-left: 4px;
@@ -40,15 +39,15 @@ $result-item-bg-gradient-position-tablet: 178px;
 	.result-first-row th.district-name {
 		width: 50%;
 		text-transform: uppercase;
-		// left: -15px;
 	}
 
 	.result-first-row th.reporting {
-		font-size: 11px;
-		color: #808080;
-		font-weight: 100;
+		padding-right: 4px;
+		font-family: $font-body;
+		font-size: 12px;
+		font-weight: 300;
 		text-align: right;
-		// right: -15px;
+		color: lighten($font-heading-color3, 30%);
 	}	
 
   tbody {
@@ -194,19 +193,30 @@ $result-item-bg-gradient-position-tablet: 178px;
 	height: 150px;
 	background: white;
 	padding: 6px 3px;
+	font-family: $font-heading;
+	font-size: 13px;
+	@include tablet-min {
+		font-size: 14px;
+	}
 }
 
 #list .card-item-inner {
-	border: 1px solid #DADADA;
-	color: #000;
 	height: 100%;
 	padding-top: 20px;
+	border: 1px solid $color-stroke;
+	color: $font-body-color;
 	text-align: center;
+	background-color: #f5f5f5;
 }
 
 #list .card-item .num-races {
-	font-size: 38px;
+	font-family: $font-heading;
+	font-weight: 100;
+	font-size: 24px;
 	padding: 8px 0 12px;
+	@include tablet-min {
+		font-size: 30px;
+	}
 }
 
 /*#election-content .house-card-deck .card-item {
