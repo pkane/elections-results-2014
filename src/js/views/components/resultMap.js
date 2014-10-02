@@ -5,16 +5,47 @@ define([
     'mapbox',
     'models/dataManager',
     'models/fips',
-    'text!views/components/resultMap.html',
+    'models/config',
+    'text!views/components/resultMap.html',    
     'd3'
 ],
-function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
+function ($, _, Backbone, Mapbox, dataManager, fipsMap, config, resultMap, D3) {
     var  IE = $('html').hasClass('lt-ie9'),
         view = Backbone.View.extend({
 
         model: new (Backbone.Model.extend({}))(),
         
         template: _.template(resultMap),
+
+        events: {
+            'click #state-list-btn': 'toggleStateList',
+            'click #back-btn': 'goBack'
+        },
+
+        goBack: function() {
+            window.location = '#' + this.model.race.key;
+        },
+
+        toggleStateList: function(e) {
+            this.$('.state-list-dropdown').toggle();
+        },
+
+        renderNav: function() {
+            if (this.model.race) {
+                var raceKey = this.model.race.key;
+
+                // this.$('.state-list-dropdown')
+                //     .html(_.map(config.states, function(state) {
+                //         return ['<li><a href=\'#', race ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
+                //     }).join(''));
+            }
+
+            this.$('#back-btn').css('display', this.model.state ? 'inline-block': 'none');
+        },
+
+        refresh: function() {
+            this.renderNav();
+        },
 
         //el: '#main-map .map',
 
@@ -31,6 +62,7 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, resultMap, D3) {
             dataManager.loadGeo('states', 'zoom');
             dataManager.loadGeo('cds', 'simp');
 
+            this.renderNav();
         },
         
         render: function () {

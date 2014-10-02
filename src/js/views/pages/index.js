@@ -124,7 +124,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
         },
         
         refreshResults: function () {
-            console.log('index refresh ', this.model.race);
+            console.log('index refresh ', this.model.race, this.model.state);
             
             if (!resultList) return;
             
@@ -133,6 +133,10 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 resultList.model.state = this.model.state;
                 resultList.model.data = dataManager[this.model.race.key].data;
                 resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
+
+                resultMap.model.race = this.model.race;
+                resultMap.model.state = this.model.state;
+                resultMap.refresh();
             }
             
             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
