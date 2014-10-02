@@ -195,6 +195,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 	padding: 6px 3px;
 	font-family: $font-heading;
 	font-size: 13px;
+	line-height: 140%;
 	@include tablet-min {
 		font-size: 14px;
 	}
@@ -202,19 +203,23 @@ $result-item-bg-gradient-position-tablet: 178px;
 
 #list .card-item-inner {
 	height: 100%;
-	padding-top: 20px;
+	padding-top: 26px;
 	border: 1px solid $color-stroke;
 	color: $font-body-color;
 	text-align: center;
 	background-color: #f5f5f5;
+	@include tablet-min {
+		padding-top: 24px;
+	}
 }
 
 #list .card-item .num-races {
 	font-family: $font-heading;
 	font-weight: 100;
 	font-size: 24px;
-	padding: 8px 0 12px;
+	padding: 12px 0;
 	@include tablet-min {
+		padding: 14px 0;
 		font-size: 30px;
 	}
 }

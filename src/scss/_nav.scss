@@ -95,6 +95,16 @@
         border-bottom-left-radius: 0;
     }
 
+    /* Elections Bar Dropdown */
+    .elections-bar-dropdown {
+        li {
+            &> a {
+                padding: 12px 20px;
+                font-family: $font-heading;
+            }
+        }
+    }
+
     @include mobile { 
 
         height: 80px;
@@ -201,9 +211,13 @@
 
     @include tablet-min {
         .elections-share-dropdown {
+
+            li {
+                text-align: center;
+            }
             
             min-width: 50px;
-            padding-left: 3px;
+            // padding-left: 3px;
 
             .dd-nav-link {
                 height: 40px;
@@ -211,6 +225,7 @@
                 background-image: url("../img/spritesheet-social.png");
                 background-size: 114px 152px;
                 text-indent: -10000px;
+                display: inline-block;
             }
 
             #facebook-share {
