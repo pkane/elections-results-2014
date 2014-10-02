@@ -35,6 +35,14 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             'click #facebook-share': 'shareFacebook',
             'click #twitter-share': 'shareTwitter',
             'click #mail-share': 'shareEmail',
+            'click a': 'anchorClick'
+        },
+
+        // TODO: REMOVE ME AFTER DESKTOP FIX
+        anchorClick: function(e) {
+            if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
+                window.location = e.target.href;
+            }
         },
 
         navLinkClicked: function() {
@@ -118,7 +126,9 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 url = this.shareUrl()
                 ;
 
-            this.$('.election-office-projection-heading').text(race.display + ' Results');
+            console.log("### RACE ", state);
+
+            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' Results');
 
             this.$('.nav-item').removeClass('selected');            
             this.$('.' + race.key + '-nav-item').addClass('selected');
