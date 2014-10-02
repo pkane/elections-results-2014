@@ -5,7 +5,7 @@
         <% _.each(data, function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
-                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 card-item">
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
                     <div class='card-item-inner'>
                         <%= s.name %>
                         <div class="num-races"><%= s.initiatives.length %></div> initiatives                        
