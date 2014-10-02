@@ -1,8 +1,11 @@
 #election-bar-content {
     border-bottom: 1px solid #dadada;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     position: relative;
     z-index: 30;
+    @include tablet-min {
+        margin-bottom: 30px;
+    }
 }
 
 .elections-overlay {
@@ -19,24 +22,33 @@
 
 
 #elections-bar {
-    height: 100px;    
-    margin-bottom: 20px;
+    min-height: 100px;
+    // margin-bottom: 20px;
+
+    .elections-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
     .page-icon {
         background: white;
-        border: 1px solid #dadada;
+        border: 1px solid $color-stroke;
         position: absolute;
-        width: 150px;
-        height: 150px;
-        padding: 10px;
+        width: 120px;
+        height: 120px;
+        padding: 0px;
 
         .icon {
             display: block;            
-            font-size: 80px;
             text-align: center; 
+            font-size: 80px;
             width: 120px;
             height: 120px;
-            padding-top: 25px;           
+            padding-top: 16px;
+            &.icon-usa-mainland {
+                font-size: 50px;
+                padding-top: 35px;
+            }
         }
     }
 
@@ -51,12 +63,14 @@
         font-weight: 700;
         font-size: 12px;
         color: #009bff;
+        margin-bottom: 4px;
     }
 
     .election-office-projection-heading {
         font-family: $font-heading;
         font-weight: 100;
-        font-size: 28px;
+        font-size: 18px;
+        line-height: 120%;
     }
 
     .elections-bar-nav .nav-item > a {
@@ -111,19 +125,6 @@
 
         .navbar-nav {
             margin: 0;
-        }
-
-        .page-icon {
-            width: 120px;
-            height: 110px;
-            padding: 0px;
-
-            .icon {
-                font-size: 50px;
-                width: 120px;
-                height: 120px;
-                padding-top: 25px;           
-            }
         }
 
         .elections-heading {
@@ -200,6 +201,7 @@
     }
 
     @include tablet {
+
         .elections-bar-nav .nav-item {
             display: none;
         } 
@@ -210,6 +212,28 @@
     }
 
     @include tablet-min {
+
+        .page-icon {
+            // background-color: blue;
+            width: 150px;
+            height: 150px;
+
+            .icon {
+                font-size: 90px;
+                width: 150px;
+                height: 150px;
+                padding-top: 28px;
+                &.icon-usa-mainland {
+                    font-size: 70px;
+                    padding-top: 42px;
+                }
+            }
+        }
+
+        .election-office-projection-heading {
+            font-size: 24px;
+        }
+
         .elections-share-dropdown {
 
             li {
@@ -241,6 +265,24 @@
             }
 
         }
+    }
+
+    @include desktop {
+
+        min-height: 120px;
+
+        .page-icon {
+            // background-color: orange;
+            .icon {
+                &.icon-usa-mainland {
+                }
+            }
+        }
+
+        .election-office-projection-heading {
+            font-size: 36px;
+        }
+
     }
 
 }
