@@ -4,7 +4,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         var opUri = config.api.op[op];
         
-        opUri = opUri.replace('{dataFeedVersionId}', '2014'); //config.api.dataFeedVersionId);
+        opUri = opUri.replace('{dataFeedVersionId}', '00'); //config.api.dataFeedVersionId);
         
         if (params) {
             _.each(params, function (value, key) {
@@ -29,54 +29,23 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         console.dir(xhr);
         console.log('Data error: ' + statusCode + '::' + msg);
     },
+    DataFeed = Backbone.Model.extend({
+        data: [],
+        loaded: false,
+        loading: false,
+        required: false,
+        detail: [],
+        updateTime: new Date()
+    }),
     
     instance = new (Backbone.Model.extend({
         
-        initiatives: {
-            data: [],
-            loaded: false,
-            required: false,
-            detail: [],
-            updateTime: new Date()
-        },
-        
-        house: {
-            data: [],
-            loaded: false,
-            required: false,
-            detail: [],
-            updateTime: new Date()
-        },
-        
-        senate: {
-            data: [],
-            loaded: false,
-            required: false,
-            detail: [],
-            updateTime: new Date()
-        },
-        
-        governors: {
-            data: [],
-            loaded: false,
-            required: false,
-            detail: [],
-            updateTime: new Date()
-        },
-
-        summary: {
-            data: [],
-            loaded: false,
-            required: true,
-            updateTime: new Date()
-        },
-        
-        updates: {
-            data: [],
-            loaded: false,
-            required: false,
-            updateTime: new Date()
-        },
+        initiatives: new DataFeed(),
+        house: new DataFeed(),
+        senate: new DataFeed(),
+        governors: new DataFeed(),
+        summary: new DataFeed(),
+        updates: new DataFeed(),
         
         loadRace: function (race, state) {
             console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
@@ -84,25 +53,33 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             var isDetail = (state && race.detail),
                 opKey = (isDetail) ? race.detail : race.op,
                 opUri = getOpUri(opKey, { raceId: (race) ? race.id : '', stateId: (state) ? state.id : '00' }),
+                opData = (isDetail) ? instance[race.key].detail[state.id] : instance[race.key],
                 opSettings = getSettings(function (xhr, statusCode) {
                     if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
-                        instance[race.key].loaded = true;
-
-                        if (isDetail) {
-                            instance[race.key].detail[state.id] = xhr.responseJSON;
-                        } else {
-                            instance[race.key].data = xhr.responseJSON;
-                        }
-
-                        instance[race.key].updateTime = new Date();
+                        opData.loading = false;
+                        opData.data = xhr.responseJSON;
+                        opData.updateTime = new Date();
+                        opData.loaded = config.api.dataFeedVersionId;
 
                         instance.trigger('change:' + race.key);
                     }
                 });
             
             if (config.api.dataFeedVersionId === 0) {
+                console.log('No data feed version');
                 return; // Ignore initial 0 state? queue request until version updates?
+            } else if (opData && (opData.loading || opData.loaded === config.api.dataFeedVersionId)) {
+                console.log('Using cached data/request');
+                return;
             } else {
+                
+                if (isDetail && !opData) {
+                    instance[race.key].detail[state.id] = new DataFeed();
+                    opData = instance[race.key].detail[state.id];
+                }
+                
+                opData.loading = true;
+                
                 $.ajax(opUri, opSettings);
             }
         }
