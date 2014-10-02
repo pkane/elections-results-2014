@@ -292,7 +292,7 @@ only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
 	#election-app .election-icon {
 		background-image: url('../img/spritesheet@2x.png');
-		background-size: 114px 342px; // size of non retina spritesheet
+		background-size: 114px 380px; // size of non retina spritesheet
 	}
 }
 
