@@ -30,9 +30,10 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 
 	.result-first-row {
-		font-family: $font-heading-bold;
+		// font-family: $font-heading-bold;
 		th {
 			padding-left: 4px;
+			font-family: $font-heading-normal;
 		}
 	}
 
@@ -96,13 +97,14 @@ $result-item-bg-gradient-position-tablet: 178px;
 
 	.result-name {
 		width: 130px;
-		padding: 0 10px 0 0;
+		padding: 8px 10px 0 0;
 		font-family: $font-heading;
 		line-height: 140%;
 	}
 
 	.result-win {
 		width: 30px;
+		padding: 5px 0;
 	}
 
 	.result-votes {
