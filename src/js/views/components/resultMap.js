@@ -15,16 +15,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         model: new (Backbone.Model.extend({}))(),
         
         template: _.template(resultMap),
-
-        initialize: function() {
-            // TODO: Check for mobile
-            this.listenTo(dataManager, 'change:states', function () { 
-                console.log('-- State Geo Data Changed -- ');
-                this.drawMap();
-            });
-        },
         
-        drawMap: function(svg) {
+        drawMap: function() {
             if (this.model.race) {
                 d3.json(dataManager.getGeo('states'), _.bind(function(json) {      
                     this.svg.selectAll("path")
@@ -40,20 +32,32 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             }
         },
 
+        drawMap2: function(geoJsonPath) {
+            d3.json(geoJsonPath, _.bind(function(json) {      
+                this.svg.selectAll("path")
+                   .data(json.features)
+                   .enter()
+                   .append("path")
+                   .attr('fill', _.bind(this.fillColor, this))
+                   .attr('stroke', '#ddd')
+                   .attr('stroke-width', 1)
+                   .attr("d", this.path)
+                   ;
+            }, this));
+        },
+
         fillColor: function(d) {
-            var _this = this, 
-                color = '#ccc'
-                found = _.findWhere(dataManager[this.model.race.key].data, {id: d.id})
+            var partyColors = config.partyColors,
+                color = partyColors.default,
+                found = _.findWhere(dataManager[this.model.race.key].data, { id: d.id })
                 ;
 
             if (found) {
-                console.log('-- found ', found, config.partyColors);
-
                 _.each(found.results, function(item) {
                     if (item.win) {                                                
-                        color = config.partyColors[item.party.toLowerCase() + "Win"] || config.partyColors["otherWin"];
+                        color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                     } else if (item.lead) {
-                        color = config.partyColors[item.party.lower()] || config.partyColors["other"];
+                        color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                     }
                 });
             }
@@ -62,7 +66,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         },
 
         refresh: function() {
-            this.drawMap();
+            this.drawMap(dataManager.getGeo('states'));
         },
 
         render: function () {
@@ -72,6 +76,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         },
 
         renderMap: function() {
+            console.log('-- render map');
+
             var width = this.$el.width(), 
                 height = Math.floor(width * 3 / 4)
                 ;
@@ -87,7 +93,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                          .attr('width', width)
                          .attr('height', height);
 
-            this.drawMap();            
+            this.drawMap(dataManager.getGeo('states'));            
         }
 
         

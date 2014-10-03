@@ -97,6 +97,7 @@ define(['jquery'], function ($) {
         ],
 
         partyColors: {
+            default: '#ccc',
             democraticWin: '#235468',
             democratic: '#64afd4',
             republicanWin: '#742b31',

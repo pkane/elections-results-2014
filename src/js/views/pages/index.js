@@ -35,7 +35,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
         },
 
         // TODO: REMOVE ME AFTER DESKTOP FIX
-        anchorClick: function() {
+        anchorClick: function(e) {
             if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
                 window.location = e.target.href;
             }
