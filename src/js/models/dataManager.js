@@ -123,7 +123,25 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             },
             places: []
         },
-        
+
+        getGeo: function(level, type) {
+            var url = '';
+            
+            if (type === 'simp' || type === 'centroids') {
+                url = 'data/geo/' + level + '.' + type + '.js';
+            } else if (level === 'states' && type === 'zoom') {
+                url = 'data/geo/' + level + '.js';
+            } else if (type) {
+                url = 'data/geo/' + level + '/' + type + '.js';
+            } else if (level === 'places') {
+                url = 'data/geo/places.js';
+            } else {
+                url = 'data/geo/' + level + '.js';
+            }
+
+            return url;
+        },
+
         loadGeo: function (level, type) {
             var url = '';
             

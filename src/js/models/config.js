@@ -96,16 +96,16 @@ define([], function () {
             { id: '56', abbr: 'wy', display: 'Wyoming'}
         ],
 
-        partyColors: [
-            { id: 'democraticWin', color: '#235468'},
-            { id: 'democratic', color: '#64afd4'},
-            { id: 'republicanWin', color: '#742b31'},
-            { id: 'republican', color: '#d88787'},
-            { id: 'otherWin', color: '#33cc80'},
-            { id: 'other', color: '#99e0b6'},
-            { id: 'tieWin', color: '#b8b8b8'},
-            { id: 'tie', color: '#e0e0e0'}
-        ]
+        partyColors: {
+            democraticWin: '#235468',
+            democratic: '#64afd4',
+            republicanWin: '#742b31',
+            republican: '#d88787',
+            otherWin: '#33cc80',
+            other: '#99e0b6',
+            tieWin: '#b8b8b8',
+            tie: '#e0e0e0'
+        }
 
     };
 
