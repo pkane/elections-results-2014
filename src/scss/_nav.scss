@@ -52,6 +52,7 @@
 // }
 
 #elections-bar {
+
     min-height: 100px;
     // margin-bottom: 20px;
     @include vendor-prefix(transition, min-height 0.2s ease-out);
@@ -268,6 +269,10 @@
     }
 
     @include tablet-min {
+
+        .elections-bar-left-col {
+            padding-left: 0;
+        }
 
         .page-icon {
             // background-color: blue;
