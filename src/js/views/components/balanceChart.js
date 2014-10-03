@@ -57,18 +57,18 @@ function ($, _, Backbone, chartTemplate, Moment) {
 
                     if (candidate[0].party === 'Democratic') {
                         $(progressLeft).addClass('dem').removeClass('other');
-                        $('icon', progressLeft).addClass('icon-dem-left');
+                        $('.icon', progressLeft).addClass('icon-dem-right');
                     } else {
                         $(progressLeft).removeClass('dem').addClass('other');
-                        $('icon', progressLeft).removeClass('icon-dem-left dem');
+                        $('.icon', progressLeft).removeClass('icon-dem-right dem');
                     }
 
                     if (candidate[1].party === 'Republican') {
                         $(progressRight).addClass('rep').removeClass('other');
-                        $('icon', progressRight).addClass('icon-rep-left');
+                        $('.icon', progressRight).addClass('icon-rep-left');
                     } else {
                         $(progressRight).removeClass('rep').addClass('other');
-                        $('icon', progressRight).removeClass('icon-rep-left dem');
+                        $('.icon', progressRight).removeClass('icon-rep-left dem');
                     } 
 
                     $('.num', numLeft).text(pctLeft + '%');
@@ -103,10 +103,10 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 this.$('.desc-individual').hide();
                 
                 $(progressLeft).addClass('dem').removeClass('other');
-                $('icon', progressLeft).addClass('icon-dem-left');
+                $('.icon', progressLeft).addClass('icon-dem-right');
                 
                 $(progressRight).addClass('rep').removeClass('other');
-                $('icon', progressRight).addClass('icon-rep-left');
+                $('.icon', progressRight).addClass('icon-rep-left');
                 
                 $('.num', numLeft).text(dem.seats + other.seats + held.dem);
                 $('.num', numRight).text(rep.seats + held.rep);

@@ -73,7 +73,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
 
         renderMap: function() {
             var width = this.$el.width(), 
-                height = width * 3 / 4
+                height = Math.floor(width * 3 / 4)
                 ;
 
             this.projection = d3.geo.albersUsa()

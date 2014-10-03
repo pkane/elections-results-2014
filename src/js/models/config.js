@@ -1,4 +1,4 @@
-define([], function () {
+define(['jquery'], function ($) {
 
     var staticInfo = JSON.parse($('.staticinfo').html()),
         isMobile = staticInfo.platform === 'mobile'
