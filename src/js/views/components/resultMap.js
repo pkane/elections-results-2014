@@ -31,13 +31,14 @@ function ($, _, Backbone, Mapbox, dataManager, fipsMap, config, resultMap, D3) {
         },
 
         renderNav: function() {
+            console.log('render nav');
             if (this.model.race) {
                 var raceKey = this.model.race.key;
 
-                // this.$('.state-list-dropdown')
-                //     .html(_.map(config.states, function(state) {
-                //         return ['<li><a href=\'#', race ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
-                //     }).join(''));
+                this.$('.state-list-dropdown')
+                    .html(_.map(config.states, function(state) {
+                        return ['<li><a class=\'state-list-link\' href=\'#', race ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
+                    }).join(''));
             }
 
             this.$('#back-btn').css('display', this.model.state ? 'inline-block': 'none');
