@@ -16,84 +16,119 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         
         template: _.template(resultMap),
         
-        drawMap: function() {
+        drawMap: function(geoJsonPath) {
             if (this.model.race) {
-                d3.json(dataManager.getGeo('states'), _.bind(function(json) {      
-                    this.svg.selectAll("path")
+                console.log('-- draw map 2', this.model);
+                console.log('-- draw ... 2', dataManager[this.model.race.key].data);
+
+                d3.json(geoJsonPath, _.bind(function(json) {
+                    this.svg.html('');
+                    this.svg                       
+                       .selectAll("path")
                        .data(json.features)
                        .enter()
                        .append("path")
                        .attr('fill', _.bind(this.fillColor, this))
                        .attr('stroke', '#ddd')
-                       .attr('stroke-width', 1)
-                       .attr("d", this.path)
+                       .attr('stroke-width', 0.5)
+                       .attr("d", d3.geo.path().projection(this.projection))
                        ;
-                }, this));
+
+                }, this));                
             }
         },
 
-        drawMap2: function(geoJsonPath) {
-            d3.json(geoJsonPath, _.bind(function(json) {      
-                this.svg.selectAll("path")
-                   .data(json.features)
-                   .enter()
-                   .append("path")
-                   .attr('fill', _.bind(this.fillColor, this))
-                   .attr('stroke', '#ddd')
-                   .attr('stroke-width', 1)
-                   .attr("d", this.path)
-                   ;
-            }, this));
-        },
-
         fillColor: function(d) {
-            var partyColors = config.partyColors,
-                color = partyColors.default,
-                found = _.findWhere(dataManager[this.model.race.key].data, { id: d.id })
+            var id = d.id,
+                partyColors = config.partyColors,
+                color = partyColors.default
                 ;
 
+            if (this.model.race.id == 'h') {
+                // 39-District 11
+                id = d.id.substr(0, 2) + '-District ' + parseInt(d.id.substr(-2))
+            }
+
+            var found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+
             if (found) {
-                _.each(found.results, function(item) {
-                    if (item.win) {                                                
-                        color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
-                    } else if (item.lead) {
-                        color = partyColors[item.party.toLowerCase()] || partyColors["other"];
-                    }
-                });
+                if (!this.model.state || this.model.state && d.id.substr(0, 2) == this.model.state.id) {
+                    _.each(found.results, function(item) {
+                        if (item.win) {                                                
+                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                        } else if (item.lead) {
+                            color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                        }
+                    });
+                }
             }
 
             return color;
         },
 
         refresh: function() {
-            this.drawMap(dataManager.getGeo('states'));
+            console.log('-- refresh --');
+            this.renderMap();            
         },
 
         render: function () {
-            this.$el.html(this.template(this.model));
+            console.log('-- render --');
+            this.$el.html(this.template(this.model));            
             this.renderMap();
             return this;
         },
 
         renderMap: function() {
-            console.log('-- render map');
+            console.log('-- render map ', this.model.race, this.model.state);
 
             var width = this.$el.width(), 
                 height = Math.floor(width * 3 / 4)
                 ;
 
-            this.projection = d3.geo.albersUsa()
+            this.svg = d3.select(this.el)
+                         .select('svg')
+                         .attr('width', width)
+                         .attr('height', height)
+                         ;
+
+            this.projection = d3.geo
+                                .albersUsa()
                                 .translate([width/2, height/2])
                                 .scale([800])
-                                ;      
+                                ;
 
-            this.path = d3.geo.path().projection(this.projection);
-            this.svg = d3.select(this.el)
-                         .insert('svg')
-                         .attr('width', width)
-                         .attr('height', height);
+            if (this.model.race) {
+                if (this.model.race.id == 'h') {
 
-            this.drawMap(dataManager.getGeo('states'));            
+                    console.log('draw house');
+
+                    if (this.model.state) {                        
+                        console.log('### ', this.model.race);
+                        console.log('### STATE ', this.model.state);
+
+                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
+                            
+                            var found = _.findWhere(json.features, { id: this.model.state.id });
+
+                            this.projection = d3.geo
+                                                .mercator()
+                                                .translate([width/2, height/2])
+                                                .scale([1600])
+                                                .center(found.geometry.coordinates)                                                    
+                                                ;
+
+                            this.drawMap(dataManager.getGeo('cds', 'simp'));
+
+                        }, this));
+
+                    } else {
+                        this.drawMap(dataManager.getGeo('cds', 'simp'));    
+                    }
+
+                } else {
+                    this.drawMap(dataManager.getGeo('states'));
+                }
+            }
         }
 
         
