@@ -16,11 +16,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         
         template: _.template(resultMap),
         
-        drawMap: function(geoJsonPath) {
+        drawMap: function(geoJsonPath, strokeWidth) {
             if (this.model.race) {
-                console.log('-- draw map 2', this.model);
-                console.log('-- draw ... 2', dataManager[this.model.race.key].data);
-
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
                     this.svg                       
@@ -29,8 +26,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                        .enter()
                        .append("path")
                        .attr('fill', _.bind(this.fillColor, this))
-                       .attr('stroke', '#ddd')
-                       .attr('stroke-width', 0.5)
+                       .attr('stroke', '#fff')
+                       .attr('stroke-width', strokeWidth || 1)
                        .attr("d", d3.geo.path().projection(this.projection))
                        ;
 
@@ -41,20 +38,22 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         fillColor: function(d) {
             var id = d.id,
                 partyColors = config.partyColors,
+                state = id,
                 color = partyColors.default
                 ;
 
             if (this.model.race.id == 'h') {
                 // 39-District 11
-                id = d.id.substr(0, 2) + '-District ' + parseInt(d.id.substr(-2))
+                state = d.id.substr(0, 2);
+                id = state + '-District ' + parseInt(d.id.substr(-2))
             }
 
             var found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
 
             if (found) {
-                if (!this.model.state || this.model.state && d.id.substr(0, 2) == this.model.state.id) {
+                if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.each(found.results, function(item) {
-                        if (item.win) {                                                
+                        if (item.win) {
                             color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         } else if (item.lead) {
                             color = partyColors[item.party.toLowerCase()] || partyColors["other"];
@@ -99,17 +98,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
 
             if (this.model.race) {
                 if (this.model.race.id == 'h') {
-
-                    console.log('draw house');
-
                     if (this.model.state) {                        
-                        console.log('### ', this.model.race);
-                        console.log('### STATE ', this.model.state);
-
                         d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
-                            
+
                             var found = _.findWhere(json.features, { id: this.model.state.id });
 
+                            // TODO: make better...
                             this.projection = d3.geo
                                                 .mercator()
                                                 .translate([width/2, height/2])
@@ -122,11 +116,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                         }, this));
 
                     } else {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'));    
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.2);    
                     }
 
                 } else {
-                    this.drawMap(dataManager.getGeo('states'));
+                    this.drawMap(dataManager.getGeo('states'), 0.2);
                 }
             }
         }
