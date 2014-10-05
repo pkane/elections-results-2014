@@ -2,10 +2,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-    'text!views/components/balanceChart.html',
-    'moment'
+    'd3',
+    'text!views/components/balanceChart.html'    
 ],
-function ($, _, Backbone, chartTemplate, Moment) {
+function ($, _, Backbone, d3, chartTemplate) {
 
     var isRendered = false,
         seatsHeld = { 
@@ -18,6 +18,8 @@ function ($, _, Backbone, chartTemplate, Moment) {
         className: 'balance-of-power-chart',
         
         template: _.template(chartTemplate),
+
+        timeFormat: d3.time.format('%I:%M %p'),
         
         model: new (Backbone.Model.extend({
             data: [],
@@ -94,8 +96,8 @@ function ($, _, Backbone, chartTemplate, Moment) {
                     held = seatsHeld[this.model.race.id],
                     dem = _.findWhere(results.results, { party: 'Democratic' }),
                     rep = _.findWhere(results.results, { party: 'Republican' }),
-                    other = _.findWhere(results.results, { party: 'Other' }),
-                    updateTime = new Moment(this.model.updateTime);
+                    other = _.findWhere(results.results, { party: 'Other' })
+                    ;
                 
                 // icon-rep-left
                 
@@ -119,8 +121,8 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 
                 $('.text-left .votes', desc).text(held.was.dem);
                 $('.text-right .votes', desc).text(held.was.rep);
-                
-                this.$('.updated').text('updated ' + updateTime.format('h:mm a'));
+
+                this.$('.updated').text('updated ' + this.timeFormat(this.model.updateTime));
             } else {
                 console.log('Build placeholder loading state for BoP');
             }
