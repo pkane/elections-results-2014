@@ -104,6 +104,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                             var found = _.findWhere(json.features, { id: this.model.state.id });
 
                             // TODO: make better...
+                            // http://stackoverflow.com/questions/12467504/how-do-i-get-my-d3-map-to-zoom-to-a-location
                             this.projection = d3.geo
                                                 .mercator()
                                                 .translate([width/2, height/2])
@@ -116,11 +117,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                         }, this));
 
                     } else {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.2);    
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);    
                     }
 
                 } else {
-                    this.drawMap(dataManager.getGeo('states'), 0.2);
+                    this.drawMap(dataManager.getGeo('states'));
                 }
             }
         }
