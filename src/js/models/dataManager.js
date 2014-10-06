@@ -116,7 +116,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 url = 'data/geo/' + level + '.js';
             }
 
-            return config.pageInfo.webproxy + config.pageInfo.geoJsonRoot + url;
+            return config.geoBase + url;
         },
 
         loadGeo: function (level, type) {
