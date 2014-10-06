@@ -31,7 +31,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                        .attr("d", d3.geo.path().projection(this.projection))
                        ;
 
-                }, this));                
+                }, this));     
+
             }
         },
 
@@ -97,21 +98,25 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                                 ;
 
             if (this.model.race) {
-                if (this.model.race.id == 'h') {
+                if (this.model.race.id == 'h') { //house
                     if (this.model.state) {                        
                         d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
 
                             var found = _.findWhere(json.features, { id: this.model.state.id });
+                            var scaleMultiplier = 1.0;
+                            if ($(window).width() < 1025) {
+                                scaleMultiplier = 0.5
+                            }
 
                             // TODO: make better...
                             // http://stackoverflow.com/questions/12467504/how-do-i-get-my-d3-map-to-zoom-to-a-location
+
                             this.projection = d3.geo
                                                 .mercator()
                                                 .translate([width/2, height/2])
-                                                .scale([1600])
+                                                .scale(found.geometry.scale * scaleMultiplier)
                                                 .center(found.geometry.coordinates)                                                    
                                                 ;
-
                             this.drawMap(dataManager.getGeo('cds', 'simp'));
 
                         }, this));
@@ -121,7 +126,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                     }
 
                 } else {
+
+
                     this.drawMap(dataManager.getGeo('states'));
+
                 }
             }
         }
