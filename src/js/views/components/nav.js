@@ -17,10 +17,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         
         template: _.template(templateFile),
 
-        shareUrl: function() { return escape(location.href); },
+        shareUrl: function() { return config.pageInfo.share_url; },
 
         text: {
-            message: _.template('Learn more about key #election2014 <%- race %> races via the @USATODAY Election Outlook'),
+            message: _.template('Latest <%- race %> race results via @USATODAY #election2014'),
 
             facebook: _.template('https://www.facebook.com/dialog/feed/?app_id=<%- appid %>&link=#url#&redirect_uri=#url#name=<%- message %>'),
             twitter: _.template('https://twitter.com/intent/tweet?url=#url#&text=<%- message %>'),
