@@ -109,7 +109,20 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },  
         
         initialize: function () {
-            $('#election-bar-content').html(this.el);                        
+            $('#election-bar-content').html(this.el);
+
+            // collapse nav on scroll on desktop
+            if (!config.isMobile) {
+                var $win = $(window);
+
+                $win.scroll(function () {
+                    if ($win.scrollTop() > 0) {
+                        $('#election-bar-content').addClass("collapsed");
+                    } else {
+                        $('#election-bar-content').removeClass("collapsed");
+                    }
+                });
+            }
         },  
         
         render: function () {            
@@ -134,6 +147,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             this.$('.' + race.key + '-nav-item').addClass('selected');
             
             this.$('.page-icon .icon').removeClass().addClass('icon ' + this.model.getStateIcon());
+            this.$('.page-icon-mini .icon').removeClass().addClass('icon ' + this.model.getStateIcon());
 
             this.$('#facebook-share').attr('href', this.text.facebook({ appid: config.pageInfo.facebook.app_id, message: message }).replace(/#url#/g, url));
             this.$('#mail-share').attr('href', this.text.mail({ message: message }).replace(/#url#/g, url));            

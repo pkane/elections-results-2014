@@ -1,10 +1,45 @@
 #election-bar-content {
+    position: relative;
+    width: 100%;
+    padding-top: 115px;
     border-bottom: 1px solid #dadada;
     margin-bottom: 10px;
-    position: relative;
+    background-color: #fafafa;
     z-index: 30;
+    @include vendor-prefix(transition, padding 0.2s ease-out);
     @include tablet-min {
         margin-bottom: 30px;
+        padding-top: 65px;
+    }
+    @include desktop {
+        /* Collapsed Navigation Styles */
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    /* Collapsed Navigation Styles */
+    &.collapsed {
+        position: fixed;
+        padding-top: 20px;
+        #elections-bar {
+            min-height: 70px;
+            .page-icon {
+                top: -200px;
+                opacity: 0;
+            }
+            .election-office-projection-heading {
+                font-size: 20px;
+                @include desktop {
+                    font-size: 24px;
+                }
+            }
+        }
+    }
+}
+
+#election-content {
+    @include desktop {
+        padding-top: 196px;
     }
 }
 
@@ -12,18 +47,19 @@
     display: none;
 }
 
-@include mobile { 
+// @include mobile { 
 
-    #election-bar-content {
-        padding-top: 30px;
-    }
+//     #election-bar-content {
+//         padding-top: 30px;
+//     }
 
-}
-
+// }
 
 #elections-bar {
+
     min-height: 100px;
     // margin-bottom: 20px;
+    @include vendor-prefix(transition, min-height 0.2s ease-out);
 
     .elections-row {
         margin-left: 0;
@@ -31,12 +67,14 @@
     }
 
     .page-icon {
+        position: absolute;
+        top: 0;
         background: white;
         border: 1px solid $color-stroke;
-        position: absolute;
         width: 120px;
         height: 120px;
         padding: 0px;
+        @include vendor-prefix(transition, (top 0.3s ease-out, opacity 0.2s ease));
 
         .icon {
             display: block;            
@@ -52,9 +90,31 @@
         }
     }
 
+    .page-icon-mini {
+        position: absolute;
+        left: 20px;
+        top: 0;
+        width: 116px;
+        height: 50px;
+        display: none;
+        border-right: 1px solid $color-stroke;
+        .icon {
+            display: block;            
+            text-align: center; 
+            font-size: 50px;
+            width: 116px;
+            height: 50px;
+            padding-top: 2px;
+            &.icon-usa-mainland {
+                font-size: 40px;
+                padding-top: 4px;
+            }
+        }
+    }
+
     .elections-heading {
         margin-left: 170px;
-        padding-bottom: 30px;
+        // padding-bottom: 30px;
         color: #666;
     }
 
@@ -71,6 +131,7 @@
         font-weight: 100;
         font-size: 18px;
         line-height: 120%;
+        @include vendor-prefix(transition, font-size 0.15s ease-out);
     }
 
     .elections-bar-nav .nav-item > a {
@@ -213,8 +274,14 @@
 
     @include tablet-min {
 
+        .elections-bar-left-col {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
         .page-icon {
-            // background-color: blue;
+            position: absolute;
+            z-index: 10;
             width: 150px;
             height: 150px;
 
@@ -228,6 +295,10 @@
                     padding-top: 42px;
                 }
             }
+        }
+
+        .page-icon-mini {
+            display: block;
         }
 
         .election-office-projection-heading {
@@ -268,15 +339,10 @@
     }
 
     @include desktop {
-
         min-height: 120px;
 
-        .page-icon {
-            // background-color: orange;
-            .icon {
-                &.icon-usa-mainland {
-                }
-            }
+        .elections-row {
+            position: relative;
         }
 
         .election-office-projection-heading {
@@ -286,4 +352,3 @@
     }
 
 }
-
