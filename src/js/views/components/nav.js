@@ -112,7 +112,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             $('#election-bar-content').html(this.el);
 
             // collapse nav on scroll on desktop (1024+)
-            if ($(window).width() >= 1024) {
+            if (!config.isMobile) {
                 var scrollTimeout;  // global for any pending scrollTimeout
                 var didScroll = false;
                 $(window).scroll(function () {
