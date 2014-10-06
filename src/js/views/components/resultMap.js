@@ -43,6 +43,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                 color = partyColors.default
                 ;
 
+            console.log('id = ' + id);
+            console.log(d);
+            console.log(this.model.state);
+
             if (this.model.race.id == 'h') {
                 // 39-District 11
                 state = d.id.substr(0, 2);
@@ -82,8 +86,13 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             console.log('-- render map ', this.model.race, this.model.state);
 
             var width = this.$el.width(), 
-                height = Math.floor(width * 3 / 4)
+                height = Math.floor(width * 3 / 4),
+                scaleMultiplier = 1.0;
                 ;
+
+            if ($(window).width() < 1025) {
+                scaleMultiplier = 0.5
+            }
 
             this.svg = d3.select(this.el)
                          .select('svg')
@@ -102,11 +111,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                     if (this.model.state) {                        
                         d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
 
-                            var found = _.findWhere(json.features, { id: this.model.state.id });
-                            var scaleMultiplier = 1.0;
-                            if ($(window).width() < 1025) {
-                                scaleMultiplier = 0.5
-                            }
+                            var found = _.findWhere(json.features, { id: this.model.state.id });                            
 
                             // TODO: make better...
                             // http://stackoverflow.com/questions/12467504/how-do-i-get-my-d3-map-to-zoom-to-a-location
@@ -125,10 +130,49 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                         this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);    
                     }
 
-                } else {
+                } else if (this.model.race.id == 'g') { //governor
 
 
-                    this.drawMap(dataManager.getGeo('states'));
+                    if (this.model.state) {                        
+                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
+
+                            var found = _.findWhere(json.features, { id: this.model.state.id });
+
+                            this.projection = d3.geo
+                                                .mercator()
+                                                .translate([width/2, height/2])
+                                                .scale(found.geometry.scale * scaleMultiplier)
+                                                .center(found.geometry.coordinates)                                                    
+                                                ;
+                            this.drawMap(dataManager.getGeo('counties', 'simp'));
+
+                        }, this));
+
+                    } else {
+                        this.drawMap(dataManager.getGeo('counties', 'simp'));    
+                    }
+
+                } else if (this.model.race.id == 's') { //senate
+
+
+                    if (this.model.state) {                        
+                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
+
+                            var found = _.findWhere(json.features, { id: this.model.state.id });
+
+                            this.projection = d3.geo
+                                                .mercator()
+                                                .translate([width/2, height/2])
+                                                .scale(found.geometry.scale * scaleMultiplier)
+                                                .center(found.geometry.coordinates)                                                    
+                                                ;
+                            this.drawMap(dataManager.getGeo('counties', 'simp'));
+
+                        }, this));
+
+                    } else {
+                        this.drawMap(dataManager.getGeo('states'));    
+                    }
 
                 }
             }
