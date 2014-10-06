@@ -122,8 +122,8 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                         resultMap = new ResultMap();
                         this.$("#map").html(resultMap.el);
                     }
-                    resultMap.render();
                     this.$('#map').show();
+                    resultMap.render();
                     console.log('show map');
                 } else {
                     this.$('#map').hide();
