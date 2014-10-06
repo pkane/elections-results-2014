@@ -95,7 +95,8 @@ $result-item-bg-gradient-position-tablet: 178px;
 		font-weight: 100;
 	}
 
-	.result-name {
+	.result-name,
+	.initiative-name {
 		width: 130px;
 		padding: 8px 10px 0 0;
 		font-family: $font-heading;
@@ -124,7 +125,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 
   .initiative-name {
-      text-align: left;
+      text-align: right;
   }
 
 	/* Result Item Tablet+ Styles */
@@ -141,7 +142,8 @@ $result-item-bg-gradient-position-tablet: 178px;
 			background-image:         linear-gradient(left, #fff 0px, #fff $result-item-bg-gradient-position-tablet, #f4f4f4 $result-item-bg-gradient-position-tablet+1, #f4f4f4 100%);
   	}
 
-  	.result-name {
+  	.result-name,
+  	.initiative-name {
   		width: 160px;
   		font-size: 14px;
   	}
