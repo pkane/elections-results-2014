@@ -111,8 +111,9 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                     if (!adView) {
                         adView = new AdView();
                     }
+                    
                     this.$('.adview').show();
-                    adView.refresh();
+                    // adView.refresh();
                 } else {
                     this.$('.adview').hide();
                 }
