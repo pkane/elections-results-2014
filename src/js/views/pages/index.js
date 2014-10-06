@@ -161,37 +161,6 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
             }
             
             resultList.render();
-
-//             if (!resultList) return;
-            
-// <<<<<<< HEAD
-//             if (dataManager[this.model.race.key].loaded) {
-//                 resultList.model.race = this.model.race;
-//                 resultList.model.state = this.model.state;
-//                 resultList.model.data = dataManager[this.model.race.key].data;
-//                 resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
-
-//                 resultMap.model.race = this.model.race;
-//                 resultMap.model.state = this.model.state;
-//                 resultMap.refresh();                
-//             }
-// =======
-//             var dataFeed = dataManager[this.model.race.key],
-//                 detailFeed = (dataFeed && this.model.state) ? dataFeed.detail[this.model.state.id] : false,
-//                 hasData = (dataFeed && dataFeed.loaded && !dataFeed.loading),
-//                 hasDetail = (detailFeed && detailFeed.loaded && !detailFeed.loading);
-// >>>>>>> master
-            
-//             resultList.model.race = this.model.race;
-//             resultList.model.state = this.model.state;
-//             resultList.model.data = hasData ? dataFeed.data : [];
-//             resultList.model.detail = hasDetail ? detailFeed.data : [];
-
-//             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
-//                 this.refreshSummary();
-//             }
-            
-//             resultList.render();
         },
         
         refreshSummary: function () {
