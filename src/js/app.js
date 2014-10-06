@@ -47,28 +47,21 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
 
             var race = _.findWhere(config.races, { key: raceKey }),
                 state = _.findWhere(config.states, { abbr: stateAbbr });
-
+            
+            if (oembed) {
+                $('#election-app').addClass('oembed');
+            } else {
+                $('#election-app').removeClass('oembed');
+            }
+            
             rootView.useOembedTemplate = (!!oembed);
             rootView.model.race = race;
             rootView.model.state = state;
             rootView.model.fips = fips;
             
-            console.log('Setting fips ' + fips);
-
             navView.model.currentRace = race;
             navView.model.currentState = state;
-            
-            if (oembed) {
-                $('#election-app').addClass('oembed');
-                $(navView.el).hide();
-            } else {
-                $('#election-app').removeClass('oembed');
-                navView.refresh();
-                $(navView.el).show();
-            }
-
-            // TODO: If not cached / most current version
-            // FIXME: If detail and no data, Request both detail and full
+            navView.refresh();
             
             dataManager.updates.required = !oembed;
             dataManager.summary.required = (race.key !== 'i');
