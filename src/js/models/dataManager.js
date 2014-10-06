@@ -103,7 +103,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
 
         getGeo: function(level, type) {
             var url = '';
-            
+
             if (type === 'simp' || type === 'centroids') {
                 url = 'data/geo/' + level + '.' + type + '.js';
             } else if (level === 'states' && type === 'zoom') {
@@ -116,7 +116,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 url = 'data/geo/' + level + '.js';
             }
 
-            return url;
+            return config.pageInfo.webproxy + config.pageInfo.geoJsonRoot + url;
         },
 
         loadGeo: function (level, type) {
