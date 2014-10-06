@@ -84,7 +84,8 @@ $result-item-bg-gradient-position-tablet: 178px;
 
 	.result-name,
 	.result-win,
-	.result-votes {
+	.result-votes,
+	.result-pct {
 		font-size: 12px;
 		text-align: right;
 	}
@@ -103,7 +104,8 @@ $result-item-bg-gradient-position-tablet: 178px;
 		line-height: 140%;
 	}
 
-	.result-win {
+	.result-win,
+	.result-pct {
 		width: 30px;
 		padding: 5px 0;
 	}
@@ -149,11 +151,13 @@ $result-item-bg-gradient-position-tablet: 178px;
   	}
 
   	.result-win,
-		.result-votes {
+		.result-votes,
+		.result-pct {
 			font-size: 13px;
 		}
 
-  	.result-win {
+  	.result-win,
+  	.result-pct {
 			width: 50px;
 		}
 
