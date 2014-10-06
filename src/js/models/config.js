@@ -94,7 +94,20 @@ define(['jquery'], function ($) {
             { id: '54', abbr: 'wv', display: 'West Virginia'},
             { id: '55', abbr: 'wi', display: 'Wisconsin'},
             { id: '56', abbr: 'wy', display: 'Wyoming'}
-        ]
+        ],
+
+        partyColors: {
+            default: '#ccc',
+            democraticWin: '#235468',
+            democratic: '#64afd4',
+            republicanWin: '#742b31',
+            republican: '#d88787',
+            otherWin: '#33cc80',
+            other: '#99e0b6',
+            tieWin: '#b8b8b8',
+            tie: '#e0e0e0'
+        }
+
     };
 
 });

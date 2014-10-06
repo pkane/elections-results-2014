@@ -82,6 +82,68 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 
                 $.ajax(opUri, opSettings);
             }
+        },
+        
+        geo: {
+            states: {
+                simp: [],
+                zoom: [],
+                centroids: []
+            },
+            counties: {
+                zoom: {}, // lazy load. properties for state fips
+                simp: []
+            },
+            cds: {
+                zoom: {}, // lazy load. properties for state fips
+                simp: []
+            },
+            places: []
+        },
+
+        getGeo: function(level, type) {
+            var url = '';
+            
+            if (type === 'simp' || type === 'centroids') {
+                url = 'data/geo/' + level + '.' + type + '.js';
+            } else if (level === 'states' && type === 'zoom') {
+                url = 'data/geo/' + level + '.js';
+            } else if (type) {
+                url = 'data/geo/' + level + '/' + type + '.js';
+            } else if (level === 'places') {
+                url = 'data/geo/places.js';
+            } else {
+                url = 'data/geo/' + level + '.js';
+            }
+
+            return url;
+        },
+
+        loadGeo: function (level, type) {
+            var url = '';
+            
+            if (type === 'simp' || type === 'centroids') {
+                url = 'data/geo/' + level + '.' + type + '.js';
+            } else if (level === 'states' && type === 'zoom') {
+                url = 'data/geo/' + level + '.js';
+            } else if (type) {
+                url = 'data/geo/' + level + '/' + type + '.js';
+            } else if (level === 'places') {
+                url = 'data/geo/places.js';
+            } else {
+                url = 'data/geo/' + level + '.js';
+            }
+            
+            $.getJSON(url, function (data) {
+                if (type === 'simp' || type === 'centroids') {
+                    instance.geo[level][type] = data;
+                } else if (type) {
+                    instance.geo[level][type] = data;
+                } else {
+                    instance.geo[level] = data;
+                }
+                instance.trigger('change:' + level);
+            });
         }
         
     }))();

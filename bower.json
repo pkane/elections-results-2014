@@ -12,7 +12,8 @@
     "respond": "~1.4.2",
     "bootstrap": "~3.1.1",
     "typeahead.js": "~0.9.3",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "mapbox.js": "~2.1.0"
   },
   "devDependencies": {},
   "resolutions": {
