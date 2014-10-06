@@ -180,8 +180,20 @@
 
         .elections-bar-nav .nav-item.selected {
             width: calc(100% - 70px); 
-            background: #2c2c2c url("../img/spritesheet.png") no-repeat;
-            background-position: right -144px;                    
+            background: #2c2c2c;         
+            position: relative;
+        }
+
+        .elections-bar-nav .nav-item.selected:after {
+            content: '';
+            height: 30px;
+            width: 30px;
+            background: url("../img/spritesheet.png") no-repeat;
+            background-position: -44px -160px;
+            right: 0;
+            top: 16px;
+            position: absolute;
+            cursor: pointer;         
         }
 
         .elections-bar-nav .nav-item.selected > a {
