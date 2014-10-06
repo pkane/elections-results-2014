@@ -40,28 +40,42 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             var id = d.id,
                 partyColors = config.partyColors,
                 state = id,
+                hasState = !!this.model.state,
+                found,
                 color = partyColors.default
                 ;
 
-            console.log('id = ' + id);
-            console.log(d);
-            console.log(this.model.state);
+            // console.log('id = ' + id);
+            // console.log(d);
+            // console.log(this.model.state);
 
-            if (this.model.race.id == 'h') {
-                // 39-District 11
-                state = d.id.substr(0, 2);
-                id = state + '-District ' + parseInt(d.id.substr(-2))
+            if (this.model.state && this.model.race.id != 'h') {
+                state = this.model.state.id;
+                found = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: d.id });
+            } else {
+
+                if (this.model.race.id == 'h') {
+                    // 39-District 11
+                    state = d.id.substr(0, 2);
+                    id = state + '-District ' + parseInt(d.id.substr(-2))
+                }
+
+                found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
             }
-
-            var found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
 
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.each(found.results, function(item) {
-                        if (item.win) {
-                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+
+                        // TODO: Check color values for in progress, called, etc...
+                        if (!hasState) {
+                            if (item.win) {
+                                color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                            } else if (item.lead) {
+                                color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            }                            
                         } else if (item.lead) {
-                            color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     });
                 }
@@ -144,12 +158,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                                                 .scale(found.geometry.scale * scaleMultiplier)
                                                 .center(found.geometry.coordinates)                                                    
                                                 ;
-                            this.drawMap(dataManager.getGeo('counties', 'simp'));
+                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
 
                         }, this));
 
                     } else {
-                        this.drawMap(dataManager.getGeo('counties', 'simp'));    
+                        this.drawMap(dataManager.getGeo('states'));    
                     }
 
                 } else if (this.model.race.id == 's') { //senate
@@ -166,7 +180,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                                                 .scale(found.geometry.scale * scaleMultiplier)
                                                 .center(found.geometry.coordinates)                                                    
                                                 ;
-                            this.drawMap(dataManager.getGeo('counties', 'simp'));
+                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
 
                         }, this));
 
