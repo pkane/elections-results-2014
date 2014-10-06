@@ -1,8 +1,9 @@
 #election-bar-content {
+    position: relative;
+    width: 100%;
     padding-top: 115px;
     border-bottom: 1px solid #dadada;
     margin-bottom: 10px;
-    position: relative;
     background-color: #fafafa;
     z-index: 30;
     @include vendor-prefix(transition, padding 0.2s ease-out);
@@ -27,7 +28,10 @@
                 opacity: 0;
             }
             .election-office-projection-heading {
-                font-size: 26px;
+                font-size: 20px;
+                @include desktop {
+                    font-size: 24px;
+                }
             }
         }
     }
@@ -272,10 +276,12 @@
 
         .elections-bar-left-col {
             padding-left: 0;
+            padding-right: 0;
         }
 
         .page-icon {
-            // background-color: blue;
+            position: absolute;
+            z-index: 10;
             width: 150px;
             height: 150px;
 
@@ -289,6 +295,10 @@
                     padding-top: 42px;
                 }
             }
+        }
+
+        .page-icon-mini {
+            display: block;
         }
 
         .election-office-projection-heading {
@@ -333,19 +343,6 @@
 
         .elections-row {
             position: relative;
-        }
-
-        .page-icon {
-            position: absolute;
-            z-index: 10;
-            .icon {
-                &.icon-usa-mainland {
-                }
-            }
-        }
-
-        .page-icon-mini {
-            display: block;
         }
 
         .election-office-projection-heading {
