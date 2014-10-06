@@ -111,25 +111,17 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         initialize: function () {
             $('#election-bar-content').html(this.el);
 
-            // collapse nav on scroll on desktop (1024+)
+            // collapse nav on scroll on desktop
             if (!config.isMobile) {
-                var scrollTimeout;  // global for any pending scrollTimeout
-                var didScroll = false;
-                $(window).scroll(function () {
-                    didScroll = true;
-                });
-                setInterval(function () {
-                    if (didScroll) {
-                        didScroll = false;
+                var $win = $(window);
 
-                        if ($(window).scrollTop()>0) {
-                            $('#election-bar-content').addClass("collapsed")
-                        } else {
-                            $('#election-bar-content').removeClass("collapsed")
-                        }
-
+                $win.scroll(function () {
+                    if ($win.scrollTop() > 0) {
+                        $('#election-bar-content').addClass("collapsed");
+                    } else {
+                        $('#election-bar-content').removeClass("collapsed");
                     }
-                }, 100);
+                });
             }
         },  
         
