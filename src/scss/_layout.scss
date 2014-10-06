@@ -99,7 +99,12 @@ $result-item-bg-gradient-position-tablet: 178px;
 		padding: 0 10px 0 0;
 		font-family: $font-heading;
 		line-height: 140%;
+		text-align: left;
 	}
+
+	.result-name span {
+		display: none;
+	}	
 
 	.result-win {
 		width: 30px;
@@ -108,6 +113,18 @@ $result-item-bg-gradient-position-tablet: 178px;
 	.result-votes {
 		padding: 5px;
 	}
+
+	tr.candidate.winner .result-name > span {
+		position: absolute;
+		display: block;
+		height: 7px;
+		width: 7px;
+		background: #8DC63F;
+		border-radius: 100%;
+		top: 15px;
+		left: -2%;
+		z-index: 3;
+	}	
 
 	.democratic .result-votes {
     background: linear-gradient(to right, $color-dem 0%, $color-dem 100%) no-repeat;
@@ -155,8 +172,6 @@ $result-item-bg-gradient-position-tablet: 178px;
 
 	}
 }
-
-
 
 #election-content .result-item a {
 	color: #000;
