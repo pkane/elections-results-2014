@@ -30,6 +30,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                        .attr('stroke-width', strokeWidth || 1)
                        .attr("d", d3.geo.path().projection(this.projection))
                        .on('click', this.clicked)
+                       //.on('click', function(d) { return (d.attr('fill') != config.partyColors.default ? this.clicked : null); })
+                       /*.on('click', function(d) {
+                            return ('fill' in d != '#ccc') ? this.clicked : null;
+                        })*/
                        ;
 
                 }, this));     
@@ -38,9 +42,15 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
         },
 
         clicked: function(d) {
-            var stateid = d.id.substr([0],[2]),
-            stateabbr = _.findWhere(config.states, { id: stateid }).abbr;
-            window.location = window.location.hash + '-' + stateabbr;
+            //console.log('fill... ', config.partyColors.default);
+            if (window.location.hash.toString().indexOf('-') < 0 && (d3.select(this).attr("fill") != config.partyColors.default)) { //if at state level, do nothing.
+                var stateid = d.id.substr([0],[2]),
+                stateabbr = _.findWhere(config.states, { id: stateid }).abbr;
+                window.location = window.location.hash + '-' + stateabbr;
+            } else {
+                return;
+            }
+
         },
 
         fillColor: function(d) {
