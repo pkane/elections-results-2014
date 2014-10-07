@@ -299,8 +299,6 @@ only screen and (                min-resolution: 2dppx) {
 /* Bootstrap Overwrites */
 
 .container {
-	padding-left: 20px;
-	padding-right: 20px;
 	@include desktop {
 		.container {
 
