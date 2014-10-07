@@ -10,7 +10,7 @@ $color-gold: #c2a059;
 $color-link: #009bff;
 $color-gray: #999999;
 
-$color-dem: #708e9c;
+$color-dem: #235468;
 $color-rep: #732c30;
 $color-other: #e6e6e6;
 
@@ -299,17 +299,19 @@ only screen and (                min-resolution: 2dppx) {
 /* Bootstrap Overwrites */
 
 .container {
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 0;
+	padding-right: 0;
 	@include desktop {
 		.container {
-
+			padding-left: 20px;
+			padding-right: 20px;
 		}
 	}
 }
 
 #election-app {
-	margin-top: 85px;
+	// margin-top: 85px;
+	padding-bottom: 100px;
 }
 
 #election-app * {
@@ -321,6 +323,13 @@ only screen and (                min-resolution: 2dppx) {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+/* Fix for clipped ad */
+
+#ad-mobile {
+	left: -20px;
+	position: relative;
 }
 
 /* States Icon styling */

@@ -2,11 +2,12 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+    'd3',
     'models/config',
     'models/fips',
     'text!views/components/resultList.html'
 ],
-function ($, _, Backbone, config, fipsMap, resultTemplate) {
+function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
 
     var view = Backbone.View.extend({
         
@@ -31,6 +32,7 @@ function ($, _, Backbone, config, fipsMap, resultTemplate) {
                 var split = id.split('-');
                 return split[1];
             },
+            formatVotes: d3.format(','),
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');
                 return split[1];

@@ -36,8 +36,8 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
 
         // TODO: REMOVE ME AFTER DESKTOP FIX
         anchorClick: function(e) {
-            if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
-                window.location = e.target.href;
+            if (!config.isMobile && e.currentTarget.href.indexOf('#') !== -1) {
+                window.location = e.currentTarget.href;
             }
         },
 
@@ -111,8 +111,9 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                     if (!adView) {
                         adView = new AdView();
                     }
+                    
                     this.$('.adview').show();
-                    adView.refresh();
+                    // adView.refresh();
                 } else {
                     this.$('.adview').hide();
                 }
@@ -135,17 +136,19 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
         },
         
         refreshResults: function () {
-            if (!resultList) return;
             
             var dataFeed = dataManager[this.model.race.key],
                 detailFeed = (dataFeed && this.model.state) ? dataFeed.detail[this.model.state.id] : false,
                 hasData = (dataFeed && dataFeed.loaded && !dataFeed.loading),
                 hasDetail = (detailFeed && detailFeed.loaded && !detailFeed.loading);
             
-            resultList.model.race = this.model.race;
-            resultList.model.state = this.model.state;
-            resultList.model.data = hasData ? dataFeed.data : [];
-            resultList.model.detail = hasDetail ? detailFeed.data : [];
+            if (resultList) {
+                resultList.model.race = this.model.race;
+                resultList.model.state = this.model.state;
+                resultList.model.data = hasData ? dataFeed.data : [];
+                resultList.model.detail = hasDetail ? detailFeed.data : [];
+                resultList.render();
+            }
 
             console.log('resultMap ', resultMap);
 
@@ -158,39 +161,6 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
                 this.refreshSummary();
             }
-            
-            resultList.render();
-
-//             if (!resultList) return;
-            
-// <<<<<<< HEAD
-//             if (dataManager[this.model.race.key].loaded) {
-//                 resultList.model.race = this.model.race;
-//                 resultList.model.state = this.model.state;
-//                 resultList.model.data = dataManager[this.model.race.key].data;
-//                 resultList.model.detail = (this.model.state) ? dataManager[this.model.race.key].detail[this.model.state.id] : [];
-
-//                 resultMap.model.race = this.model.race;
-//                 resultMap.model.state = this.model.state;
-//                 resultMap.refresh();                
-//             }
-// =======
-//             var dataFeed = dataManager[this.model.race.key],
-//                 detailFeed = (dataFeed && this.model.state) ? dataFeed.detail[this.model.state.id] : false,
-//                 hasData = (dataFeed && dataFeed.loaded && !dataFeed.loading),
-//                 hasDetail = (detailFeed && detailFeed.loaded && !detailFeed.loading);
-// >>>>>>> master
-            
-//             resultList.model.race = this.model.race;
-//             resultList.model.state = this.model.state;
-//             resultList.model.data = hasData ? dataFeed.data : [];
-//             resultList.model.detail = hasDetail ? detailFeed.data : [];
-
-//             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
-//                 this.refreshSummary();
-//             }
-            
-//             resultList.render();
         },
         
         refreshSummary: function () {
