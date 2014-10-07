@@ -29,11 +29,18 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                        .attr('stroke', '#fff')
                        .attr('stroke-width', strokeWidth || 1)
                        .attr("d", d3.geo.path().projection(this.projection))
+                       .on('click', this.clicked)
                        ;
 
                 }, this));     
 
             }
+        },
+
+        clicked: function(d) {
+            var stateid = d.id.substr([0],[2]),
+            stateabbr = _.findWhere(config.states, { id: stateid }).abbr;
+            window.location = window.location.hash + '-' + stateabbr;
         },
 
         fillColor: function(d) {
