@@ -21,6 +21,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 }
 
 #list table.result-item {
+	position: relative;
 	border: none;
 	margin: 10px 0 0;
 	width: 100%;
@@ -54,7 +55,7 @@ $result-item-bg-gradient-position-tablet: 178px;
   tbody {
 		float: left;
     border: 1px solid $color-stroke;
-    margin: 0 10px 10px 0;
+    // margin: 0 10px 10px 0;
     padding: 10px;
     position: relative;
     width: 100%;
@@ -185,7 +186,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 #list table.result-item tbody:after {
 	content: "";
 	position: absolute;
-	z-index: -1;		
+	z-index: -1;
 	-webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
 	box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
 	bottom: 0px;
