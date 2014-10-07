@@ -102,10 +102,13 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             var width = this.$el.width(), 
                 height = Math.floor(width * 3 / 4),
                 scaleMultiplier = 1.0;
+                natScaleMultiplier = 1.2;
                 ;
 
             if ($(window).width() < 1025) {
-                scaleMultiplier = 0.5
+                scaleMultiplier = 0.5;
+                natScaleMultiplier = 0.65;
+
             }
 
             this.svg = d3.select(this.el)
@@ -117,7 +120,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             this.projection = d3.geo
                                 .albersUsa()
                                 .translate([width/2, height/2])
-                                .scale([800])
+                                .scale([800 * natScaleMultiplier])
                                 ;
 
             if (this.model.race) {
