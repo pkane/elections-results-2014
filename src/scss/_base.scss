@@ -301,7 +301,8 @@ only screen and (                min-resolution: 2dppx) {
 .container {
 	@include desktop {
 		.container {
-
+			padding-left: 20px;
+			padding-right: 20px;
 		}
 	}
 }
