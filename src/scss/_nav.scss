@@ -17,16 +17,20 @@
     #election-bar-content {
         padding-top: 30px;
     }
-
+    
 }
 
 .oembed-linkout { display: none; }
+
+// 280x152 - MobileWeb / iPhone
+// 600x325 - Desktop
+// 650x350 - iPad
 
 #election-app.oembed {
     margin: 0;
     .elections-bar-nav { display: none; }
     
-    #election-bar-content { padding-top: 20px; }
+    #election-bar-content { padding-top: 10px; }
     
     #elections-bar {
         
@@ -34,30 +38,30 @@
         min-height: 60px;
         
         .elections-heading {
-            margin-left: 70px;
+            margin-left: 90px;
+            line-height: 1.1;
         }
         
-        .election-office-projection-heading {
-            font-size: 20px;
-        }
+        .election-state-subheading { font-size: 14px; }
+        .election-office-projection-heading { font-size: 20px; }
         
         .page-icon {
-            width: 60px;
+            width: 70px;
             height: 50px;
             border-bottom: none;
             border-left: none;
             border-top: none;
 
             .icon {
-                width: 50px;
-                font-size: 30px;
-                padding-top: 10px;
+                width: 60px;
+                font-size: 40px;
+                padding-top: 5px;
             }
         }
     }
     
     #election-content { 
-        top: 0;
+        top: 20px;
         
         .election-content-col { 
             border: none;
@@ -67,12 +71,64 @@
     
     .oembed-linkout { 
         display: inherit;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        padding: 5px 20px;
+        background: #fff;
+        z-index: 10;
+        line-height: 1.1;
+        
         a { 
-            font-size: smaller;
+            font-size: 10px;
             font-weight: bold;
         }
     }
+}
 
+@include breakpointMax(400) {
+    #election-app.oembed {
+        #election-content {
+            top: 0px;
+        }
+        
+        .bop-group-num .num { font-size: 20px; }
+        .bop-group-desc { 
+            font-size: 0.5em;
+            .text-left { padding-top: 0; }
+            .text-right { padding-top: 0; }
+        }
+        
+        ul.progress-stat-bar li { height: 25px; }
+        ul.progress-stat-bar-slim li { height: 2px; }
+        
+        span.icon-dem-right, span.icon-rep-left { 
+            font-size: 16px;
+            margin-top: 4px;
+        }
+        
+        .fifty-line { height: 28px; }
+        
+        #elections-bar {
+            height: 36px;
+            min-height: 36px;
+        
+            .elections-heading { margin-left: 60px; }
+        
+            .election-state-subheading { font-size: 10px; }
+            .election-office-projection-heading { font-size: 16px; }
+
+            .page-icon {
+                width: 50px;
+                height: 30px;
+
+                .icon {
+                    width: 40px;
+                    font-size: 24px;
+                    padding-top: 5px;
+                }
+            }
+        }
+    }
 }
 
 #elections-bar {

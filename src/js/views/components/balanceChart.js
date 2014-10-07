@@ -38,7 +38,9 @@ function ($, _, Backbone, chartTemplate, Moment) {
                 progressLeft = this.$('.bop-group-results .bar-progress-left'),
                 progressRight = this.$('.bop-group-results .bar-progress-right'),
                 desc = this.$('.bop-group-desc');
-                
+            
+            console.log('BOP - Render', (this.model.detail && this.model.detail.id));
+            
             if (this.model.detail && this.model.detail.id) {
                 
                 var candidate = _.chain(this.model.detail.results).sortBy('votes').last(2).value(); 
@@ -49,8 +51,8 @@ function ($, _, Backbone, chartTemplate, Moment) {
                         candidate.reverse();
                     }
 
-                    var pctLeft = Math.round(candidate[0].pct*100)/100,
-                        pctRight = Math.round(candidate[1].pct*100)/100;
+                    var pctLeft = Math.round(candidate[0].pct*10)/10,
+                        pctRight = Math.round(candidate[1].pct*10)/10;
 
                     this.$('.desc-all').hide();
                     this.$('.desc-individual').show();
