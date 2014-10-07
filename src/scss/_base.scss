@@ -299,6 +299,8 @@ only screen and (                min-resolution: 2dppx) {
 /* Bootstrap Overwrites */
 
 .container {
+	padding-left: 0;
+	padding-right: 0;
 	@include desktop {
 		.container {
 			padding-left: 20px;
@@ -320,6 +322,13 @@ only screen and (                min-resolution: 2dppx) {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+/* Fix for clipped ad */
+
+#ad-mobile {
+	left: -20px;
+	position: relative;
 }
 
 /* States Icon styling */
