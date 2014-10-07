@@ -3,6 +3,7 @@ define([
 	'underscore',
 	'backbone',
     'views/components/resultList',
+    'views/components/resultMap',
     'views/components/balanceChart',
     'views/components/updatesFeed',
     'views/components/ads',
@@ -11,7 +12,8 @@ define([
     'models/indexModel',    
     'text!views/pages/index.html'
 ],
-function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, config, dataManager, IndexModel, templateFile) {
+
+function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdView, config, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
@@ -33,9 +35,9 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, config,
         },
 
         // TODO: REMOVE ME AFTER DESKTOP FIX
-        anchorClick: function() {
-            if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
-                window.location = e.target.href;
+        anchorClick: function(e) {
+            if (!config.isMobile && e.currentTarget.href.indexOf('#') !== -1) {
+                window.location = e.currentTarget.href;
             }
         },
 
@@ -82,11 +84,6 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, config,
                     this.$('#balanceOfPower').hide();
                 }
                                
-                if (needsMap) { 
-                    this.$('#map').show();
-                } else {
-                    this.$('#map').hide();
-                }
                 
                 if (needsResultList) {
                     if (!resultList) {
@@ -114,10 +111,23 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, config,
                     if (!adView) {
                         adView = new AdView();
                     }
+                    
                     this.$('.adview').show();
-                    adView.refresh();
+                    // adView.refresh();
                 } else {
                     this.$('.adview').hide();
+                }
+
+                if (needsMap) {
+                    if (!resultMap) {
+                        resultMap = new ResultMap();
+                        this.$("#map").html(resultMap.el);
+                    }
+                    this.$('#map').show();
+                    resultMap.render();
+                    console.log('show map');
+                } else {
+                    this.$('#map').hide();
                 }
                 
             } else {
@@ -138,6 +148,14 @@ function ($, _, Backbone, ResultList, BalanceChart, UpdatesFeed, AdView, config,
                 resultList.model.data = hasData ? dataFeed.data : [];
                 resultList.model.detail = hasDetail ? detailFeed.data : [];
                 resultList.render();
+            }
+
+            console.log('resultMap ', resultMap);
+
+            if (resultMap) {
+                resultMap.model.race = this.model.race;
+                resultMap.model.state = this.model.state;
+                resultMap.refresh();
             }
 
             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {

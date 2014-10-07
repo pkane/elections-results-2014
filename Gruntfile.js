@@ -187,7 +187,8 @@ module.exports = function (grunt) {
                         moment: '../bower_components/momentjs/moment',
                         respond: '../bower_components/respond/dest/respond.src',
                         typeahead: '../bower_components/typeahead.js/dist/typeahead',
-                        text: '../bower_components/requirejs-text/text'
+                        text: '../bower_components/requirejs-text/text',
+                        mapbox: '../bower_components/mapbox.js/mapbox.uncompressed'
                     },
                     shim: {
                         'backbone': {
@@ -225,11 +226,11 @@ module.exports = function (grunt) {
                         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
                         d3: '../bower_components/d3/d3',
                         'jquery.hashchange': '../bower_components/jquery-hashchange/jquery.ba-hashchange',
-                        masonry: '../bower_components/masonry/dist/masonry.pkgd',
                         moment: '../bower_components/momentjs/moment',
                         respond: '../bower_components/respond/dest/respond.src',
                         typeahead: '../bower_components/typeahead.js/dist/typeahead',
-                        text: '../bower_components/requirejs-text/text'
+                        text: '../bower_components/requirejs-text/text',
+                        mapbox: '../bower_components/mapbox.js/mapbox.uncompressed'
                     },
                     shim: {
                         'backbone': {
@@ -238,6 +239,9 @@ module.exports = function (grunt) {
                         },
                         'underscore': {
                             exports: '_'
+                        },
+                        'mapbox': {
+                            exports: 'L'
                         }
                     }
                 }
@@ -309,7 +313,6 @@ module.exports = function (grunt) {
                 ]
             }
         }
-
     });
 
     // Load the plugins
