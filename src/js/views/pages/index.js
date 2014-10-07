@@ -136,17 +136,19 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
         },
         
         refreshResults: function () {
-            if (!resultList) return;
             
             var dataFeed = dataManager[this.model.race.key],
                 detailFeed = (dataFeed && this.model.state) ? dataFeed.detail[this.model.state.id] : false,
                 hasData = (dataFeed && dataFeed.loaded && !dataFeed.loading),
                 hasDetail = (detailFeed && detailFeed.loaded && !detailFeed.loading);
             
-            resultList.model.race = this.model.race;
-            resultList.model.state = this.model.state;
-            resultList.model.data = hasData ? dataFeed.data : [];
-            resultList.model.detail = hasDetail ? detailFeed.data : [];
+            if (resultList) {
+                resultList.model.race = this.model.race;
+                resultList.model.state = this.model.state;
+                resultList.model.data = hasData ? dataFeed.data : [];
+                resultList.model.detail = hasDetail ? detailFeed.data : [];
+                resultList.render();
+            }
 
             console.log('resultMap ', resultMap);
 
@@ -159,8 +161,6 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
             if (this.model.fips || (this.model.state && this.model.race.id != 'h')) {
                 this.refreshSummary();
             }
-            
-            resultList.render();
         },
         
         refreshSummary: function () {
