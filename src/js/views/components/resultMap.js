@@ -11,14 +11,30 @@ define([
 ],
 function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
     var  IE = $('html').hasClass('lt-ie9'),
+
         view = Backbone.View.extend({
 
         model: new (Backbone.Model.extend({}))(),
         
         template: _.template(resultMap),
+
         
         drawMap: function(geoJsonPath, strokeWidth) {
+            var yOffset = 110;
+            if (this.model.state) {
+                yOffset = 80;
+            }
+
             if (this.model.race) {
+                console.log('model...', this.model);
+
+                if ($('.tooltip').length == 0) {
+                    tooltip = d3.select("#main-map").append("div")
+                    .attr("id", "mapTooltip")
+                    .attr("class", "tooltip")
+                    ;
+                }    
+
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
                     this.svg                       
@@ -31,9 +47,20 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                        .attr('stroke-width', strokeWidth || 1)
                        .attr("d", d3.geo.path().projection(this.projection))
                        .on('click', this.clicked)
+                       .on('mousemove', function(d,i) {
+                            var mouse = d3.mouse(this);
+
+                            tooltip
+                              .classed('hidden', false)
+                              .attr("style", "left:" + (mouse[0] - 10) + "px; top:"+ (mouse[1] + yOffset) + "px;")
+                              .html(d.properties.name) 
+                          })
+                       .on("mouseout",  function(d,i) {
+                            tooltip.classed("hidden", true)
+                          })
                        ;
 
-                }, this));     
+                }, this)); 
 
             }
         },
@@ -207,6 +234,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 }
             }
+
         }
 
         
