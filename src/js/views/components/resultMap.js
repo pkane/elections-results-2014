@@ -165,71 +165,32 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                 ;
 
             if (this.model.race) {
-                if (this.model.race.id == 'h') { //house
-                    if (this.model.state) {                        
-                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
+                if (this.model.state) {                        
+                    d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
 
-                            var found = _.findWhere(json.features, { id: this.model.state.id });                            
+                        var found = _.findWhere(json.features, { id: this.model.state.id });                            
 
-                            // TODO: make better...
-                            // http://stackoverflow.com/questions/12467504/how-do-i-get-my-d3-map-to-zoom-to-a-location
+                        this.projection = d3.geo
+                                            .mercator()
+                                            .translate([width/2, height/2])
+                                            .scale(found.geometry.scale * scaleMultiplier)
+                                            .center(found.geometry.coordinates)                                                    
+                                            ;
 
-                            this.projection = d3.geo
-                                                .mercator()
-                                                .translate([width/2, height/2])
-                                                .scale(found.geometry.scale * scaleMultiplier)
-                                                .center(found.geometry.coordinates)                                                    
-                                                ;
+                        if (this.model.race.id == 'h') {
                             this.drawMap(dataManager.getGeo('cds', 'simp'));
-
-                        }, this));
-
-                    } else {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);    
-                    }
-
-                } else if (this.model.race.id == 'g') { //governor
-
-
-                    if (this.model.state) {                        
-                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
-
-                            var found = _.findWhere(json.features, { id: this.model.state.id });
-
-                            this.projection = d3.geo
-                                                .mercator()
-                                                .translate([width/2, height/2])
-                                                .scale(found.geometry.scale * scaleMultiplier)
-                                                .center(found.geometry.coordinates)                                                    
-                                                ;
+                        } else {
                             this.drawMap(dataManager.getGeo('counties', this.model.state.id));
+                        }
 
-                        }, this));
+                    }, this));
 
+                } else {
+
+                    if (this.model.race.id == 'h') {
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);
                     } else {
-                        this.drawMap(dataManager.getGeo('states'));    
-                    }
-
-                } else if (this.model.race.id == 's') { //senate
-
-
-                    if (this.model.state) {                        
-                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
-
-                            var found = _.findWhere(json.features, { id: this.model.state.id });
-
-                            this.projection = d3.geo
-                                                .mercator()
-                                                .translate([width/2, height/2])
-                                                .scale(found.geometry.scale * scaleMultiplier)
-                                                .center(found.geometry.coordinates)                                                    
-                                                ;
-                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
-
-                        }, this));
-
-                    } else {
-                        this.drawMap(dataManager.getGeo('states'));    
+                        this.drawMap(dataManager.getGeo('states')); 
                     }
 
                 }
