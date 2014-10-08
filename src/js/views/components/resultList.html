@@ -17,7 +17,7 @@
     <% } else { %>
         <div class="row-fluid">
         <% _.each(detail, function(value) { %>
-            <table class="result-item">
+            <table class="result-item" data-oembed="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>">
                 <thead>
                     <tr class="result-first-row">
                         <th class="district-name" colspan="3">
