@@ -20,10 +20,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         
         drawMap: function(geoJsonPath, strokeWidth) {
-            var yOffset = 110;
-            if (this.model.state) {
-                yOffset = 80;
-            }
 
             if (this.model.race) {
                 console.log('model...', this.model);
@@ -38,27 +34,20 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
                     this.svg                       
-                       .selectAll("path")
-                       .data(json.features)
-                       .enter()
-                       .append("path")
-                       .attr('fill', _.bind(this.fillColor, this))
-                       .attr('stroke', '#fff')
-                       .attr('stroke-width', strokeWidth || 1)
-                       .attr("d", d3.geo.path().projection(this.projection))
-                       .on('click', this.clicked)
-                       .on('mousemove', function(d,i) {
-                            var mouse = d3.mouse(this);
-
-                            tooltip
-                              .classed('hidden', false)
-                              .attr("style", "left:" + (mouse[0] - 10) + "px; top:"+ (mouse[1] + yOffset) + "px;")
-                              .html(d.properties.name) 
-                          })
-                       .on("mouseout",  function(d,i) {
-                            tooltip.classed("hidden", true)
-                          })
-                       ;
+                        .selectAll('path')
+                        .data(json.features)
+                        .enter()
+                        .append('path')
+                        .attr('fill', _.bind(this.fillColor, this))
+                        .attr('stroke', '#fff')
+                        .attr('stroke-width', strokeWidth || 1)
+                        .attr("d", d3.geo.path().projection(this.projection))
+                        .on('click', this.clicked)
+                        .on('mousemove', _.bind(this.buildTooltip, this))
+                        .on('mouseout',  function(d,i) {
+                            tooltip.classed('hidden', true)
+                        })
+                        ;
 
                 }, this)); 
 
@@ -75,6 +64,61 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 return;
             }
 
+        },
+
+        buildTooltip: function(d, i) {
+            var mouse = d3.mouse(d3.select("#main-map").node());
+            var id = d.id,
+            state = id,
+            found,
+            tooltipHTML = '',
+            yOffset = 170
+            ;
+
+            if (this.model.state && this.model.race.id != 'h') {
+                state = this.model.state.id;
+                found = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: d.id });
+            } else {
+
+                if (this.model.race.id == 'h') {
+                    state = d.id.substr(0, 2);
+                    id = state + '-District ' + parseInt(d.id.substr(-2))
+                }
+
+                found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            }
+
+            //console.log('found...', found);
+
+            if (found) {
+                tooltipHTML += '<h4>' + d.properties.name + '</h4>';
+                tooltipHTML += '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>';
+                $(found.results).each(function() {
+                    tooltipHTML += '<tr><td>' + this.name + ' (' + this.party.substr(0,1).toUpperCase() + ')';
+                    if (this.win) {
+                        tooltipHTML += '<span class="won">won</span>'
+                    }
+                    tooltipHTML += '</td>'
+                    tooltipHTML += '<td class="right">' + numberWithCommas(this.votes) + '</td>';
+                    tooltipHTML += '<td class="right">' + this.pct.toFixed(2) + '% </td></tr>';
+                })
+                tooltipHTML += '</tbody></table>';
+                tooltipHTML += '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>';
+
+                tooltip
+                .classed('hidden', false)
+                .attr('style', 'left:' + (mouse[0] - 10) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
+                .html(tooltipHTML);
+                ;
+            }
+
+            
+
+            function numberWithCommas(x) {
+            var parts = x.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+            }
         },
 
         fillColor: function(d) {
