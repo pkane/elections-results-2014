@@ -54,6 +54,8 @@
 
 #election-app.oembed {
     margin: 0;
+    background: #fff;
+    
     .elections-bar-nav { display: none; }
     
     #election-bar-content { padding-top: 10px; }
@@ -77,6 +79,7 @@
             border-bottom: none;
             border-left: none;
             border-top: none;
+            background: inherit;
 
             .icon {
                 width: 60px;
@@ -105,8 +108,19 @@
         line-height: 1.1;
         
         a { 
-            font-size: 10px;
+            font-size: 14px;
             font-weight: bold;
+        }
+        
+        .oembed-link-logo {
+            background-image: url('../img/logo.png');
+            background-repeat: no-repeat;
+            background-position: 85% 50%; 	
+            background-size: 75px 14px;
+            height: 14px;
+            width: 75px;
+            margin-top: 2px;
+            display: inline-block;
         }
     }
 }
@@ -123,6 +137,8 @@
             .text-left { padding-top: 0; }
             .text-right { padding-top: 0; }
         }
+        
+        .oembed-linkout a { font-size: 10px; }
         
         ul.progress-stat-bar li { height: 25px; }
         ul.progress-stat-bar-slim li { height: 2px; }
@@ -153,6 +169,14 @@
                     padding-top: 5px;
                 }
             }
+        }
+    }
+}
+
+@include tablet-min {
+    #election-app.oembed {
+        .page-icon-mini {
+            display: none;
         }
     }
 }
