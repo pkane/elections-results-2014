@@ -72,8 +72,8 @@
                 <tbody>
                 <% _.each(value.results, function(item) { %>
                     <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
-                    <tr class="candidate <%= item.party.toLowerCase() %>">
-                        <td class="result-name"><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
+                    <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
+                        <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
                             <%= formatVotes(item.votes) %> 
                         </td>
@@ -105,8 +105,8 @@
             <tbody>
             <% _.each(value.results, function(item) { %>
                 <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*1000)/10; %>
-                <tr class="candidate <%= item.party.toLowerCase() %>">
-                    <td class="result-name"><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
+                <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
+                    <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
                     <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
                         <%= formatVotes(item.votes) %> 
                     </td>
