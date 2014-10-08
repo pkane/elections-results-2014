@@ -72,7 +72,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             state = id,
             found,
             tooltipHTML = '',
-            yOffset = 170
+            yOffset = 175
             ;
 
             if (this.model.state && this.model.race.id != 'h') {
@@ -107,7 +107,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 tooltip
                 .classed('hidden', false)
-                .attr('style', 'left:' + (mouse[0] - 10) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
+                .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
                 .html(tooltipHTML);
                 ;
             }
