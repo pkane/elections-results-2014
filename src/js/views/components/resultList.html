@@ -10,7 +10,6 @@ function capitaliseFirstLetter(string)
 
     <% if (!state) { %>
     <div class="row house-card-deck">
-        <% console.log(data) %>
         <% _.each(data, function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
