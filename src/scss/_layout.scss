@@ -121,6 +121,8 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 
 	tr.candidate.winner .result-name > span {
+		position: relative;
+		bottom: 1px;
 		display: inline-block;
 		height: .5em;
 		width: .5em;
