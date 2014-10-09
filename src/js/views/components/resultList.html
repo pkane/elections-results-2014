@@ -2,7 +2,7 @@
 
     <% if (!state) { %>
     <div class="row house-card-deck">    
-        <% _.each(_.sortBy(data, function (id) { return parseInt(id); }), function(s) { %>
+        <% _.each(_.sortBy(data, function (obj) { return parseInt(obj.id); }), function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">

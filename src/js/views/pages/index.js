@@ -149,7 +149,12 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 resultList.model.race = this.model.race;
                 resultList.model.state = this.model.state;
                 resultList.model.data = hasData ? dataFeed.data : [];
-                resultList.model.detail = hasDetail ? detailFeed.data : [];
+                if (this.model.race.id === 'i' && this.model.state) {
+                    var detail = _.findWhere(dataFeed.data, { id: this.model.state.id });
+                    resultList.model.detail = (detail) ? detail.initiatives : [];
+                } else {
+                    resultList.model.detail = hasDetail ? detailFeed.data : [];
+                }
                 resultList.render();
             }
 

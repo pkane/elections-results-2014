@@ -63,7 +63,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                         opData.data = xhr.responseJSON;
                         opData.updateTime = new Date();
                         opData.loaded = config.api.dataFeedVersionId;
-
+                        
                         instance.trigger('change:' + race.key);
                     }
                 }, opKey);

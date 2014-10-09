@@ -18,7 +18,7 @@ define(['jquery'], function ($) {
         },
 
         api: {
-            base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
+            base: 'http://159.54.243.12/ElectionsServices/Elections/',
             dataFeedVersionId: 0,
             lastChecked: 0,
             pollFrequency: 5 * 60 * 1000, // TBD
