@@ -2,7 +2,7 @@
 
     <% if (!state) { %>
     <div class="row house-card-deck">    
-        <% _.each(data, function(s) { %>
+        <% _.each(_.sortBy(data, function (id) { return parseInt(id); }), function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
@@ -71,13 +71,13 @@
                 </thead>
                 <tbody>
                 <% _.each(value.results, function(item) { %>
-                    <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
+                    <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
                             <%= formatVotes(item.votes) %> 
                         </td>
-                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)*1000)/10 %>%</td>                              
+                        <td class="result-win"><%= formatPercent(item.votes, value.votes) %>%</td>                              
                     </tr>
                 <% }); %>
                 </tbody>
@@ -104,7 +104,7 @@
             </thead>
             <tbody>
             <% _.each(value.results, function(item) { %>
-                <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*1000)/10; %>
+                <% var pctVotes = formatPercent(item.votes, value.votes); %>
                 <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
                     <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
                     <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>

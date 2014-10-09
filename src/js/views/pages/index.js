@@ -94,6 +94,9 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                     this.refreshResults();
                 } else {
                     this.$('#list').hide();
+                    if (resultList) {
+                        resultList.reset();
+                    }
                 }
                                
                 if (needsUpdateFeed) {

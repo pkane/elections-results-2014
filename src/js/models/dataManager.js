@@ -28,14 +28,16 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         console.dir(xhr);
         console.log('Data error: ' + statusCode + '::' + msg);
     },
-    DataFeed = Backbone.Model.extend({
-        data: [],
-        loaded: false,
-        loading: false,
-        required: false,
-        detail: [],
-        updateTime: new Date()
-    }),
+    DataFeed = function () {
+        return {
+            data: [],
+            loaded: false,
+            loading: false,
+            required: false,
+            detail: [],
+            updateTime: new Date()
+        };
+    },
     
     instance = new (Backbone.Model.extend({
         
@@ -47,7 +49,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         updates: new DataFeed(),
         
         loadRace: function (race, state) {
-            console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
+            console.log('DM load ' + race.key + ' s.' + ((state) ? state.id : 'global'));
             
             var isDetail = (state && race.detail),
                 opKey = (isDetail) ? race.detail : race.op,
@@ -55,6 +57,8 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 opData = (isDetail) ? instance[race.key].detail[state.id] : instance[race.key],
                 opSettings = getSettings(function (xhr, statusCode) {
                     if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
+                        console.log('DM Storing request to', race.key, (state) ? state.id : 'global');
+                        
                         opData.loading = false;
                         opData.data = xhr.responseJSON;
                         opData.updateTime = new Date();
@@ -64,15 +68,14 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                     }
                 }, opKey);
             
-            if (config.api.dataFeedVersionId === 0) {
-                console.log('No data feed version');
-                return; // Ignore initial 0 state? queue request until version updates?
-            } else if (opData && (opData.loading || opData.loaded === config.api.dataFeedVersionId)) {
-                console.log('Using cached data/request');
+            if (opData && (opData.loading || opData.loaded === config.api.dataFeedVersionId)) {
+                console.log('DM Using cached data/request');
                 return;
             } else {
                 
                 if (isDetail && !opData) {
+                    console.log('DM Creating detail feed for', race.key, state.id);
+                    
                     instance[race.key].detail[state.id] = new DataFeed();
                     opData = instance[race.key].detail[state.id];
                 }

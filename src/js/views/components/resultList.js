@@ -33,6 +33,10 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 return split[1];
             },
             formatVotes: d3.format(','),
+            formatPercent: function (a,b) {
+                var full = a / b;
+                return (full) ? Math.round(full*1000)/10 : 0;
+            }, 
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');
                 return split[1];
@@ -40,7 +44,14 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
         }))(),
         
         template: _.template(resultTemplate),
-									        
+        
+        reset: function () { 
+            this.model.data = [];
+            this.model.detail = [];
+            this.model.race = {};
+            this.model.state = {};
+        },
+        
         render: function () {
             
             if (this.model.race.id === 'h') {
