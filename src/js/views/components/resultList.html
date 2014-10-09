@@ -1,14 +1,24 @@
+
+<%
+function capitaliseFirstLetter(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+%>
+
 <% if (race.key === 'initiatives') { %>
 
     <% if (!state) { %>
-    <div class="row house-card-deck">    
+    <div class="row house-card-deck">
+        <% console.log(data) %>
         <% _.each(data, function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
                     <div class='card-item-inner'>
-                        <%= s.name %>
-                        <div class="num-races"><%= s.initiatives.length %></div> initiatives                        
+
+                        <%= capitaliseFirstLetter(s.name.toLowerCase()) %>
+                        <div class="num-races"><%= s.initiatives.length %></div> initiatives
                     </div>
                 </div>
             </a>
