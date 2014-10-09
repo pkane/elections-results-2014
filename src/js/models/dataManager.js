@@ -14,11 +14,10 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         return config.api.base + opUri;
     },
-    settingsCount = 0,
-    getSettings = function (completeHandler) {
+    getSettings = function (completeHandler, callbackHash) {
         return {
             dataType: 'jsonp',
-            jsonpCallback: 'usat_' + settingsCount++,
+            jsonpCallback: 'usat_' + callbackHash,
             cache: true,
             complete: completeHandler,
             error: errorHandler
@@ -63,7 +62,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
 
                         instance.trigger('change:' + race.key);
                     }
-                });
+                }, opKey);
             
             if (config.api.dataFeedVersionId === 0) {
                 console.log('No data feed version');
