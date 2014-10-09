@@ -12,6 +12,7 @@ define([
 function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
     var IE = $('html').hasClass('lt-ie9'),
         tooltip,
+        voteFormat = d3.format(','),
         view = Backbone.View.extend({
 
         model: new (Backbone.Model.extend({}))(),
@@ -39,8 +40,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .on('mousemove', _.bind(this.mouseMove, this))                        
                         .on('mouseout', this.mouseOut)
                         ;
-
-                        //.on('mousemove', _.bind(this.buildTooltip, this))
 
                 }, this)); 
 
@@ -75,8 +74,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             return item;
         },
 
-        voteFormat: d3.format(','),
-        
         mouseOver: function(d, i) {
             var found = this.findItemById(d.id);
 
@@ -92,7 +89,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                 + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')' 
                                 + (item.win ? '<span class="won">won</span>' : '')                                
                                 + '</td>'
-                                + '<td class="right">' + item.votes + '</td>'
+                                + '<td class="right">' + voteFormat(item.votes) + '</td>'
                                 + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
                         }, ''),
 
@@ -100,6 +97,22 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
                     ].join(''))
                     ;
+
+                this.mouseMove(d, i);
+            } else {
+                tooltip.html("");
+            }
+
+        },
+
+        mouseMove: function(d, i) {
+            if (tooltip.html()) {
+                var mouse = d3.mouse(this.el);
+
+                tooltip
+                    .classed('hidden', false)
+                    .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + 175) + 'px; opacity: 1;')
+                    ;                
             }
 
         },
@@ -107,78 +120,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         mouseOut: function() {
             tooltip.classed('hidden', true);
         },
-        mouseMove: function(d, i) {
-            var mouse = d3.mouse(this.el);
-
-            tooltip
-                .classed('hidden', false)
-                .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + 175) + 'px; opacity: 1;')
-                ;
-
-        },
-
-        buildTooltip: function(d, i) {            
-            var html = [],
-                yOffset = 175
-                ;
-
-
-            var found = this.findItemById(d.id);
-
-            if (found) {
-
-                tooltip
-                    .classed('hidden', false)
-                    .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
-                    .html([
-                        '<h4>', d.properties.name, '</h4>',
-                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
-
-                        _.reduce(found.results, function(memo, item) { 
-                            console.log('found ', item);
-                            return memo 
-                                + item.win ? '<span class="won">won</span>' : ''
-                                + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')'
-                                + '</td>'
-                                + '<td class="right">' + item.votes + '</td>'
-                                + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>'
-                                ;
-                        }, ''),
-
-                        '</tbody></table>',
-                        '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
-                    ].join(''))
-                    ;
-
-                // tooltipHTML += '<h4>' + d.properties.name + '</h4>';
-                // tooltipHTML += '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>';
-                // $(found.results).each(function() {
-                //     tooltipHTML += '<tr><td>' + this.name + ' (' + this.party.substr(0,1).toUpperCase() + ')';
-                //     if (this.win) {
-                //         tooltipHTML += '<span class="won">won</span>'
-                //     }
-                //     tooltipHTML += '</td>'
-                //     tooltipHTML += '<td class="right">' + numberWithCommas(this.votes) + '</td>';
-                //     tooltipHTML += '<td class="right">' + this.pct.toFixed(2) + '% </td></tr>';
-                // })
-                // tooltipHTML += '</tbody></table>';
-                // tooltipHTML += '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>';
-
-                // tooltip
-                // .classed('hidden', false)
-                // .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
-                // .html(tooltipHTML);
-                ;
-            }
-
-            
-
-            function numberWithCommas(x) {
-            var parts = x.toString().split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            return parts.join(".");
-            }
-        },
+        
 
         fillColor: function(d) {
             var id = d.id,
