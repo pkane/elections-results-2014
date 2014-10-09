@@ -6,18 +6,35 @@ define([
     'models/dataManager',
     'models/fips',
     'text!views/components/resultMap.html',
-    'd3'
+    'd3',
+    'events/analytics'
 ],
-function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
+function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
     var  IE = $('html').hasClass('lt-ie9'),
+
         view = Backbone.View.extend({
 
         model: new (Backbone.Model.extend({}))(),
         
         template: _.template(resultMap),
+
         
         drawMap: function(geoJsonPath, strokeWidth) {
+            var yOffset = 110;
+            if (this.model.state) {
+                yOffset = 80;
+            }
+
             if (this.model.race) {
+                console.log('model...', this.model);
+
+                if ($('.tooltip').length == 0) {
+                    tooltip = d3.select("#main-map").append("div")
+                    .attr("id", "mapTooltip")
+                    .attr("class", "tooltip")
+                    ;
+                }    
+
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
                     this.svg                       
@@ -29,34 +46,77 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
                        .attr('stroke', '#fff')
                        .attr('stroke-width', strokeWidth || 1)
                        .attr("d", d3.geo.path().projection(this.projection))
+                       .on('click', this.clicked)
+                       .on('mousemove', function(d,i) {
+                            var mouse = d3.mouse(this);
+
+                            tooltip
+                              .classed('hidden', false)
+                              .attr("style", "left:" + (mouse[0] - 10) + "px; top:"+ (mouse[1] + yOffset) + "px;")
+                              .html(d.properties.name) 
+                          })
+                       .on("mouseout",  function(d,i) {
+                            tooltip.classed("hidden", true)
+                          })
                        ;
 
-                }, this));                
+                }, this)); 
+
             }
+        },
+
+        clicked: function(d) {
+            if (window.location.hash.toString().indexOf('-') < 0 && (d3.select(this).attr("fill") != config.partyColors.default)) { //if at state level or no results, do nothing.
+                var stateid = d.id.substr([0],[2]),
+                stateabbr = _.findWhere(config.states, { id: stateid }).abbr;
+                analytics.trigger('track:event', 'results2014map' + stateabbr);
+                window.location = window.location.hash + '-' + stateabbr;
+            } else {
+                return;
+            }
+
         },
 
         fillColor: function(d) {
             var id = d.id,
                 partyColors = config.partyColors,
                 state = id,
+                hasState = !!this.model.state,
+                found,
                 color = partyColors.default
                 ;
 
-            if (this.model.race.id == 'h') {
-                // 39-District 11
-                state = d.id.substr(0, 2);
-                id = state + '-District ' + parseInt(d.id.substr(-2))
-            }
+            // console.log('id = ' + id);
+            // console.log(d);
+            // console.log(this.model.state);
 
-            var found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            if (this.model.state && this.model.race.id != 'h') {
+                state = this.model.state.id;
+                found = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: d.id });
+            } else {
+
+                if (this.model.race.id == 'h') {
+                    // 39-District 11
+                    state = d.id.substr(0, 2);
+                    id = state + '-District ' + parseInt(d.id.substr(-2))
+                }
+
+                found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            }
 
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.each(found.results, function(item) {
-                        if (item.win) {
-                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+
+                        // TODO: Check color values for in progress, called, etc...
+                        if (!hasState) {
+                            if (item.win) {
+                                color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                            } else if (item.lead) {
+                                color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            }                            
                         } else if (item.lead) {
-                            color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     });
                 }
@@ -81,8 +141,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             console.log('-- render map ', this.model.race, this.model.state);
 
             var width = this.$el.width(), 
-                height = Math.floor(width * 3 / 4)
+                height = Math.floor(width * 3 / 4),
+                scaleMultiplier = 1.0;
+                natScaleMultiplier = 1.2;
                 ;
+
+            if ($(window).width() < 1025) {
+                scaleMultiplier = 0.5;
+                natScaleMultiplier = 0.65;
+
+            }
 
             this.svg = d3.select(this.el)
                          .select('svg')
@@ -93,37 +161,41 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             this.projection = d3.geo
                                 .albersUsa()
                                 .translate([width/2, height/2])
-                                .scale([800])
+                                .scale([800 * natScaleMultiplier])
                                 ;
 
             if (this.model.race) {
-                if (this.model.race.id == 'h') {
-                    if (this.model.state) {                        
-                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
+                if (this.model.state) {                        
+                    d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
 
-                            var found = _.findWhere(json.features, { id: this.model.state.id });
+                        var found = _.findWhere(json.features, { id: this.model.state.id });                            
 
-                            // TODO: make better...
-                            // http://stackoverflow.com/questions/12467504/how-do-i-get-my-d3-map-to-zoom-to-a-location
-                            this.projection = d3.geo
-                                                .mercator()
-                                                .translate([width/2, height/2])
-                                                .scale([1600])
-                                                .center(found.geometry.coordinates)                                                    
-                                                ;
+                        this.projection = d3.geo
+                                            .mercator()
+                                            .translate([width/2, height/2])
+                                            .scale(found.geometry.scale * scaleMultiplier)
+                                            .center(found.geometry.coordinates)                                                    
+                                            ;
 
+                        if (this.model.race.id == 'h') {
                             this.drawMap(dataManager.getGeo('cds', 'simp'));
+                        } else {
+                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
+                        }
 
-                        }, this));
-
-                    } else {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);    
-                    }
+                    }, this));
 
                 } else {
-                    this.drawMap(dataManager.getGeo('states'));
+
+                    if (this.model.race.id == 'h') {
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);
+                    } else {
+                        this.drawMap(dataManager.getGeo('states')); 
+                    }
+
                 }
             }
+
         }
 
         
