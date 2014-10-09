@@ -1,8 +1,6 @@
-#mapTooltip {
-	opacity: 1.0;
+#map-tooltip {	
 	padding: 10px;
-	background-color: rgba(255,255,255,.85);
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	@include vendor-prefix(border-radius, 3px);
+	background-color: rgba(256,256,256,.90);
+	width: 300px;
 }
