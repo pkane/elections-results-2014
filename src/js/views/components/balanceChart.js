@@ -120,8 +120,8 @@ function ($, _, Backbone, d3, chartTemplate) {
                 $('.bar-progress-left', desc).css('width', (held.was.dem / held.total)*100 + '%');
                 $('.bar-progress-right', desc).css('width', (held.was.rep / held.total)*100 + '%');
                 
-                $('.text-left .votes', desc).text(this.numFormat(held.was.dem));
-                $('.text-right .votes', desc).text(this.numFormat(held.was.rep));
+                $('.text-left .num', desc).text(this.numFormat(held.was.dem));
+                $('.text-right .num', desc).text(this.numFormat(held.was.rep));
 
                 this.$('.updated').text('updated ' + this.timeFormat(this.model.updateTime));
             } else {
