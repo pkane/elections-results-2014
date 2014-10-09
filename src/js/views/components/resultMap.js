@@ -10,26 +10,18 @@ define([
     'events/analytics'
 ],
 function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
-    var  IE = $('html').hasClass('lt-ie9'),
-
+    var IE = $('html').hasClass('lt-ie9'),
+        tooltip,
         view = Backbone.View.extend({
 
         model: new (Backbone.Model.extend({}))(),
         
         template: _.template(resultMap),
 
-        
         drawMap: function(geoJsonPath, strokeWidth) {
 
             if (this.model.race) {
                 console.log('model...', this.model);
-
-                if ($('.tooltip').length == 0) {
-                    tooltip = d3.select("#main-map").append("div")
-                    .attr("id", "mapTooltip")
-                    .attr("class", "tooltip")
-                    ;
-                }    
 
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
@@ -42,12 +34,13 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .attr('stroke', '#fff')
                         .attr('stroke-width', strokeWidth || 1)
                         .attr("d", d3.geo.path().projection(this.projection))
-                        .on('click', this.clicked)
-                        .on('mousemove', _.bind(this.buildTooltip, this))
-                        .on('mouseout',  function(d,i) {
-                            tooltip.classed('hidden', true)
-                        })
+                        .on('click', _.bind(this.clicked, this))
+                        .on('mouseover', _.bind(this.mouseOver, this))
+                        .on('mousemove', _.bind(this.mouseMove, this))                        
+                        .on('mouseout', this.mouseOut)
                         ;
+
+                        //.on('mousemove', _.bind(this.buildTooltip, this))
 
                 }, this)); 
 
@@ -55,60 +48,126 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         clicked: function(d) {
-            if (window.location.hash.toString().indexOf('-') < 0 && (d3.select(this).attr("fill") != config.partyColors.default)) { //if at state level or no results, do nothing.
-                var stateid = d.id.substr([0],[2]),
-                stateabbr = _.findWhere(config.states, { id: stateid }).abbr;
-                analytics.trigger('track:event', 'results2014map' + stateabbr);
-                window.location = window.location.hash + '-' + stateabbr;
+            if (!this.model.state && this.findItemById(d.id)) {
+                var state = _.findWhere(config.states, { id: (this.model.race.id == 'h' ? d.id.substr(0, 2) : d.id) });
+
+                analytics.trigger('track:event', this.model.race.key + 'results2014map' + state.abbr);
+                window.location.hash = this.model.race.key + "-" + state.abbr;
+
+            }
+        },
+
+        findItemById: function(id) {
+            var item, state = id;
+
+            if (this.model.state && this.model.race.id != 'h') {
+                state = this.model.state.id;
+                item = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: id });
             } else {
-                return;
+                if (this.model.race.id == 'h') {
+                    state = id.substr(0, 2);
+                    id = state + '-District ' + parseInt(id.substr(-2))
+                }
+
+                item = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            }
+
+            return item;
+        },
+
+        voteFormat: d3.format(','),
+        
+        mouseOver: function(d, i) {
+            var found = this.findItemById(d.id);
+
+            if (found) {
+
+                tooltip                    
+                    .html([
+                        '<h4>', d.properties.name, '</h4>',
+                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
+
+                        _.reduce(found.results, function(memo, item) {
+                            return (memo
+                                + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')' 
+                                + (item.win ? '<span class="won">won</span>' : '')                                
+                                + '</td>'
+                                + '<td class="right">' + item.votes + '</td>'
+                                + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
+                        }, ''),
+
+                        '</tbody></table>',
+                        '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
+                    ].join(''))
+                    ;
             }
 
         },
 
-        buildTooltip: function(d, i) {
-            var mouse = d3.mouse(d3.select("#main-map").node());
-            var id = d.id,
-            state = id,
-            found,
-            tooltipHTML = '',
-            yOffset = 175
-            ;
+        mouseOut: function() {
+            tooltip.classed('hidden', true);
+        },
+        mouseMove: function(d, i) {
+            var mouse = d3.mouse(this.el);
 
-            if (this.model.state && this.model.race.id != 'h') {
-                state = this.model.state.id;
-                found = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: d.id });
-            } else {
+            tooltip
+                .classed('hidden', false)
+                .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + 175) + 'px; opacity: 1;')
+                ;
 
-                if (this.model.race.id == 'h') {
-                    state = d.id.substr(0, 2);
-                    id = state + '-District ' + parseInt(d.id.substr(-2))
-                }
+        },
 
-                found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
-            }
+        buildTooltip: function(d, i) {            
+            var html = [],
+                yOffset = 175
+                ;
 
-            //console.log('found...', found);
+
+            var found = this.findItemById(d.id);
 
             if (found) {
-                tooltipHTML += '<h4>' + d.properties.name + '</h4>';
-                tooltipHTML += '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>';
-                $(found.results).each(function() {
-                    tooltipHTML += '<tr><td>' + this.name + ' (' + this.party.substr(0,1).toUpperCase() + ')';
-                    if (this.win) {
-                        tooltipHTML += '<span class="won">won</span>'
-                    }
-                    tooltipHTML += '</td>'
-                    tooltipHTML += '<td class="right">' + numberWithCommas(this.votes) + '</td>';
-                    tooltipHTML += '<td class="right">' + this.pct.toFixed(2) + '% </td></tr>';
-                })
-                tooltipHTML += '</tbody></table>';
-                tooltipHTML += '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>';
 
                 tooltip
-                .classed('hidden', false)
-                .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
-                .html(tooltipHTML);
+                    .classed('hidden', false)
+                    .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
+                    .html([
+                        '<h4>', d.properties.name, '</h4>',
+                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
+
+                        _.reduce(found.results, function(memo, item) { 
+                            console.log('found ', item);
+                            return memo 
+                                + item.win ? '<span class="won">won</span>' : ''
+                                + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')'
+                                + '</td>'
+                                + '<td class="right">' + item.votes + '</td>'
+                                + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>'
+                                ;
+                        }, ''),
+
+                        '</tbody></table>',
+                        '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
+                    ].join(''))
+                    ;
+
+                // tooltipHTML += '<h4>' + d.properties.name + '</h4>';
+                // tooltipHTML += '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>';
+                // $(found.results).each(function() {
+                //     tooltipHTML += '<tr><td>' + this.name + ' (' + this.party.substr(0,1).toUpperCase() + ')';
+                //     if (this.win) {
+                //         tooltipHTML += '<span class="won">won</span>'
+                //     }
+                //     tooltipHTML += '</td>'
+                //     tooltipHTML += '<td class="right">' + numberWithCommas(this.votes) + '</td>';
+                //     tooltipHTML += '<td class="right">' + this.pct.toFixed(2) + '% </td></tr>';
+                // })
+                // tooltipHTML += '</tbody></table>';
+                // tooltipHTML += '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>';
+
+                // tooltip
+                // .classed('hidden', false)
+                // .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + yOffset) + 'px;')
+                // .html(tooltipHTML);
                 ;
             }
 
@@ -178,6 +237,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             console.log('-- render --');
             this.$el.html(this.template(this.model));            
             this.renderMap();
+            tooltip = d3.select("#map-tooltip");
+
             return this;
         },
 
