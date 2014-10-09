@@ -333,6 +333,10 @@ only screen and (                min-resolution: 2dppx) {
 #ad-mobile {
 	left: -20px;
 	position: relative;
+	margin-bottom: 20px;
+	@include breakpoint(360) {
+		left: auto;
+	}
 }
 
 /* States Icon styling */
