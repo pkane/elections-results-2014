@@ -103,7 +103,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 		padding: 8px 10px 0 0;
 		font-family: $font-heading;
 		line-height: 140%;
-		text-align: left;
+		text-align: right;
 	}
 
 	.result-name > span {
@@ -121,14 +121,12 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 
 	tr.candidate.winner .result-name > span {
-		position: absolute;
-		display: block;
+		display: inline-block;
 		height: .5em;
 		width: .5em;
 		background: #8DC63F;
 		border-radius: 100%;
-		top: 19px;
-		left: -2%;
+		margin-right: 8px;
 		z-index: 3;
 	}	
 
