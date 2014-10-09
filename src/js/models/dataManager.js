@@ -29,16 +29,14 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         console.dir(xhr);
         console.log('Data error: ' + statusCode + '::' + msg);
     },
-    DataFeed = function() {
-        return {
-            data: [],
-            loaded: false,
-            loading: false,
-            required: false,
-            detail: [],
-            updateTime: new Date()
-        };
-    },
+    DataFeed = Backbone.Model.extend({
+        data: [],
+        loaded: false,
+        loading: false,
+        required: false,
+        detail: [],
+        updateTime: new Date()
+    }),
     
     instance = new (Backbone.Model.extend({
         
