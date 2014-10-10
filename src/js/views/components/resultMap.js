@@ -81,8 +81,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 tooltip                    
                     .html([
-                        '<h4>', d.properties.name, '</h4>',
-                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
+                        '<h4 class="map-tooltip-heading">', d.properties.name, '</h4>',
+                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th>%</th></tr></thead><tbody>',
 
                         _.reduce(found.results, function(memo, item) {
                             return (memo
@@ -118,7 +118,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         mouseOut: function() {
-            tooltip.classed('hidden', true);
+            // tooltip.classed('hidden', true);
         },
         
 
