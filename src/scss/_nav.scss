@@ -521,3 +521,58 @@
     }
 
 }
+
+/* Result Nav CSS */
+
+#election-app #main-map {
+    position: relative;
+    .main-map-controls {
+        position: absolute;
+        left: 0;
+        top: 20px;
+    }
+    #resultmap-back-btn,
+    #state-list-dropdown-btn {
+        background-color: #333333;
+        @include vendor-prefix(border-radius, 20px);
+        // display: none;
+    }
+    #resultmap-back-btn {
+        margin-right: 8px;
+    }
+    #state-list-dropdown-btn {
+
+    }
+    .state-list-dropdown-container {
+        position: relative;
+        display: inline-block;
+    }
+    .state-list-dropdown {
+        position: absolute;
+        left: 60px;
+        top: 0;
+        display: none;
+        list-style: none;
+        padding: 0;
+        border: 1px solid $color-stroke;
+        background-color: white;
+        height: 280px;
+        overflow-y: scroll;
+        @include vendor-prefix(box-shadow, 0px 1px 1px rgba(0,0,0,0.25));
+        &.visible {
+            display: inline-block;
+        }
+        li {
+            a {
+                padding: 12px 20px;
+                width: 180px;
+                display: inline-block;
+                color: $font-body-color;
+                font-family: $font-heading;
+                &:hover, &:focus {
+                    background-color: darken(white, 5%);
+                }
+            }
+        }
+    }
+}
