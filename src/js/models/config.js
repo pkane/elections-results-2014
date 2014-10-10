@@ -24,13 +24,13 @@ define(['jquery'], function ($) {
             pollFrequency: 5 * 60 * 1000, // TBD
             op: {
                 version: 'CurrentVersion',
-                all: '{dataFeedVersionId}/AllRaces',
-                initiatives: '{dataFeedVersionId}/BallotInitiativesByState',
-                initiativesDetail: '{dataFeedVersionId}/StateBallotInitiatives/{stateId}',
-                raceByState: '{dataFeedVersionId}/RaceResultsByState/{raceId}',
-                raceByCounty: '{dataFeedVersionId}/StateResultsByCountyOrCd/{raceId}/{stateId}',
-                raceByCountyDetail: '{dataFeedVersionId}/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
-                updates: 'DataFeedVersions/00'
+                all: '2014/AllRaces',
+                initiatives: '2014/BallotInitiativesByState',
+                initiativesDetail: '2014/StateBallotInitiatives/{stateId}',
+                raceByState: '2014/RaceResultsByState/{raceId}',
+                raceByCounty: '2014/StateResultsByCountyOrCd/{raceId}/{stateId}',
+                raceByCountyDetail: '2014/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
+                updates: 'DataFeedVersions/2014'
             }
         },
 
