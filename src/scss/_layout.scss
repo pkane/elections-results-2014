@@ -264,6 +264,10 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 }
 
+#list .card-item .card-state-name {
+	text-transform: capitalize;
+}
+
 /*#election-content .house-card-deck .card-item {
 	height: 150px;
 	background: #F5F5F5;
