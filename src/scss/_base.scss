@@ -300,12 +300,12 @@ only screen and (                min-resolution: 2dppx) {
 /* Bootstrap Overwrites */
 
 .container {
-	padding-left: 0;
-	padding-right: 0;
+	// padding-left: 0;
+	// padding-right: 0;
 	@include desktop {
 		.container {
-			padding-left: 20px;
-			padding-right: 20px;
+			// padding-left: 20px;
+			// padding-right: 20px;
 		}
 	}
 }
@@ -619,4 +619,8 @@ only screen and (                min-resolution: 2dppx) {
 
 .interactivepages-body {
 	background: none !important;
+}
+
+.padded-container {
+	padding: 0 !important;
 }
