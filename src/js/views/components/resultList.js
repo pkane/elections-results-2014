@@ -28,6 +28,10 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 var county = _.findWhere(fipsMap, { s: fips.substr(0, 2), c: fips.substr(2, 3) })
                 return (county) ? county.d : '';
             },
+            findSortValue: function (value) {
+                var matches = value.match(/[^\d]*(\d+)[^\d]*/);
+                return (matches && matches.length > 1) ? parseInt(matches[1]) : value;
+            },
             formatHouseId: function (id) {
                 var split = id.split('-');
                 return split[1];

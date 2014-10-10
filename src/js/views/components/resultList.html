@@ -16,7 +16,7 @@
     </div>
     <% } else { %>
         <div class="row-fluid">
-        <% _.each(detail, function(value) { %>
+        <% _.each(_.sortBy(detail, function(obj) { return findSortValue(obj.name); }), function(value) { %>
             <table class="result-item">
                 <thead>
                     <tr class="result-first-row">
