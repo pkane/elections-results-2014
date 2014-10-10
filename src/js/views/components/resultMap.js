@@ -43,24 +43,26 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 }, this)); 
 
-                d3.json(geoJsonPlaces, _.bind(function(json) {
-                    console.log('json...', json);
-                    /*this.svg.labels.selectAll('circle')
-                        .data(_(json).filter(function(feature) {
-                            return json.properties.state === state;
-                        }))
-                        .enter()
-                        .append('circle')
-                        .attr('class', 'places')
-                        //.transition().ease(ease).delay(timer).duration(0)
-                        .attr('cx', function(d) {
-                            return projection(d.geometry.coordinates)[0];
-                        })
-                        .attr('cy', function(d) {
-                            return projection(d.geometry.coordinates)[1];
-                        })
-                        .attr('r', 3); */
+                if (this.model.state) {
+                    d3.json(geoJsonPlaces, _.bind(function(json) {
+                        console.log('json...', json);
+                        /*this.svg.labels.selectAll('circle')
+                            .data(_(json).filter(function(feature) {
+                                return json.properties.state === state;
+                            }))
+                            .enter()
+                            .append('circle')
+                            .attr('class', 'places')
+                            //.transition().ease(ease).delay(timer).duration(0)
+                            .attr('cx', function(d) {
+                                return projection(d.geometry.coordinates)[0];
+                            })
+                            .attr('cy', function(d) {
+                                return projection(d.geometry.coordinates)[1];
+                            })
+                            .attr('r', 3); */
                 }, this));
+                }
 
             }
         },
@@ -101,13 +103,13 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 tooltip                    
                     .html([
-                        '<h4>', d.properties.name, '</h4>',
+                        '<h4>', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
                         '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
 
                         _.reduce(found.results, function(memo, item) {
                             return (memo
-                                + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')' 
-                                + (item.win ? '<span class="won">won</span>' : '')                                
+                                + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '') //' (' + item.party.substr(0,1).toUpperCase() + ')' 
+                                + (item.win ? ' <span class="won">won</span>' : '')                                
                                 + '</td>'
                                 + '<td class="right">' + voteFormat(item.votes) + '</td>'
                                 + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
