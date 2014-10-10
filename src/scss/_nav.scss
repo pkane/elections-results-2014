@@ -341,6 +341,10 @@
             margin-left: 140px;
         }
 
+        #election-bar-content {
+            padding-top: 70px;
+        }
+
         .dropdown-menu {
             top: 0px;
             width: 100%;
@@ -362,6 +366,10 @@
 
         }
 
+        .dropdown-menu > li > a:hover {
+            background: none;
+        }
+
         .elections-bar-nav { 
             background: #2c2c2c;
             position: fixed;
@@ -371,7 +379,7 @@
         }
 
         .election-icon.election-icon-share {
-            background-position-x: -30px;
+            background-position: -30px -130px;
         }
 
         .elections-bar-nav .nav-item {
