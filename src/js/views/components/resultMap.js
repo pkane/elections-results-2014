@@ -111,7 +111,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 tooltip
                     .classed('hidden', false)
-                    .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + 175) + 'px; opacity: 1;')
+                    .attr('style', 'left:' + (mouse[0] - 20) + 'px; top:'+ (mouse[1] + 20) + 'px; opacity: 1;')
                     ;                
             }
 
