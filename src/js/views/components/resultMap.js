@@ -173,14 +173,23 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         renderNav: function() {
             console.log('render nav');
             if (this.model.race) {
+
                 var raceKey = this.model.race.key;
 
                 this.$('#state-list-dropdown-btn').css('display', 'inline-block');
-                this.$('#resultmap-back-btn').attr("href", "#" + this.model.race.key);
+                this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
 
                 this.$('.state-list-dropdown')
                     .html(_.map(config.states, function(state) {
-                        return ['<li><a class=\'state-list-link\' href=\'#', raceKey ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
+
+                        var found = _.find(dataManager[raceKey].data, function(item) { return item.id.substr(0, 2) === state.id;  });
+
+                        if (found) {
+                            return ['<li><a class=\'state-list-link\' href=\'#', raceKey ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
+                        }
+
+                        return '';
+                        
                     }).join(''));
             }
 
