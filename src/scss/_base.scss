@@ -229,30 +229,30 @@ $desktop-xl: 1600;
 		font-weight: 100;
 		line-height: 36px;
 	}
-	&.election-icon-search 				{ background-position: 0px 0px; }
-	&.election-icon-search-white 		{ background-position: -38px 0px; }
-	&.election-icon-search-blue 		{ background-position: -76px 0px; }
-	&.election-icon-arrow-right 		{ background-position: 0px -36px; }
+	&.election-icon-search 				    { background-position: 0px 0px; }
+	&.election-icon-search-white 		  { background-position: -38px 0px; }
+	&.election-icon-search-blue 		  { background-position: -76px 0px; }
+	&.election-icon-arrow-right 		  { background-position: 0px -36px; }
 	&.election-icon-arrow-right-white	{ background-position: -38px -36px; }
 	&.election-icon-arrow-right-blue	{ background-position: -76px -36px; }
-	&.election-icon-share 				{ background-position: 0px -114px; }
-	&.election-icon-share-white 		{ background-position: -38px -110px; text-indent: -9999px; }
-	&.election-icon-share-blue 			{ background-position: -76px -114px; }
-	&.election-icon-arrow-down 			{ background-position: 0px -152px; }
+	&.election-icon-share 				    { background-position: 0px -114px; }
+	&.election-icon-share-white 			{ background-position: -38px -110px; text-indent: -9999px; }
+	&.election-icon-share-blue 				{ background-position: -76px -114px; }
+	&.election-icon-arrow-down 				{ background-position: 0px -152px; }
 	&.election-icon-arrow-down-white 	{ background-position: -38px -152px; }
 	&.election-icon-arrow-down-blue 	{ background-position: -76px -152px; }
-	&.election-icon-arrow-left 			{ background-position: 0px -152px; }
-	&.election-icon-arrow-left-white 	{ background-position: -38px -152px; }
-	&.election-icon-arrow-left-blue 	{ background-position: -76px -152px; }
-	&.election-icon-new-window 			{ background-position: 0px -190px; }
+	&.election-icon-arrow-left 				{ background-position: 0px -304px; }
+	&.election-icon-arrow-left-white 	{ background-position: -39px -304px; }
+	&.election-icon-arrow-left-blue 	{ background-position: -76px -304px; }
+	&.election-icon-new-window 				{ background-position: 0px -190px; }
 	&.election-icon-new-window-white 	{ background-position: -38px -190px; }
 	&.election-icon-new-window-blue 	{ background-position: -76px -190px; }
-	&.election-icon-remove 				{ background-position: 0px -266px; }
-	&.election-icon-remove-white 		{ background-position: -38px -290px; }
-	&.election-icon-remove-blue 		{ background-position: -76px -266px; }
-	&.election-icon-state 				{ background-position: 0px -228px; }
-	&.election-icon-state-white 		{ background-position: -38px -228px; }
-	&.election-icon-state-blue 			{ background-position: -76px -228px; }
+	&.election-icon-remove 						{ background-position: 0px -266px; }
+	&.election-icon-remove-white 			{ background-position: -38px -290px; }
+	&.election-icon-remove-blue 			{ background-position: -76px -266px; }
+	&.election-icon-state 						{ background-position: 0px -228px; }
+	&.election-icon-state-white 			{ background-position: -38px -228px; }
+	&.election-icon-state-blue 				{ background-position: -76px -228px; }
 
 	// Social Icons
 	&.election-icon-social-close,

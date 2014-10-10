@@ -170,16 +170,49 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             return color;
         },
 
+        renderNav: function() {
+            console.log('render nav');
+            if (this.model.race) {
+
+                var raceKey = this.model.race.key;
+
+                this.$('#state-list-dropdown-btn').css('display', 'inline-block');
+                this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
+
+                this.$('.state-list-dropdown')
+                    .html(_.map(config.states, function(state) {
+
+                        var found = _.find(dataManager[raceKey].data, function(item) { return item.id.substr(0, 2) === state.id;  });
+
+                        if (found) {
+                            return ['<li><a class=\'state-list-link\' href=\'#', raceKey ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
+                        }
+
+                        return '';
+                        
+                    }).join(''));
+            }
+
+            this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
+        },
+
         refresh: function() {
             console.log('-- refresh --');
-            this.renderMap();            
+            this.renderMap();
+            this.renderNav();
         },
 
         render: function () {
             console.log('-- render --');
             this.$el.html(this.template(this.model));            
             this.renderMap();
+            this.renderNav();
             tooltip = d3.select("#map-tooltip");
+
+            var stateListDropdown = this.$('.state-list-dropdown');
+            this.$('#state-list-dropdown-btn').on('click', function() {
+                !stateListDropdown.hasClass("visible") ? stateListDropdown.addClass("visible") : stateListDropdown.removeClass("visible")
+            });
 
             return this;
         },
