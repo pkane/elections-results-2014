@@ -19,7 +19,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         
         template: _.template(resultMap),
 
-        drawMap: function(geoJsonPath, strokeWidth) {
+        drawMap: function(geoJsonPath, geoJsonPlaces, strokeWidth) {
 
             if (this.model.race) {
                 console.log('model...', this.model);
@@ -43,8 +43,28 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 }, this)); 
 
+                d3.json(geoJsonPlaces, _.bind(function(json) {
+                    console.log('json...', json);
+                    /*this.svg.labels.selectAll('circle')
+                        .data(_(json).filter(function(feature) {
+                            return json.properties.state === state;
+                        }))
+                        .enter()
+                        .append('circle')
+                        .attr('class', 'places')
+                        //.transition().ease(ease).delay(timer).duration(0)
+                        .attr('cx', function(d) {
+                            return projection(d.geometry.coordinates)[0];
+                        })
+                        .attr('cy', function(d) {
+                            return projection(d.geometry.coordinates)[1];
+                        })
+                        .attr('r', 3); */
+                }, this));
+
             }
         },
+
 
         clicked: function(d) {
             if (!this.model.state && this.findItemById(d.id)) {
@@ -225,9 +245,9 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                             ;
 
                         if (this.model.race.id == 'h') {
-                            this.drawMap(dataManager.getGeo('cds', 'simp'));
+                            this.drawMap(dataManager.getGeo('cds', 'simp'), dataManager.getGeo('places'));
                         } else {
-                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
+                            this.drawMap(dataManager.getGeo('counties', this.model.state.id), dataManager.getGeo('places'));
                         }
 
                     }, this));
@@ -235,7 +255,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 } else {
 
                     if (this.model.race.id == 'h') {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), '', 0.3);
                     } else {
                         this.drawMap(dataManager.getGeo('states')); 
                     }
@@ -888,160 +908,160 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 //             }
 
 //             // Needs data update to include state fips
-//             function places() {
-
-//                 remove('.places');
-
-//                 if (res === 'zoom') {
-
-//                     // show places
-//                     if (!data.geo.places.length) {
-//                         view.getData(['places'], showPlaces);
-//                     } else {
-//                         showPlaces();
-//                     }
-
-//                 }
-
-//                 function showPlaces() {
-
-//                     var places = data.geo.places,
-//                         projection = view.mercator;
-
-//                     if (IE) {
-//                         view.svg.selectAll('circle')
-//                             .data(_(places).filter(function(feature) {
-//                                 return feature.properties.state === state;
-//                             })).enter().append('circle')
-//                             .attr('fill', '#000000')
-//                             .attr('class', 'places')
-//                             .attr('cx', function(d) {
-//                                 return projection(d.geometry.coordinates)[0];
-//                             })
-//                             .attr('cy', function(d) {
-//                                 return projection(d.geometry.coordinates)[1];
-//                             })
-//                             .attr('r', 3);
-
-//                         view.svg.selectAll('circle.outline')
-//                             .data(_(places).filter(function(feature) {
-//                                 return (feature.properties.capital && feature.properties.state === state);
-//                             })).enter().append('circle')
-//                             .attr('class', 'places')
-//                             .attr('fill', 'none')
-//                             .attr('stroke', '#000000')
-//                             .attr('stroke-width', 1)
-//                             .attr('cx', function(d) {
-//                                 return projection(d.geometry.coordinates)[0];
-//                             })
-//                             .attr('cy', function(d) {
-//                                 return projection(d.geometry.coordinates)[1];
-//                             })
-//                             .attr('r', 5);
-
-//                         view.svg.selectAll('text')
-//                             .data(_(places).filter(function(feature) {
-//                                 return feature.properties.state === state;
-//                             })).enter().append('text')
-//                             .attr('class', 'places')
-//                             .text(function(d) {
-//                                 return d.properties.name.toUpperCase();
-//                             })
-//                             .attr('font-size', 10)
-//                             .attr('text-anchor', function(d) {
-//                                 if (d.properties.placement === 'right') return 'start';
-//                                 if (d.properties.placement === 'left') return 'end';
-//                                 return 'middle';
-//                             })
-//                             .attr('transform', function(d) {
-//                                 var x = 0, y = -10;
-//                                 if (d.properties.placement === 'right')  y = 4;
-//                                 if (d.properties.placement === 'left')   y = 4;
-//                                 if (d.properties.placement === 'bottom') y = 18;
-//                                 if (d.properties.placement === 'right')  x = 10;
-//                                 if (d.properties.placement === 'left')   x = -10;
-
-//                                 return 'translate(' + x + ',' + y + ')';
-//                             })
-//                             .attr('x', function(d) {
-//                                 return projection(d.geometry.coordinates)[0];
-//                             })
-//                             .attr('y', function(d) {
-//                                 return projection(d.geometry.coordinates)[1];
-//                             });
-
-//                             return undefined;
-//                     }
-
-//                     view.svg.labels.selectAll('circle')
-//                         .data(_(places).filter(function(feature) {
-//                             return feature.properties.state === state;
-//                         })).enter().append('circle')
-//                         .attr('class', 'places')
-//                         .transition().ease(ease).delay(timer).duration(0)
-//                         .attr('cx', function(d) {
-//                             return projection(d.geometry.coordinates)[0];
-//                         })
-//                         .attr('cy', function(d) {
-//                             return projection(d.geometry.coordinates)[1];
-//                         })
-//                         .attr('r', 3);
-
-//                     view.svg.labels.selectAll('circle.outline')
-//                         .data(_(places).filter(function(feature) {
-//                             return (feature.properties.capital && feature.properties.state === state);
-//                         })).enter().append('circle')
-//                         .attr('class', 'places')
-//                         .attr('fill', 'none')
-//                         .attr('stroke', '#000000')
-//                         .attr('stroke-width', 1)
-//                         .transition().ease(ease).delay(timer).duration(0)
-//                         .attr('cx', function(d) {
-//                             return projection(d.geometry.coordinates)[0];
-//                         })
-//                         .attr('cy', function(d) {
-//                             return projection(d.geometry.coordinates)[1];
-//                         })
-//                         .attr('r', 5);
-
-//                     view.svg.labels.selectAll('text')
-//                         .data(_(places).filter(function(feature) {
-//                             return feature.properties.state === state;
-//                         })).enter().append('text')
-//                         .attr('class', 'places')
-//                         .transition().ease(ease).delay(timer).duration(0)
-//                         .text(function(d) {
-//                             return d.properties.name.toUpperCase();
-//                         })
-//                         .attr('font-size', 10)
-//                         .attr('font-family', function(d) {
-//                             if (d.properties.capital)
-//                                 return "'Futura Today Demibold', Helvetica, Arial, sans-serif;";
-//                         })
-//                         .attr('text-anchor', function(d) {
-//                             if (d.properties.placement === 'right') return 'start';
-//                             if (d.properties.placement === 'left') return 'end';
-//                             return 'middle';
-//                         })
-//                         .attr('dy', function(d) {
-//                             if (d.properties.placement === 'right') return 4;
-//                             if (d.properties.placement === 'left') return 4;
-//                             if (d.properties.placement === 'bottom') return 18;
-//                             return -10;
-//                         })
-//                         .attr('dx', function(d) {
-//                             if (d.properties.placement === 'right') return 10;
-//                             if (d.properties.placement === 'left') return -10;
-//                             return 0;
-//                         })
-//                         .attr('x', function(d) {
-//                             return projection(d.geometry.coordinates)[0];
-//                         })
-//                         .attr('y', function(d) {
-//                             return projection(d.geometry.coordinates)[1];
-//                         });
-
-//                 }
+//            function places() {
+//
+//                remove('.places');
+//
+//                if (res === 'zoom') {
+//
+//                    // show places
+//                    if (!data.geo.places.length) {
+//                        view.getData(['places'], showPlaces);
+//                    } else {
+//                        showPlaces();
+//                    }
+//
+//                }
+//
+//                function showPlaces() {
+//
+//                    var places = data.geo.places,
+//                        projection = view.mercator;
+//
+//                    if (IE) {
+//                        view.svg.selectAll('circle')
+//                            .data(_(places).filter(function(feature) {
+//                                return feature.properties.state === state;
+//                            })).enter().append('circle')
+//                            .attr('fill', '#000000')
+//                            .attr('class', 'places')
+//                            .attr('cx', function(d) {
+//                                return projection(d.geometry.coordinates)[0];
+//                            })
+//                            .attr('cy', function(d) {
+//                                return projection(d.geometry.coordinates)[1];
+//                            })
+//                            .attr('r', 3);
+//
+//                        view.svg.selectAll('circle.outline')
+//                            .data(_(places).filter(function(feature) {
+//                                return (feature.properties.capital && feature.properties.state === state);
+//                            })).enter().append('circle')
+//                            .attr('class', 'places')
+//                            .attr('fill', 'none')
+//                            .attr('stroke', '#000000')
+//                            .attr('stroke-width', 1)
+//                            .attr('cx', function(d) {
+//                                return projection(d.geometry.coordinates)[0];
+//                            })
+//                            .attr('cy', function(d) {
+//                                return projection(d.geometry.coordinates)[1];
+//                            })
+//                            .attr('r', 5);
+//
+//                        view.svg.selectAll('text')
+//                            .data(_(places).filter(function(feature) {
+//                                return feature.properties.state === state;
+//                            })).enter().append('text')
+//                            .attr('class', 'places')
+//                            .text(function(d) {
+//                                return d.properties.name.toUpperCase();
+//                            })
+//                            .attr('font-size', 10)
+//                            .attr('text-anchor', function(d) {
+//                                if (d.properties.placement === 'right') return 'start';
+//                                if (d.properties.placement === 'left') return 'end';
+//                                return 'middle';
+//                            })
+//                            .attr('transform', function(d) {
+//                                var x = 0, y = -10;
+//                                if (d.properties.placement === 'right')  y = 4;
+//                                if (d.properties.placement === 'left')   y = 4;
+//                                if (d.properties.placement === 'bottom') y = 18;
+//                                if (d.properties.placement === 'right')  x = 10;
+//                                if (d.properties.placement === 'left')   x = -10;
+//
+//                                return 'translate(' + x + ',' + y + ')';
+//                            })
+//                            .attr('x', function(d) {
+//                                return projection(d.geometry.coordinates)[0];
+//                            })
+//                            .attr('y', function(d) {
+//                                return projection(d.geometry.coordinates)[1];
+//                            });
+//
+//                            return undefined;
+//                    }
+//
+//                    view.svg.labels.selectAll('circle')
+//                        .data(_(places).filter(function(feature) {
+//                            return feature.properties.state === state;
+//                        })).enter().append('circle')
+//                        .attr('class', 'places')
+//                        .transition().ease(ease).delay(timer).duration(0)
+//                        .attr('cx', function(d) {
+//                            return projection(d.geometry.coordinates)[0];
+//                        })
+//                        .attr('cy', function(d) {
+//                            return projection(d.geometry.coordinates)[1];
+//                        })
+//                        .attr('r', 3);
+//
+//                    view.svg.labels.selectAll('circle.outline')
+//                        .data(_(places).filter(function(feature) {
+//                            return (feature.properties.capital && feature.properties.state === state);
+//                        })).enter().append('circle')
+//                        .attr('class', 'places')
+//                        .attr('fill', 'none')
+//                        .attr('stroke', '#000000')
+//                        .attr('stroke-width', 1)
+//                        .transition().ease(ease).delay(timer).duration(0)
+//                        .attr('cx', function(d) {
+//                            return projection(d.geometry.coordinates)[0];
+//                        })
+//                        .attr('cy', function(d) {
+//                            return projection(d.geometry.coordinates)[1];
+//                        })
+//                        .attr('r', 5);
+//
+//                    view.svg.labels.selectAll('text')
+//                        .data(_(places).filter(function(feature) {
+//                            return feature.properties.state === state;
+//                        })).enter().append('text')
+//                        .attr('class', 'places')
+//                        .transition().ease(ease).delay(timer).duration(0)
+//                        .text(function(d) {
+//                            return d.properties.name.toUpperCase();
+//                        })
+//                        .attr('font-size', 10)
+//                        .attr('font-family', function(d) {
+//                            if (d.properties.capital)
+//                                return "'Futura Today Demibold', Helvetica, Arial, sans-serif;";
+//                        })
+//                        .attr('text-anchor', function(d) {
+//                            if (d.properties.placement === 'right') return 'start';
+//                            if (d.properties.placement === 'left') return 'end';
+//                            return 'middle';
+//                        })
+//                        .attr('dy', function(d) {
+//                            if (d.properties.placement === 'right') return 4;
+//                            if (d.properties.placement === 'left') return 4;
+//                            if (d.properties.placement === 'bottom') return 18;
+//                            return -10;
+//                        })
+//                        .attr('dx', function(d) {
+//                            if (d.properties.placement === 'right') return 10;
+//                            if (d.properties.placement === 'left') return -10;
+//                            return 0;
+//                        })
+//                        .attr('x', function(d) {
+//                            return projection(d.geometry.coordinates)[0];
+//                        })
+//                        .attr('y', function(d) {
+//                            return projection(d.geometry.coordinates)[1];
+//                        });
+//
+//                }
 
 //             }
 
