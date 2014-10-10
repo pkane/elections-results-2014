@@ -118,7 +118,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         mouseOut: function() {
-            // tooltip.classed('hidden', true);
+            tooltip.classed('hidden', true);
         },
         
 
