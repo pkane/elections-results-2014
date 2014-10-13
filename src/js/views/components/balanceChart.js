@@ -3,9 +3,10 @@ define([
 	'underscore',
 	'backbone',
     'd3',
+    'models/config',
     'text!views/components/balanceChart.html'    
 ],
-function ($, _, Backbone, d3, chartTemplate) {
+function ($, _, Backbone, d3, config, chartTemplate) {
 
     var isRendered = false,
         seatsHeld = { 
@@ -78,6 +79,9 @@ function ($, _, Backbone, d3, chartTemplate) {
 
                     $('.num', numLeft).text(pctLeft + '%');
                     $('.num', numRight).text(pctRight + '%');
+                    
+                    $('.party-label', numLeft).text('');
+                    $('.party-label', numRight).text('');
 
                     $(progressLeft).css('width', pctLeft + '%');
                     $(progressRight).css('width', pctRight + '%');
@@ -112,8 +116,10 @@ function ($, _, Backbone, d3, chartTemplate) {
                 $('.icon', progressRight).addClass('icon-rep-left');
                 
                 $('.num', numLeft).text(dem.seats + other.seats + held.dem);
+                $('.party-label', numLeft).text(config.isMobile ? 'Dem' : 'Democrat');
                 $('.num', numRight).text(rep.seats + held.rep);
-                
+                $('.party-label', numRight).text(config.isMobile ? 'Rep' : 'Republican');
+
                 $(progressLeft).css('width', ((dem.seats + other.seats + held.dem) / held.total)*100 + '%');
                 $(progressRight).css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
                 

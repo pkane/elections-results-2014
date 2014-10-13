@@ -69,10 +69,12 @@ ul.progress-stat-bar {
 
     .bop-group-num-left {
         color: $color-dem;
+        .party-label { font-size: 1.25em; }
     }
 
     .bop-group-num-right {
         color: $color-rep;
+        .party-label { font-size: 1.25em; }
     }
 }
 
