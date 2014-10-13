@@ -48,16 +48,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                             
                             })); */
 
-                            this.svg                       
+                            /*this.svg                       
                             .append('svg:circle')
-                            /* .attr('transform', function(d) { 
+                             .attr('transform', function(d) { 
                                     return 'translate(' + d3.geo.path().projection([41.75645509751427, -124.20049157905994]) + ')';
-                            }) */
+                            }) 
                             .attr('cx', 100)
                             .attr('cy', 100)
                             .attr('r', 5)
                             .attr('stroke', 'black')
-                            .attr('fill', 'red')
+                            .attr('fill', 'red')*/
                             ;
                         }
 
@@ -218,7 +218,9 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             if ($(window).width() < 1025) {
                 scaleMultiplier = 0.5;
                 natScaleMultiplier = 0.65;
-
+            } else if ($(window).width() < 1200) {
+                scaleMultiplier = 0.9;
+                natScaleMultiplier = 1.0;
             }
 
             this.svg = d3.select(this.el)
@@ -247,7 +249,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                             ;
 
                         if (this.model.race.id == 'h') {
-                            this.drawMap(dataManager.getGeo('cds', 'simp'), dataManager.getGeo('places'));
+                            this.drawMap(dataManager.getGeo('cds',  this.model.state.id), dataManager.getGeo('places'));
                         } else {
                             this.drawMap(dataManager.getGeo('counties', this.model.state.id), dataManager.getGeo('places'));
                         }

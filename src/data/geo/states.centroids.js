@@ -264,8 +264,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-84.11764, 43.66849],
-            "scale" : 2800
+            "coordinates": [-86.11764, 44.9],
+            "scale" : 3200
         },
         "properties": {
             "name": "Michigan",
@@ -304,7 +304,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-75.45304, 38.99789],
-            "scale" : 6400
+            "scale" : 12000
         },
         "properties": {
             "name": "Delaware",
@@ -369,7 +369,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-85.284906, 37.533728],
-            "scale" : 4000
+            "scale" : 4400
         },
         "properties": {
             "name": "Kentucky",
@@ -382,7 +382,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-71.507205, 42.163683],
-            "scale" : 5600
+            "scale" : 10000
         },
         "properties": {
             "name": "Massachusetts",
@@ -407,8 +407,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-114.68383, 44.467497],
-            "scale" : 2000
+            "coordinates": [-114.68383, 45.467497],
+            "scale" : 2800
         },
         "properties": {
             "name": "Idaho",
@@ -433,8 +433,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-157.980707, 21.442633],
-            "scale" : 3200
+            "coordinates": [-157.50, 20.5],
+            "scale" : 6000
         },
         "properties": {
             "name": "Hawaii",
@@ -499,7 +499,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-89.147835, 40.166166],
-            "scale" : 3200
+            "scale" : 3600
         },
         "properties": {
             "name": "Illinois",
