@@ -6,57 +6,165 @@ define([
     'models/dataManager',
     'models/fips',
     'text!views/components/resultMap.html',
-    'd3'
+    'd3',
+    'events/analytics'
 ],
-function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
-    var  IE = $('html').hasClass('lt-ie9'),
+function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
+    var IE = $('html').hasClass('lt-ie9'),
+        tooltip,
+        voteFormat = d3.format(','),
         view = Backbone.View.extend({
 
         model: new (Backbone.Model.extend({}))(),
         
         template: _.template(resultMap),
-        
+
         drawMap: function(geoJsonPath, strokeWidth) {
+
             if (this.model.race) {
+                console.log('model...', this.model);
+
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
                     this.svg                       
-                       .selectAll("path")
-                       .data(json.features)
-                       .enter()
-                       .append("path")
-                       .attr('fill', _.bind(this.fillColor, this))
-                       .attr('stroke', '#fff')
-                       .attr('stroke-width', strokeWidth || 1)
-                       .attr("d", d3.geo.path().projection(this.projection))
-                       ;
+                        .selectAll('path')
+                        .data(json.features)
+                        .enter()
+                        .append('path')
+                        .attr('fill', _.bind(this.fillColor, this))
+                        .attr('stroke', '#fff')
+                        .attr('stroke-width', strokeWidth || 1)
+                        .attr("d", d3.geo.path().projection(this.projection))
+                        .on('click', _.bind(this.clicked, this))
+                        .on('mouseover', _.bind(this.mouseOver, this))
+                        .on('mousemove', _.bind(this.mouseMove, this))                        
+                        .on('mouseout', this.mouseOut)
+                        ;
 
-                }, this));                
+                }, this)); 
+
             }
         },
+
+        clicked: function(d) {
+            if (!this.model.state && this.findItemById(d.id)) {
+                var state = _.findWhere(config.states, { id: (this.model.race.id == 'h' ? d.id.substr(0, 2) : d.id) });
+
+                analytics.trigger('track:event', this.model.race.key + 'results2014map' + state.abbr);
+                window.location.hash = this.model.race.key + "-" + state.abbr;
+
+            }
+        },
+
+        findItemById: function(id) {
+            var item, state = id;
+
+            if (this.model.state && this.model.race.id != 'h') {
+                state = this.model.state.id;
+                item = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: id });
+            } else {
+                if (this.model.race.id == 'h') {
+                    state = id.substr(0, 2);
+                    id = state + '-District ' + parseInt(id.substr(-2))
+                }
+
+                item = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            }
+
+            return item;
+        },
+
+        mouseOver: function(d, i) {
+            var found = this.findItemById(d.id);
+
+            if (found) {
+
+                tooltip                    
+                    .html([
+                        '<h4 class="map-tooltip-heading">', d.properties.name, '</h4>',
+                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th>%</th></tr></thead><tbody>',
+
+                        _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
+                            if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
+                                memo += '<tr><td colspan="3"><hr /></td></tr>';
+                            }
+                            return (memo
+                                + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')' 
+                                + (item.win ? '<span class="won">won</span>' : '')                                
+                                + '</td>'
+                                + '<td class="right">' + voteFormat(item.votes) + '</td>'
+                                + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
+                        }, '').value(),
+
+                        '</tbody></table>',
+                        '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
+                    ].join(''))
+                    ;
+
+                this.mouseMove(d, i);
+            } else {
+                tooltip.html("");
+            }
+
+        },
+
+        mouseMove: function(d, i) {
+            if (tooltip.html()) {
+                var mouse = d3.mouse(this.el);
+
+                tooltip
+                    .classed('hidden', false)
+                    .attr('style', 'left:' + (mouse[0] - 20) + 'px; top:'+ (mouse[1] + 20) + 'px; opacity: 1;')
+                    ;                
+            }
+
+        },
+
+        mouseOut: function() {
+            tooltip.classed('hidden', true);
+        },
+        
 
         fillColor: function(d) {
             var id = d.id,
                 partyColors = config.partyColors,
                 state = id,
+                hasState = !!this.model.state,
+                found,
                 color = partyColors.default
                 ;
 
-            if (this.model.race.id == 'h') {
-                // 39-District 11
-                state = d.id.substr(0, 2);
-                id = state + '-District ' + parseInt(d.id.substr(-2))
-            }
+            // console.log('id = ' + id);
+            // console.log(d);
+            // console.log(this.model.state);
 
-            var found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            if (this.model.state && this.model.race.id != 'h') {
+                state = this.model.state.id;
+                found = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: d.id });
+            } else {
+
+                if (this.model.race.id == 'h') {
+                    // 39-District 11
+                    state = d.id.substr(0, 2);
+                    id = state + '-District ' + parseInt(d.id.substr(-2))
+                }
+
+                found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+            }
 
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.each(found.results, function(item) {
-                        if (item.win) {
-                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+
+                        // TODO: Check color values for in progress, called, etc...
+                        if (!hasState) {
+                            if (item.win) {
+                                color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                            } else if (item.lead) {
+                                color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            }                            
                         } else if (item.lead) {
-                            color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     });
                 }
@@ -65,15 +173,50 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             return color;
         },
 
+        renderNav: function() {
+            console.log('render nav');
+            if (this.model.race) {
+
+                var raceKey = this.model.race.key;
+
+                this.$('#state-list-dropdown-btn').css('display', 'inline-block');
+                this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
+
+                this.$('.state-list-dropdown')
+                    .html(_.map(config.states, function(state) {
+
+                        var found = _.find(dataManager[raceKey].data, function(item) { return item.id.substr(0, 2) === state.id;  });
+
+                        if (found) {
+                            return ['<li><a class=\'state-list-link\' href=\'#', raceKey ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
+                        }
+
+                        return '';
+                        
+                    }).join(''));
+            }
+
+            this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
+        },
+
         refresh: function() {
             console.log('-- refresh --');
-            this.renderMap();            
+            this.renderMap();
+            this.renderNav();
         },
 
         render: function () {
             console.log('-- render --');
             this.$el.html(this.template(this.model));            
             this.renderMap();
+            this.renderNav();
+            tooltip = d3.select("#map-tooltip");
+
+            var stateListDropdown = this.$('.state-list-dropdown');
+            this.$('#state-list-dropdown-btn').on('click', function() {
+                !stateListDropdown.hasClass("visible") ? stateListDropdown.addClass("visible") : stateListDropdown.removeClass("visible")
+            });
+
             return this;
         },
 
@@ -81,8 +224,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             console.log('-- render map ', this.model.race, this.model.state);
 
             var width = this.$el.width(), 
-                height = Math.floor(width * 3 / 4)
+                height = Math.floor(width * 3 / 4),
+                scaleMultiplier = 1.0;
+                natScaleMultiplier = 1.2;
                 ;
+
+            if ($(window).width() < 1025) {
+                scaleMultiplier = 0.5;
+                natScaleMultiplier = 0.65;
+
+            }
 
             this.svg = d3.select(this.el)
                          .select('svg')
@@ -93,37 +244,41 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3) {
             this.projection = d3.geo
                                 .albersUsa()
                                 .translate([width/2, height/2])
-                                .scale([800])
+                                .scale([800 * natScaleMultiplier])
                                 ;
 
             if (this.model.race) {
-                if (this.model.race.id == 'h') {
-                    if (this.model.state) {                        
-                        d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
+                if (this.model.state) {                        
+                    d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
 
-                            var found = _.findWhere(json.features, { id: this.model.state.id });
+                        var found = _.findWhere(json.features, { id: this.model.state.id });                            
 
-                            // TODO: make better...
-                            // http://stackoverflow.com/questions/12467504/how-do-i-get-my-d3-map-to-zoom-to-a-location
-                            this.projection = d3.geo
-                                                .mercator()
-                                                .translate([width/2, height/2])
-                                                .scale([1600])
-                                                .center(found.geometry.coordinates)                                                    
-                                                ;
+                        this.projection = d3.geo
+                                            .mercator()
+                                            .translate([width/2, height/2])
+                                            .scale(found.geometry.scale * scaleMultiplier)
+                                            .center(found.geometry.coordinates)                                                    
+                                            ;
 
+                        if (this.model.race.id == 'h') {
                             this.drawMap(dataManager.getGeo('cds', 'simp'));
+                        } else {
+                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
+                        }
 
-                        }, this));
-
-                    } else {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);    
-                    }
+                    }, this));
 
                 } else {
-                    this.drawMap(dataManager.getGeo('states'));
+
+                    if (this.model.race.id == 'h') {
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);
+                    } else {
+                        this.drawMap(dataManager.getGeo('states')); 
+                    }
+
                 }
             }
+
         }
 
         
