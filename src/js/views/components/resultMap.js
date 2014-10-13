@@ -46,10 +46,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
         },
 
-        something: function() {
-            console.log("something")
-        },
-
         clicked: function(d) {
             if (!this.model.state && this.findItemById(d.id)) {
                 var state = _.findWhere(config.states, { id: (this.model.race.id == 'h' ? d.id.substr(0, 2) : d.id) });
