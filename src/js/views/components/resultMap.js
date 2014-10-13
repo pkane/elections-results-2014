@@ -41,28 +41,55 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .on('mouseout', this.mouseOut)
                         ;
 
+                        if (this.model.state) {
+                            /* d3.jsonPlaces(geoJsonPlaces, _.bind(function(geoJsonPlaces) {
+                                console.log('json...', jsonPlaces);
+                                //console.log('state...', json.properties.state);
+                            
+                            })); */
+
+                            this.svg                       
+                            .append('svg:circle')
+                            /* .attr('transform', function(d) { 
+                                    return 'translate(' + d3.geo.path().projection([41.75645509751427, -124.20049157905994]) + ')';
+                            }) */
+                            .attr('cx', 100)
+                            .attr('cy', 100)
+                            .attr('r', 5)
+                            .attr('stroke', 'black')
+                            .attr('fill', 'red')
+                            ;
+                        }
+
+                    /*if (this.model.state) {
+                        d3.json(geoJsonPlaces, _.bind(function(json) {
+                            console.log('json...', json);
+                             this.svg
+                                .append('svg:circle')
+                                .attr("transform", function(d) { 
+                                return "translate(" + this.projection([-124.20049157905994, 41.75645509751427]) + ")"; 
+                            })
+                            .attr('r', 5); */
+                            /*this.svg.labels.selectAll('circle')
+                                .data(_(json).filter(function(feature) {
+                                    return json.properties.state === state;
+                                }))
+                                .enter()
+                                .append('circle')
+                                .attr('class', 'places')
+                                //.transition().ease(ease).delay(timer).duration(0)
+                                .attr('cx', function(d) {
+                                    return projection(d.geometry.coordinates)[0];
+                                })
+                                .attr('cy', function(d) {
+                                    return projection(d.geometry.coordinates)[1];
+                                })
+                                .attr('r', 3); 
+                        }, this));
+                    }*/
+
                 }, this)); 
 
-                if (this.model.state) {
-                    d3.json(geoJsonPlaces, _.bind(function(json) {
-                        console.log('json...', json);
-                        /*this.svg.labels.selectAll('circle')
-                            .data(_(json).filter(function(feature) {
-                                return json.properties.state === state;
-                            }))
-                            .enter()
-                            .append('circle')
-                            .attr('class', 'places')
-                            //.transition().ease(ease).delay(timer).duration(0)
-                            .attr('cx', function(d) {
-                                return projection(d.geometry.coordinates)[0];
-                            })
-                            .attr('cy', function(d) {
-                                return projection(d.geometry.coordinates)[1];
-                            })
-                            .attr('r', 3); */
-                }, this));
-                }
 
             }
         },
