@@ -1,26 +1,47 @@
+<div id='elections-bar' class='elections-bar-display container'>
+  <div class='row'>
+    <div class='col-sm-7 col-md-6 col-lg-6 elections-bar-left-col'>
+      <div class='row elections-row'>
+        <div class="page-icon"><span class="icon"></span></div>
+        <div class="page-icon-mini"><span class="icon"></span></div>
+        <div class='elections-heading'>
+          <div class="election-state-subheading">2014 Midterm Election</div>
+          <div class="election-office-projection-heading">Senate Results</div>
+        </div>
+      </div>
+    </div>
 
-    <ul>
-        <li class="isDesktop election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-        <li class="isDesktop election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-        <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-        <li class="isDesktop election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
+    <div class='col-sm-5 col-md-6 col-lg-6'>
+      <div class='navbar elections-bar-nav'>
+        <ul class="nav navbar-nav navbar-right navbar-race">
+          <li class='nav-item senate-nav-item'><a href="#senate">Senate</a></li>
+          <li class='nav-item house-nav-item'><a href="#house">House</a></li>
+          <li class='nav-item governors-nav-item'><a href="#governors">Governor</a></li>
+          <li class='nav-item initiatives-nav-item'><a href="#initiatives">Initiatives</a></li>
+          <li class='nav-item share-nav-item'><a href='javascript:;' class='share-icon'><span class='election-icon election-icon-share'></span></a></li>
+        </ul>
 
-        <li class="isTablet">
-            <ul>
-                <li class="election-results-nav-item election-results-nav-senate"><a href="#/senate">Senate</a></li>
-                <li class="election-results-nav-item election-results-nav-house"><a href="#/house">House</a></li>
-                <li class="election-results-nav-item election-results-nav-governors"><a href="#/governors">Governors</a></li>
-                <li class="election-results-nav-item election-results-nav-governors"><a href="#/iniatives">Iniatives</a></li>
-            </ul>
-        </li>
-        
-        <li>
-            <a>State</a>
-            <ul class="state-list">
-                <% _.each(states, function (state) { %>
-                    <li class="election-results-nav-item election-results-nav-<%= state.abbr %>" data-abbr="<%= state.abbr %>"><a href="#"><%= state.display %></a></li>
-                <% }) %>
-            </ul>
-        </li>
-        <li class="election-results-nav-item election-results-nav-share"><a>Share</a></li>
-    </ul>
+        <ul class="dropdown-menu dropdown-menu-right elections-bar-dropdown">
+          <li class='dd-nav-item senate-dd-nav-item'><a class='dd-nav-link' href="#senate">Senate</a></li>
+          <li class='dd-nav-item house-dd-nav-item'><a class='dd-nav-link' href="#house">House</a></li>
+          <li class='dd-nav-item governors-dd-nav-item'><a class='dd-nav-link' href="#governors">Governor</a></li>
+          <li class='dd-nav-item initiatives-dd-nav-item'><a class='dd-nav-link' href="#initiatives">Initiatives</a></li>
+        </ul>
+
+        <ul class="dropdown-menu dropdown-menu-right elections-share-dropdown">
+          <li><a class='dd-nav-link' id='facebook-share' href='javascript:;'>Facebook</a></li>
+          <li><a class='dd-nav-link' id='twitter-share' href='javascript:;'>Twitter</a></li>
+          <li><a class='dd-nav-link' id='mail-share' href='javascript:;'>Mail</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+<div class='elections-overlay'>
+
+  <div class="election-overlay-button-close">
+    <a class="close-nav"><span class="election-icon election-icon-remove-white"></span></a>
+  </div>
+
+</div>

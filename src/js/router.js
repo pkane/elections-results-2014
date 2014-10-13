@@ -5,29 +5,35 @@ define([
 ],
 function ($, _, Backbone) {
 
-    var AppRouter = Backbone.Router.extend({
-
-        routes: {
-            '': 'index' // /elections-results-2014/
-        },
-
-        initialize: function() {
-            
-            // /elections-results-2014/#/{house|senate|governors|iniatives}-{al-wy}/{embed}
-            this.route(/^(house|senate|governors|iniatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/, 'index');
-
-            // /elections-results-2014/#/race/{house|senate|governors}-{al-wy|al-wy + fip}/{embed}
-            this.route(/^race\/(house|senate|governors|iniatives)-([a-zA-Z]{2})([0-9]*)\/?(oembed)?\/?/, 'race');
-            
-            console.log('Router initialized');
-        },
+    var routeHandler = function () {
+            // /elections-results-2014/#/{house|senate|governors|initiatives}-{al-wy}/{embed}
+            // /elections-results-2014/#/race/{house|senate|governors|initiatives}-{al-wy|al-wy + fip}/{embed}
         
-        redirect: function () {
-            Backbone.history.navigate('#/');
-        }
-        
-    });
+            var index = location.hash.match(/^#(house|senate|governors|initiatives)?-?([a-zA-Z]{2})?\/?(oembed)?\/?/),
+                race = location.hash.match(/^#\/race\/(house|senate|governors|initiatives)-([a-zA-Z]{2})-([a-zA-Z0-9]*)\/?(oembed)?\/?/);
+            if (race) {
+                AppRouter.trigger('route:race', race[1], race[2], race[3], race[4]);
+            } else if (index){
+                AppRouter.trigger('route:index', index[1], index[2], index[3]);
+            } else if (location.hash === '') {
+                AppRouter.trigger('route:index', 'senate');
+            }
+        },
+        AppRouter = {
+
+            initialize: function() {
+
+                $(window).on('hashchange', routeHandler);
+
+                routeHandler();
+
+                console.log('Router initialized');
+            },
+
+            redirect: function () {
+                Backbone.history.navigate('#/');
+            }
+        };
     
-    return new AppRouter();
-
+    return _.extend(AppRouter, Backbone.Events);
 });

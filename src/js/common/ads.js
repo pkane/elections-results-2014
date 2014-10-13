@@ -6,14 +6,26 @@ define([
 ],
     function ($, _, Backbone) {
         'use strict';
+
+        var staticInfo = JSON.parse($('.staticinfo').html());
         
         return {
             registerAd: function (domId, adUnit, adSizes, targetingObj) {
-                // console.log('Ad: ' + domId + ' - ' + adUnit);
+                console.log('Ad: ' + domId + ' - ' + adUnit);
+	   
+                var $node = $('#' + domId);
 
-                // var newDomID = domId + Math.floor(Math.random() * 10000);
-                //          console.log('new dom id', newDomID);
-                //          $("#" + domId).attr("id", newDomID);
+                if (staticInfo.platform === 'mobile') {
+                    
+                    $node.css({ background: '#ccc', width: '320px', height: '50px', textAlign: 'center', margin: '0 auto' });
+
+                } else {
+
+                    $node.css({ background: '#ccc', width: '300px', height: '250px', textAlign: 'center', paddingTop: '100px' });
+
+                }
+
+                $node.html(adUnit);
             }
         };
     });

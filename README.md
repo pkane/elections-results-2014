@@ -1,6 +1,8 @@
 Elections Results 2014
 ----
 
+![Vote Quimby](http://thedailydose.com/lll/externals/vote_quimby.jpg)
+
 #### URL Structure
 /elections-results-2014/   
 /elections-results-2014/#/{house|senate|governors}/{embed}  

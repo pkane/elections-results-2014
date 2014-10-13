@@ -1,27 +1,10 @@
+@import "../bower_components/bootstrap/dist/css/bootstrap.css";
 
 @import "base.scss";
-
 @import "nav.scss";
-
-body {
-    background: #fcfcfc;
-    color: #333;
-}
-
-#election-app {
-    width: 100%;
-    height: 100%;
-}
-
-.isTablet { visibility: hidden; }
-.isDesktop { visibility: hidden; }
-
-@include tablet() {
-    .isTablet { visibility: visible; }
-    .isDesktop { visibility: collapse; }
-};
-
-@include desktop() {
-    .isTablet { visibility: hidden; }
-    .isDesktop { visibility: visible; }
-};
+@import "overlay.scss";
+@import "layout.scss";
+@import "balanceChart.scss";
+@import "map.scss";
+@import "updatesFeed";
+@import "ads";

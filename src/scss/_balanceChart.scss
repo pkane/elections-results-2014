@@ -1,0 +1,162 @@
+
+ul.progress-stat-bar {
+    width: 100%;
+    background: $color-other;
+    
+    &.progress-stat-bar-slim li { 
+        height: 4px;
+    }
+    
+    li {
+        width: 0;
+        height: 50px;
+        text-align: right;
+        
+        transition: width 1s;
+        
+        &.bar-progress-right { text-align: right; }
+        &.bar-progress-leftt { text-align: left; }
+        
+        &.dem { background: $color-dem; }
+        &.rep { background: $color-rep; }
+        &.other { background: $color-ind; }
+    }
+}
+
+.bop-group {
+    clear: both;
+    position: relative;
+    font-family: "Futura Today", "arial";
+    line-height: 1;
+    .text-left,
+    .text-right {
+        padding-top: 10px;
+        p, 
+        .num {
+            display: inline-block;
+            margin-bottom: 4px;
+            color: #656565;
+        }
+        .num {
+            min-width: 34px;
+        }
+    }
+    .text-left {
+        p {
+            float: left; 
+        }
+        .num {
+            float: left;
+        }
+    }
+    .text-right {
+        padding-left: 0;
+        p {
+            float: right; 
+        }
+        .num {
+            float: right;
+        }
+    }
+    .text-center {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .desc-all {
+        margin-top: 4px;
+        margin-bottom: 20px;
+    }
+
+    .bop-group-num-left {
+        color: $color-dem;
+    }
+
+    .bop-group-num-right {
+        color: $color-rep;
+    }
+}
+
+.bar-progress-right, .bop-group-num-right { 
+    float: right;
+}
+
+.bop-group-desc {
+    
+    font-size: smaller;
+    
+    ul.progress-stat-bar { 
+        margin-top: 2px;
+    }
+    
+    .num, .name {
+        font-size: 2em;
+    }
+    
+    .rep {
+        text-align: right;
+    }
+}
+
+.bop-group-num {
+
+    text-transform: uppercase;
+    
+    .num {
+        font-size: 2.5em;
+    }
+
+    .rep {
+        color: #742b31;
+    }
+    @include tablet-min {
+        .num {
+            font-size: 3em;    
+        }
+    }
+}
+
+.fifty-line {
+    position: absolute;
+    width: 1px;
+    height: 56px;
+    display: block;
+    background: #6B6B6B;
+    top: 0;
+    left: 50%;
+    margin: 0 0 0 -1px;
+    z-index: 2;
+}
+
+.progress-stat-bar {
+    padding-left: 0px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: block;
+    font-size: smaller;
+}
+
+.updated {
+    font-size: smaller;
+    color: #656565;
+}
+
+span.icon-dem-right {
+    font-size: 32px;
+    color: #547A8A;
+    position: absolute;
+    margin-top: 9px;
+    margin-left: 9px;
+    left: 0;
+}
+
+span.icon-rep-left {
+    font-size: 32px;
+    color: #8F6468;
+    position: absolute;
+    margin-left: 474px;
+    margin-top: 9px;
+    right: 10px;
+}
+

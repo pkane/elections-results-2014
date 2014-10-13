@@ -2,7 +2,11 @@ define(['backbone'], function (Backbone) {
 
     return Backbone.Model.extend({
         
-        race: 'senate'
+        isMobile: false,
+        
+        race: { key: '' },
+        
+        state: false
         
     });
 

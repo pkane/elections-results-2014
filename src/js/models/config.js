@@ -1,62 +1,116 @@
-define([], function () {
+define(['jquery'], function ($) {
+
+    var staticInfo = JSON.parse($('.staticinfo').html()),
+        isMobile = staticInfo.platform === 'mobile'
+        ;
 
     return {
+        isMobile: isMobile,
+        pageInfo: staticInfo,
+        ssts: 'news/politics/elections/results',
+
+
+        ads: {
+            sizes: (function() { return isMobile ? [[320, 50]]: [[300, 250]];  })(),
+            unit: (function() {
+                return ((isMobile ? 'mobileweb-banner_top/': 'poster/') + 'news/politics/elections_results');
+            })()
+        },
+
+        api: {
+            base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
+            dataFeedVersionId: 0,
+            lastChecked: 0,
+            pollFrequency: 5 * 60 * 1000, // TBD
+            op: {
+                version: 'CurrentVersion',
+                all: '2014/AllRaces',
+                initiatives: '2014/BallotInitiativesByState',
+                initiativesDetail: '2014/StateBallotInitiatives/{stateId}',
+                raceByState: '2014/RaceResultsByState/{raceId}',
+                raceByCounty: '2014/StateResultsByCountyOrCd/{raceId}/{stateId}',
+                raceByCountyDetail: '2014/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
+                updates: 'DataFeedVersions/2014'
+            }
+        },
+
+        geoBase: (function() { return window.location.port === '9000' ? '' : '/services/webproxy/?url=http://www.gannett-cdn.com/GDContent/2014/election-results/json/'; })(),
+
+        races: [
+            { id: 'h', key: 'house', display: 'House', op: 'raceByCounty', detail: 'raceByCountyDetail'},
+            { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCountyDetail'},
+            { id: 'g', key: 'governors', display: 'Governor', op: 'raceByState', detail: 'raceByCountyDetail'},
+            { id: 'i', key: 'initiatives', display: 'Initiatives', op: 'initiatives', detail: 'initiativesDetail'},
+            { id: 's', key: 'summary', op: 'all'},
+            { id: 'u', key: 'updates', op: 'updates'}
+        ],
         
-        indexes: ['house', 'senate', 'governors', 'iniatives'],
-        
-        states: {
-            all: [{ abbr: 'al', display: 'Alabama'},
-                    { abbr: 'ak', display: 'Alaska'},
-                    { abbr: 'az', display: 'Arizona'},
-                    { abbr: 'ar', display: 'Arkansas'},
-                    { abbr: 'ca', display: 'California'},
-                    { abbr: 'co', display: 'Colorado'},
-                    { abbr: 'ct', display: 'Connecticut'},
-                    { abbr: 'de', display: 'Delaware'},
-                    { abbr: 'fl', display: 'Florida'},
-                    { abbr: 'ga', display: 'Georgia'},
-                    { abbr: 'hi', display: 'Hawaii'},
-                    { abbr: 'id', display: 'Idaho'},
-                    { abbr: 'il', display: 'Illinois'},
-                    { abbr: 'in', display: 'Indiana'},
-                    { abbr: 'ia', display: 'Iowa'},
-                    { abbr: 'ks', display: 'Kansas'},
-                    { abbr: 'ky', display: 'Kentucky'},
-                    { abbr: 'la', display: 'Louisiana'},
-                    { abbr: 'me', display: 'Maine'},
-                    { abbr: 'md', display: 'Maryland'},
-                    { abbr: 'ma', display: 'Massachusetts'},
-                    { abbr: 'mi', display: 'Michigan'},
-                    { abbr: 'mn', display: 'Minnesota'},
-                    { abbr: 'ms', display: 'Mississippi'},
-                    { abbr: 'mo', display: 'Missouri'},
-                    { abbr: 'mt', display: 'Montana'},
-                    { abbr: 'ne', display: 'Nebraska'},
-                    { abbr: 'nv', display: 'Nevada'},
-                    { abbr: 'nh', display: 'New Hampshire'},
-                    { abbr: 'nj', display: 'New Jersey'},
-                    { abbr: 'nm', display: 'New Mexico'},
-                    { abbr: 'ny', display: 'New York'},
-                    { abbr: 'nc', display: 'North Carolina'},
-                    { abbr: 'nd', display: 'North Dakota'},
-                    { abbr: 'oh', display: 'Ohio'},
-                    { abbr: 'ok', display: 'Oklahoma'},
-                    { abbr: 'or', display: 'Oregon'},
-                    { abbr: 'pa', display: 'Pennsylvania'},
-                    { abbr: 'ri', display: 'Rhode Island'},
-                    { abbr: 'sc', display: 'South Carolina'},
-                    { abbr: 'sd', display: 'South Dakota'},
-                    { abbr: 'tn', display: 'Tennessee'},
-                    { abbr: 'tx', display: 'Texas'},
-                    { abbr: 'ut', display: 'Utah'},
-                    { abbr: 'vt', display: 'Vermont'},
-                    { abbr: 'va', display: 'Virginia'},
-                    { abbr: 'wa', display: 'Washington'},
-                    { abbr: 'wv', display: 'West Virginia'},
-                    { abbr: 'wi', display: 'Wisconsin'},
-                    { abbr: 'wy', display: 'Wyoming'}]
+        states: [
+            { id: '01', abbr: 'al', display: 'Alabama'},
+            { id: '02', abbr: 'ak', display: 'Alaska'},
+            { id: '04', abbr: 'az', display: 'Arizona'},
+            { id: '05', abbr: 'ar', display: 'Arkansas'},
+            { id: '06', abbr: 'ca', display: 'California'},
+            { id: '08', abbr: 'co', display: 'Colorado'},
+            { id: '09', abbr: 'ct', display: 'Connecticut'},
+            { id: '10', abbr: 'de', display: 'Delaware'},
+            { id: '11', abbr: 'dc', display: 'District of Columbia'},
+            { id: '12', abbr: 'fl', display: 'Florida'},
+            { id: '13', abbr: 'ga', display: 'Georgia'},
+            { id: '15', abbr: 'hi', display: 'Hawaii'},
+            { id: '16', abbr: 'id', display: 'Idaho'},
+            { id: '17', abbr: 'il', display: 'Illinois'},
+            { id: '18', abbr: 'in', display: 'Indiana'},
+            { id: '19', abbr: 'ia', display: 'Iowa'},
+            { id: '20', abbr: 'ks', display: 'Kansas'},
+            { id: '21', abbr: 'ky', display: 'Kentucky'},
+            { id: '22', abbr: 'la', display: 'Louisiana'},
+            { id: '23', abbr: 'me', display: 'Maine'},
+            { id: '24', abbr: 'md', display: 'Maryland'},
+            { id: '25', abbr: 'ma', display: 'Massachusetts'},
+            { id: '26', abbr: 'mi', display: 'Michigan'},
+            { id: '27', abbr: 'mn', display: 'Minnesota'},
+            { id: '28', abbr: 'ms', display: 'Mississippi'},
+            { id: '29', abbr: 'mo', display: 'Missouri'},
+            { id: '30', abbr: 'mt', display: 'Montana'},
+            { id: '31', abbr: 'ne', display: 'Nebraska'},
+            { id: '32', abbr: 'nv', display: 'Nevada'},
+            { id: '33', abbr: 'nh', display: 'New Hampshire'},
+            { id: '34', abbr: 'nj', display: 'New Jersey'},
+            { id: '35', abbr: 'nm', display: 'New Mexico'},
+            { id: '36', abbr: 'ny', display: 'New York'},
+            { id: '37', abbr: 'nc', display: 'North Carolina'},
+            { id: '38', abbr: 'nd', display: 'North Dakota'},
+            { id: '39', abbr: 'oh', display: 'Ohio'},
+            { id: '40', abbr: 'ok', display: 'Oklahoma'},
+            { id: '41', abbr: 'or', display: 'Oregon'},
+            { id: '42', abbr: 'pa', display: 'Pennsylvania'},
+            { id: '44', abbr: 'ri', display: 'Rhode Island'},
+            { id: '45', abbr: 'sc', display: 'South Carolina'},
+            { id: '46', abbr: 'sd', display: 'South Dakota'},
+            { id: '47', abbr: 'tn', display: 'Tennessee'},
+            { id: '48', abbr: 'tx', display: 'Texas'},
+            { id: '49', abbr: 'ut', display: 'Utah'},
+            { id: '50', abbr: 'vt', display: 'Vermont'},
+            { id: '51', abbr: 'va', display: 'Virginia'},
+            { id: '53', abbr: 'wa', display: 'Washington'},
+            { id: '54', abbr: 'wv', display: 'West Virginia'},
+            { id: '55', abbr: 'wi', display: 'Wisconsin'},
+            { id: '56', abbr: 'wy', display: 'Wyoming'}
+        ],
+
+        partyColors: {
+            default: '#ccc',
+            democraticWin: '#235468',
+            democratic: '#64afd4',
+            republicanWin: '#742b31',
+            republican: '#d88787',
+            otherWin: '#33cc80',
+            other: '#99e0b6',
+            tieWin: '#b8b8b8',
+            tie: '#e0e0e0'
         }
-        
+
     };
 
 });

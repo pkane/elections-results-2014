@@ -1,20 +1,580 @@
-.election-results-nav {
-    
-    a { text-decoration: none; }
-    
-    li { 
-        display: inline-block;
-        border: 1px solid #333;
-        padding: 5px;
+#election-bar-content {
+    position: relative;
+    width: 100%;
+    padding-top: 115px;
+    border-bottom: 1px solid #dadada;
+    margin-bottom: 10px;
+    background-color: #fafafa;
+    z-index: 30;
+    @include vendor-prefix(transition, padding 0.2s ease-out);
+    @include tablet-min {
+        margin-bottom: 30px;
+        padding-top: 65px;
+    }
+    @include desktop {
+        /* Collapsed Navigation Styles */
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    /* Collapsed Navigation Styles */
+    &.collapsed {
+        position: fixed;        
+        #elections-bar {
+            min-height: 70px;
+            .page-icon {
+                top: -200px;
+                opacity: 0;
+            }
+            .election-office-projection-heading {
+                font-size: 20px;
+                @include desktop {
+                    font-size: 24px;
+                }
+            }
+        }
     }
 }
 
-.election-results-nav-selected {
+#election-content {
+    @include desktop {
+        padding-top: 196px;
+    }
+}
 
-    background: #333;
-    border: 1px solid #ccc;
+.elections-overlay {
+    display: none;
+}
+
+.oembed-linkout { display: none; }
+
+// 280x152 - MobileWeb / iPhone
+// 600x325 - Desktop
+// 650x350 - iPad
+
+#election-app.oembed {
+    margin: 0;
+    background: #fff;
     
+    .elections-bar-nav { display: none; }
     
-    a { color: #fff; }
-    a:visited { color: #eee; }
+    #election-bar-content { 
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+    
+    #elections-bar {
+        
+        height: 60px;
+        min-height: 60px;
+        
+        .elections-heading {
+            margin-left: 90px;
+            line-height: 1.1;
+        }
+        
+        .election-state-subheading { 
+            font-size: 14px;
+            margin-bottom: 0;
+            @include breakpoint(401) {
+                margin-bottom: 8px;
+            }
+        }
+
+        .election-office-projection-heading { font-size: 20px; }
+        
+        .page-icon {
+            width: 70px;
+            height: 50px;
+            border-bottom: none;
+            border-left: none;
+            border-top: none;
+            background: inherit;
+
+            .icon {
+                width: 60px;
+                font-size: 40px;
+                padding-top: 5px;
+            }
+        }
+    }
+    
+    #election-content {
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 20px;
+        
+        .election-content-col { 
+            border: none;
+            width: 100%; 
+        }
+    }
+    
+    .oembed-linkout { 
+        display: inherit;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        padding: 5px 20px;
+        background: #fff;
+        z-index: 10;
+        line-height: 1.1;
+        
+        a { 
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .oembed-link-logo {
+            background-image: url('../img/oembed-logo.png');
+            background-repeat: no-repeat;
+            background-position: 85% 50%; 	
+            background-size: 75px 14px;
+            height: 14px;
+            width: 75px;
+            margin-top: 2px;
+            display: inline-block;
+        }
+    }
+
+    .updated {
+        font-size: 10px;
+    }
+
+}
+
+@include breakpointMax(400) {
+    #election-app.oembed {
+        #election-content {
+            top: 0px;
+        }
+        
+        .bop-group-num .num { font-size: 20px; }
+        .bop-group-desc { 
+            font-size: 0.5em;
+            .text-left { 
+                font-size: 10px;
+                padding-top: 0;
+            }
+            .text-right { 
+                font-size: 10px;
+                padding-top: 0;
+            }
+        }
+        
+        .oembed-linkout a { font-size: 10px; }
+        
+        ul.progress-stat-bar li { height: 25px; }
+        ul.progress-stat-bar-slim li { height: 2px; }
+        
+        span.icon-dem-right, span.icon-rep-left { 
+            font-size: 16px;
+            margin-top: 4px;
+        }
+        
+        .fifty-line { height: 28px; }
+        
+        #elections-bar {
+            height: 36px;
+            min-height: 36px;
+        
+            .elections-heading { margin-left: 60px; }
+        
+            .election-state-subheading { font-size: 10px; }
+            .election-office-projection-heading { font-size: 16px; }
+
+            .page-icon {
+                width: 50px;
+                height: 30px;
+
+                .icon {
+                    width: 40px;
+                    font-size: 24px;
+                    padding-top: 5px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet-min {
+    #election-app.oembed {
+        .page-icon-mini {
+            display: none;
+        }
+    }
+}
+
+#elections-bar {
+
+    min-height: 100px;
+    // margin-bottom: 20px;
+    @include vendor-prefix(transition, min-height 0.2s ease-out);
+
+    .elections-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .page-icon {
+        position: absolute;
+        top: 0;
+        background: white;
+        border: 1px solid $color-stroke;
+        width: 120px;
+        height: 120px;
+        padding: 0px;
+        @include vendor-prefix(transition, (top 0.3s ease-out, opacity 0.2s ease));
+
+        .icon {
+            display: block;            
+            text-align: center; 
+            font-size: 80px;
+            width: 120px;
+            height: 120px;
+            padding-top: 16px;
+            &.icon-usa-mainland {
+                font-size: 50px;
+                padding-top: 35px;
+            }
+        }
+    }
+
+    .page-icon-mini {
+        position: absolute;
+        left: 20px;
+        top: 0;
+        width: 116px;
+        height: 50px;
+        display: none;
+        border-right: 1px solid $color-stroke;
+        .icon {
+            display: block;            
+            text-align: center; 
+            font-size: 50px;
+            width: 116px;
+            height: 50px;
+            padding-top: 2px;
+            &.icon-usa-mainland {
+                font-size: 40px;
+                padding-top: 4px;
+            }
+        }
+    }
+
+    .elections-heading {
+        margin-left: 170px;
+        // padding-bottom: 30px;
+        color: #666;
+    }
+
+    .election-state-subheading {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+        color: #009bff;
+        margin-bottom: 4px;
+    }
+
+    .election-office-projection-heading {
+        font-family: $font-heading;
+        font-weight: 100;
+        font-size: 18px;
+        line-height: 120%;
+        @include vendor-prefix(transition, font-size 0.15s ease-out);
+    }
+
+    .elections-bar-nav .nav-item > a {
+        background-color: #EFEFEF;
+        width: 100%;
+        padding: 14px 20px;
+        color: #333;
+        border: 1px solid #DADADA;
+        border-right: none;
+        font-family: $font-heading;
+        font-weight: 100;
+    }
+
+    .elections-bar-nav .nav-item.selected > a {
+        color: $color-usat-blue;
+        background: white;
+    }
+
+    .elections-bar-nav .nav-item > a.share-icon {
+        padding: 4px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .elections-bar-nav .nav-item:first-child > a {
+        border-left: 1px solid #DADADA;
+        border-radius: 4px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .elections-bar-nav .nav-item:last-child > a {
+        border-right: 1px solid #DADADA;
+        border-radius: 4px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    /* Elections Bar Dropdown */
+    .elections-bar-dropdown {
+        li {
+            &> a {
+                padding: 12px 20px;
+                font-family: $font-heading;
+            }
+        }
+    }
+
+    @include mobile { 
+
+        height: 80px;
+
+        .navbar-nav {
+            margin: 0;
+        }
+
+        .elections-heading {
+            margin-left: 140px;
+        }
+
+        #election-bar-content {
+            padding-top: 70px;
+        }
+
+        .dropdown-menu {
+            top: 0px;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0, 0.9);
+            position: fixed;
+            padding-top: 200px;
+            @include vendor-prefix(border-radius, 0px);
+        }
+
+        .dropdown-menu > li > a {
+            color: white;
+            text-transform: uppercase;
+            font-weight: 100;
+            letter-spacing: 1px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 14px 0;
+
+        }
+
+        .dropdown-menu > li > a:hover {
+            background: none;
+        }
+
+        .elections-bar-nav { 
+            background: #2c2c2c;
+            position: fixed;
+            top: 50px;
+            left: 0px;
+            width: 100%;
+        }
+
+        .election-icon.election-icon-share {
+            background-position: -38px -114px;
+        }
+
+        .elections-bar-nav .nav-item {
+            display: none;
+        } 
+
+        .elections-bar-nav .nav-item > a {
+            background: none;
+            border: none;
+        }
+
+        .elections-bar-nav .nav-item.selected, .elections-bar-nav .share-nav-item {
+            display: inline-block;
+            float: left;
+        }
+
+        .elections-bar-nav .nav-item.selected {
+            width: calc(100% - 50px); 
+            background: #2c2c2c;         
+            position: relative;
+        }
+
+        .elections-bar-nav .nav-item.selected:after {
+            content: '';
+            height: 30px;
+            width: 30px;
+            background: url("../img/spritesheet.png") no-repeat;
+            background-position: -44px -160px;
+            right: 0;
+            top: 16px;
+            position: absolute;
+            cursor: pointer;         
+        }
+
+        .elections-bar-nav .nav-item.selected > a {
+            color: white;
+            text-transform: uppercase;
+            background: none;
+        }
+
+        .elections-bar-nav .nav-item:first-child > a {
+            border: none;
+        }
+
+        .elections-bar-nav .nav-item:last-child > a {
+            border: none;
+        }
+
+    }
+
+    @include tablet {
+
+        .elections-bar-nav .nav-item {
+            display: none;
+        } 
+
+        .elections-bar-nav .nav-item.selected, .elections-bar-nav .share-nav-item {
+            display: block;
+        }        
+    }
+
+    @include tablet-min {
+
+        .elections-bar-left-col {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .page-icon {
+            position: absolute;
+            z-index: 10;
+            width: 150px;
+            height: 150px;
+
+            .icon {
+                font-size: 90px;
+                width: 150px;
+                height: 150px;
+                padding-top: 28px;
+                &.icon-usa-mainland {
+                    font-size: 70px;
+                    padding-top: 42px;
+                }
+            }
+        }
+
+        .page-icon-mini {
+            display: block;
+        }
+
+        .election-office-projection-heading {
+            font-size: 24px;
+        }
+
+        .elections-share-dropdown {
+
+            li {
+                text-align: center;
+            }
+            
+            min-width: 50px;
+            // padding-left: 3px;
+
+            .dd-nav-link {
+                height: 40px;
+                width: 40px;
+                background-image: url("../img/spritesheet-social.png");
+                background-size: 114px 152px;
+                text-indent: -10000px;
+                display: inline-block;
+            }
+
+            #facebook-share {
+                background-position: -76px -38px;
+            }
+
+            #twitter-share {
+                background-position: -76px -76px;
+            }
+
+            #mail-share {
+                background-position: -76px -114px;
+            }
+
+        }
+    }
+
+    @include desktop {
+        min-height: 120px;
+
+        .elections-row {
+            position: relative;
+        }
+
+        .election-office-projection-heading {
+            font-size: 32px;
+        }
+
+    }
+
+}
+
+/* Result Nav CSS */
+
+#election-app #main-map {
+    position: relative;
+    .main-map-controls {
+        position: absolute;
+        left: 0;
+        top: 20px;
+    }
+    #resultmap-back-btn,
+    #state-list-dropdown-btn {
+        background-color: #333333;
+        @include vendor-prefix(border-radius, 20px);
+        // display: none;
+    }
+    #resultmap-back-btn {
+        margin-right: 8px;
+    }
+    #state-list-dropdown-btn {
+
+    }
+    .state-list-dropdown-container {
+        position: relative;
+        display: inline-block;
+    }
+    .state-list-dropdown {
+        position: absolute;
+        left: 60px;
+        top: 0;
+        display: none;
+        list-style: none;
+        padding: 0;
+        border: 1px solid $color-stroke;
+        background-color: white;
+        height: 280px;
+        overflow-y: scroll;
+        @include vendor-prefix(box-shadow, 0px 1px 1px rgba(0,0,0,0.25));
+        &.visible {
+            display: inline-block;
+        }
+        li {
+            a {
+                padding: 12px 20px;
+                width: 180px;
+                display: inline-block;
+                color: $font-body-color;
+                font-family: $font-heading;
+                &:hover, &:focus {
+                    background-color: darken(white, 5%);
+                }
+            }
+        }
+    }
 }

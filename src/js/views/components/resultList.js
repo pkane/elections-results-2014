@@ -1,20 +1,56 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
+	'backbone',
+    'd3',
+    'models/config',
+    'models/fips',
+    'text!views/components/resultList.html'
 ],
-function ($, _, Backbone) {
+function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
 
     var view = Backbone.View.extend({
         
-        template: _.template('<h4>Placeholder for result list table</h4>'),
+        model: new (Backbone.Model.extend({ 
+            data: [], 
+            detail: [],
+            race: '',
+            state: {},
+            getStateById: function (id) {
+                return _.findWhere(config.states, { id: id });
+            },
+            getStateByName: function (name) {
+                return _.find(config.states, function (state) { 
+                    return (name && state.display.toLowerCase() === name.toLowerCase())
+                });
+            },
+            getCountyByFips: function (fips) {
+                var county = _.findWhere(fipsMap, { s: fips.substr(0, 2), c: fips.substr(2, 3) })
+                return (county) ? county.d : '';
+            },
+            formatHouseId: function (id) {
+                var split = id.split('-');
+                return split[1];
+            },
+            formatVotes: d3.format(','),
+            tokenizeHouseId: function (id) {
+                var split = id.split(' ');
+                return split[1];
+            }
+        }))(),
         
+        template: _.template(resultTemplate),
+									        
         render: function () {
             
-            this.$el.html(this.template());
+            if (this.model.race.id === 'h') {
+                this.model.data = _.groupBy(this.model.data, function (obj) { return (obj && obj.id) ? obj.id.substr(0, 2) : '00'; });
+            }
+            
+            this.$el.html(this.template(this.model));
             
             return this;
-        },
+        }
         
     });
     
