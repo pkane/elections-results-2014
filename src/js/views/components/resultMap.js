@@ -61,33 +61,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                             ;
                         }
 
-                    /*if (this.model.state) {
-                        d3.json(geoJsonPlaces, _.bind(function(json) {
-                            console.log('json...', json);
-                             this.svg
-                                .append('svg:circle')
-                                .attr("transform", function(d) { 
-                                return "translate(" + this.projection([-124.20049157905994, 41.75645509751427]) + ")"; 
-                            })
-                            .attr('r', 5); */
-                            /*this.svg.labels.selectAll('circle')
-                                .data(_(json).filter(function(feature) {
-                                    return json.properties.state === state;
-                                }))
-                                .enter()
-                                .append('circle')
-                                .attr('class', 'places')
-                                //.transition().ease(ease).delay(timer).duration(0)
-                                .attr('cx', function(d) {
-                                    return projection(d.geometry.coordinates)[0];
-                                })
-                                .attr('cy', function(d) {
-                                    return projection(d.geometry.coordinates)[1];
-                                })
-                                .attr('r', 3); 
-                        }, this));
-                    }*/
-
                 }, this)); 
 
 
