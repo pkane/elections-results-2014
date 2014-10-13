@@ -46,6 +46,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
         },
 
+        something: function() {
+            console.log("something")
+        },
+
         clicked: function(d) {
             if (!this.model.state && this.findItemById(d.id)) {
                 var state = _.findWhere(config.states, { id: (this.model.race.id == 'h' ? d.id.substr(0, 2) : d.id) });
@@ -77,12 +81,15 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         mouseOver: function(d, i) {
             var found = this.findItemById(d.id);
 
-            if (found) {
+            // console.log("blfdshkfdsh")
+            // console.log(this.svg[0])
+            // this.svg[0].attr('fill-opacity', 0.5)
 
+            if (found) {
                 tooltip                    
                     .html([
                         '<h4 class="map-tooltip-heading">', d.properties.name, '</h4>',
-                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th>%</th></tr></thead><tbody>',
+                        '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th>%</th></tr></thead><tbody>',
 
                         _.reduce(found.results, function(memo, item) {
                             return (memo

@@ -600,4 +600,10 @@
             }
         }
     }
+    &> svg path {
+        cursor: pointer;
+        &:hover, &:focus {
+            background-color: orange;
+        }
+    }
 }
