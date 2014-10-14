@@ -47,7 +47,29 @@ function ($, _, Backbone, d3, config, chartTemplate) {
             
             if (this.model.detail && this.model.detail.id) {
                 
-                var candidate = _.chain(this.model.detail.results).sortBy('votes').last(2).value(); 
+                var hasDem = false, 
+                    hasRep = false,
+                    candidate = _.chain(this.model.detail.results).filter(function (item) { 
+                            return !item.seatNumber || (item.seatNumber === '0') 
+                        }).sortBy(function (item) {
+                            return item.votes * -1; // Reverse
+                        }).filter(function (item) {
+                            var result = false;
+                            if (item.party === 'Democratic') {
+                                result = !hasDem;
+                                hasDem = true;
+                            } else if (item.party === 'Republican') {
+                                result = !hasRep;
+                                hasRep = true;
+                            } else {
+                                result = true;
+                            }
+                        
+                            return result;
+                        }).first(2).value();
+                
+                console.log('Heres yer sign');
+                console.dir(candidate);
                 
                 if (candidate.length == 2)
                 {
