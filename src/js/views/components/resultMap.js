@@ -257,15 +257,15 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     _.each(found.results, function(item) {
 
                         // TODO: Check color values for in progress, called, etc...
-                        if (!hasState) {
+                        //if (!hasState) {
                             if (item.win) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                             } else if (item.lead) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }                            
-                        } else if (item.lead) {
-                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
-                        }
+                        //} else if (item.lead) {
+                        //    color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                        //}
                     });
                 }
             }
