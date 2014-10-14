@@ -41,25 +41,37 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .on('mouseout', this.mouseOut)
                         ;
 
-                        if (this.model.state) {
-                            /* d3.jsonPlaces(geoJsonPlaces, _.bind(function(geoJsonPlaces) {
-                                console.log('json...', jsonPlaces);
-                                //console.log('state...', json.properties.state);
-                            
-                            })); */
+                        if (geoJsonPlaces) {
+                            d3.json(geoJsonPlaces, _.bind(function(places) {
 
-                            this.svg                       
-                            .append('svg:circle')
-                            /* .attr('transform', function(d) { 
-                                    return 'translate(' + d3.geo.path().projection([41.75645509751427, -124.20049157905994]) + ')';
-                            }) */
-                            .attr('cx', 100)
-                            .attr('cy', 100)
-                            .attr('r', 5)
-                            .attr('stroke', 'black')
-                            .attr('fill', 'red')
-                            ;
-                        }
+                                console.log('places found', places, this.model.state);
+
+                                var projection = this.projection,
+                                    state = this.model.state
+                                    ;
+
+                                this.svg                                    
+                                    .selectAll('circle')
+                                    .data(_.filter(places.features, function(f) {
+                                        return f.properties.state === state.id;
+                                    }))
+                                    .enter()
+                                    .append('circle')
+                                    .attr('cx', function(d) {
+                                        return projection(d.geometry.coordinates)[0];
+                                    })
+                                    .attr('cy', function(d) {
+                                        return projection(d.geometry.coordinates)[1];
+                                    })
+                                    .attr('r', 5)
+                                    .attr('stroke', 'black')
+                                    .attr('fill', 'red')
+                                    ;
+
+
+                            }, this));
+
+                         }                     
 
                 }, this)); 
 
