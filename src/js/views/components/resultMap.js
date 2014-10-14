@@ -187,14 +187,17 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         '<h4 class="map-tooltip-heading">', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
                         '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
 
-                        _.reduce(found.results, function(memo, item) {
+                        _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
+                            if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
+                                memo += '<tr><td colspan="3"><hr /></td></tr>';
+                            }
                             return (memo
                                 + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '') //' (' + item.party.substr(0,1).toUpperCase() + ')' 
                                 + (item.win ? ' <span class="won">won</span>' : '')                                
                                 + '</td>'
                                 + '<td class="right">' + voteFormat(item.votes) + '</td>'
                                 + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
-                        }, ''),
+                        }, '').value(),
 
                         '</tbody></table>',
                         '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
@@ -303,6 +306,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         refresh: function() {
             console.log('-- refresh --');
+            
+            // TODO: Query data to discover if multi-race
+            //  Set resultmap-swap-btn show/hide
+            //  Set race/state seat flag prop
+            //  Set color based on selected race
+            
             this.renderMap();
             this.renderNav();
         },
