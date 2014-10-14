@@ -43,15 +43,14 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 progressRight = this.$('.bop-group-results .bar-progress-right'),
                 desc = this.$('.bop-group-desc');
             
-            console.log('BOP - Render', (this.model.detail && this.model.detail.id));
-            
             if (this.model.detail && this.model.detail.id) {
                 
                 var hasDem = false, 
                     hasRep = false,
+                    isMultirace = _.chain(this.model.detail.results).pluck('seatNumber').uniq().value().length > 1,
                     candidate = _.chain(this.model.detail.results).filter(function (item) { 
-                            return !item.seatNumber || (item.seatNumber === '0') 
-                        }).sortBy(function (item) {
+                            return !isMultirace || (item.seatNumber === this.model.fips);
+                        }, this).sortBy(function (item) {
                             return item.votes * -1; // Reverse
                         }).filter(function (item) {
                             var result = false;

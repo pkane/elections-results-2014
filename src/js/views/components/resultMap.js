@@ -236,16 +236,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 state = id,
                 hasState = !!this.model.state,
                 found,
-                color = partyColors.default
-                ;
-
-            // console.log('id = ' + id);
-            // console.log(d);
-            // console.log(this.model.state);
+                color = partyColors.default;
 
             if (this.model.state && this.model.race.id != 'h') {
                 state = this.model.state.id;
-                found = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: d.id });
+                found = _.findWhere(this.model.detail, { id: d.id });
             } else {
 
                 if (this.model.race.id == 'h') {
@@ -254,7 +249,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     id = state + '-District ' + parseInt(d.id.substr(-2))
                 }
 
-                found = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+                found = _.findWhere(this.model.data, { id: id });
             }
 
             if (found) {
@@ -263,9 +258,9 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                         // TODO: Check color values for in progress, called, etc...
                         //if (!hasState) {
-                            if (item.win) {
+                            if (item.win && (item.seatNumber || parseInt(item.seatNumber) === this.model.fips)) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
-                            } else if (item.lead) {
+                            } else if (item.lead && (item.seatNumber || item.seatNumber === '0')) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }                            
                         //} else if (item.lead) {
@@ -280,17 +275,21 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         renderNav: function() {
             console.log('render nav');
+            
+            var isMultiRace = (this.model.detail && this.model.detail.length > 0 && _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value().length > 1);
+            
             if (this.model.race) {
-
                 var raceKey = this.model.race.key;
 
                 this.$('#state-list-dropdown-btn').css('display', 'inline-block');
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
+                
+                //this.$('#resultmap-swap-btn').attr("href", "#/race/" + raceKey + '-' + this.model.state);
 
                 this.$('.state-list-dropdown')
                     .html(_.map(config.states, function(state) {
 
-                        var found = _.find(dataManager[raceKey].data, function(item) { return item.id.substr(0, 2) === state.id;  });
+                        var found = _.find(this.model.data, function(item) { return item.id.substr(0, 2) === state.id;  });
 
                         if (found) {
                             return ['<li><a class=\'state-list-link\' href=\'#', raceKey ,'-', state.abbr , '\'>', state.display ,'</a></li>'].join('');
@@ -298,10 +297,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                         return '';
                         
-                    }).join(''));
+                    }, this).join(''));
             }
-
+            
             this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
+            this.$('#resultmap-swap-btn').css('display', isMultiRace ? 'inline-block': 'none');
         },
 
         refresh: function() {
