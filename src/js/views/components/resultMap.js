@@ -129,11 +129,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         mouseMove: function(d, i) {
             if (tooltip.html()) {
-                var mouse = d3.mouse(this.el);
+                var mouse = d3.mouse(this.el),
+                leftOffset = 135,
+                topOffset = 175;
+                if ($(window).width() < 996) {
+                    topOffset = 205;
+                }
 
                 tooltip
                     .classed('hidden', false)
-                    .attr('style', 'left:' + (mouse[0] - 135) + 'px; top:'+ (mouse[1] + 175) + 'px; opacity: 1;')
+                    .attr('style', 'left:' + (mouse[0] - leftOffset) + 'px; top:'+ (mouse[1] + topOffset) + 'px; opacity: 1;')
                     ;                
             }
 
@@ -215,12 +220,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 natScaleMultiplier = 1.2;
                 ;
 
-            if ($(window).width() < 1025) {
+            if ($('#main-map').width() < 400) {
                 scaleMultiplier = 0.6;
                 natScaleMultiplier = 0.65;
-            } else if ($(window).width() < 1200) {
+            } else if ($('#main-map').width() < 600) {
                 scaleMultiplier = 0.9;
-                natScaleMultiplier = 1.0;
+                natScaleMultiplier = 0.9;
             }
 
             this.svg = d3.select(this.el)

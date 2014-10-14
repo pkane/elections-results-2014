@@ -5,7 +5,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-107.551483, 43.032205],
-            "scale" : 4000
+            "scale" : 4400
         },
         "properties": {
             "name": "Wyoming",
@@ -17,8 +17,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-77.839899, 40.90707],
-            "scale" : 5600
+            "coordinates": [-77.6, 40.90707],
+            "scale" : 5900
         },
         "properties": {
             "name": "Pennsylvania",
@@ -43,8 +43,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-106.106341, 34.461496],
-            "scale" : 3600
+            "coordinates": [-106.106341, 34.3],
+            "scale" : 4000
         },
         "properties": {
             "name": "New Mexico",
@@ -56,8 +56,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-76.691329, 38.952632],
-            "scale" : 6000
+            "coordinates": [-77.2, 38.8],
+            "scale" : 8100
         },
         "properties": {
             "name": "Maryland",
@@ -70,7 +70,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-71.524745, 41.59578],
-            "scale" : 17600
+            "scale" : 22400
         },
         "properties": {
             "name": "Rhode Island",
@@ -83,7 +83,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-120.602404, 43.973235],
-            "scale" : 4000
+            "scale" : 4400
         },
         "properties": {
             "name": "Oregon",
@@ -109,7 +109,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-100.471049, 47.468575],
-            "scale" : 4000
+            "scale" : 4400
         },
         "properties": {
             "name": "North Dakota",
@@ -121,8 +121,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-116.66681, 39.413815],
-            "scale" : 2400
+            "coordinates": [-116.66681, 38.8],
+            "scale" : 3200
         },
         "properties": {
             "name": "Nevada",
@@ -135,7 +135,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-83.43257, 32.66272],
-            "scale" : 4400
+            "scale" : 4800
         },
         "properties": {
             "name": "Georgia",
@@ -147,8 +147,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-75.597075, 42.945157],
-            "scale" : 4000
+            "coordinates": [-76.2, 42.945157],
+            "scale" : 4200
         },
         "properties": {
             "name": "New York",
@@ -161,7 +161,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-92.437409, 34.917256],
-            "scale" : 4800
+            "scale" : 6000
         },
         "properties": {
             "name": "Arkansas",
@@ -174,7 +174,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-98.380975, 38.500193],
-            "scale" : 4400
+            "scale" : 4800
         },
         "properties": {
             "name": "Kansas",
@@ -200,7 +200,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-111.682374, 39.364235],
-            "scale" : 3600
+            "scale" : 4000
         },
         "properties": {
             "name": "Utah",
@@ -225,8 +225,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-89.652506, 32.741079],
-            "scale" : 4400
+            "coordinates": [-89.652506, 32.7],
+            "scale" : 4600
         },
         "properties": {
             "name": "Mississippi",
@@ -238,7 +238,7 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-98.0, 35.599051],
+            "coordinates": [-98.5, 35.599051],
             "scale" : 4000
         },
         "properties": {
@@ -251,8 +251,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-80.608736, 38.65193],
-            "scale" : 5200
+            "coordinates": [-80.608736, 38.9],
+            "scale" : 6000
         },
         "properties": {
             "name": "West Virginia",
@@ -278,7 +278,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-105.547878, 39.026877],
-            "scale" : 4400
+            "scale" : 4800
         },
         "properties": {
             "name": "Colorado",
@@ -291,7 +291,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-74.65439, 40.118885],
-            "scale" : 8000
+            "scale" : 8500
         },
         "properties": {
             "name": "New Jersey",
@@ -303,8 +303,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-75.45304, 38.99789],
-            "scale" : 12000
+            "coordinates": [-75.45304, 39.1],
+            "scale" : 14000
         },
         "properties": {
             "name": "Delaware",
@@ -317,7 +317,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-109.651276, 47.072882],
-            "scale" : 2800
+            "scale" : 3200
         },
         "properties": {
             "name": "Montana",
@@ -330,7 +330,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-120.591077, 47.43427],
-            "scale" : 4000
+            "scale" : 4800
         },
         "properties": {
             "name": "Washington",
@@ -343,7 +343,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-72.737742, 41.576868],
-            "scale" : 6400
+            "scale" : 16600
         },
         "properties": {
             "name": "Connecticut",
@@ -356,7 +356,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-119.732916, 37.350143],
-            "scale" : 2000
+            "scale" : 2400
         },
         "properties": {
             "name": "California",
@@ -368,8 +368,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-85.284906, 37.533728],
-            "scale" : 4400
+            "coordinates": [-85.7, 37.533728],
+            "scale" : 4800
         },
         "properties": {
             "name": "Kentucky",
@@ -381,7 +381,7 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-71.507205, 42.163683],
+            "coordinates": [-71.7, 42.163683],
             "scale" : 10000
         },
         "properties": {
@@ -394,8 +394,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-82.488045, 28.520094],
-            "scale" : 3200
+            "coordinates": [-83.0, 28.0],
+            "scale" : 3600
         },
         "properties": {
             "name": "Florida",
@@ -421,7 +421,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-92.487243, 38.398088],
-            "scale" : 4000
+            "scale" : 4600
         },
         "properties": {
             "name": "Missouri",
@@ -446,8 +446,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-86.843357, 32.782287],
-            "scale" : 4400
+            "coordinates": [-86.8, 32.6],
+            "scale" : 4800
         },
         "properties": {
             "name": "Alabama",
@@ -459,8 +459,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-80.867791, 33.5],
-            "scale" : 6000
+            "coordinates": [-80.867791, 33.7],
+            "scale" : 6800
         },
         "properties": {
             "name": "South Carolina",
@@ -472,8 +472,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-71.569875, 43.690915],
-            "scale" : 6000
+            "coordinates": [-71.569875, 43.9],
+            "scale" : 7200
         },
         "properties": {
             "name": "New Hampshire",
@@ -486,7 +486,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-100.23222, 44.455337],
-            "scale" : 4400
+            "scale" : 4600
         },
         "properties": {
             "name": "South Dakota",
@@ -512,7 +512,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-86.0, 35.847021],
-            "scale" : 4000
+            "scale" : 4300
         },
         "properties": {
             "name": "Tennessee",
@@ -525,7 +525,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-86.279146, 39.945277],
-            "scale" : 4400
+            "scale" : 5200
         },
         "properties": {
             "name": "Indiana",
@@ -538,7 +538,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-93.502193, 42.090545],
-            "scale" : 4800
+            "scale" : 5400
         },
         "properties": {
             "name": "Iowa",
@@ -551,7 +551,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-111.666354, 34.335802],
-            "scale" : 3600
+            "scale" : 4000
         },
         "properties": {
             "name": "Arizona",
@@ -564,7 +564,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-94.198076, 46.416463],
-            "scale" : 2800
+            "scale" : 3300
         },
         "properties": {
             "name": "Minnesota",
@@ -577,7 +577,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-91.822111, 30.928961],
-            "scale" : 4800
+            "scale" : 5200
         },
         "properties": {
             "name": "Louisiana",
@@ -616,7 +616,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-99.332603, 31.525791],
-            "scale" : 2000
+            "scale" : 2200
         },
         "properties": {
             "name": "Texas",
@@ -628,8 +628,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-72.660822, 44.085472],
-            "scale" : 4800
+            "coordinates": [-72.660822, 43.9],
+            "scale" : 8400
         },
         "properties": {
             "name": "Vermont",
@@ -642,7 +642,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-69.197276, 45.300782],
-            "scale" : 4000
+            "scale" : 4400
         },
         "properties": {
             "name": "Maine",
@@ -655,7 +655,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-79.8, 35.532708],
-            "scale" : 3600
+            "scale" : 4200
         },
         "properties": {
             "name": "North Carolina",
