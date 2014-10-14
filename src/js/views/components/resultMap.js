@@ -216,7 +216,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 ;
 
             if ($(window).width() < 1025) {
-                scaleMultiplier = 0.5;
+                scaleMultiplier = 0.6;
                 natScaleMultiplier = 0.65;
             } else if ($(window).width() < 1200) {
                 scaleMultiplier = 0.9;

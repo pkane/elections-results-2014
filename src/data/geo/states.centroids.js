@@ -70,7 +70,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-71.524745, 41.59578],
-            "scale" : 6400
+            "scale" : 17600
         },
         "properties": {
             "name": "Rhode Island",
@@ -238,8 +238,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-97.515483, 35.599051],
-            "scale" : 3600
+            "coordinates": [-98.0, 35.599051],
+            "scale" : 4000
         },
         "properties": {
             "name": "Oklahoma",
@@ -459,8 +459,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-80.867791, 33.88727],
-            "scale" : 5200
+            "coordinates": [-80.867791, 33.5],
+            "scale" : 6000
         },
         "properties": {
             "name": "South Carolina",
@@ -473,7 +473,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-71.569875, 43.690915],
-            "scale" : 4800
+            "scale" : 6000
         },
         "properties": {
             "name": "New Hampshire",
@@ -486,7 +486,7 @@
         "geometry": {
             "type": "Point",
             "coordinates": [-100.23222, 44.455337],
-            "scale" : 4000
+            "scale" : 4400
         },
         "properties": {
             "name": "South Dakota",
@@ -511,7 +511,7 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-86.339774, 35.847021],
+            "coordinates": [-86.0, 35.847021],
             "scale" : 4000
         },
         "properties": {
@@ -602,8 +602,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-78.661658, 37.520315],
-            "scale" : 3600
+            "coordinates": [-79.5, 37.520315],
+            "scale" : 4400
         },
         "properties": {
             "name": "Virginia",
@@ -654,8 +654,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-79.131578, 35.532708],
-            "scale" : 3200
+            "coordinates": [-79.8, 35.532708],
+            "scale" : 3600
         },
         "properties": {
             "name": "North Carolina",
