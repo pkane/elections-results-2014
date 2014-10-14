@@ -393,6 +393,15 @@ only screen and (                min-resolution: 2dppx) {
 .icon-lg-ct:before {
 	content: "\e506";
 }
+
+.page-icon .icon-lg-dc {
+	background: url('../img/dc-lg.gif') no-repeat 15px 0;
+}
+
+.page-icon-mini .icon-lg-dc {
+	background: url('../img/dc-sm.gif') no-repeat 40px 0;
+}
+
 .icon-lg-de:before {
 	content: "\e507";
 }

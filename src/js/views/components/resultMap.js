@@ -331,10 +331,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 natScaleMultiplier = 1.2;
                 ;
 
-            if ($('#main-map').width() < 400) {
+            if ($('#main-map').width() < 402) {
                 scaleMultiplier = 0.6;
                 natScaleMultiplier = 0.65;
-            } else if ($('#main-map').width() < 600) {
+            } else if ($('#main-map').width() < 610) {
                 scaleMultiplier = 0.9;
                 natScaleMultiplier = 0.9;
             }
