@@ -48,67 +48,59 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                 console.log('places found', places, this.model.state);
 
                                 var projection = this.projection,
-                                    state = this.model.state
+                                    state = this.model.state,
+                                    filteredPlaces = _.filter(places.features, function(f) {
+                                        return f.properties.state === state.id;
+                                    }),
+                                    fnX = function(d) { return projection(d.geometry.coordinates)[0] },
+                                    fnY = function(d) { return projection(d.geometry.coordinates)[1] }
                                     ;
 
                                 this.svg                                    
                                     .selectAll('circle')
-                                    .data(_.filter(places.features, function(f) {
-                                        return f.properties.state === state.id;
-                                    }))
-                                    .enter()
-                                    .append('circle')
-                                    .attr('cx', function(d) {
-                                        return projection(d.geometry.coordinates)[0];
+                                    .data(filteredPlaces)
+                                    .enter().append('circle')
+                                    .attr({
+                                        'cx': fnX,
+                                        'cy': fnY,
+                                        'r': 3,
+                                        'stroke': 'rgb(12,12,12)',
+                                        'stroke-width': 1,
+                                        'fill': 'rgb(244,244,244)'
                                     })
-                                    .attr('cy', function(d) {
-                                        return projection(d.geometry.coordinates)[1];
-                                    })
-                                    .attr('r', 3)
-                                    .attr('stroke', 'rgb(12,12,12)')
-                                    .attr('stroke-width', 1)
-                                    .attr('fill', 'rgb(244,244,244)')
                                     ;
 
                                 this.svg
                                     .selectAll('circle.outline')
-                                    .data(_.filter(places.features, function(f) {
-                                        return (f.properties.capital && f.properties.state === state.id);
+                                    .data(_.filter(filteredPlaces, function(f) {
+                                        return f.properties.capital;
                                     }))
-                                    .enter()
-                                    .append('circle')
-                                    .attr('class', 'places')
-                                    //.attr('fill', 'rgb(244,244,244)')
-                                    .attr('fill', 'none')
-                                    .attr('stroke', '#000000')
-                                    .attr('stroke-width', 1)
-                                    .attr('cx', function(d) {
-                                        return projection(d.geometry.coordinates)[0];
+                                    .enter().append('circle')
+                                    .attr({
+                                        'class': 'places',
+                                        'fill': 'none',
+                                        'stroke': '#000',
+                                        'stroke-width': 1,
+                                        'cx': fnX,
+                                        'cy': fnY,
+                                        'r': 6
                                     })
-                                    .attr('cy', function(d) {
-                                        return projection(d.geometry.coordinates)[1];
-                                    })
-                                    .attr('r', 6)
-                                    
+                                    ;                                    
 
                                 this.svg
                                     .selectAll('text')
-                                    .data(_.filter(places.features, function(f) {
-                                        return f.properties.state === state.id;
-                                        }))
-                                    .enter()
-                                    .append('text')
-                                    .attr('class', 'places')
-                                    //.transition().ease(ease).delay(timer).duration(0)
+                                    .data(filteredPlaces)
+                                    .enter().append('text')
                                     .text(function(d) {
                                         return d.properties.name.toUpperCase();
                                     })
-                                    .attr('fill', '#000000')
-                                    .attr('font-size', 11)
-                                    .style('font-weight', 'bold')
-                                    .attr('font-family', function(d) {
-                                        if (d.properties.capital)
-                                            return "'Futura Today Demibold', Helvetica, Arial, sans-serif;";
+                                    .attr({
+                                        'class': 'places',
+                                        'fill': '#000000',
+                                        'font-size': 11,
+                                        'font-weight': 'bold',
+                                        'x': fnX,
+                                        'y': fnY
                                     })
                                     .attr('text-anchor', function(d) {
                                         if (d.properties.placement === 'right') return 'start';
@@ -126,12 +118,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                         if (d.properties.placement === 'left') return -10;
                                         return 0;
                                     })
-                                    .attr('x', function(d) {
-                                        return projection(d.geometry.coordinates)[0];
-                                    })
-                                    .attr('y', function(d) {
-                                        return projection(d.geometry.coordinates)[1];
-                                    });
+                                    ;
 
 
                             }, this));
@@ -239,9 +226,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 color = partyColors.default
                 ;
 
-            // console.log('id = ' + id);
-            // console.log(d);
-            // console.log(this.model.state);
 
             if (this.model.state && this.model.race.id != 'h') {
                 state = this.model.state.id;
@@ -262,19 +246,19 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     _.each(found.results, function(item) {
 
                         // TODO: Check color values for in progress, called, etc...
-                        //if (!hasState) {
+                        if (!hasState) {
                             if (item.win) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                             } else if (item.lead) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }                            
-                        //} else if (item.lead) {
-                        //    color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
-                        //}
+                        } else if (item.lead) {
+                           color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                        }
                     });
                 }
             }
-            // console.log(color)
+            
             return color;
         },
 
@@ -353,11 +337,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                          .attr('width', width)
                          .attr('height', height)
                          ;
-
-            // console.log('chilly willy the penguin', this.svg.selectAll('path'))
-            // this.svg.selectAll("d").on('mouseover', function() {
-            //     alert("wthgds")
-            // })
 
             this.projection = d3.geo
                                 .albersUsa()
