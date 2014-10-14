@@ -4,3 +4,15 @@
 	background-color: rgba(256,256,256,.90);
 	width: 300px;
 }
+
+#main-map text {
+  text-shadow: 1px 0px   4px rgba(255,255,255,0.75),
+               0px 1px   4px rgba(255,255,255,0.75),
+               -1px 0px  4px rgba(255,255,255,0.75),
+               0px -1px  4px rgba(255,255,255,0.75);
+  pointer-events: none;
+}
+
+#main-map .tooltipTitle {
+	text-transform: capitalize;
+}

@@ -63,10 +63,74 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                     .attr('cy', function(d) {
                                         return projection(d.geometry.coordinates)[1];
                                     })
-                                    .attr('r', 5)
-                                    .attr('stroke', 'black')
-                                    .attr('fill', 'red')
+                                    .attr('r', 3)
+                                    .attr('stroke', 'rgb(12,12,12)')
+                                    .attr('stroke-width', 1)
+                                    .attr('fill', 'rgb(244,244,244)')
                                     ;
+
+                                this.svg
+                                    .selectAll('circle.outline')
+                                    .data(_.filter(places.features, function(f) {
+                                        return (f.properties.capital && f.properties.state === state.id);
+                                    }))
+                                    .enter()
+                                    .append('circle')
+                                    .attr('class', 'places')
+                                    //.attr('fill', 'rgb(244,244,244)')
+                                    .attr('fill', 'none')
+                                    .attr('stroke', '#000000')
+                                    .attr('stroke-width', 1)
+                                    .attr('cx', function(d) {
+                                        return projection(d.geometry.coordinates)[0];
+                                    })
+                                    .attr('cy', function(d) {
+                                        return projection(d.geometry.coordinates)[1];
+                                    })
+                                    .attr('r', 6)
+                                    
+
+                                this.svg
+                                    .selectAll('text')
+                                    .data(_.filter(places.features, function(f) {
+                                        return f.properties.state === state.id;
+                                        }))
+                                    .enter()
+                                    .append('text')
+                                    .attr('class', 'places')
+                                    //.transition().ease(ease).delay(timer).duration(0)
+                                    .text(function(d) {
+                                        return d.properties.name.toUpperCase();
+                                    })
+                                    .attr('fill', '#000000')
+                                    .attr('font-size', 11)
+                                    .style('font-weight', 'bold')
+                                    .attr('font-family', function(d) {
+                                        if (d.properties.capital)
+                                            return "'Futura Today Demibold', Helvetica, Arial, sans-serif;";
+                                    })
+                                    .attr('text-anchor', function(d) {
+                                        if (d.properties.placement === 'right') return 'start';
+                                        if (d.properties.placement === 'left') return 'end';
+                                        return 'middle';
+                                    })
+                                    .attr('dy', function(d) {
+                                        if (d.properties.placement === 'right') return 4;
+                                        if (d.properties.placement === 'left') return 4;
+                                        if (d.properties.placement === 'bottom') return 18;
+                                        return -10;
+                                    })
+                                    .attr('dx', function(d) {
+                                        if (d.properties.placement === 'right') return 10;
+                                        if (d.properties.placement === 'left') return -10;
+                                        return 0;
+                                    })
+                                    .attr('x', function(d) {
+                                        return projection(d.geometry.coordinates)[0];
+                                    })
+                                    .attr('y', function(d) {
+                                        return projection(d.geometry.coordinates)[1];
+                                    });
 
 
                             }, this));
@@ -115,7 +179,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 tooltip                    
                     .html([
-                        '<h4>', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
+                        '<h4 class="tooltipTitle">', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
                         '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
 
                         _.reduce(found.results, function(memo, item) {
