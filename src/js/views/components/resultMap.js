@@ -35,7 +35,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .attr('stroke', '#fff')
                         .attr('stroke-width', strokeWidth || 1)
                         .attr("d", d3.geo.path().projection(this.projection))
-                        .attr("class", _.bind(this.wooHa, this))
+                        .attr("class", _.bind(this.addHover, this))
                         .on('click', _.bind(this.clicked, this))
                         .on('mouseover', _.bind(this.mouseOver, this))
                         .on('mousemove', _.bind(this.mouseMove, this))                        
@@ -47,7 +47,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
         },
 
-        wooHa: function(d) {
+        addHover: function(d) {
             var found = this.findItemById(d.id);
 
             if (found) {
