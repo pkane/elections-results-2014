@@ -228,9 +228,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 ;
 
             if ($(window).width() < 1025) {
-                scaleMultiplier = 0.5;
+                scaleMultiplier = 0.6;
                 natScaleMultiplier = 0.65;
-
+            } else if ($(window).width() < 1200) {
+                scaleMultiplier = 0.9;
+                natScaleMultiplier = 1.0;
             }
 
             this.svg = d3.select(this.el)
@@ -259,7 +261,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                             ;
 
                         if (this.model.race.id == 'h') {
-                            this.drawMap(dataManager.getGeo('cds', 'simp'), dataManager.getGeo('places'));
+                            this.drawMap(dataManager.getGeo('cds',  this.model.state.id), dataManager.getGeo('places'));
                         } else {
                             this.drawMap(dataManager.getGeo('counties', this.model.state.id), dataManager.getGeo('places'));
                         }
