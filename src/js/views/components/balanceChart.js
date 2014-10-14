@@ -68,9 +68,6 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                             return result;
                         }).first(2).value();
                 
-                console.log('Heres yer sign');
-                console.dir(candidate);
-                
                 if (candidate.length == 2)
                 {
                     if (candidate[1].party === 'Democratic' || candidate[0].party === 'Republican') {

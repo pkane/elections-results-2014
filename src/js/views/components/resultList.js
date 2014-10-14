@@ -40,7 +40,10 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             formatPercent: function (a,b) {
                 var full = a / b;
                 return (full) ? Math.round(full*1000)/10 : 0;
-            }, 
+            },
+            formatParty: function (party) {
+                return (config.partyAbbr[party]) ? config.partyAbbr[party] : party.charAt(0);
+            },
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');
                 return split[1];
