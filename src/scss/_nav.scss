@@ -318,6 +318,17 @@
         width: 50px;
         height: 50px;
     }
+    @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (   min--moz-device-pixel-ratio: 2),
+    only screen and (     -o-min-device-pixel-ratio: 2/1),
+    only screen and (        min-device-pixel-ratio: 2),
+    only screen and (                min-resolution: 192dpi),
+    only screen and (                min-resolution: 2dppx) {
+        .elections-bar-nav .nav-item > a.share-icon {
+            background-position: -38px -128px;
+        }
+    }
 
     .elections-bar-nav .nav-item:first-child > a {
         border-left: 1px solid #DADADA;
@@ -430,6 +441,14 @@
             cursor: pointer;         
         }
 
+        @media
+        only screen and ( min-resolution: 2dppx) {
+            .elections-bar-nav .nav-item.selected:after {
+                background-image: url("../img/spritesheet@2x.png");
+                background-size: 114px 380px;
+            }        
+        }
+
         .elections-bar-nav .nav-item.selected > a {
             color: white;
             text-transform: uppercase;
@@ -536,6 +555,18 @@
 
     }
 
+    @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (   min--moz-device-pixel-ratio: 2),
+    only screen and (     -o-min-device-pixel-ratio: 2/1),
+    only screen and (        min-device-pixel-ratio: 2),
+    only screen and (                min-resolution: 192dpi),
+    only screen and (                min-resolution: 2dppx) {
+        .elections-overlay .election-overlay-button-close {
+            background-position:-38px -298px;
+        }
+    }
+
 }
 
 /* Result Nav CSS */
@@ -589,6 +620,14 @@
                 &:hover, &:focus {
                     background-color: darken(white, 5%);
                 }
+            }
+        }
+    }
+    &> svg path {
+        cursor: pointer;
+        &.has-data {
+            &:hover, &:focus {
+                fill-opacity: 0.85;
             }
         }
     }
