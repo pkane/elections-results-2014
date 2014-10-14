@@ -602,8 +602,10 @@
     }
     &> svg path {
         cursor: pointer;
-        &:hover, &:focus {
-            background-color: orange;
+        &.has-data {
+            &:hover, &:focus {
+                fill-opacity: 0.85;
+            }
         }
     }
 }

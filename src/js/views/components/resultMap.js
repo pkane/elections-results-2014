@@ -35,14 +35,23 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .attr('stroke', '#fff')
                         .attr('stroke-width', strokeWidth || 1)
                         .attr("d", d3.geo.path().projection(this.projection))
+                        .attr("class", _.bind(this.wooHa, this))
                         .on('click', _.bind(this.clicked, this))
                         .on('mouseover', _.bind(this.mouseOver, this))
                         .on('mousemove', _.bind(this.mouseMove, this))                        
                         .on('mouseout', this.mouseOut)
                         ;
 
-                }, this)); 
+                }, this));
 
+            }
+        },
+
+        wooHa: function(d) {
+            var found = this.findItemById(d.id);
+
+            if (found) {
+                return "has-data"
             }
         },
 
@@ -76,10 +85,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         mouseOver: function(d, i) {
             var found = this.findItemById(d.id);
-
-            // console.log("blfdshkfdsh")
-            // console.log(this.svg[0])
-            // this.svg[0].attr('fill-opacity', 0.5)
 
             if (found) {
                 tooltip                    
@@ -169,7 +174,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     });
                 }
             }
-
+            // console.log(color)
             return color;
         },
 
@@ -240,6 +245,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                          .attr('width', width)
                          .attr('height', height)
                          ;
+
+            // console.log('chilly willy the penguin', this.svg.selectAll('path'))
+            // this.svg.selectAll("d").on('mouseover', function() {
+            //     alert("wthgds")
+            // })
 
             this.projection = d3.geo
                                 .albersUsa()
