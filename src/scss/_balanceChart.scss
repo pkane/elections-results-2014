@@ -31,8 +31,7 @@ ul.progress-stat-bar {
     .text-left,
     .text-right {
         padding-top: 10px;
-        p, 
-        .num {
+        p, .num {
             display: inline-block;
             margin-bottom: 4px;
             color: #656565;
@@ -40,10 +39,16 @@ ul.progress-stat-bar {
         .num {
             min-width: 34px;
         }
+        .votes {
+            font-family: $font-heading-normal;
+        }
     }
     .text-left {
         p {
             float: left; 
+        }
+        .name {
+            color: $color-dem;
         }
         .num {
             float: left;
@@ -54,6 +59,9 @@ ul.progress-stat-bar {
         p {
             float: right; 
         }
+        .name {
+            color: $color-rep;
+        }
         .num {
             float: right;
         }
@@ -62,7 +70,8 @@ ul.progress-stat-bar {
         padding-left: 0;
         padding-right: 0;
     }
-    .desc-all {
+    .desc-all,
+    .desc-individual {
         margin-top: 4px;
         margin-bottom: 20px;
     }
@@ -89,18 +98,26 @@ ul.progress-stat-bar {
     }
     
     .num, .name {
-        font-size: 2em;
+        font-size: 2em;;
+    }
+
+    .name {
+        margin-bottom: 4px;
+        font-family: $font-heading-normal;
     }
     
+    .num {
+        font-family: $font-heading;
+    }
+
     .rep {
         text-align: right;
     }
 }
 
 .bop-group-num {
-
+    margin-bottom: 8px;
     text-transform: uppercase;
-    
     .num {
         font-size: 2.5em;
     }

@@ -2,8 +2,7 @@
   padding: 10px;
   width: 300px;
   background-color: rgba(256,256,256,1);
-  @include vendor-prefix(border-radius, 3px);
-  @include vendor-prefix(box-shadow, 0px 2px 1px rgba(0,0,0,0.25));
+  @include vendor-prefix(box-shadow, 0px 1px 4px rgba(0,0,0,0.25));
   .map-tooltip-heading {
     font-family: $font-heading-bold;
     font-size: 14px;
@@ -20,5 +19,41 @@
     tbody td {
       border-top: none;
     }
+  }
+}
+
+#elections-map-legend {
+  margin-bottom: 20px;
+  .elections-map-legend-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    li {
+      display: inline-block;
+      margin-left: 14px;
+      font-family: $font-heading;
+      font-size: 11px;
+      text-transform: uppercase;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+  .elections-map-legend-icon {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    @include vendor-prefix(border-radius, 10px);
+    &.emli-no-el { background-color: $color-no-election; }
+    &.emli-safe-d { background-color: $color-dem; }
+    &.emli-lean-d{ background-color: $color-lean-dem; }
+    &.emli-lean-r { background-color: $color-lean-rep; }
+    &.emli-safe-r { background-color: $color-rep; }
+    &.emli-lean-ind { background-color: $color-lean-ind; }
+    &.emli-ind { background-color: #70B848; }
   }
 }
