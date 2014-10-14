@@ -76,6 +76,13 @@ ul.progress-stat-bar {
         color: $color-rep;
         .party-label { font-size: 1.25em; }
     }
+    
+    .bop-group-winner {
+        background: url("../img/spritesheet.png") no-repeat 0px -340px;
+        display: none;
+        width: 30px;
+        height:px;
+    }
 }
 
 .bar-progress-right, .bop-group-num-right { 

@@ -55,8 +55,13 @@
 #election-app.oembed {
     margin: 0;
     background: #fff;
+    padding-bottom: 0;
     
     .elections-bar-nav { display: none; }
+    
+    .balance-of-power-chart {
+        margin-top: 30px;
+    }
     
     #election-bar-content { 
         padding-left: 20px;
@@ -93,6 +98,7 @@
 
             .icon {
                 width: 60px;
+                height: 60px;
                 font-size: 40px;
                 padding-top: 5px;
             }
@@ -106,7 +112,8 @@
         
         .election-content-col { 
             border: none;
-            width: 100%; 
+            width: 100%;
+            padding: 0;
         }
     }
     
@@ -114,7 +121,7 @@
         display: inherit;
         position: fixed;
         bottom: 0; left: 0; right: 0;
-        padding: 5px 20px;
+        padding: 10px 20px;
         background: #fff;
         z-index: 10;
         line-height: 1.1;
@@ -142,11 +149,16 @@
 
 }
 
-@include breakpointMax(400) {
+@include breakpointMax(450) {
     #election-app.oembed {
+        
         #election-content {
             top: 0px;
         }
+        
+        .elections-bar-left-col { padding: 0; }
+        
+        .balance-of-power-chart { margin-top: -5px; }
         
         .bop-group-num .num { font-size: 20px; }
         .bop-group-desc { 
@@ -159,6 +171,7 @@
                 font-size: 10px;
                 padding-top: 0;
             }
+            .name { font-size: 1.2em; }
         }
         
         .oembed-linkout a { font-size: 10px; }
@@ -188,6 +201,7 @@
 
                 .icon {
                     width: 40px;
+                    height: 40px;
                     font-size: 24px;
                     padding-top: 5px;
                 }
