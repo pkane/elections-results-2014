@@ -21,6 +21,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 jsonpCallback: 'ping',
                 cache: true,
                 timeout: config.api.pollFrequency,
+                data: config.api.key,
             
                 complete: function (xhr, statusCode) {
                     if (statusCode === 'success') {

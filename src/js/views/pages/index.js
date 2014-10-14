@@ -158,11 +158,11 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 resultList.render();
             }
 
-            console.log('resultMap ', resultMap);
-
             if (resultMap) {
                 resultMap.model.race = this.model.race;
                 resultMap.model.state = this.model.state;
+                resultMap.model.data = hasData ? dataFeed.data : [];
+                resultMap.model.detail = hasDetail ? detailFeed.data : [];
                 resultMap.refresh();
             }
 

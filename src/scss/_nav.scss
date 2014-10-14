@@ -548,7 +548,8 @@
         top: 20px;
     }
     #resultmap-back-btn,
-    #state-list-dropdown-btn {
+    #state-list-dropdown-btn,
+    #resultmap-swap-btn {
         background-color: #333333;
         @include vendor-prefix(border-radius, 20px);
         // display: none;

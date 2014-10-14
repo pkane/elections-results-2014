@@ -17,6 +17,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
             dataType: 'jsonp',
             jsonpCallback: 'usat_' + callbackHash,
             cache: true,
+            data: config.api.key,
             complete: completeHandler,
             error: errorHandler
         };

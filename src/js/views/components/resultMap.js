@@ -201,6 +201,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         refresh: function() {
             console.log('-- refresh --');
+            
+            // TODO: Query data to discover if multi-race
+            //  Set resultmap-swap-btn show/hide
+            //  Set race/state seat flag prop
+            //  Set color based on selected race
+            
             this.renderMap();
             this.renderNav();
         },
