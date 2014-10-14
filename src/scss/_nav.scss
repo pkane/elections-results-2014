@@ -416,6 +416,14 @@
             cursor: pointer;         
         }
 
+        @media
+        only screen and ( min-resolution: 2dppx) {
+            .elections-bar-nav .nav-item.selected:after {
+                background-image: url("../img/spritesheet@2x.png");
+                background-size: 114px 380px;
+            }        
+        }
+
         .elections-bar-nav .nav-item.selected > a {
             color: white;
             text-transform: uppercase;
