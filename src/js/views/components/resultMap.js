@@ -35,6 +35,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .attr('stroke', '#fff')
                         .attr('stroke-width', strokeWidth || 1)
                         .attr("d", d3.geo.path().projection(this.projection))
+                        .attr("class", _.bind(this.cssClass, this))
                         .on('click', _.bind(this.clicked, this))
                         .on('mouseover', _.bind(this.mouseOver, this))
                         .on('mousemove', _.bind(this.mouseMove, this))                        
@@ -143,6 +144,9 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
         },
 
+        cssClass: function(d) {
+            return (this.findItemById(d.id) ? "has-data" : "");
+        },
 
         clicked: function(d) {
             if (!this.model.state && this.findItemById(d.id)) {
@@ -173,12 +177,13 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         mouseOver: function(d, i) {
+
             var found = this.findItemById(d.id);
 
             if (found) {
-
                 tooltip                    
                     .html([
+
                         '<h4 class="map-tooltip-heading">', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
                         '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
 
@@ -266,7 +271,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     });
                 }
             }
-
+            // console.log(color)
             return color;
         },
 
@@ -339,6 +344,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                          .attr('width', width)
                          .attr('height', height)
                          ;
+
+            // console.log('chilly willy the penguin', this.svg.selectAll('path'))
+            // this.svg.selectAll("d").on('mouseover', function() {
+            //     alert("wthgds")
+            // })
 
             this.projection = d3.geo
                                 .albersUsa()
