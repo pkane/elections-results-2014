@@ -3,6 +3,7 @@
 	@include tablet-min {
 		padding-right: 30px;
 		border-right: 1px solid $color-stroke;
+		padding-bottom: 100px;
 	}
 }
 
@@ -21,8 +22,9 @@ $result-item-bg-gradient-position-tablet: 178px;
 }
 
 #list table.result-item {
+	position: relative;
 	border: none;
-	margin: 10px 0 0;
+	margin: 10px 0 20px;
 	width: 100%;
 
 	thead {
@@ -30,9 +32,10 @@ $result-item-bg-gradient-position-tablet: 178px;
 	}
 
 	.result-first-row {
-		font-family: $font-heading-bold;
+		// font-family: $font-heading-bold;
 		th {
 			padding-left: 4px;
+			font-family: $font-heading-normal;
 		}
 	}
 
@@ -53,7 +56,7 @@ $result-item-bg-gradient-position-tablet: 178px;
   tbody {
 		float: left;
     border: 1px solid $color-stroke;
-    margin: 0 10px 10px 0;
+    // margin: 0 10px 10px 0;
     padding: 10px;
     position: relative;
     width: 100%;
@@ -83,7 +86,8 @@ $result-item-bg-gradient-position-tablet: 178px;
 
 	.result-name,
 	.result-win,
-	.result-votes {
+	.result-votes,
+	.result-pct {
 		font-size: 12px;
 		text-align: right;
 	}
@@ -94,35 +98,70 @@ $result-item-bg-gradient-position-tablet: 178px;
 		font-weight: 100;
 	}
 
-	.result-name {
+	.result-name,
+	.initiative-name {
 		width: 130px;
-		padding: 0 10px 0 0;
+		padding: 8px 10px 0 0;
 		font-family: $font-heading;
 		line-height: 140%;
+		text-align: right;
 	}
 
-	.result-win {
+	.result-name > span {
+		display: none;
+	}	
+
+	.result-win,
+	.result-pct {
 		width: 30px;
+		padding: 5px 0;
 	}
 
 	.result-votes {
 		padding: 5px;
 	}
 
+	tr.candidate.winner .result-name > span {
+		position: relative;
+		bottom: 1px;
+		display: inline-block;
+		height: .5em;
+		width: .5em;
+		background: #8DC63F;
+		border-radius: 100%;
+		margin-right: 8px;
+		z-index: 3;
+	}	
+
 	.democratic .result-votes {
     background: linear-gradient(to right, $color-dem 0%, $color-dem 100%) no-repeat;
+    background-image: -webkit-linear-gradient(right, $color-dem 0%, $color-dem 100%);
+		background-image:    -moz-linear-gradient(right, $color-dem 0%, $color-dem 100%);
+		background-image:      -o-linear-gradient(right, $color-dem 0%, $color-dem 100%);
+		background-image:     -ms-linear-gradient(right, $color-dem 0%, $color-dem 100%);
+		background-image:         linear-gradient(right, $color-dem 0%, $color-dem 100%);
 	}
 
 	.republican .result-votes {        
-		background: linear-gradient(to right, $color-rep 0%, $color-rep 100%) no-repeat;        
+		background: linear-gradient(to right, $color-rep 0%, $color-rep 100%) no-repeat;
+		background-image: -webkit-linear-gradient(right, $color-rep 0%, $color-rep 100%);
+		background-image:    -moz-linear-gradient(right, $color-rep 0%, $color-rep 100%);
+		background-image:      -o-linear-gradient(right, $color-rep 0%, $color-rep 100%);
+		background-image:     -ms-linear-gradient(right, $color-rep 0%, $color-rep 100%);
+		background-image:         linear-gradient(right, $color-rep 0%, $color-rep 100%);
 	}	
 
 	.other .result-votes {
-    background: linear-gradient(to right, $color-other 0%, $color-other 100%) no-repeat;
+    background: linear-gradient(to right, $color-bar-gray 0%, $color-bar-gray 100%) no-repeat;
+    background-image: -webkit-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
+		background-image:    -moz-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
+		background-image:      -o-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
+		background-image:     -ms-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
+		background-image:         linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
 	}
 
   .initiative-name {
-      text-align: left;
+      text-align: right;
   }
 
 	/* Result Item Tablet+ Styles */
@@ -139,24 +178,25 @@ $result-item-bg-gradient-position-tablet: 178px;
 			background-image:         linear-gradient(left, #fff 0px, #fff $result-item-bg-gradient-position-tablet, #f4f4f4 $result-item-bg-gradient-position-tablet+1, #f4f4f4 100%);
   	}
 
-  	.result-name {
+  	.result-name,
+  	.initiative-name {
   		width: 160px;
   		font-size: 14px;
   	}
 
   	.result-win,
-		.result-votes {
+		.result-votes,
+		.result-pct {
 			font-size: 13px;
 		}
 
-  	.result-win {
+  	.result-win,
+  	.result-pct {
 			width: 50px;
 		}
 
 	}
 }
-
-
 
 #election-content .result-item a {
 	color: #000;
@@ -177,7 +217,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 #list table.result-item tbody:after {
 	content: "";
 	position: absolute;
-	z-index: -1;		
+	z-index: -1;
 	-webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
 	box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
 	bottom: 0px;
@@ -222,6 +262,10 @@ $result-item-bg-gradient-position-tablet: 178px;
 		padding: 14px 0;
 		font-size: 30px;
 	}
+}
+
+#list .card-item .card-state-name {
+	text-transform: capitalize;
 }
 
 /*#election-content .house-card-deck .card-item {

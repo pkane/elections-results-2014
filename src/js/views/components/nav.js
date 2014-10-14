@@ -17,10 +17,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         
         template: _.template(templateFile),
 
-        shareUrl: function() { return escape(location.href); },
+        shareUrl: function() { return config.pageInfo.share_url; },
 
         text: {
-            message: _.template('Learn more about key #election2014 <%- race %> races via the @USATODAY Election Outlook'),
+            message: _.template('Latest <%- race %> race results via @USATODAY #election2014'),
 
             facebook: _.template('https://www.facebook.com/dialog/feed/?app_id=<%- appid %>&link=#url#&redirect_uri=#url#name=<%- message %>'),
             twitter: _.template('https://twitter.com/intent/tweet?url=#url#&text=<%- message %>'),
@@ -109,7 +109,20 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },  
         
         initialize: function () {
-            $('#election-bar-content').html(this.el);                        
+            $('#election-bar-content').html(this.el);
+
+            // collapse nav on scroll on desktop
+            if (!config.isMobile) {
+                var $win = $(window);
+
+                $win.scroll(function () {
+                    if ($win.scrollTop() > 0) {
+                        $('#election-bar-content').addClass("collapsed");
+                    } else {
+                        $('#election-bar-content').removeClass("collapsed");
+                    }
+                });
+            }
         },  
         
         render: function () {            
@@ -134,6 +147,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             this.$('.' + race.key + '-nav-item').addClass('selected');
             
             this.$('.page-icon .icon').removeClass().addClass('icon ' + this.model.getStateIcon());
+            this.$('.page-icon-mini .icon').removeClass().addClass('icon ' + this.model.getStateIcon());
 
             this.$('#facebook-share').attr('href', this.text.facebook({ appid: config.pageInfo.facebook.app_id, message: message }).replace(/#url#/g, url));
             this.$('#mail-share').attr('href', this.text.mail({ message: message }).replace(/#url#/g, url));            

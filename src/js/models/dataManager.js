@@ -4,8 +4,6 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         var opUri = config.api.op[op];
         
-        opUri = opUri.replace('{dataFeedVersionId}', '00'); //config.api.dataFeedVersionId);
-        
         if (params) {
             _.each(params, function (value, key) {
                 opUri = opUri.replace('{' + key + '}', value);
@@ -103,7 +101,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
 
         getGeo: function(level, type) {
             var url = '';
-            
+
             if (type === 'simp' || type === 'centroids') {
                 url = 'data/geo/' + level + '.' + type + '.js';
             } else if (level === 'states' && type === 'zoom') {
@@ -116,7 +114,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 url = 'data/geo/' + level + '.js';
             }
 
-            return url;
+            return config.geoBase + url;
         },
 
         loadGeo: function (level, type) {

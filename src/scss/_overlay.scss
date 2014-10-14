@@ -31,8 +31,8 @@
     }
 }
 .election-overlay-button-close {
-    position: absolute;
-    top: 18px;
+    position: fixed;
+    top: 50px;
     right: 30px;
     a {
         color: white;

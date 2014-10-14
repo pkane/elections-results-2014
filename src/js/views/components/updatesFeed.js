@@ -1,25 +1,26 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone',
-    'moment',
+	'backbone',    
+    'd3',
     'models/config',
     'text!views/components/updatesFeed.html'
 ],
-function ($, _, Backbone, Moment, config, componentTemplate) {
+function ($, _, Backbone, d3, config, componentTemplate) {
 
     var view = Backbone.View.extend({
         
         model: new (Backbone.Model.extend({ 
-            data: [],
+            data: [],            
+            timeFormat: d3.time.format('%-I:%M %p %m/%d/%y'),
+
             filterData: function (dataSet) { 
                 return _.filter(dataSet, function (i) { 
                     return (i.changes.win.length > 0);
                 });
             },
             formatTimestamp: function (timestamp) {
-                var moment = new Moment(parseInt(timestamp)*1000);
-                return moment.format('h:mm A M/D/YY');
+                return this.timeFormat(new Date(timestamp * 1000));
             },
             formatRaceResult: function (item) {
                 var formatted = '',

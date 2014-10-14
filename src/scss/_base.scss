@@ -10,9 +10,10 @@ $color-gold: #c2a059;
 $color-link: #009bff;
 $color-gray: #999999;
 
-$color-dem: #708e9c;
+$color-dem: #235468;
 $color-rep: #732c30;
 $color-other: #e6e6e6;
+$color-bar-gray: #c6c6c6;
 
 /* Typography */
 @font-face {
@@ -229,22 +230,22 @@ $desktop-xl: 1600;
 		font-weight: 100;
 		line-height: 36px;
 	}
-	&.election-icon-search 				{ background-position: 0px 0px; }
-	&.election-icon-search-white 		{ background-position: -38px 0px; }
-	&.election-icon-search-blue 		{ background-position: -76px 0px; }
-	&.election-icon-arrow-right 		{ background-position: 0px -36px; }
+	&.election-icon-search 				    { background-position: 0px 0px; }
+	&.election-icon-search-white 		  { background-position: -38px 0px; }
+	&.election-icon-search-blue 		  { background-position: -76px 0px; }
+	&.election-icon-arrow-right 		  { background-position: 0px -36px; }
 	&.election-icon-arrow-right-white	{ background-position: -38px -36px; }
 	&.election-icon-arrow-right-blue	{ background-position: -76px -36px; }
-	&.election-icon-share 				{ background-position: 0px -114px; }
-	&.election-icon-share-white 		{ background-position: -38px -110px; text-indent: -9999px; }
-	&.election-icon-share-blue 			{ background-position: -76px -114px; }
-	&.election-icon-arrow-down 			{ background-position: 0px -152px; }
+	&.election-icon-share 				    { background-position: 0px -114px; }
+	&.election-icon-share-white 			{ background-position: -38px -110px; text-indent: -9999px; }
+	&.election-icon-share-blue 				{ background-position: -76px -114px; }
+	&.election-icon-arrow-down 				{ background-position: 0px -152px; }
 	&.election-icon-arrow-down-white 	{ background-position: -38px -152px; }
 	&.election-icon-arrow-down-blue 	{ background-position: -76px -152px; }
-	&.election-icon-arrow-left 			{ background-position: 0px -152px; }
-	&.election-icon-arrow-left-white 	{ background-position: -38px -152px; }
-	&.election-icon-arrow-left-blue 	{ background-position: -76px -152px; }
-	&.election-icon-new-window 			{ background-position: 0px -190px; }
+	&.election-icon-arrow-left 				{ background-position: 0px -304px; }
+	&.election-icon-arrow-left-white 	{ background-position: -39px -304px; }
+	&.election-icon-arrow-left-blue 	{ background-position: -76px -304px; }
+	&.election-icon-new-window 				{ background-position: 0px -190px; }
 	&.election-icon-new-window-white 	{ background-position: -38px -190px; }
 	&.election-icon-new-window-blue 	{ background-position: -76px -190px; }
 	&.election-icon-remove 				{ background-position: 0px -266px; }
@@ -299,17 +300,22 @@ only screen and (                min-resolution: 2dppx) {
 /* Bootstrap Overwrites */
 
 .container {
-	padding-left: 20px;
-	padding-right: 20px;
+	// padding-left: 0;
+	// padding-right: 0;
 	@include desktop {
 		.container {
-
+			// padding-left: 20px;
+			// padding-right: 20px;
 		}
 	}
 }
 
 #election-app {
-	margin-top: 85px;
+	// margin-top: 85px;
+	padding-bottom: 100px;
+	@include tablet-min {
+		padding-bottom: 0;
+	}
 }
 
 #election-app * {
@@ -321,6 +327,17 @@ only screen and (                min-resolution: 2dppx) {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+/* Fix for clipped ad */
+
+#ad-mobile {
+	left: -20px;
+	position: relative;
+	margin-bottom: 20px;
+	@include breakpoint(360) {
+		left: auto;
+	}
 }
 
 /* States Icon styling */
@@ -598,5 +615,16 @@ only screen and (                min-resolution: 2dppx) {
 	content: "\e901";
 }
 
-/* USA Icon styling */
+/* .interactivepages-body Overrides */
 
+.interactivepages-body {
+	background: none !important;
+}
+
+.padded-container {
+	padding: 0 !important;
+}
+
+.first-margin {
+	margin-top: 0 !important;
+}

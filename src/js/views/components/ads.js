@@ -11,6 +11,11 @@ function ($, _, Backbone, config, ads) {
 
     	el: '#ad-' + config.pageInfo.platform,
 
+        initialize: function() {
+            Backbone.View.prototype.initialize.apply(this, arguments);            
+            this.refresh();
+        },
+
         refresh: function() {
         	console.log('ad view refresh ', this.$el.attr('id'));
 

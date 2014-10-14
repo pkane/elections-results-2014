@@ -1,14 +1,16 @@
+
 <% if (race.key === 'initiatives') { %>
 
     <% if (!state) { %>
-    <div class="row house-card-deck">    
+    <div class="row house-card-deck">
         <% _.each(data, function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
                     <div class='card-item-inner'>
-                        <%= s.name %>
-                        <div class="num-races"><%= s.initiatives.length %></div> initiatives                        
+
+                        <span class="card-state-name"><%= s.name.toLowerCase() %></span>
+                        <div class="num-races"><%= s.initiatives.length %></div> initiatives
                     </div>
                 </div>
             </a>
@@ -21,9 +23,7 @@
                 <thead>
                     <tr class="result-first-row">
                         <th class="district-name" colspan="3">
-                            <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= value.id %>">
-                                <%= value.name %>
-                            </a>
+                            <%= value.name %>
                         </th>
                     </tr>
                 </thead>
@@ -31,8 +31,8 @@
                 <% _.each(value.results, function(item) { %>
                     <tr class="initiatives">
                         <td class="initiative-name"><%= item.name %></td>
-                        <td class="result-votes"><%= item.votes %></td>
-                        <td class="result-pct"><%= Math.round(item.pct) %>%</td>
+                        <td class="result-votes"><%= formatVotes(item.votes) %></td>
+                        <td class="result-pct"><%= Math.round(item.pct*10)/10 %>%</td>
                     </tr>
                 <% }); %>
                 </tbody>
@@ -74,12 +74,12 @@
                 <tbody>
                 <% _.each(value.results, function(item) { %>
                     <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
-                    <tr class="candidate <%= item.party.toLowerCase() %>">
-                        <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>                    
+                    <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
+                        <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                            <%= item.votes %> 
+                            <%= formatVotes(item.votes) %> 
                         </td>
-                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)*10000)/100 %>%</td>                              
+                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)*1000)/10 %>%</td>                              
                     </tr>
                 <% }); %>
                 </tbody>
@@ -106,11 +106,11 @@
             </thead>
             <tbody>
             <% _.each(value.results, function(item) { %>
-                <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
-                <tr class="candidate <%= item.party.toLowerCase() %>">
-                    <td class="result-name"><%= item.name %> <%= item.party.charAt(0) %></td>                    
+                <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*1000)/10; %>
+                <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
+                    <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
                     <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                        <%= item.votes %> 
+                        <%= formatVotes(item.votes) %> 
                     </td>
                     <td class="result-win"><%= pctVotes %>%</td>
                 </tr>
