@@ -207,10 +207,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             if (tooltip.html()) {
                 var mouse = d3.mouse(this.el),
                 leftOffset = 135,
-                topOffset = 175;
-                if ($(window).width() < 996) {
-                    topOffset = 205;
-                }
+                topOffset = 20;
 
                 tooltip
                     .classed('hidden', false)
