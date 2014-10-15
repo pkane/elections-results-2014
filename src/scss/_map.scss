@@ -28,6 +28,9 @@
     thead th {
       border-bottom: 1px solid $color-stroke;
     }
+    thead th.percent {
+      text-align: right;
+    }
     tbody td {
       border-top: none;
     }
