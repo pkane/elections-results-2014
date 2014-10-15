@@ -95,7 +95,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         _.reduce(found.results, function(memo, item) {
                             return (memo
                                 + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')' 
-                                + (item.win ? '<span class="won">won</span>' : '')                                
+                                + (item.win ? '<span class="won"></span>' : '')                                
                                 + '</td>'
                                 + '<td class="right">' + voteFormat(item.votes) + '</td>'
                                 + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
