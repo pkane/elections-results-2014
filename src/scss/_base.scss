@@ -395,10 +395,12 @@ only screen and (                min-resolution: 2dppx) {
 }
 
 .page-icon .icon-lg-dc {
-	background: url('../img/dc-lg.png') no-repeat 15px 0;
+	opacity:0.75;
+	background: url('../img/dc-lg.png') no-repeat 20px 7px;
 }
 
 .page-icon-mini .icon-lg-dc {
+	opacity:0.75;
 	background: url('../img/dc-sm.png') no-repeat 40px 0;
 }
 
