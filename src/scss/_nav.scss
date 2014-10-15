@@ -358,6 +358,11 @@
 
         height: 80px;
 
+        .election-navigation.modal-on {
+            position: absolute;
+            z-index: 100;
+        }
+
         .navbar-nav {
             margin: 0;
         }
