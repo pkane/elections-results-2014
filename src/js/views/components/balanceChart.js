@@ -3,9 +3,10 @@ define([
 	'underscore',
 	'backbone',
     'd3',
+    'models/config',
     'text!views/components/balanceChart.html'    
 ],
-function ($, _, Backbone, d3, chartTemplate) {
+function ($, _, Backbone, d3, config, chartTemplate) {
 
     var isRendered = false,
         seatsHeld = { 
@@ -46,7 +47,26 @@ function ($, _, Backbone, d3, chartTemplate) {
             
             if (this.model.detail && this.model.detail.id) {
                 
-                var candidate = _.chain(this.model.detail.results).sortBy('votes').last(2).value(); 
+                var hasDem = false, 
+                    hasRep = false,
+                    candidate = _.chain(this.model.detail.results).filter(function (item) { 
+                            return !item.seatNumber || (item.seatNumber === '0') 
+                        }).sortBy(function (item) {
+                            return item.votes * -1; // Reverse
+                        }).filter(function (item) {
+                            var result = false;
+                            if (item.party === 'Democratic') {
+                                result = !hasDem;
+                                hasDem = true;
+                            } else if (item.party === 'Republican') {
+                                result = !hasRep;
+                                hasRep = true;
+                            } else {
+                                result = true;
+                            }
+                        
+                            return result;
+                        }).first(2).value();
                 
                 if (candidate.length == 2)
                 {
@@ -78,6 +98,9 @@ function ($, _, Backbone, d3, chartTemplate) {
 
                     $('.num', numLeft).text(pctLeft + '%');
                     $('.num', numRight).text(pctRight + '%');
+                    
+                    $('.party-label', numLeft).text('');
+                    $('.party-label', numRight).text('');
 
                     $(progressLeft).css('width', pctLeft + '%');
                     $(progressRight).css('width', pctRight + '%');
@@ -112,16 +135,18 @@ function ($, _, Backbone, d3, chartTemplate) {
                 $('.icon', progressRight).addClass('icon-rep-left');
                 
                 $('.num', numLeft).text(dem.seats + other.seats + held.dem);
+                $('.party-label', numLeft).text(config.isMobile ? 'Dem' : 'Democrat');
                 $('.num', numRight).text(rep.seats + held.rep);
-                
+                $('.party-label', numRight).text(config.isMobile ? 'Rep' : 'Republican');
+
                 $(progressLeft).css('width', ((dem.seats + other.seats + held.dem) / held.total)*100 + '%');
                 $(progressRight).css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
                 
                 $('.bar-progress-left', desc).css('width', (held.was.dem / held.total)*100 + '%');
                 $('.bar-progress-right', desc).css('width', (held.was.rep / held.total)*100 + '%');
                 
-                $('.text-left .votes', desc).text(this.numFormat(held.was.dem));
-                $('.text-right .votes', desc).text(this.numFormat(held.was.rep));
+                $('.text-left .num', desc).text(this.numFormat(held.was.dem));
+                $('.text-right .num', desc).text(this.numFormat(held.was.rep));
 
                 this.$('.updated').text('updated ' + this.timeFormat(this.model.updateTime));
             } else {

@@ -2,8 +2,8 @@
 <% if (race.key === 'initiatives') { %>
 
     <% if (!state) { %>
-    <div class="row house-card-deck">
-        <% _.each(data, function(s) { %>
+    <div class="row house-card-deck">    
+        <% _.each(_.sortBy(data, function (obj) { return parseInt(obj.id); }), function(s) { %>
 
             <a href="#<%= race.key %>-<%= getStateById(s.id).abbr %>">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
@@ -18,7 +18,7 @@
     </div>
     <% } else { %>
         <div class="row-fluid">
-        <% _.each(detail, function(value) { %>
+        <% _.each(_.sortBy(detail, function(obj) { return findSortValue(obj.name); }), function(value) { %>
             <table class="result-item">
                 <thead>
                     <tr class="result-first-row">
@@ -73,13 +73,13 @@
                 </thead>
                 <tbody>
                 <% _.each(value.results, function(item) { %>
-                    <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*100); %>
+                    <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
-                        <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
+                        <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
                             <%= formatVotes(item.votes) %> 
                         </td>
-                        <td class="result-win"><%= Math.round(parseFloat(item.votes/value.votes)*1000)/10 %>%</td>                              
+                        <td class="result-win"><%= formatPercent(item.votes, value.votes) %>%</td>                              
                     </tr>
                 <% }); %>
                 </tbody>
@@ -102,18 +102,27 @@
                         >
                         <%= value.name %><%= getCountyByFips(value.id) %>
                     </th>
+                    <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
                 </tr>
             </thead>
             <tbody>
-            <% _.each(value.results, function(item) { %>
-                <% var pctVotes = Math.round(parseFloat(item.votes/value.votes)*1000)/10; %>
-                <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
-                    <td class="result-name"><span></span><%= item.name %> (<%= item.party.charAt(0) %>)</td>                    
-                    <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                        <%= formatVotes(item.votes) %> 
-                    </td>
-                    <td class="result-win"><%= pctVotes %>%</td>
-                </tr>
+            <% _.each(_.groupBy(value.results, 'seatNumber'), function(race, index) { %>
+                
+                <% if (index != 0) { %>
+                    <tr><td colspan="3"><hr /></td></tr>
+                <% } %>
+
+                <% _.each(race, function(item) { %>
+                <% var pctVotes = formatPercent(item.votes, value.votes); %>
+                    <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
+                        <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
+                        <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
+                            <%= formatVotes(item.votes) %> 
+                        </td>
+                        <td class="result-win"><%= pctVotes %>%</td>
+                    </tr>
+                    
+                <% }); %>
             <% }); %>
             </tbody>
         </table>
