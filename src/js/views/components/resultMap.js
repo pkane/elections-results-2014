@@ -255,18 +255,20 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.each(found.results, function(item) {
+                        
+                        var isCurrentSeat = (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
 
                         // TODO: Check color values for in progress, called, etc...
                         //if (!hasState) {
-                            if (item.win && (item.seatNumber || parseInt(item.seatNumber) === this.model.fips)) {
+                            if (item.win && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
-                            } else if (item.lead && (item.seatNumber || item.seatNumber === '0')) {
+                            } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }                            
                         //} else if (item.lead) {
                         //    color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         //}
-                    });
+                    }, this);
                 }
             }
             // console.log(color)
@@ -276,16 +278,20 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         renderNav: function() {
             console.log('render nav');
             
-            var isMultiRace = (this.model.detail && this.model.detail.length > 0 && _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value().length > 1);
+            var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
+                currentSeat = (this.model.fips) ? this.model.fips : '0';
             
             if (this.model.race) {
-                var raceKey = this.model.race.key;
+                var raceKey = this.model.race.key,
+                    altSeat = (races.length > 1) ? _.reject(races, function (i) { return i === currentSeat; })[0] : false;
 
                 this.$('#state-list-dropdown-btn').css('display', 'inline-block');
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
                 
-                //this.$('#resultmap-swap-btn').attr("href", "#/race/" + raceKey + '-' + this.model.state);
-
+                if (altSeat) {
+                    this.$('#resultmap-swap-btn').attr("href", "#/race/" + raceKey + '-' + this.model.state + '-' + altSeat);
+                }
+                                                       
                 this.$('.state-list-dropdown')
                     .html(_.map(config.states, function(state) {
 
@@ -301,7 +307,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
             
             this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
-            this.$('#resultmap-swap-btn').css('display', isMultiRace ? 'inline-block': 'none');
+            this.$('#resultmap-swap-btn').css('display', races.length > 1 ? 'inline-block': 'none');
         },
 
         refresh: function() {

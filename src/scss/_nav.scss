@@ -48,9 +48,9 @@
 
 .oembed-linkout { display: none; }
 
-// 280x152 - MobileWeb / iPhone
-// 600x325 - Desktop
-// 650x350 - iPad
+// 280x175 - MobileWeb / iPhone
+// 600x375 - Desktop
+// 650x405 - iPad
 
 #election-app.oembed {
     margin: 0;
@@ -58,10 +58,6 @@
     padding-bottom: 0;
     
     .elections-bar-nav { display: none; }
-    
-    .balance-of-power-chart {
-        margin-top: 30px;
-    }
     
     #election-bar-content { 
         padding-left: 20px;
@@ -149,7 +145,24 @@
 
 }
 
-@include breakpointMax(450) {
+@include breakpointMax(350) {
+    #election-app.oembed .balance-of-power-chart { margin-top: -5px; }
+}
+
+@include breakpointBetween(350, 500) {
+    #election-app.oembed {
+        .balance-of-power-chart { margin-top: 15px; }
+        #election-content { top: 0px; }
+    }
+}
+
+@includ breakpointMin(500) {
+    #election-app.oembed {
+        .balance-of-power-chart { margin-top: 30px; }
+    }
+}
+
+@include breakpointMax(500) {
     #election-app.oembed {
         
         #election-content {
@@ -157,22 +170,6 @@
         }
         
         .elections-bar-left-col { padding: 0; }
-        
-        .balance-of-power-chart { margin-top: -5px; }
-        
-        .bop-group-num .num { font-size: 20px; }
-        .bop-group-desc { 
-            font-size: 0.5em;
-            .text-left { 
-                font-size: 10px;
-                padding-top: 0;
-            }
-            .text-right { 
-                font-size: 10px;
-                padding-top: 0;
-            }
-            .name { font-size: 1.2em; }
-        }
         
         .oembed-linkout a { font-size: 10px; }
         
