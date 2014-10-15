@@ -168,11 +168,15 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             var found = this.findItemById(d.id);
 
             if (found) {
+                var uncontested = false;
+                if (found.results.length === 1) {
+                    uncontested = true;
+                }
                 tooltip                    
                     .html([
 
                         '<h4 class="map-tooltip-heading">', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
-                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th></th></tr></thead><tbody>',
+                        '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th class="percent">%</th></tr></thead><tbody>',
 
                         _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
                             if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
@@ -182,12 +186,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                 + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '') //' (' + item.party.substr(0,1).toUpperCase() + ')' 
                                 + (item.win ? ' <span class="won">won</span>' : '')                                
                                 + '</td>'
-                                + '<td class="right">' + voteFormat(item.votes) + '</td>'
-                                + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
+                                + '<td class="right">' + (!uncontested ? voteFormat(item.votes) : 'Uncontested') + '</td>'
+                                + '<td class="right" style="text-align:right">' + (!uncontested ? item.pct.toFixed(1) + '%' : '') + '</td></tr>');
                         }, '').value(),
 
                         '</tbody></table>',
-                        '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
+                        '<span class="muted">' + (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : '') + '</span>'
                     ].join(''))
                     ;
 
@@ -324,10 +328,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 natScaleMultiplier = 1.2;
                 ;
 
-            if ($('#main-map').width() < 400) {
+            if ($('#main-map').width() < 402) {
                 scaleMultiplier = 0.6;
                 natScaleMultiplier = 0.65;
-            } else if ($('#main-map').width() < 600) {
+            } else if ($('#main-map').width() < 610) {
                 scaleMultiplier = 0.9;
                 natScaleMultiplier = 0.9;
             }
