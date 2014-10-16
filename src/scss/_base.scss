@@ -11,9 +11,12 @@ $color-link: #009bff;
 $color-gray: #999999;
 
 $color-dem: #235468;
-$color-rep: #732c30;
+$color-dem-rgba: rgba(35,84,104,0.4);
+$color-rep: #732c30; 
+$color-rep-rgba: rgba(115,44,48,0.4);
 $color-other: #e6e6e6;
 $color-bar-gray: #c6c6c6;
+$color-bar-gray-rgba: rgba(198,198,198,0.4);
 
 /* Typography */
 @font-face {
