@@ -5,6 +5,8 @@ define(['jquery'], function ($) {
         ;
 
     return {
+        appVersion: 2,
+
         isMobile: isMobile,
         pageInfo: staticInfo,
         ssts: 'news/politics/elections/results',
@@ -18,7 +20,8 @@ define(['jquery'], function ($) {
         },
 
         api: {
-            base: 'http://www.gannett-cdn.com/ElectionsServices/Elections/',
+            base: 'http://api.gannett-cdn.com/internal/ElectionsServices/Elections/',
+            key: 'api_key=mwpprad6j3da5u34cnt7prnh',
             dataFeedVersionId: 0,
             lastChecked: 0,
             pollFrequency: 5 * 60 * 1000, // TBD
@@ -100,16 +103,71 @@ define(['jquery'], function ($) {
         ],
 
         partyColors: {
-            default: '#ccc',
+            default: '#e3e3e3',
             democraticWin: '#235468',
-            democratic: '#64afd4',
+            democratic: '#518296',
             republicanWin: '#742b31',
-            republican: '#d88787',
-            otherWin: '#33cc80',
-            other: '#99e0b6',
+            republican: '#95474e',
+            otherWin: '#70B848',
+            other: '#8dc66d',
             tieWin: '#b8b8b8',
             tie: '#e0e0e0'
+        },
+        
+        partyAbbr: {
+            'Truth Vision Hope': '(TVH)',
+            'Constitution': '(Const.)',
+            'Democratic-NPL': '(D-NPL)',
+            'Reform': '(Ref.)',
+            'Flourish Every Person Can Shine Like the Sun': '(F)',
+            'Independent Green': '(IG)',
+            'Conservative': '(C)',
+            'D-R Party': '(D-R)',
+            'Stop Common Core': '(SCC)',
+            'United Citizens': '(UC)',
+            'Other': '(Other)',
+            'Farmer': '(Farm.)',
+            'Moderate': '(M)',
+            'Grassroots Party': '(GP)',
+            'Independence': '(Ind.)',
+            'Liberty Union': '(LU)',
+            'Independent': '(I)',
+            'Start the Conversation': '(SC)',
+            'Unaffiliated': '(I)',
+            'American Labor': '(Am. Labor)',
+            'American Constitution Party': '(ACP)',
+            'Non-Affiliated': '(I)',
+            'Party of New Jersey': '(PNJ)',
+            'Lincoln Liberty': '(LL)',
+            'Libertarian Party of Florida': '(LPF)',
+            'Politicians Are Crooks': '(PAC)',
+            'Republican': '(R)',
+            'No Party Affiliation': '(I)',
+            'Progressive': '(P)',
+            'For Americans': '(FA)',
+            'Mountain Party': '(MTN)',
+            'Write-In Independent': '(I)',
+            'No Party Preference': '(I)',
+            'Libertarian': '(L)',
+            'American': '(Am.)',
+            'Working Families': '(WF)',
+            'Green': '(G)',
+            'Tax Revolt': '(TR)',
+            'Of the People': '(OP)',
+            'Legalize Marijuana Party': '(LMP)',
+            'Independent American': '(IA)',
+            'Women\'s Equality': '(WE)',
+            'Democratic': '(D)',
+            'Allen For Congress': '(AFC)',
+            'Stop Boss Politics': '(SBP)',
+            'Mr. Smith for Congress': '(MSC)',
+            'Alaska Constitution Party': '(ACP)',
+            'Green Party': '(G)',
+            'Labor': '(Lab.)',
+            'Americans Elect': '(AE)',
+            'Democratic/Farmer/Labor': '(DFL)'
         }
+
 
     };
 

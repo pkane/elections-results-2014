@@ -19,7 +19,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         
         template: _.template(resultMap),
 
-        drawMap: function(geoJsonPath, strokeWidth) {
+        drawMap: function(geoJsonPath, geoJsonPlaces, strokeWidth) {
 
             if (this.model.race) {
                 console.log('model...', this.model);
@@ -35,15 +35,104 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         .attr('stroke', '#fff')
                         .attr('stroke-width', strokeWidth || 1)
                         .attr("d", d3.geo.path().projection(this.projection))
+                        .attr("class", _.bind(this.cssClass, this))
                         .on('click', _.bind(this.clicked, this))
                         .on('mouseover', _.bind(this.mouseOver, this))
                         .on('mousemove', _.bind(this.mouseMove, this))                        
                         .on('mouseout', this.mouseOut)
                         ;
 
+                        if (geoJsonPlaces) {
+                            d3.json(geoJsonPlaces, _.bind(function(places) {
+
+                                console.log('places found', places, this.model.state);
+
+                                var projection = this.projection,
+                                    state = this.model.state,
+                                    filteredPlaces = _.filter(places.features, function(f) {
+                                        return f.properties.state === state.id;
+                                    }),
+                                    fnX = function(d) { return projection(d.geometry.coordinates)[0] },
+                                    fnY = function(d) { return projection(d.geometry.coordinates)[1] }
+                                    ;
+
+                                this.svg                                    
+                                    .selectAll('circle')
+                                    .data(filteredPlaces)
+                                    .enter().append('circle')
+                                    .attr({
+                                        'cx': fnX,
+                                        'cy': fnY,
+                                        'r': 3,
+                                        'stroke': 'rgb(12,12,12)',
+                                        'stroke-width': 1,
+                                        'fill': 'rgb(244,244,244)'
+                                    })
+                                    ;
+
+                                this.svg
+                                    .selectAll('circle.outline')
+                                    .data(_.filter(filteredPlaces, function(f) {
+                                        return f.properties.capital;
+                                    }))
+                                    .enter().append('circle')
+                                    .attr({
+                                        'class': 'places',
+                                        'fill': 'none',
+                                        'stroke': '#000',
+                                        'stroke-width': 1,
+                                        'cx': fnX,
+                                        'cy': fnY,
+                                        'r': 6
+                                    })
+                                    ;                                    
+
+                                this.svg
+                                    .selectAll('text')
+                                    .data(filteredPlaces)
+                                    .enter().append('text')
+                                    .text(function(d) {
+                                        return d.properties.name.toUpperCase();
+                                    })
+                                    .attr({
+                                        'class': 'places',
+                                        'fill': '#000000',
+                                        'font-size': 11,
+                                        'font-weight': 'bold',
+                                        'x': fnX,
+                                        'y': fnY
+                                    })
+                                    .attr('text-anchor', function(d) {
+                                        if (d.properties.placement === 'right') return 'start';
+                                        if (d.properties.placement === 'left') return 'end';
+                                        return 'middle';
+                                    })
+                                    .attr('dy', function(d) {
+                                        if (d.properties.placement === 'right') return 4;
+                                        if (d.properties.placement === 'left') return 4;
+                                        if (d.properties.placement === 'bottom') return 18;
+                                        return -10;
+                                    })
+                                    .attr('dx', function(d) {
+                                        if (d.properties.placement === 'right') return 10;
+                                        if (d.properties.placement === 'left') return -10;
+                                        return 0;
+                                    })
+                                    ;
+
+
+                            }, this));
+
+                         }                     
+
                 }, this)); 
 
+
             }
+        },
+
+        cssClass: function(d) {
+            return (this.findItemById(d.id) ? "has-data" : "");
         },
 
         clicked: function(d) {
@@ -75,26 +164,34 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         mouseOver: function(d, i) {
+
             var found = this.findItemById(d.id);
 
             if (found) {
-
+                var uncontested = false;
+                if (found.results.length === 1) {
+                    uncontested = true;
+                }
                 tooltip                    
                     .html([
-                        '<h4 class="map-tooltip-heading">', d.properties.name, '</h4>',
-                        '<table class="table table-condensed"><thead><tr><th></th><th class="right">Votes</th><th>%</th></tr></thead><tbody>',
 
-                        _.reduce(found.results, function(memo, item) {
+                        '<h4 class="map-tooltip-heading">', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
+                        '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th class="percent">%</th></tr></thead><tbody>',
+
+                        _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
+                            if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
+                                memo += '<tr><td colspan="3"><hr /></td></tr>';
+                            }
                             return (memo
-                                + '<tr><td>' + item.name + ' (' + item.party.substr(0,1).toUpperCase() + ')' 
-                                + (item.win ? '<span class="won">won</span>' : '')                                
+                                + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '') //' (' + item.party.substr(0,1).toUpperCase() + ')' 
+                                + (item.win ? ' <span class="won">won</span>' : '')                                
                                 + '</td>'
-                                + '<td class="right">' + voteFormat(item.votes) + '</td>'
-                                + '<td class="right">' + item.pct.toFixed(2) + '% </td></tr>');
-                        }, ''),
+                                + '<td class="right">' + (!uncontested ? voteFormat(item.votes) : 'Uncontested') + '</td>'
+                                + '<td class="right" style="text-align:right">' + (!uncontested ? item.pct.toFixed(1) + '%' : '') + '</td></tr>');
+                        }, '').value(),
 
                         '</tbody></table>',
-                        '<span class="muted">' + found.precincts.pct.toFixed(1) + '% Precincts reporting</span>'
+                        '<span class="muted">' + (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : '') + '</span>'
                     ].join(''))
                     ;
 
@@ -107,11 +204,13 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         mouseMove: function(d, i) {
             if (tooltip.html()) {
-                var mouse = d3.mouse(this.el);
+                var mouse = d3.mouse(this.el),
+                leftOffset = 135,
+                topOffset = 20;
 
                 tooltip
                     .classed('hidden', false)
-                    .attr('style', 'left:' + (mouse[0] - 20) + 'px; top:'+ (mouse[1] + 20) + 'px; opacity: 1;')
+                    .attr('style', 'left:' + (mouse[0] - leftOffset) + 'px; top:'+ (mouse[1] + topOffset) + 'px; opacity: 1;')
                     ;                
             }
 
@@ -131,9 +230,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 color = partyColors.default
                 ;
 
-            // console.log('id = ' + id);
-            // console.log(d);
-            // console.log(this.model.state);
 
             if (this.model.state && this.model.race.id != 'h') {
                 state = this.model.state.id;
@@ -161,12 +257,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }                            
                         } else if (item.lead) {
-                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                           color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     });
                 }
             }
-
+            
             return color;
         },
 
@@ -198,6 +294,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         refresh: function() {
             console.log('-- refresh --');
+            
+            // TODO: Query data to discover if multi-race
+            //  Set resultmap-swap-btn show/hide
+            //  Set race/state seat flag prop
+            //  Set color based on selected race
+            
             this.renderMap();
             this.renderNav();
         },
@@ -226,10 +328,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 natScaleMultiplier = 1.2;
                 ;
 
-            if ($(window).width() < 1025) {
-                scaleMultiplier = 0.5;
+            if ($('#main-map').width() < 402) {
+                scaleMultiplier = 0.6;
                 natScaleMultiplier = 0.65;
-
+            } else if ($('#main-map').width() < 610) {
+                scaleMultiplier = 0.9;
+                natScaleMultiplier = 0.9;
             }
 
             this.svg = d3.select(this.el)
@@ -258,9 +362,9 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                             ;
 
                         if (this.model.race.id == 'h') {
-                            this.drawMap(dataManager.getGeo('cds', 'simp'));
+                            this.drawMap(dataManager.getGeo('cds',  this.model.state.id), dataManager.getGeo('places'));
                         } else {
-                            this.drawMap(dataManager.getGeo('counties', this.model.state.id));
+                            this.drawMap(dataManager.getGeo('counties', this.model.state.id), dataManager.getGeo('places'));
                         }
 
                     }, this));
@@ -268,7 +372,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 } else {
 
                     if (this.model.race.id == 'h') {
-                        this.drawMap(dataManager.getGeo('cds', 'simp'), 0.3);
+                        this.drawMap(dataManager.getGeo('cds', 'simp'), '', 0.3);
                     } else {
                         this.drawMap(dataManager.getGeo('states')); 
                     }
@@ -921,160 +1025,160 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 //             }
 
 //             // Needs data update to include state fips
-//             function places() {
-
-//                 remove('.places');
-
-//                 if (res === 'zoom') {
-
-//                     // show places
-//                     if (!data.geo.places.length) {
-//                         view.getData(['places'], showPlaces);
-//                     } else {
-//                         showPlaces();
-//                     }
-
-//                 }
-
-//                 function showPlaces() {
-
-//                     var places = data.geo.places,
-//                         projection = view.mercator;
-
-//                     if (IE) {
-//                         view.svg.selectAll('circle')
-//                             .data(_(places).filter(function(feature) {
-//                                 return feature.properties.state === state;
-//                             })).enter().append('circle')
-//                             .attr('fill', '#000000')
-//                             .attr('class', 'places')
-//                             .attr('cx', function(d) {
-//                                 return projection(d.geometry.coordinates)[0];
-//                             })
-//                             .attr('cy', function(d) {
-//                                 return projection(d.geometry.coordinates)[1];
-//                             })
-//                             .attr('r', 3);
-
-//                         view.svg.selectAll('circle.outline')
-//                             .data(_(places).filter(function(feature) {
-//                                 return (feature.properties.capital && feature.properties.state === state);
-//                             })).enter().append('circle')
-//                             .attr('class', 'places')
-//                             .attr('fill', 'none')
-//                             .attr('stroke', '#000000')
-//                             .attr('stroke-width', 1)
-//                             .attr('cx', function(d) {
-//                                 return projection(d.geometry.coordinates)[0];
-//                             })
-//                             .attr('cy', function(d) {
-//                                 return projection(d.geometry.coordinates)[1];
-//                             })
-//                             .attr('r', 5);
-
-//                         view.svg.selectAll('text')
-//                             .data(_(places).filter(function(feature) {
-//                                 return feature.properties.state === state;
-//                             })).enter().append('text')
-//                             .attr('class', 'places')
-//                             .text(function(d) {
-//                                 return d.properties.name.toUpperCase();
-//                             })
-//                             .attr('font-size', 10)
-//                             .attr('text-anchor', function(d) {
-//                                 if (d.properties.placement === 'right') return 'start';
-//                                 if (d.properties.placement === 'left') return 'end';
-//                                 return 'middle';
-//                             })
-//                             .attr('transform', function(d) {
-//                                 var x = 0, y = -10;
-//                                 if (d.properties.placement === 'right')  y = 4;
-//                                 if (d.properties.placement === 'left')   y = 4;
-//                                 if (d.properties.placement === 'bottom') y = 18;
-//                                 if (d.properties.placement === 'right')  x = 10;
-//                                 if (d.properties.placement === 'left')   x = -10;
-
-//                                 return 'translate(' + x + ',' + y + ')';
-//                             })
-//                             .attr('x', function(d) {
-//                                 return projection(d.geometry.coordinates)[0];
-//                             })
-//                             .attr('y', function(d) {
-//                                 return projection(d.geometry.coordinates)[1];
-//                             });
-
-//                             return undefined;
-//                     }
-
-//                     view.svg.labels.selectAll('circle')
-//                         .data(_(places).filter(function(feature) {
-//                             return feature.properties.state === state;
-//                         })).enter().append('circle')
-//                         .attr('class', 'places')
-//                         .transition().ease(ease).delay(timer).duration(0)
-//                         .attr('cx', function(d) {
-//                             return projection(d.geometry.coordinates)[0];
-//                         })
-//                         .attr('cy', function(d) {
-//                             return projection(d.geometry.coordinates)[1];
-//                         })
-//                         .attr('r', 3);
-
-//                     view.svg.labels.selectAll('circle.outline')
-//                         .data(_(places).filter(function(feature) {
-//                             return (feature.properties.capital && feature.properties.state === state);
-//                         })).enter().append('circle')
-//                         .attr('class', 'places')
-//                         .attr('fill', 'none')
-//                         .attr('stroke', '#000000')
-//                         .attr('stroke-width', 1)
-//                         .transition().ease(ease).delay(timer).duration(0)
-//                         .attr('cx', function(d) {
-//                             return projection(d.geometry.coordinates)[0];
-//                         })
-//                         .attr('cy', function(d) {
-//                             return projection(d.geometry.coordinates)[1];
-//                         })
-//                         .attr('r', 5);
-
-//                     view.svg.labels.selectAll('text')
-//                         .data(_(places).filter(function(feature) {
-//                             return feature.properties.state === state;
-//                         })).enter().append('text')
-//                         .attr('class', 'places')
-//                         .transition().ease(ease).delay(timer).duration(0)
-//                         .text(function(d) {
-//                             return d.properties.name.toUpperCase();
-//                         })
-//                         .attr('font-size', 10)
-//                         .attr('font-family', function(d) {
-//                             if (d.properties.capital)
-//                                 return "'Futura Today Demibold', Helvetica, Arial, sans-serif;";
-//                         })
-//                         .attr('text-anchor', function(d) {
-//                             if (d.properties.placement === 'right') return 'start';
-//                             if (d.properties.placement === 'left') return 'end';
-//                             return 'middle';
-//                         })
-//                         .attr('dy', function(d) {
-//                             if (d.properties.placement === 'right') return 4;
-//                             if (d.properties.placement === 'left') return 4;
-//                             if (d.properties.placement === 'bottom') return 18;
-//                             return -10;
-//                         })
-//                         .attr('dx', function(d) {
-//                             if (d.properties.placement === 'right') return 10;
-//                             if (d.properties.placement === 'left') return -10;
-//                             return 0;
-//                         })
-//                         .attr('x', function(d) {
-//                             return projection(d.geometry.coordinates)[0];
-//                         })
-//                         .attr('y', function(d) {
-//                             return projection(d.geometry.coordinates)[1];
-//                         });
-
-//                 }
+//            function places() {
+//
+//                remove('.places');
+//
+//                if (res === 'zoom') {
+//
+//                    // show places
+//                    if (!data.geo.places.length) {
+//                        view.getData(['places'], showPlaces);
+//                    } else {
+//                        showPlaces();
+//                    }
+//
+//                }
+//
+//                function showPlaces() {
+//
+//                    var places = data.geo.places,
+//                        projection = view.mercator;
+//
+//                    if (IE) {
+//                        view.svg.selectAll('circle')
+//                            .data(_(places).filter(function(feature) {
+//                                return feature.properties.state === state;
+//                            })).enter().append('circle')
+//                            .attr('fill', '#000000')
+//                            .attr('class', 'places')
+//                            .attr('cx', function(d) {
+//                                return projection(d.geometry.coordinates)[0];
+//                            })
+//                            .attr('cy', function(d) {
+//                                return projection(d.geometry.coordinates)[1];
+//                            })
+//                            .attr('r', 3);
+//
+//                        view.svg.selectAll('circle.outline')
+//                            .data(_(places).filter(function(feature) {
+//                                return (feature.properties.capital && feature.properties.state === state);
+//                            })).enter().append('circle')
+//                            .attr('class', 'places')
+//                            .attr('fill', 'none')
+//                            .attr('stroke', '#000000')
+//                            .attr('stroke-width', 1)
+//                            .attr('cx', function(d) {
+//                                return projection(d.geometry.coordinates)[0];
+//                            })
+//                            .attr('cy', function(d) {
+//                                return projection(d.geometry.coordinates)[1];
+//                            })
+//                            .attr('r', 5);
+//
+//                        view.svg.selectAll('text')
+//                            .data(_(places).filter(function(feature) {
+//                                return feature.properties.state === state;
+//                            })).enter().append('text')
+//                            .attr('class', 'places')
+//                            .text(function(d) {
+//                                return d.properties.name.toUpperCase();
+//                            })
+//                            .attr('font-size', 10)
+//                            .attr('text-anchor', function(d) {
+//                                if (d.properties.placement === 'right') return 'start';
+//                                if (d.properties.placement === 'left') return 'end';
+//                                return 'middle';
+//                            })
+//                            .attr('transform', function(d) {
+//                                var x = 0, y = -10;
+//                                if (d.properties.placement === 'right')  y = 4;
+//                                if (d.properties.placement === 'left')   y = 4;
+//                                if (d.properties.placement === 'bottom') y = 18;
+//                                if (d.properties.placement === 'right')  x = 10;
+//                                if (d.properties.placement === 'left')   x = -10;
+//
+//                                return 'translate(' + x + ',' + y + ')';
+//                            })
+//                            .attr('x', function(d) {
+//                                return projection(d.geometry.coordinates)[0];
+//                            })
+//                            .attr('y', function(d) {
+//                                return projection(d.geometry.coordinates)[1];
+//                            });
+//
+//                            return undefined;
+//                    }
+//
+//                    view.svg.labels.selectAll('circle')
+//                        .data(_(places).filter(function(feature) {
+//                            return feature.properties.state === state;
+//                        })).enter().append('circle')
+//                        .attr('class', 'places')
+//                        .transition().ease(ease).delay(timer).duration(0)
+//                        .attr('cx', function(d) {
+//                            return projection(d.geometry.coordinates)[0];
+//                        })
+//                        .attr('cy', function(d) {
+//                            return projection(d.geometry.coordinates)[1];
+//                        })
+//                        .attr('r', 3);
+//
+//                    view.svg.labels.selectAll('circle.outline')
+//                        .data(_(places).filter(function(feature) {
+//                            return (feature.properties.capital && feature.properties.state === state);
+//                        })).enter().append('circle')
+//                        .attr('class', 'places')
+//                        .attr('fill', 'none')
+//                        .attr('stroke', '#000000')
+//                        .attr('stroke-width', 1)
+//                        .transition().ease(ease).delay(timer).duration(0)
+//                        .attr('cx', function(d) {
+//                            return projection(d.geometry.coordinates)[0];
+//                        })
+//                        .attr('cy', function(d) {
+//                            return projection(d.geometry.coordinates)[1];
+//                        })
+//                        .attr('r', 5);
+//
+//                    view.svg.labels.selectAll('text')
+//                        .data(_(places).filter(function(feature) {
+//                            return feature.properties.state === state;
+//                        })).enter().append('text')
+//                        .attr('class', 'places')
+//                        .transition().ease(ease).delay(timer).duration(0)
+//                        .text(function(d) {
+//                            return d.properties.name.toUpperCase();
+//                        })
+//                        .attr('font-size', 10)
+//                        .attr('font-family', function(d) {
+//                            if (d.properties.capital)
+//                                return "'Futura Today Demibold', Helvetica, Arial, sans-serif;";
+//                        })
+//                        .attr('text-anchor', function(d) {
+//                            if (d.properties.placement === 'right') return 'start';
+//                            if (d.properties.placement === 'left') return 'end';
+//                            return 'middle';
+//                        })
+//                        .attr('dy', function(d) {
+//                            if (d.properties.placement === 'right') return 4;
+//                            if (d.properties.placement === 'left') return 4;
+//                            if (d.properties.placement === 'bottom') return 18;
+//                            return -10;
+//                        })
+//                        .attr('dx', function(d) {
+//                            if (d.properties.placement === 'right') return 10;
+//                            if (d.properties.placement === 'left') return -10;
+//                            return 0;
+//                        })
+//                        .attr('x', function(d) {
+//                            return projection(d.geometry.coordinates)[0];
+//                        })
+//                        .attr('y', function(d) {
+//                            return projection(d.geometry.coordinates)[1];
+//                        });
+//
+//                }
 
 //             }
 
