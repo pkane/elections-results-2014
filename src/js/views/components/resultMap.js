@@ -196,23 +196,29 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         '<span class="muted">' + (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : '') + '</span>'
                     ].join(''))
                     ;
-
+                
+                this.offsetTop = this.$el.offset().top;
                 this.mouseMove(d, i);
             } else {
                 tooltip.html("");
-            }
-
+            }            
         },
 
         mouseMove: function(d, i) {
             if (tooltip.html()) {
                 var mouse = d3.mouse(this.el),
-                leftOffset = 135,
-                topOffset = 20;
+                    mouseX = mouse[0], mouseY = mouse[1],                    
+                    tooltipHeight = $(tooltip.node()).height(),
+                    leftOffset = mouseX - 135,
+                    topOffset = mouseY + 20;
+
+                if ((this.offsetTop + mouseY + tooltipHeight) > window.innerHeight) {                    
+                    topOffset = mouseY - tooltipHeight - 40;
+                }
 
                 tooltip
                     .classed('hidden', false)
-                    .attr('style', 'left:' + (mouse[0] - leftOffset) + 'px; top:'+ (mouse[1] + topOffset) + 'px; opacity: 1;')
+                    .attr('style', 'left:' + leftOffset + 'px; top:'+ topOffset + 'px; opacity: 1;')
                     ;                
             }
 
