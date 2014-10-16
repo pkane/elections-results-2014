@@ -589,8 +589,8 @@
     }, {
         "geometry": {
             "type": "Point",
-            "coordinates": [-77.016297, 38.904809],
-            "scale" : 4800
+            "coordinates": [-77.016297, 38.88],
+            "scale" : 90000
         },
         "properties": {
             "name": "District of Columbia",
