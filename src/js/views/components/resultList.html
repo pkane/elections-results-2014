@@ -107,8 +107,8 @@
             </thead>
             <tbody>
             <% _.each(_.groupBy(value.results, 'seatNumber'), function(race, index) { %>
-                
-                <% if (index != 0) { %>
+
+                <% if (index > 0) { %>
                     <tr><td colspan="3"><hr /></td></tr>
                 <% } %>
 
