@@ -4,14 +4,18 @@ $color-nav-background: #2c2c2c;
 $color-blue: #6f8e9c;
 $color-red: #742b31;
 $color-ind: #999999;
+$color-lean-ind: #8dc66d;
 
 $color-usat-blue: #009bff;
 $color-gold: #c2a059;
 $color-link: #009bff;
 $color-gray: #999999;
+$color-no-election: #e3e3e3;
 
 $color-dem: #235468;
+$color-lean-dem: #518296;
 $color-rep: #732c30;
+$color-lean-rep: #95474e;
 $color-other: #e6e6e6;
 $color-bar-gray: #c6c6c6;
 
@@ -389,6 +393,17 @@ only screen and (                min-resolution: 2dppx) {
 .icon-lg-ct:before {
 	content: "\e506";
 }
+
+.page-icon .icon-lg-dc {
+	opacity:0.75;
+	background: url('../img/dc-lg.png') no-repeat 20px 7px;
+}
+
+.page-icon-mini .icon-lg-dc {
+	opacity:0.75;
+	background: url('../img/dc-sm.png') no-repeat 40px 0;
+}
+
 .icon-lg-de:before {
 	content: "\e507";
 }

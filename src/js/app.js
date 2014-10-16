@@ -21,6 +21,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 jsonpCallback: 'ping',
                 cache: true,
                 timeout: config.api.pollFrequency,
+                data: config.api.key,
             
                 complete: function (xhr, statusCode) {
                     if (statusCode === 'success') {
@@ -64,10 +65,10 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             navView.refresh();
             
             dataManager.updates.required = !oembed;
-            dataManager.summary.required = (race.key !== 'i');
+            dataManager.summary.required = (race.id !== 'i');
             
             dataManager.loadRace(race);
-            if (state) {
+            if (state && race.id !== 'i') { // Initiatives detail comes from main feed
                 dataManager.loadRace(race, state);
             }
             
@@ -128,7 +129,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 
                 if (navView.model.currentRace.key) {
                     dataManager.loadRace(navView.model.currentRace);
-                    if (navView.model.currentState) {
+                    if (navView.model.currentState && navView.model.currentRace.id !== 'i') {
                         dataManager.loadRace(navView.model.currentRace, navView.model.currentState);
                     }
                 }
