@@ -163,6 +163,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 resultMap.model.state = this.model.state;
                 resultMap.model.data = hasData ? dataFeed.data : [];
                 resultMap.model.detail = hasDetail ? detailFeed.data : [];
+                resultMap.model.fips = this.model.fips;
                 resultMap.refresh();
             }
 
@@ -179,6 +180,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 balanceChart.model.data = dataManager.summary.data;
                 balanceChart.model.race = this.model.race;
                 balanceChart.model.updateTime = dataManager.summary.updateTime;
+                balanceChart.model.fips = this.model.fips;
             }
 
             if (this.model.state && (this.model.race.id === 'g' || this.model.race.id === 's')) {
