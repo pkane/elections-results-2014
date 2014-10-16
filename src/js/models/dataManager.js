@@ -12,12 +12,12 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         
         return config.api.base + opUri;
     },
-    settingsCount = 0,
-    getSettings = function (completeHandler) {
+    getSettings = function (completeHandler, callbackHash) {
         return {
             dataType: 'jsonp',
-            jsonpCallback: 'usat_' + settingsCount++,
+            jsonpCallback: 'usat_' + config.appVersion + callbackHash,
             cache: true,
+            data: config.api.key,
             complete: completeHandler,
             error: errorHandler
         };
@@ -27,14 +27,16 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         console.dir(xhr);
         console.log('Data error: ' + statusCode + '::' + msg);
     },
-    DataFeed = Backbone.Model.extend({
-        data: [],
-        loaded: false,
-        loading: false,
-        required: false,
-        detail: [],
-        updateTime: new Date()
-    }),
+    DataFeed = function () {
+        return {
+            data: [],
+            loaded: false,
+            loading: false,
+            required: false,
+            detail: [],
+            updateTime: new Date()
+        };
+    },
     
     instance = new (Backbone.Model.extend({
         
@@ -46,7 +48,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
         updates: new DataFeed(),
         
         loadRace: function (race, state) {
-            console.log('DataMan load ' + race.key + ' v.' + config.api.dataFeedVersionId);
+            console.log('DM load ' + race.key + ' s.' + ((state) ? state.id : 'global'));
             
             var isDetail = (state && race.detail),
                 opKey = (isDetail) ? race.detail : race.op,
@@ -54,24 +56,25 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 opData = (isDetail) ? instance[race.key].detail[state.id] : instance[race.key],
                 opSettings = getSettings(function (xhr, statusCode) {
                     if (statusCode === 'success' && typeof xhr.responseJSON !== 'string') {
+                        console.log('DM Storing request to', race.key, (state) ? state.id : 'global');
+                        
                         opData.loading = false;
                         opData.data = xhr.responseJSON;
                         opData.updateTime = new Date();
                         opData.loaded = config.api.dataFeedVersionId;
-
+                        
                         instance.trigger('change:' + race.key);
                     }
-                });
+                }, opKey);
             
-            if (config.api.dataFeedVersionId === 0) {
-                console.log('No data feed version');
-                return; // Ignore initial 0 state? queue request until version updates?
-            } else if (opData && (opData.loading || opData.loaded === config.api.dataFeedVersionId)) {
-                console.log('Using cached data/request');
+            if (opData && (opData.loading || opData.loaded === config.api.dataFeedVersionId)) {
+                console.log('DM Using cached data/request');
                 return;
             } else {
                 
                 if (isDetail && !opData) {
+                    console.log('DM Creating detail feed for', race.key, state.id);
+                    
                     instance[race.key].detail[state.id] = new DataFeed();
                     opData = instance[race.key].detail[state.id];
                 }
@@ -114,7 +117,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 url = 'data/geo/' + level + '.js';
             }
 
-            return config.geoBase + url;
+            return config.geoBase + url + '?v=' + config.appVersion;
         },
 
         loadGeo: function (level, type) {

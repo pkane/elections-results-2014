@@ -94,6 +94,9 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                     this.refreshResults();
                 } else {
                     this.$('#list').hide();
+                    if (resultList) {
+                        resultList.reset();
+                    }
                 }
                                
                 if (needsUpdateFeed) {
@@ -146,15 +149,20 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 resultList.model.race = this.model.race;
                 resultList.model.state = this.model.state;
                 resultList.model.data = hasData ? dataFeed.data : [];
-                resultList.model.detail = hasDetail ? detailFeed.data : [];
+                if (this.model.race.id === 'i' && this.model.state) {
+                    var detail = _.findWhere(dataFeed.data, { id: this.model.state.id });
+                    resultList.model.detail = (detail) ? detail.initiatives : [];
+                } else {
+                    resultList.model.detail = hasDetail ? detailFeed.data : [];
+                }
                 resultList.render();
             }
-
-            console.log('resultMap ', resultMap);
 
             if (resultMap) {
                 resultMap.model.race = this.model.race;
                 resultMap.model.state = this.model.state;
+                resultMap.model.data = hasData ? dataFeed.data : [];
+                resultMap.model.detail = hasDetail ? detailFeed.data : [];
                 resultMap.refresh();
             }
 

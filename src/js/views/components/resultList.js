@@ -28,11 +28,22 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 var county = _.findWhere(fipsMap, { s: fips.substr(0, 2), c: fips.substr(2, 3) })
                 return (county) ? county.d : '';
             },
+            findSortValue: function (value) {
+                var matches = value.match(/[^\d]*(\d+)[^\d]*/);
+                return (matches && matches.length > 1) ? parseInt(matches[1]) : value;
+            },
             formatHouseId: function (id) {
                 var split = id.split('-');
                 return split[1];
             },
             formatVotes: d3.format(','),
+            formatPercent: function (a,b) {
+                var full = a / b;
+                return (full) ? Math.round(full*1000)/10 : 0;
+            },
+            formatParty: function (party) {
+                return (config.partyAbbr[party]) ? config.partyAbbr[party] : party.charAt(0);
+            },
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');
                 return split[1];
@@ -40,7 +51,14 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
         }))(),
         
         template: _.template(resultTemplate),
-									        
+        
+        reset: function () { 
+            this.model.data = [];
+            this.model.detail = [];
+            this.model.race = {};
+            this.model.state = {};
+        },
+        
         render: function () {
             
             if (this.model.race.id === 'h') {
