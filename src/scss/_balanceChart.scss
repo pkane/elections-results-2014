@@ -30,7 +30,6 @@ ul.progress-stat-bar {
     line-height: 1;
     .text-left,
     .text-right {
-        padding-top: 10px;
         p, .num {
             display: inline-block;
             margin-bottom: 4px;
@@ -195,12 +194,14 @@ span.icon-rep-left {
     margin-top: 9px;
     right: 10px;
 }
+@include breakpointMax(350) {
+    #election-app.oembed .bop-group-desc {
+         .text-left > *, .text-right > * { display: none; }
+    }
+}
 
 @include breakpointMax(450) {
     #election-app.oembed {
-        .bop-group-num { 
-            margin-bottom: 0;
-        }
 
         .bop-group-num .num { font-size: 20px; }
         .bop-group-desc { 
