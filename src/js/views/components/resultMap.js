@@ -183,8 +183,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                 memo += '<tr><td colspan="3"><hr /></td></tr>';
                             }
                             return (memo
-                                + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '') //' (' + item.party.substr(0,1).toUpperCase() + ')' 
-                                + (item.win ? ' <span class="won">won</span>' : '')                                
+
+                                + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '')
+                                + (item.win ? '<span class="won"></span>' : '')
+
                                 + '</td>'
                                 + '<td class="right">' + (!uncontested ? voteFormat(item.votes) : 'Uncontested') + '</td>'
                                 + '<td class="right" style="text-align:right">' + (!uncontested ? item.pct.toFixed(1) + '%' : '') + '</td></tr>');
