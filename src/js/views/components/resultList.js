@@ -29,8 +29,14 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 return (county) ? county.d : '';
             },
             findSortValue: function (value) {
-                var matches = value.match(/[^\d]*(\d+)[^\d]*/);
-                return (matches && matches.length > 1) ? parseInt(matches[1]) : value;
+                var matches = value.match(/[^\d]*(\d+)[^\d]*/),
+                    result = (matches && matches.length > 1) ? parseInt(matches[1], 10) : value;
+                
+                if (_.isNumber(result)) {
+                    result = (result < 10) ? '0' + result : '' + result;
+                }
+                
+                return result;
             },
             formatHouseId: function (id) {
                 var split = id.split('-');
