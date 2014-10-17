@@ -1,5 +1,5 @@
 <h3 class="updates-feed-heading">Updates</h3>
-<% _.each(filterData(data), function (item) { %>
+<% _.each(filterData(data), function (item, i) { if (i <= 9) { %>
 
 <div class="update-card update-card-<%= item.id %>">
     <div class="update-card-header">
@@ -15,4 +15,4 @@
     </div>
 </div>
     
-<% }); %>
+<% } }); %>
