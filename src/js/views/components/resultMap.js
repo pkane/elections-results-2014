@@ -150,14 +150,14 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
             if (this.model.state && this.model.race.id != 'h') {
                 state = this.model.state.id;
-                item = _.findWhere(dataManager[this.model.race.key].detail[this.model.state.id].data, { id: id });
+                item = _.findWhere(this.model.detail, { id: id });
             } else {
                 if (this.model.race.id == 'h') {
                     state = id.substr(0, 2);
                     id = state + '-District ' + parseInt(id.substr(-2))
                 }
 
-                item = _.findWhere(dataManager[this.model.race.key].data, { id: id });
+                item = _.findWhere(this.model.data, { id: id });
             }
 
             return item;
@@ -257,7 +257,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.each(found.results, function(item) {
                         
-                        var isCurrentSeat = (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
+                        var isCurrentSeat = !item.seatNumber || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
 
                         if (!hasState) {
                             if (item.win && isCurrentSeat) {
