@@ -137,13 +137,14 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         refresh: function () {
             var race = this.model.currentRace,
                 state = this.model.currentState,
+                fips = this.model.currentFips,
                 message = escape(this.text.message({ race: race.display })),
                 url = this.shareUrl()
                 ;
 
             console.log("### RACE ", state);
 
-            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' Results');
+            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' ' + fips + ' Results');
 
             this.$('.nav-item').removeClass('selected');            
             this.$('.' + race.key + '-nav-item').addClass('selected');
