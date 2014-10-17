@@ -1,7 +1,6 @@
 #election-bar-content {
     position: relative;
     width: 100%;
-    padding-top: 115px;
     border-bottom: 1px solid #dadada;
     margin-bottom: 10px;
     background-color: #fafafa;
@@ -282,7 +281,9 @@
         line-height: 120%;
         @include vendor-prefix(transition, font-size 0.15s ease-out);
     }
-
+    .elections-bar-nav {
+        height:50px;
+    }
     .elections-bar-nav .nav-item > a {
         background-color: #EFEFEF;
         width: 100%;
