@@ -38,10 +38,14 @@
             position: absolute;
             z-index: 100;
         }
-        #election-bar-content.inherit {
-            position: inherit;
-        }        
+        padding-top: 20px;
     }
+}
+
+@include mobile {
+    #election-bar-content.inherit {
+        position: inherit;
+    }        
 }
 
 #election-content {
