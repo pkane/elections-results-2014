@@ -321,9 +321,15 @@ only screen and (                min-resolution: 2dppx) {
 
 #election-app {
 	// margin-top: 85px;
-	padding-bottom: 100px;
+	padding-bottom: 100px;	
 	@include tablet-min {
 		padding-bottom: 0;
+	}
+}
+
+.has-notifications #election-app.first-margin {	
+	@include mobile {
+	    margin-top: 20px;
 	}
 }
 
