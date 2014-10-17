@@ -15,7 +15,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
     getSettings = function (completeHandler, callbackHash) {
         return {
             dataType: 'jsonp',
-            jsonpCallback: 'usat_' + callbackHash,
+            jsonpCallback: 'usat_' + config.appVersion + callbackHash,
             cache: true,
             data: config.api.key,
             complete: completeHandler,
@@ -117,7 +117,7 @@ define(['backbone', 'underscore', 'models/config'], function (Backbone, _, confi
                 url = 'data/geo/' + level + '.js';
             }
 
-            return config.geoBase + url;
+            return config.geoBase + url + '?v=' + config.appVersion;
         },
 
         loadGeo: function (level, type) {

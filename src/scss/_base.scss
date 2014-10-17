@@ -13,11 +13,14 @@ $color-gray: #999999;
 $color-no-election: #e3e3e3;
 
 $color-dem: #235468;
+$color-dem-rgba: rgba(35,84,104,0.4);
 $color-lean-dem: #518296;
-$color-rep: #732c30;
+$color-rep: #732c30; 
+$color-rep-rgba: rgba(115,44,48,0.4);
 $color-lean-rep: #95474e;
 $color-other: #e6e6e6;
 $color-bar-gray: #c6c6c6;
+$color-bar-gray-rgba: rgba(198,198,198,0.4);
 
 /* Typography */
 @font-face {
@@ -186,6 +189,8 @@ $desktop-xl: 1600;
 }
 
 /* Elections Base */
+html { height: 100%; }
+
 .asset {
 	width: 100%;
 	padding: 0;
@@ -630,9 +635,9 @@ only screen and (                min-resolution: 2dppx) {
 }
 
 .padded-container {
-	padding: 0 !important;
+	padding: 0;
 }
 
 .first-margin {
-	margin-top: 0 !important;
+	margin-top: 0;
 }

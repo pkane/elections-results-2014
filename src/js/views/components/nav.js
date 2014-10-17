@@ -93,6 +93,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         
         toggleOverlay: function() {
             this.$('.elections-overlay').toggle();
+            $(this.el).toggleClass('modal-on');
         },
 
         toggleShare: function () {

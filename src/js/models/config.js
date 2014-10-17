@@ -5,6 +5,8 @@ define(['jquery'], function ($) {
         ;
 
     return {
+        appVersion: 2,
+
         isMobile: isMobile,
         pageInfo: staticInfo,
         ssts: 'news/politics/elections/results',

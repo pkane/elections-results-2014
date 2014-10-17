@@ -43,15 +43,14 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 progressRight = this.$('.bop-group-results .bar-progress-right'),
                 desc = this.$('.bop-group-desc');
             
-            console.log('BOP - Render', (this.model.detail && this.model.detail.id));
-            
             if (this.model.detail && this.model.detail.id) {
                 
                 var hasDem = false, 
                     hasRep = false,
-                    candidate = _.chain(this.model.detail.results).filter(function (item) { 
-                            return !item.seatNumber || (item.seatNumber === '0') 
-                        }).sortBy(function (item) {
+                    isMultirace = _.chain(this.model.detail.results).pluck('seatNumber').uniq().value().length > 1,
+                    candidate = _.chain(this.model.detail.results).filter(function (item) {
+                            return !isMultirace || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0') );
+                        }, this).sortBy(function (item) {
                             return item.votes * -1; // Reverse
                         }).filter(function (item) {
                             var result = false;
@@ -137,7 +136,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 $('.num', numLeft).text(dem.seats + other.seats + held.dem);
                 $('.party-label', numLeft).text(config.isMobile ? 'Dem' : 'Democrat');
                 $('.num', numRight).text(rep.seats + held.rep);
-                $('.party-label', numRight).text(config.isMobile ? 'Rep' : 'Republican');
+                $('.party-label', numRight).text(config.isMobile ? 'GOP' : 'Republican');
 
                 $(progressLeft).css('width', ((dem.seats + other.seats + held.dem) / held.total)*100 + '%');
                 $(progressRight).css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
