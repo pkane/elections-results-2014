@@ -148,15 +148,14 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         findItemById: function(id) {
             var item, state = id;
 
-            if (this.model.state && this.model.race.id != 'h') {
-                state = this.model.state.id;
+            if (this.model.race.id == 'h') {
+                state = id.substr(0, 2);
+                id = state + '-District ' + parseInt(id.substr(-2))
+            }
+            
+            if (this.model.detail && this.model.detail.length > 0) {
                 item = _.findWhere(this.model.detail, { id: id });
             } else {
-                if (this.model.race.id == 'h') {
-                    state = id.substr(0, 2);
-                    id = state + '-District ' + parseInt(id.substr(-2))
-                }
-
                 item = _.findWhere(this.model.data, { id: id });
             }
 
