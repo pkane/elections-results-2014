@@ -140,9 +140,9 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 url = this.shareUrl()
                 ;
 
-            console.log("### RACE ", state, race.key);
+            console.log("### RACE ", state);
 
-            if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') };
+            if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') } else { this.$('.election-office-projection-heading').removeClass('initiatives'); }
             this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' Results');
 
             this.$('.nav-item').removeClass('selected');            
