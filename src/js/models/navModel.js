@@ -4,6 +4,7 @@ define(['backbone'], function (Backbone) {
         
         currentRace: {},
         currentState: {},
+        currentFips: {},
         
         getStateDisplay: function () {
             return (this.currentState && this.currentState.display) ? this.currentState.display : 'USA';
