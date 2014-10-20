@@ -64,7 +64,7 @@
                 <thead>
                     <tr class="result-first-row">
                     <th class="district-name">
-                        <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= tokenizeHouseId(value.id) %>">
+                        <a href="#race/<%= race.key %>-<%= state.abbr %>-<%= tokenizeHouseId(value.id) %>">
                             <%= formatHouseId(value.id) %>
                         </a>
                     </th>
@@ -93,14 +93,16 @@
         <table class="result-item senate-item">
             <thead>
                 <tr class="result-first-row">
-                    <th class="district-name" colspan="3" data-href=
+                    <th class="district-name" colspan="3">
+                        <a href="
                         <% if (!state) { %>
-                            '#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'
+                            #<%= race.key %>-<%= getStateByName(value.name).abbr %>
                         <% } else { %>
-                            '#/<%= race.key %>-<%= state.abbr %>'
+                            #<%= race.key %>-<%= state.abbr %>
                         <% } %>
-                        >
+                        ">
                         <%= value.name %><%= getCountyByFips(value.id) %>
+                        </a>
                     </th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
                 </tr>

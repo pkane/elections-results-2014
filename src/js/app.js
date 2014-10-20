@@ -72,6 +72,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             
             navView.model.currentRace = race;
             navView.model.currentState = state;
+            navView.model.currentFips = fips;
             navView.refresh();
             
             dataManager.updates.required = !oembed;
