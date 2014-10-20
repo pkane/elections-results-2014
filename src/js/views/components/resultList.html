@@ -118,13 +118,8 @@
                 <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
-<<<<<<< HEAD
-                        <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                            <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%> 
-=======
                         <td class="result-votes" style='background-size: <%= parseInt(pctVotes) %>% 100%;'>
-                            <%= formatVotes(item.votes) %> 
->>>>>>> 1cdc15068b9527ec22c8e4ab729f1e80faf520af
+                            <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%> 
                         </td>
                         <td class="result-win"><%= pctVotes %></td>
                     </tr>
