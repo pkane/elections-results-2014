@@ -265,7 +265,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                             } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }
-                        } else if (item.lead) {
+                        } else if (item.lead || (item.win && item.pct == 0)) {
                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     }, this);
