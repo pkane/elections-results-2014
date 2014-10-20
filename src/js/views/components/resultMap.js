@@ -200,11 +200,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.mouseMove(d, i);
             } else {
                 tooltip.html("");
+                tooltip.classed('hidden', true);
             }            
         },
 
         mouseMove: function(d, i) {
-            if (tooltip.html()) {
+            if (tooltip.html() && tooltip.html() != '') {
                 var mouse = d3.mouse(this.el),
                     mouseX = mouse[0], mouseY = mouse[1],                    
                     tooltipHeight = $(tooltip.node()).height(),
