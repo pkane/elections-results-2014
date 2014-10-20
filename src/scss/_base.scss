@@ -189,6 +189,8 @@ $desktop-xl: 1600;
 }
 
 /* Elections Base */
+html { height: 100%; }
+
 .asset {
 	width: 100%;
 	padding: 0;
@@ -319,9 +321,15 @@ only screen and (                min-resolution: 2dppx) {
 
 #election-app {
 	// margin-top: 85px;
-	padding-bottom: 100px;
+	padding-bottom: 100px;	
 	@include tablet-min {
 		padding-bottom: 0;
+	}
+}
+
+.has-notifications #election-app.first-margin {	
+	@include mobile {
+	    margin-top: 20px;
 	}
 }
 
@@ -396,17 +404,9 @@ only screen and (                min-resolution: 2dppx) {
 .icon-lg-ct:before {
 	content: "\e506";
 }
-
-.page-icon .icon-lg-dc {
-	opacity:0.75;
-	background: url('../img/dc-lg.png') no-repeat 20px 7px;
+.icon-lg-dc:before {
+	content: "\e532";
 }
-
-.page-icon-mini .icon-lg-dc {
-	opacity:0.75;
-	background: url('../img/dc-sm.png') no-repeat 40px 0;
-}
-
 .icon-lg-de:before {
 	content: "\e507";
 }
@@ -642,8 +642,4 @@ only screen and (                min-resolution: 2dppx) {
 
 .padded-container {
 	padding: 0;
-}
-
-.first-margin {
-	margin-top: 0;
 }

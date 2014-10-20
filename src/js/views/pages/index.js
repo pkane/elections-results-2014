@@ -67,7 +67,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
             var isReady = (this.model.race.key !== ''),
                 needsBoP = (this.model.race.id !== 'i' || this.model.fips),
                 needsMap = (!this.useOembedTemplate && !this.model.isMobile && this.model.race.id !== 'i'),
-                needsResultList = (!this.useOembedTemplate || this.model.race.id === 'i'),
+                needsResultList = (!this.useOembedTemplate),
                 needsUpdateFeed = (!this.useOembedTemplate),
                 needsAds = (!this.useOembedTemplate);
             
@@ -111,12 +111,14 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 }
                 
                 if (needsAds) {
+                    this.$('.adview').show();
+
                     if (!adView) {
                         adView = new AdView();
+                    } else {
+                        adView.refresh();
                     }
                     
-                    this.$('.adview').show();
-                    // adView.refresh();
                 } else {
                     this.$('.adview').hide();
                 }

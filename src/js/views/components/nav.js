@@ -94,6 +94,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         toggleOverlay: function() {
             this.$('.elections-overlay').toggle();
             $(this.el).toggleClass('modal-on');
+            $(this.el).parent().toggleClass('inherit');
         },
 
         toggleShare: function () {
@@ -136,6 +137,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         refresh: function () {
             var race = this.model.currentRace,
                 state = this.model.currentState,
+                fips = this.model.currentFips,
                 message = escape(this.text.message({ race: race.display })),
                 url = this.shareUrl()
                 ;
@@ -143,7 +145,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             console.log("### RACE ", state);
 
             if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') } else { this.$('.election-office-projection-heading').removeClass('initiatives'); }
-            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' Results');
+            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' ' + fips + ' Results');
 
             this.$('.nav-item').removeClass('selected');            
             this.$('.' + race.key + '-nav-item').addClass('selected');
