@@ -132,7 +132,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         cssClass: function(d) {
-            return (this.findItemById(d.id) ? "has-data" : "");
+            if (this.model.state) {
+                return (this.findItemById(d.id) ? "has-data state-level" : "");
+            } else {
+                return (this.findItemById(d.id) ? "has-data nation-level" : "");
+            }
         },
 
         clicked: function(d) {
