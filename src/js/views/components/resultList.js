@@ -29,8 +29,14 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 return (county) ? county.d : '';
             },
             findSortValue: function (value) {
-                var matches = value.match(/[^\d]*(\d+)[^\d]*/);
-                return (matches && matches.length > 1) ? parseInt(matches[1]) : value;
+                var matches = value.match(/[^\d]*(\d+)[^\d]*/),
+                    result = (matches && matches.length > 1) ? parseInt(matches[1], 10) : value;
+                
+                if (_.isNumber(result)) {
+                    result = (result < 10) ? '0' + result : '' + result;
+                }
+                
+                return result;
             },
             formatHouseId: function (id) {
                 var split = id.split('-');
@@ -38,8 +44,9 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             },
             formatVotes: d3.format(','),
             formatPercent: function (a,b) {
-                var full = a / b;
-                return (full) ? Math.round(full*1000)/10 : 0;
+                var full = (b !== undefined) ? (a / b) : a,
+                    format = d3.format('.1%');
+                return (full) ? format(full) : 0;
             },
             formatParty: function (party) {
                 return (config.partyAbbr[party]) ? config.partyAbbr[party] : party.charAt(0);
