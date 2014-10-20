@@ -238,29 +238,29 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 ;
 
 
-            if (this.model.state && this.model.race.id != 'h') {
+            if (this.model.race.id == 'h') {
+                state = id.substr(0, 2);
+                id = state + '-District ' + parseInt(id.substr(-2))
+            } else if (this.model.state) {
                 state = this.model.state.id;
-                found = _.findWhere(this.model.detail, { id: d.id });
+            }
+            
+            if (this.model.detail && this.model.detail.length > 0) {
+                found = _.findWhere(this.model.detail, { id: id });
             } else {
-
-                if (this.model.race.id == 'h') {
-                    // 39-District 11
-                    state = d.id.substr(0, 2);
-                    id = state + '-District ' + parseInt(d.id.substr(-2))
-                }
-
                 found = _.findWhere(this.model.data, { id: id });
             }
 
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
-                    _.each(found.results, function(item) {
+                    _.find(found.results, function(item) {
                         
                         var isCurrentSeat = !item.seatNumber || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
 
                         if (!hasState) {
                             if (item.win && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                                return true;
                             } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }
@@ -399,4 +399,3 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
     
     return view;
 });
-

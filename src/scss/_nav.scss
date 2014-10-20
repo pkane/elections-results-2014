@@ -38,10 +38,14 @@
             position: absolute;
             z-index: 100;
         }
-        #election-bar-content.inherit {
-            position: inherit;
-        }        
+        padding-top: 20px;
     }
+}
+
+@include mobile {
+    #election-bar-content.inherit {
+        position: inherit;
+    }        
 }
 
 #election-content {
@@ -638,8 +642,8 @@
         }
     }
     &> svg path {
-        cursor: pointer;
         &.has-data {
+            cursor: pointer;
             &:hover, &:focus {
                 fill-opacity: 0.85;
             }
