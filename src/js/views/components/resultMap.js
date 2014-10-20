@@ -288,7 +288,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
                 
                 if (altSeat) {
-                    this.$('#resultmap-swap-btn').attr("href", "#/race/" + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
+                    this.$('#resultmap-swap-btn').attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
                 }
 
                 this.$('.state-list-dropdown')
