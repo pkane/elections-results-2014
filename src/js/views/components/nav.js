@@ -45,7 +45,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 $parent = $target.parent()
                 ;
 
-            if (e.target.href.indexOf('#') !== -1 && !$parent.hasClass('selected')) {
+            if (e.target.href.indexOf('#') !== -1 && !$parent.hasClass('selected')) {                
                 analytics.trigger('track:event', 'results2014' + $target.text().toLowerCase());
 
                 if (!config.isMobile) {

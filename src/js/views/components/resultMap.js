@@ -19,18 +19,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         
         template: _.template(resultMap),
 
-        events: {
-            'click .state-list-dropdown': 'dropdownClicked'
-        },
-
-        dropdownClicked: function(e) {
-            var $target = $(e.target);
-
-            if ($target.attr('href')) {
-                analytics.trigger('track:event', this.model.race.key + 'results2014' + $target.text().toLowerCase());
-            }
-        },
-
         drawMap: function(geoJsonPath, geoJsonPlaces, strokeWidth) {
 
             if (this.model.race) {
