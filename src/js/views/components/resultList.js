@@ -16,6 +16,8 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             detail: [],
             race: '',
             state: {},
+            isMobile: config.isMobile,
+            
             getStateById: function (id) {
                 return _.findWhere(config.states, { id: id });
             },

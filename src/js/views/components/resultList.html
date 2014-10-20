@@ -31,7 +31,7 @@
                 <% _.each(value.results, function(item) { %>
                     <tr class="initiatives">
                         <td class="initiative-name"><%= item.name %></td>
-                        <td class="result-votes"><%= formatVotes(item.votes) %></td>
+                        <td class="result-votes"><% if (isMobile != "mobile") { formatVotes(item.votes) }%></td>
                         <td class="result-pct"><%= Math.round(item.pct*10)/10 %>%</td>
                     </tr>
                 <% }); %>
@@ -77,7 +77,7 @@
                     <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                            <%= formatVotes(item.votes) %> 
+                            <% if (isMobile != "mobile") { formatVotes(item.votes) }%> 
                         </td>
                         <td class="result-win"><%= formatPercent(item.votes, value.votes) %>%</td>                              
                     </tr>
@@ -117,7 +117,8 @@
                     <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                            <%= formatVotes(item.votes) %> 
+                            <% isMobile %>
+                            <% if (isMobile != "mobile") { formatVotes(item.votes) }%> 
                         </td>
                         <td class="result-win"><%= pctVotes %>%</td>
                     </tr>
