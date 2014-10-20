@@ -38,12 +38,7 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 var split = id.split('-');
                 return split[1];
             },
-            formatVotes: function(votes) {
-                if (config.isMobile == false) {
-                    var x = d3.format(',');
-                    return x(votes);
-                };
-            },
+            formatVotes: d3.format(','),
             formatPercent: function (a,b) {
                 var full = a / b;
                 return (full) ? Math.round(full*1000)/10 : 0;

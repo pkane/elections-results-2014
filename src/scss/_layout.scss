@@ -82,6 +82,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 		width: 100%;
 		display: inline-table;
 		position: relative;	
+		margin-bottom: 2px;
 	}
 
 	.result-name,
@@ -101,7 +102,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 	.result-name,
 	.initiative-name {
 		width: 130px;
-		padding: 8px 10px 0 0;
+		padding: 5px 10px 3px 0;
 		font-family: $font-heading;
 		line-height: 140%;
 		text-align: right;
