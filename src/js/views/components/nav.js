@@ -140,8 +140,9 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 url = this.shareUrl()
                 ;
 
-            console.log("### RACE ", state);
+            console.log("### RACE ", state, race.key);
 
+            if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') };
             this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' Results');
 
             this.$('.nav-item').removeClass('selected');            

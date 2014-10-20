@@ -16,6 +16,7 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             detail: [],
             race: '',
             state: {},
+
             isMobile: config.isMobile,
             
             getStateById: function (id) {
@@ -38,7 +39,8 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 var split = id.split('-');
                 return split[1];
             },
-            formatVotes: d3.format(','),
+
+            formatVotes: d3.format(','), //function(votes) { var format = d3.format(','); return format(votes);},
             formatPercent: function (a,b) {
                 var full = a / b;
                 return (full) ? Math.round(full*1000)/10 : 0;
