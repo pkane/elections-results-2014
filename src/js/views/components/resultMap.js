@@ -291,9 +291,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 this.$('#state-list-dropdown-btn').css('display', 'inline-block');
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
-                
+
                 if (altSeat) {
                     this.$('#resultmap-swap-btn').attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
+                    this.$('#resultmap-swap-btn').html("View Seat " + altSeat + " Results");                                
                 }
 
                 this.$('.state-list-dropdown')

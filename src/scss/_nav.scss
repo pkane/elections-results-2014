@@ -399,7 +399,7 @@
             height: 100%;
             background: rgba(0,0,0, 0.9);
             position: fixed;
-            padding-top: 200px;
+            padding-top: 100px;
             @include vendor-prefix(border-radius, 0px);
         }
 
@@ -600,16 +600,28 @@
         position: absolute;
         left: 0;
         top: 20px;
+        width: 100%;
     }
     #resultmap-back-btn,
-    #state-list-dropdown-btn,
-    #resultmap-swap-btn {
+    #state-list-dropdown-btn {
         background-color: #333333;
         @include vendor-prefix(border-radius, 20px);
         // display: none;
     }
     #resultmap-back-btn {
         margin-right: 8px;
+    }
+    #resultmap-swap-btn {
+        background-color: #EFEFEF;
+        color: #333;
+        border: 1px solid #DADADA;
+        font-family: "Futura Today Light";
+        font-weight: 100;
+        padding: 6px;
+        margin: 0 0 0 10px;
+        position: relative;
+        float: right;
+        border-radius: 4px;
     }
     #state-list-dropdown-btn {
 
