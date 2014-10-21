@@ -132,7 +132,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         cssClass: function(d) {
-            return (this.findItemById(d.id) ? "has-data" : "");
+            if (this.model.state) {
+                return (this.findItemById(d.id) ? "has-data state-level" : "");
+            } else {
+                return (this.findItemById(d.id) ? "has-data nation-level" : "");
+            }
         },
 
         clicked: function(d) {
@@ -200,11 +204,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.mouseMove(d, i);
             } else {
                 tooltip.html("");
+                tooltip.classed('hidden', true);
             }            
         },
 
         mouseMove: function(d, i) {
-            if (tooltip.html()) {
+            if (tooltip.html() && tooltip.html() != '') {
                 var mouse = d3.mouse(this.el),
                     mouseX = mouse[0], mouseY = mouse[1],                    
                     tooltipHeight = $(tooltip.node()).height(),
@@ -264,7 +269,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                             } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }
-                        } else if (item.lead) {
+                        } else if (item.lead || (item.win && item.pct == 0)) {
                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     }, this);

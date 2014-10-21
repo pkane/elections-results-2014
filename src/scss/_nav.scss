@@ -643,10 +643,12 @@
     }
     &> svg path {
         &.has-data {
-            cursor: pointer;
             &:hover, &:focus {
                 fill-opacity: 0.85;
             }
+        }
+        &.nation-level {
+            cursor: pointer;
         }
     }
 }
