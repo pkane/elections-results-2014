@@ -203,7 +203,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.offsetTop = this.$el.offset().top;
                 this.mouseMove(d, i);
             } else {
-                tooltip.html("");
+                tooltip.html('');
                 tooltip.classed('hidden', true);
             }            
         },
@@ -239,7 +239,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 state = id,
                 hasState = !!this.model.state,
                 found,
-                color = partyColors.default
+                color = partyColors.defaultColor
                 ;
 
 

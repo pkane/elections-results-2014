@@ -152,7 +152,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 		background-image:         linear-gradient(right, $color-rep 0%, $color-rep 100%);
 	}	
 
-	.other .result-votes {
+	.result-votes {
     background: linear-gradient(to right, $color-bar-gray 0%, $color-bar-gray 100%) no-repeat;
     background-image: -webkit-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
 		background-image:    -moz-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
