@@ -176,7 +176,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
                 resultList.render();
             }
 
-            if (resultMap) {
+            if (resultMap && this.model.race.id !== 'i') {
                 resultMap.model.race = this.model.race;
                 resultMap.model.state = this.model.state;
                 resultMap.model.data = hasData ? dataFeed.data : [];

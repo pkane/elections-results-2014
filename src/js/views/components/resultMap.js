@@ -31,16 +31,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         mapCache: { path: 'none', places: 'none' },    
             
         drawMap: function(geoJsonPath, geoJsonPlaces, strokeWidth) {
-            var isCached = (geoJsonPath === this.mapCache.path && geoJsonPlaces === this.mapCache.places),
-                noRace = !this.model.race;
-
-            if (noRace) {
-                console.count('Short circuit');
-            } else {
-                console.count('DRAW ' + geoJsonPath+geoJsonPlaces);
-
-                this.mapCache.path = geoJsonPath;
-                this.mapCache.places = geoJsonPlaces;
+            
+            if (this.model.race) {
 
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
