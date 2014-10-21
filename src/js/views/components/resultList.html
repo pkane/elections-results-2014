@@ -49,7 +49,7 @@
                 <a href="#<%= race.key %>-<%= getStateById(stateId).abbr %>">
                     <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
                         <div class='card-item-inner'>
-                            <%= getStateById(stateId).display %>
+                            <span class="card-state-name"><%= getStateById(stateId).display %></span>
                             <div class="num-races"><%= data[stateId].length %></div>races
                         </div>
                     </div>
