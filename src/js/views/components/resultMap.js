@@ -12,6 +12,15 @@ define([
 function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
     var IE = $('html').hasClass('lt-ie9'),
         tooltip,
+        templates = {
+            tooltip: _.template('<h4 class="map-tooltip-heading"><%= heading %></h4>'
+                + '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th class="percent">%</th></tr></thead>'
+                + '<tbody><%= listing %></tbody></table>'
+                + '<span class="muted"><%= pctReporting %></span>'),
+            tooltipItem: _.template('<tr><td><%= label %><%= win %></td>'
+                + '<td class="right"><%= votes %></td>'
+                + '<td class="right" style="text-align:right"><%= pct %></td></tr>')
+        },
         voteFormat = d3.format(','),
         view = Backbone.View.extend({
 
@@ -178,31 +187,22 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 var uncontested = (found.results.length === 1),
                     tooldata = {
                         heading: d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''),
-                        pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : '')
-                    },
-                    templateItem = _.template('<tr><td><%= label %><%= win %></td>'
-                        + '<td class="right"><%= votes %></td>'
-                        + '<td class="right" style="text-align:right"><%= pct %></td></tr>'),
-                    templateTooltip = _.template('<h4 class="map-tooltip-heading"><%= heading %></h4>'
-                        + '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th class="percent">%</th></tr></thead><tbody>'
-                        + '<%= listing %>'
-                        + '</tbody></table>'
-                        + '<span class="muted"><%= pctReporting %></span>');
-
-                tooldata.listing = _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
-                    var itemData = {
-                        label: (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : ''),
-                        win: (item.win ? '<span class="won"></span>' : ''),
-                        votes: (!uncontested ? voteFormat(item.votes) : 'Uncontested'),
-                        pct: (!uncontested ? item.pct.toFixed(1) + '%' : '')
+                        pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : ''),
+                        listing: _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
+                            var itemData = {
+                                label: (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : ''),
+                                win: (item.win ? '<span class="won"></span>' : ''),
+                                votes: (!uncontested ? voteFormat(item.votes) : 'Uncontested'),
+                                pct: (!uncontested ? item.pct.toFixed(1) + '%' : '')
+                            };
+                            if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
+                                memo += '<tr><td colspan="3"><hr /></td></tr>';
+                            }
+                            return memo + templates.tooltipItem(itemData);
+                        }, '').value()
                     };
-                    if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
-                        memo += '<tr><td colspan="3"><hr /></td></tr>';
-                    }
-                    return memo + templateItem(itemData);
-                }, '').value(),
-                
-                tooltip.html(templateTooltip(tooldata));
+
+                tooltip.html(templates.tooltip(tooldata));
                 
                 this.offsetTop = this.$el.offset().top;
                 this.mouseMove(d, i);
@@ -220,7 +220,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     leftOffset = mouseX - 135,
                     topOffset = mouseY + 20;
 
-                if ((this.offsetTop + mouseY + tooltipHeight) > window.innerHeight) {                    
+                if ((this.offsetTop + mouseY + tooltipHeight) > (window.innerHeight + window.scrollY)) {                    
                     topOffset = mouseY - tooltipHeight - 40;
                 }
 
