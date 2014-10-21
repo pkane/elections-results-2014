@@ -117,7 +117,7 @@ ul.progress-stat-bar {
 
     .name {
         margin-bottom: 4px;
-        font-family: $font-heading-normal;
+        font-family: $font-heading;
     }
     
     .num {
@@ -221,5 +221,13 @@ span.icon-rep-left {
             .current-seats-label { font-size: smaller; }
             .name { font-size: 1.2em; }
         }
+    }
+}
+
+@include breakpoint(450) { 
+    #election-app.oembed {
+        .bop-group-desc ul.progress-stat-bar { margin-bottom: 2em; }
+        .bop-group-num { margin-bottom: 1em; }
+        .oembed-linkout { padding-bottom: 2em; }
     }
 }
