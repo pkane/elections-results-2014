@@ -42,10 +42,11 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             e.preventDefault();
 
             var $target = $(e.target),
-                $parent = $target.parent()
+                $parent = $target.parent(),
+                href = e.target.href;
                 ;
 
-            if (e.target.href.indexOf('#') !== -1 && !$parent.hasClass('selected')) {                
+            if (href.indexOf('#') !== -1 && href != window.location.href && (window.innerWidth > config.maxTabletWidth || !$parent.hasClass('selected'))) {                
                 analytics.trigger('track:event', 'results2014' + $target.text().toLowerCase());
 
                 if (!config.isMobile) {

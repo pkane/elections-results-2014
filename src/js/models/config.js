@@ -11,6 +11,7 @@ define(['jquery'], function ($) {
         pageInfo: staticInfo,
         ssts: 'news/politics/elections/results',
 
+        maxTabletWidth: 991,
 
         ads: {
             sizes: (function() { return isMobile ? [[320, 50]]: [[300, 250]];  })(),
