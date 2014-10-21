@@ -39,8 +39,6 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         },
 
         navItemClicked: function(e) {
-            e.preventDefault();
-
             var $target = $(e.target),
                 $parent = $target.parent(),
                 href = e.target.href;
