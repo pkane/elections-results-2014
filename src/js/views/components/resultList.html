@@ -74,8 +74,8 @@
                 <tbody>
                 <% _.each(value.results, function(item) { %>
                     <% var pctVotes = formatPercent(item.votes, value.votes); %>
-                    <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
-                        <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
+                    <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
+                        <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
                             <%= formatVotes(item.votes) %> 
                         </td>
@@ -114,8 +114,8 @@
 
                 <% _.each(race, function(item) { %>
                 <% var pctVotes = formatPercent(item.votes, value.votes); %>
-                    <tr class="candidate <%= item.party.toLowerCase() %><% if (item.win) { %> winner <% } %>">
-                        <td class="result-name"><span></span><%= item.name %> <%= formatParty(item.party) %></td>                    
+                    <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
+                        <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
                             <%= formatVotes(item.votes) %> 
                         </td>
