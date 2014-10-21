@@ -234,7 +234,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         
 
         fillColor: function(d) {
-            console.log('fillColor');
             var id = d.id,
                 partyColors = config.partyColors,
                 state = id,
