@@ -16,6 +16,9 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             detail: [],
             race: '',
             state: {},
+
+            isMobile: config.isMobile,
+            
             getStateById: function (id) {
                 return _.findWhere(config.states, { id: id });
             },
@@ -42,7 +45,8 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 var split = id.split('-');
                 return split[1];
             },
-            formatVotes: d3.format(','),
+
+            formatVotes: d3.format(','), //function(votes) { var format = d3.format(','); return format(votes);},
             formatPercent: function (a,b) {
                 var full = (b !== undefined) ? (a / b) : a,
                     format = d3.format('.1%');
