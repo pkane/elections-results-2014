@@ -117,7 +117,7 @@ ul.progress-stat-bar {
 
     .name {
         margin-bottom: 4px;
-        font-family: $font-heading-normal;
+        font-family: $font-heading;
     }
     
     .num {
@@ -125,11 +125,11 @@ ul.progress-stat-bar {
     }
 
     .text-right {
-        padding-right: 0;
+        padding-right: 0px;
         text-align: right;
     }
     .text-left {
-        padding-left: 0;
+        padding-left: 0px;
     }
 }
 
@@ -195,8 +195,11 @@ span.icon-rep-left {
     right: 10px;
 }
 @include breakpointMax(350) {
-    #election-app.oembed .bop-group-desc {
-         .text-left > *, .text-right > * { display: none; }
+    #election-app.oembed {
+        .bop-group-desc .desc-all {
+            .text-left > *, .text-right > * { display: none; }
+        }
+        .bop-group-num { margin-bottom: 0 }
     }
 }
 
@@ -218,5 +221,13 @@ span.icon-rep-left {
             .current-seats-label { font-size: smaller; }
             .name { font-size: 1.2em; }
         }
+    }
+}
+
+@include breakpoint(450) { 
+    #election-app.oembed {
+        .bop-group-desc ul.progress-stat-bar { margin-bottom: 2em; }
+        .bop-group-num { margin-bottom: 1em; }
+        .oembed-linkout { padding-bottom: 2em; }
     }
 }

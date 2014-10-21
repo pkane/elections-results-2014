@@ -31,8 +31,8 @@
                 <% _.each(value.results, function(item) { %>
                     <tr class="initiatives">
                         <td class="initiative-name"><%= item.name %></td>
-                        <td class="result-votes"><%= formatVotes(item.votes) %></td>
-                        <td class="result-pct"><%= Math.round(item.pct*10)/10 %>%</td>
+                        <td class="result-votes"><% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%></td>
+                        <td class="result-pct"><%= formatPercent(item.pct/100) %></td>
                     </tr>
                 <% }); %>
                 </tbody>
@@ -49,7 +49,7 @@
                 <a href="#<%= race.key %>-<%= getStateById(stateId).abbr %>">
                     <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
                         <div class='card-item-inner'>
-                            <%= getStateById(stateId).display %>
+                            <span class="card-state-name"><%= getStateById(stateId).display %></span>
                             <div class="num-races"><%= data[stateId].length %></div>races
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                 <thead>
                     <tr class="result-first-row">
                     <th class="district-name">
-                        <a href="#/race/<%= race.key %>-<%= state.abbr %>-<%= tokenizeHouseId(value.id) %>">
+                        <a href="#race/<%= race.key %>-<%= state.abbr %>-<%= tokenizeHouseId(value.id) %>">
                             <%= formatHouseId(value.id) %>
                         </a>
                     </th>
@@ -77,9 +77,9 @@
                     <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    
                         <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                            <%= formatVotes(item.votes) %> 
+                            <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%>
                         </td>
-                        <td class="result-win"><%= formatPercent(item.votes, value.votes) %>%</td>                              
+                        <td class="result-win"><%= formatPercent(item.votes, value.votes) %></td>                              
                     </tr>
                 <% }); %>
                 </tbody>
@@ -93,14 +93,16 @@
         <table class="result-item senate-item">
             <thead>
                 <tr class="result-first-row">
-                    <th class="district-name" colspan="3" data-href=
+                    <th class="district-name" colspan="3">
+                        <a href="
                         <% if (!state) { %>
-                            '#/<%= race.key %>-<%= getStateByName(value.name).abbr %>'
+                            #<%= race.key %>-<%= getStateByName(value.name).abbr %>
                         <% } else { %>
-                            '#/<%= race.key %>-<%= state.abbr %>'
+                            #<%= race.key %>-<%= state.abbr %>
                         <% } %>
-                        >
+                        ">
                         <%= value.name %><%= getCountyByFips(value.id) %>
+                        </a>
                     </th>
                     <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 %>% reporting</th>
                 </tr>
@@ -116,10 +118,10 @@
                 <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    
-                        <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
-                            <%= formatVotes(item.votes) %> 
+                        <td class="result-votes" style='background-size: <%= parseInt(pctVotes) %>% 100%;'>
+                            <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%> 
                         </td>
-                        <td class="result-win"><%= pctVotes %>%</td>
+                        <td class="result-win"><%= pctVotes %></td>
                     </tr>
                     
                 <% }); %>

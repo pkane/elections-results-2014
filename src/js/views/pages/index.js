@@ -8,12 +8,13 @@ define([
     'views/components/updatesFeed',
     'views/components/ads',
     'models/config',
+    'events/analytics',
     'models/dataManager',
     'models/indexModel',    
     'text!views/pages/index.html'
 ],
 
-function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdView, config, dataManager, IndexModel, templateFile) {
+function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdView, config, analytics, dataManager, IndexModel, templateFile) {
 
     var resultList,
         resultMap,
@@ -34,10 +35,25 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
             'click a': 'anchorClick'
         },
 
-        // TODO: REMOVE ME AFTER DESKTOP FIX
+        // TODO: REMOVE window.location after desktop fix...
         anchorClick: function(e) {
-            if (!config.isMobile && e.currentTarget.href.indexOf('#') !== -1) {
-                window.location = e.currentTarget.href;
+            if (e.currentTarget.href.indexOf('#') !== -1) {
+                var $target = $(e.currentTarget),
+                    $cardStateName = $target.find(".card-state-name"),
+                    text = $target.text()                    
+                    ;
+
+                // house or intiatives boxes
+                if ($cardStateName.length > 0) {
+                    text = $cardStateName.text();
+                }
+
+                analytics.trigger('track:event', 'results2014' + this.model.race.key + text.toLowerCase());
+
+                if (!config.isMobile) {
+                    window.location = e.currentTarget.href;
+                }
+                
             }
         },
 
@@ -67,7 +83,7 @@ function ($, _, Backbone, ResultList, ResultMap, BalanceChart, UpdatesFeed, AdVi
             var isReady = (this.model.race.key !== ''),
                 needsBoP = (this.model.race.id !== 'i' || this.model.fips),
                 needsMap = (!this.useOembedTemplate && !this.model.isMobile && this.model.race.id !== 'i'),
-                needsResultList = (!this.useOembedTemplate || this.model.race.id === 'i'),
+                needsResultList = (!this.useOembedTemplate),
                 needsUpdateFeed = (!this.useOembedTemplate),
                 needsAds = (!this.useOembedTemplate);
             

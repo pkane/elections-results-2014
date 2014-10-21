@@ -29,19 +29,29 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
         events: {
             'click .share-icon': 'toggleShare',
-            'click .dd-nav-link' : 'navLinkClicked',
+            'click .dd-nav-link' : 'navLinkClicked',            
             'click .navbar-race .nav-item.selected': 'toggleRaceSelect',            
             'click .close-nav' : 'close',
             'click #facebook-share': 'shareFacebook',
             'click #twitter-share': 'shareTwitter',
             'click #mail-share': 'shareEmail',
-            'click a': 'anchorClick'
+            'click a': 'navItemClicked'
         },
 
-        // TODO: REMOVE ME AFTER DESKTOP FIX
-        anchorClick: function(e) {
-            if (!config.isMobile && e.target.href.indexOf('#') !== -1) {
-                window.location = e.target.href;
+        navItemClicked: function(e) {
+            e.preventDefault();
+
+            var $target = $(e.target),
+                $parent = $target.parent(),
+                href = e.target.href;
+                ;
+
+            if (href.indexOf('#') !== -1 && href != window.location.href && (window.innerWidth > config.maxTabletWidth || !$parent.hasClass('selected'))) {                
+                analytics.trigger('track:event', 'results2014' + $target.text().toLowerCase());
+
+                if (!config.isMobile) {
+                    window.location = e.target.href;    
+                }                
             }
         },
 
@@ -94,6 +104,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         toggleOverlay: function() {
             this.$('.elections-overlay').toggle();
             $(this.el).toggleClass('modal-on');
+            $(this.el).parent().toggleClass('inherit');
         },
 
         toggleShare: function () {
@@ -104,6 +115,9 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
         toggleRaceSelect: function(e) {
             if (window.innerWidth < 992) {
+                console.log('toggle race selected');
+
+                e.preventDefault();                
                 this.$('.elections-bar-dropdown').toggle();
                 this.toggleOverlay();
             }
@@ -136,13 +150,15 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         refresh: function () {
             var race = this.model.currentRace,
                 state = this.model.currentState,
+                fips = this.model.currentFips,
                 message = escape(this.text.message({ race: race.display })),
                 url = this.shareUrl()
                 ;
 
             console.log("### RACE ", state);
 
-            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' Results');
+            if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') } else { this.$('.election-office-projection-heading').removeClass('initiatives'); }
+            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' ' + fips + ' Results');
 
             this.$('.nav-item').removeClass('selected');            
             this.$('.' + race.key + '-nav-item').addClass('selected');
