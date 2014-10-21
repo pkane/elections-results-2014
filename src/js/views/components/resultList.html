@@ -25,7 +25,7 @@
                         <th class="district-name">
                             <%= value.name %>
                         </th>
-                        <th class="reporting" colspan="2"><%= Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting' %></th>
+                        <th class="reporting" colspan="2"><%= (Math.round(parseFloat(value.precincts.pct)*100)/100).toFixed(1) + '% reporting' %></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
                             <%= formatHouseId(value.id) %>
                         </a>
                     </th>
-                    <th class="reporting" colspan="2"><%= !uncontested ? (Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting') : '' %></th>
+                    <th class="reporting" colspan="2"><%= !uncontested ? ((Math.round(parseFloat(value.precincts.pct)*100)/100).toFixed(1) + '% reporting') : '' %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,7 +112,7 @@
                         <%= value.name %><%= getCountyByFips(value.id) %>
                         </a>
                     </th>
-                    <th class="reporting" colspan="2"><%= !uncontested ? (Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting') : '' %></th>
+                    <th class="reporting" colspan="2"><%= !uncontested ? ((Math.round(parseFloat(value.precincts.pct)*100)/100).toFixed(1) + '% reporting') : '' %></th>
                 </tr>
             </thead>
             <tbody>
