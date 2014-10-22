@@ -298,10 +298,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     for (var i = races.length - 1; i >= 0; i--) {
                         $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]);
                         $(swapBtn[i]).html("Seat " + races[i]);    
-                        if ($(swapBtn[i]).hasClass('active-race')) {
-                            $(swapBtn[i]).removeClass('active-race');
-                        } else {
+                        if ( parseInt(races[i]) == races.indexOf(currentSeat) ) {
                             $(swapBtn[i]).addClass('active-race');
+                        } else {
+                            $(swapBtn[i]).removeClass('active-race');
                         }
                     };
 
@@ -322,7 +322,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
             
             this.$('.resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
-            this.$('.resultmap-back-btn').css('display', races.length > 1 ? 'inline-block': 'none');
+            this.$('.resultmap-swap-btn').css('display', races.length > 1 ? 'inline-block': 'none');
         },
 
         refresh: function() {
