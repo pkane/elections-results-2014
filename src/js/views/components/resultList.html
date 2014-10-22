@@ -98,6 +98,9 @@
 <div class="row">
     <% _.each(!state ? data : detail, function(value) { %>
     <% var uncontested = false; if (value.results.length == 1) { uncontested = true } %>
+
+        <% _.each(_.groupBy(value.results, 'seatNumber'), function(raceItem, index) { %>
+
         <table class="result-item senate-item">
             <thead>
                 <tr class="result-first-row">
@@ -116,13 +119,7 @@
                 </tr>
             </thead>
             <tbody>
-            <% _.each(_.groupBy(value.results, 'seatNumber'), function(race, index) { %>
-
-                <% if (index > 0) { %>
-                    <tr><td colspan="3"><hr /></td></tr>
-                <% } %>
-
-                <% _.each(race, function(item) { %>
+                <% _.each(raceItem, function(item) { %>
                 <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    

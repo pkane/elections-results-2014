@@ -22,6 +22,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
 
         timeFormat: d3.time.format('%I:%M %p'),
         numFormat: d3.format(','),
+        pctFormat: d3.format('.1%'),
         
         model: new (Backbone.Model.extend({
             data: [],
@@ -67,14 +68,22 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                             return result;
                         }).first(2).value();
                 
-                if (candidate.length == 2)
-                {
+                if (candidate.length == 1) {
+                    candidate.push({ 
+                        party: ((candidate[0].party === 'Democratic') ? 'Republican' : 'Democratic'),
+                        name: 'Uncontested',
+                        votes: 0,
+                        pct: 0
+                    });
+                }
+                
+                if (candidate.length == 2) {
                     if (candidate[1].party === 'Democratic' || candidate[0].party === 'Republican') {
                         candidate.reverse();
                     }
 
-                    var pctLeft = Math.round(candidate[0].pct*10)/10,
-                        pctRight = Math.round(candidate[1].pct*10)/10;
+                    var pctLeft = this.pctFormat(candidate[0].pct/100),
+                        pctRight = this.pctFormat(candidate[1].pct/100);
 
                     this.$('.desc-all').hide();
                     this.$('.desc-individual').show();
@@ -95,14 +104,14 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                         $('.icon', progressRight).removeClass('icon-rep-left dem');
                     } 
 
-                    $('.num', numLeft).text(pctLeft + '%');
-                    $('.num', numRight).text(pctRight + '%');
+                    $('.num', numLeft).text(pctLeft);
+                    $('.num', numRight).text(pctRight);
                     
                     $('.party-label', numLeft).text('');
                     $('.party-label', numRight).text('');
 
-                    $(progressLeft).css('width', pctLeft + '%');
-                    $(progressRight).css('width', pctRight + '%');
+                    $(progressLeft).css('width', pctLeft);
+                    $(progressRight).css('width', pctRight);
 
                     $('.text-left .name', desc).text(candidate[0].name);
                     $('.text-right .name', desc).text(candidate[1].name);
@@ -112,8 +121,8 @@ function ($, _, Backbone, d3, config, chartTemplate) {
 
                     $('.bar-progress-left', desc).css('width', '0%');
                     $('.bar-progress-right', desc).css('width', '0%');
-                } else {
-                    console.log('Handle edge case of single candidate');
+                    
+                    this.$('.updated').text(this.pctFormat(this.model.detail.precincts.pct/100) + ' reporting');
                 }
             } else if (this.model.data.length > 0 && this.model.race.id !== 'i') {
 
