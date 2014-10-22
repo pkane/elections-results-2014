@@ -176,7 +176,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             var found = this.findItemById(d.id);
 
             if (found) {
-                var uncontested = (found.results.length === 1),
+                var uncontested = (found.results && found.results.length === 1),
                     tooldata = {
                         heading: d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''),
                         pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : ''),
@@ -286,8 +286,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
 
                 if (altSeat) {
-                    this.$('#resultmap-swap-btn').attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
-                    this.$('#resultmap-swap-btn').html("View Seat " + altSeat + " Results");                                
+                    this.$('#resultmap-swap-btn').attr('href', '#race/' + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
+                    this.$('#resultmap-swap-btn').html((altSeat === '0') ? 'View General Election Results' : 'View Special Election Results');                                
                 }
 
                 this.$('.state-list-dropdown')

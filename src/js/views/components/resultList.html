@@ -10,7 +10,7 @@
                     <div class='card-item-inner'>
 
                         <span class="card-state-name"><%= s.name.toLowerCase() %></span>
-                        <div class="num-races"><%= s.initiatives.length %></div> initiatives
+                        <div class="num-races"><%= s.initiatives.length %></div> initiative<% if (s.initiatives.length > 1){ %>s<% } %>
                     </div>
                 </div>
             </a>
@@ -22,9 +22,10 @@
             <table class="result-item">
                 <thead>
                     <tr class="result-first-row">
-                        <th class="district-name" colspan="3">
+                        <th class="district-name">
                             <%= value.name %>
                         </th>
+                        <th class="reporting" colspan="2"><%= formatPercent(value.precincts.pct/100) + ' reporting' %></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +52,7 @@
                     <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 card-item">
                         <div class='card-item-inner'>
                             <span class="card-state-name"><%= getStateById(stateId).display %></span>
-                            <div class="num-races"><%= data[stateId].length %></div>races
+                            <div class="num-races"><%= data[stateId].length %></div>race<% if (data[stateId].length > 1){ %>s<% } %>
                         </div>
                     </div>
                 </a>
@@ -70,7 +71,7 @@
                             <%= formatHouseId(value.id) %>
                         </a>
                     </th>
-                    <th class="reporting" colspan="2"><%= !uncontested ? (Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting') : '' %></th>
+                    <th class="reporting" colspan="2"><%= !uncontested ? (formatPercent(value.precincts.pct/100) + ' reporting') : '' %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,12 +80,12 @@
                     <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>
                         <% if (!uncontested) { %>
-                        <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
+                        <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'>
                             <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%>
                         </td>
                         <td class="result-win"><%= formatPercent(item.votes, value.votes) %></td>
                         <% } else { %>  
-                            <td class="result-votes" colspan="2">Uncontested</td>
+                            <td class="result-votes" style="background-size: 0% 100%;" colspan="2">Uncontested</td>
                         <% } %>                                                 
                     </tr>
                 <% }); %>
@@ -97,6 +98,7 @@
 <div class="row">
     <% _.each(!state ? data : detail, function(value) { %>
     <% var uncontested = false; if (value.results.length == 1) { uncontested = true } %>
+        <% _.each(_.groupBy(value.results, 'seatNumber'), function(race, index) { %>
         <table class="result-item senate-item">
             <thead>
                 <tr class="result-first-row">
@@ -108,37 +110,32 @@
                             #<%= race.key %>-<%= state.abbr %>
                         <% } %>
                         ">
-                        <%= value.name %><%= getCountyByFips(value.id) %>
+                        <%= value.name %><%= getCountyByFips(value.id) %><% if (index > 0) { %> Special Election<% } %>
                         </a>
                     </th>
-                    <th class="reporting" colspan="2"><%= !uncontested ? (Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting') : '' %></th>
+                    <th class="reporting" colspan="2"><%= !uncontested ? (formatPercent(value.precincts.pct/100) + ' reporting') : '' %></th>
                 </tr>
             </thead>
             <tbody>
-            <% _.each(_.groupBy(value.results, 'seatNumber'), function(race, index) { %>
-
-                <% if (index > 0) { %>
-                    <tr><td colspan="3"><hr /></td></tr>
-                <% } %>
-
                 <% _.each(race, function(item) { %>
                 <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    
                         <% if (!uncontested) { %>
-                        <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'>
+                        <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'>
                             <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%>
                         </td>
                         <td class="result-win"><%= formatPercent(item.votes, value.votes) %></td>
                         <% } else { %>  
-                            <td class="result-votes" colspan="2">Uncontested</td>
+                            <td class="result-votes" style="background-size: 0% 100%;" colspan="2">Uncontested</td>
                         <% } %> 
                     </tr>
                     
                 <% }); %>
-            <% }); %>
+
             </tbody>
         </table>
+        <% }); %>
     <% }); %>
 </div>
 

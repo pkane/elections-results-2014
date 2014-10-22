@@ -155,7 +155,16 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
             console.log("### RACE ", state);
 
-            if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') } else { this.$('.election-office-projection-heading').removeClass('initiatives'); }
+            if (race.key == "initiatives") { 
+                this.$('.election-office-projection-heading').addClass('initiatives') 
+            } else { 
+                this.$('.election-office-projection-heading').removeClass('initiatives'); 
+            }
+            
+            if (race.id === 's') {
+                fips = (fips === '2') ? 'Special Election' : '';
+            }
+            
             this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' ' + fips + ' Results');
 
             this.$('.nav-item').removeClass('selected');            
