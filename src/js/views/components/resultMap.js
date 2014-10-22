@@ -255,7 +255,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     _.find(found.results, function(item) {
                         
                         var isCurrentSeat = !item.seatNumber || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
-
                         if (!hasState) {
                             if (item.win && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
@@ -263,7 +262,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                             } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }
-                        } else if (item.lead || (item.win && item.pct == 0)) {
+                        } else if (isCurrentSeat && (item.lead || (item.win && item.pct == 0))) {
                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     }, this);
