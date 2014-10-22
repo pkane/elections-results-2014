@@ -354,6 +354,45 @@
         }
     }
 
+    .elections-share-dropdown {
+
+        text-align: center;
+
+        li {
+            text-align: center;
+            display: inline-block;
+            margin-right: 10%;
+            &:nth-child(3) {
+                margin-right: 0;
+            }
+        }
+        
+        min-width: 50px;
+        // padding-left: 3px;
+
+        .dd-nav-link {
+            height: 40px;
+            width: 40px;
+            background-image: url("../img/spritesheet-social-large.png");
+            background-size: 76px 114px;
+            text-indent: -10000px;
+            display: inline-block;
+        }
+
+        #facebook-share {
+            background-position: -38px 0px;
+        }
+
+        #twitter-share {
+            background-position: -38px -38px;
+        }
+
+        #mail-share {
+            background-position: -38px -76px;
+        }
+
+    }
+
     @include mobile { 
 
         height: 80px;
@@ -517,19 +556,13 @@
         .elections-share-dropdown {
 
             li {
-                text-align: center;
+                margin-right: 0;
+                display: block;
             }
-            
-            min-width: 50px;
-            // padding-left: 3px;
 
             .dd-nav-link {
-                height: 40px;
-                width: 40px;
                 background-image: url("../img/spritesheet-social.png");
                 background-size: 114px 152px;
-                text-indent: -10000px;
-                display: inline-block;
             }
 
             #facebook-share {
