@@ -281,6 +281,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         renderNav: function() {
             console.log('render nav');
+
+            var swapBtn = this.$('.resultmap-swap-btn');
             
             var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
                 currentSeat = (this.model.fips) ? this.model.fips : '0';
@@ -293,8 +295,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
 
                 if (altSeat) {
-                    this.$('#resultmap-swap-btn').attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
-                    this.$('#resultmap-swap-btn').html("View Seat " + altSeat + " Results");                                
+                    for (var i = races.length - 1; i >= 0; i--) {
+                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]);
+                        $(swapBtn[i]).html("Seat " + races[i]);    
+                        if ($(swapBtn[i]).hasClass('active-race')) {
+                            $(swapBtn[i]).removeClass('active-race');
+                        } else {
+                            $(swapBtn[i]).addClass('active-race');
+                        }
+                    };
+
                 }
 
                 this.$('.state-list-dropdown')
@@ -311,8 +321,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     }, this).join(''));
             }
             
-            this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
-            this.$('#resultmap-swap-btn').css('display', races.length > 1 ? 'inline-block': 'none');
+            this.$('.resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
+            this.$('.resultmap-back-btn').css('display', races.length > 1 ? 'inline-block': 'none');
         },
 
         refresh: function() {
