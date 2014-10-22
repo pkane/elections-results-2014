@@ -22,9 +22,10 @@
             <table class="result-item">
                 <thead>
                     <tr class="result-first-row">
-                        <th class="district-name" colspan="3">
+                        <th class="district-name">
                             <%= value.name %>
                         </th>
+                        <th class="reporting" colspan="2"><%= (Math.round(parseFloat(value.precincts.pct)*100)/100).toFixed(1) + '% reporting' %></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +71,7 @@
                             <%= formatHouseId(value.id) %>
                         </a>
                     </th>
-                    <th class="reporting" colspan="2"><%= !uncontested ? (Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting') : '' %></th>
+                    <th class="reporting" colspan="2"><%= !uncontested ? ((Math.round(parseFloat(value.precincts.pct)*100)/100).toFixed(1) + '% reporting') : '' %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,7 +85,7 @@
                         </td>
                         <td class="result-win"><%= formatPercent(item.votes, value.votes) %></td>
                         <% } else { %>  
-                            <td class="result-votes" colspan="2">Uncontested</td>
+                            <td class="result-uncontested" colspan="2">Uncontested</td>
                         <% } %>                                                 
                     </tr>
                 <% }); %>
@@ -111,7 +112,7 @@
                         <%= value.name %><%= getCountyByFips(value.id) %>
                         </a>
                     </th>
-                    <th class="reporting" colspan="2"><%= !uncontested ? (Math.round(parseFloat(value.precincts.pct)*100)/100 + '% reporting') : '' %></th>
+                    <th class="reporting" colspan="2"><%= !uncontested ? ((Math.round(parseFloat(value.precincts.pct)*100)/100).toFixed(1) + '% reporting') : '' %></th>
                 </tr>
             </thead>
             <tbody>
@@ -131,7 +132,7 @@
                         </td>
                         <td class="result-win"><%= formatPercent(item.votes, value.votes) %></td>
                         <% } else { %>  
-                            <td class="result-votes" colspan="2">Uncontested</td>
+                            <td class="result-uncontested" colspan="2">Uncontested</td>
                         <% } %> 
                     </tr>
                     
