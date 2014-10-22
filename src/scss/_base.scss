@@ -321,7 +321,6 @@ only screen and (                min-resolution: 2dppx) {
 
 #election-app {
 	// margin-top: 85px;
-	padding-bottom: 100px;	
 	@include tablet-min {
 		padding-bottom: 0;
 	}
