@@ -36,6 +36,8 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                         var remoteVersion = parseInt(xhr.responseJSON);
                         
                         if (remoteVersion > config.api.dataFeedVersionId) {
+                            $('body').attr('data-version', remoteVersion);
+                            
                             config.api.dataFeedVersionId = remoteVersion;
                             App.refresh();
                         }
