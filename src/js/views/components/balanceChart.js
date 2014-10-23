@@ -90,17 +90,25 @@ function ($, _, Backbone, d3, config, chartTemplate) {
 
                     if (candidate[0].party === 'Democratic') {
                         $(progressLeft).addClass('dem').removeClass('other');
+                        $(numLeft).addClass('dem').removeClass('other');
+                        $('.text-left', desc).addClass('dem').removeClass('other');
                         $('.icon', progressLeft).addClass('icon-dem-right');
                     } else {
                         $(progressLeft).removeClass('dem').addClass('other');
+                        $(numLeft).removeClass('dem').addClass('other');
+                        $('.text-left', desc).removeClass('dem').addClass('other');
                         $('.icon', progressLeft).removeClass('icon-dem-right dem');
                     }
 
                     if (candidate[1].party === 'Republican') {
                         $(progressRight).addClass('rep').removeClass('other');
+                        $(numRight).addClass('rep').removeClass('other');
+                        $('.text-right', desc).addClass('rep').removeClass('other');
                         $('.icon', progressRight).addClass('icon-rep-left');
                     } else {
                         $(progressRight).removeClass('rep').addClass('other');
+                        $(numRight).removeClass('rep').addClass('other');
+                        $('.text-right', desc).removeClass('rep').addClass('other');
                         $('.icon', progressRight).removeClass('icon-rep-left dem');
                     } 
 

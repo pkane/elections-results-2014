@@ -46,9 +46,6 @@ ul.progress-stat-bar {
         p {
             float: left; 
         }
-        .name {
-            color: $color-dem;
-        }
         .num {
             float: left;
         }
@@ -58,12 +55,14 @@ ul.progress-stat-bar {
         p {
             float: right; 
         }
-        .name {
-            color: $color-rep;
-        }
         .num {
             float: right;
         }
+    }
+    .text-left, .text-right {
+        &.dem .name { color: $color-dem; }
+        &.rep .name { color: $color-rep; }
+        &.other .name { color: $color-ind; }
     }
     .text-center {
         padding-left: 0;
@@ -75,16 +74,10 @@ ul.progress-stat-bar {
         margin-bottom: 20px;
     }
 
-    .bop-group-num-left {
-        color: $color-dem;
-        .party-label { 
-            font-size: 1.25em;
-            font-family: "Futura Today Light", "arial";
-        }
-    }
-
-    .bop-group-num-right {
-        color: $color-rep;
+    .bop-group-num-left, .bop-group-num-right {
+        &.dem { color: $color-dem; }
+        &.rep { color: $color-rep; }
+        &.other { color: $color-ind; }
         .party-label { 
             font-size: 1.25em;
             font-family: "Futura Today Light", "arial";
