@@ -30,7 +30,6 @@ ul.progress-stat-bar {
     line-height: 1;
     .text-left,
     .text-right {
-        padding-top: 10px;
         p, .num {
             display: inline-block;
             margin-bottom: 4px;
@@ -78,12 +77,18 @@ ul.progress-stat-bar {
 
     .bop-group-num-left {
         color: $color-dem;
-        .party-label { font-size: 1.25em; }
+        .party-label { 
+            font-size: 1.25em;
+            font-family: "Futura Today Light", "arial";
+        }
     }
 
     .bop-group-num-right {
         color: $color-rep;
-        .party-label { font-size: 1.25em; }
+        .party-label { 
+            font-size: 1.25em;
+            font-family: "Futura Today Light", "arial";
+        }
     }
     
     .bop-group-winner {
@@ -112,15 +117,19 @@ ul.progress-stat-bar {
 
     .name {
         margin-bottom: 4px;
-        font-family: $font-heading-normal;
+        font-family: $font-heading;
     }
     
     .num {
         font-family: $font-heading;
     }
 
-    .rep {
+    .text-right {
+        padding-right: 0px;
         text-align: right;
+    }
+    .text-left {
+        padding-left: 0px;
     }
 }
 
@@ -185,4 +194,40 @@ span.icon-rep-left {
     margin-top: 9px;
     right: 10px;
 }
+@include breakpointMax(350) {
+    #election-app.oembed {
+        .bop-group-desc .desc-all {
+            .text-left > *, .text-right > * { display: none; }
+        }
+        .bop-group-num { margin-bottom: 0 }
+    }
+}
 
+@include breakpointMax(450) {
+    #election-app.oembed {
+
+        .bop-group-num .num { font-size: 20px; }
+        .bop-group-desc { 
+            font-size: 0.5em;
+            .text-left { 
+                font-size: 10px;
+                padding-top: 0;
+            }
+            .text-right { 
+                font-size: 10px;
+                padding-top: 0;
+            }
+            .num { font-size: 1.5em; }
+            .current-seats-label { font-size: smaller; }
+            .name { font-size: 1.2em; }
+        }
+    }
+}
+
+@include breakpoint(450) { 
+    #election-app.oembed {
+        .bop-group-desc ul.progress-stat-bar { margin-bottom: 2em; }
+        .bop-group-num { margin-bottom: 1em; }
+        .oembed-linkout { padding-bottom: 2em; }
+    }
+}

@@ -1,7 +1,6 @@
 #election-bar-content {
     position: relative;
     width: 100%;
-    padding-top: 115px;
     border-bottom: 1px solid #dadada;
     margin-bottom: 10px;
     background-color: #fafafa;
@@ -32,8 +31,24 @@
                     font-size: 24px;
                 }
             }
+            .election-office-projection-heading.initiatives {
+                font-size: 15px;
+            }            
         }
     }
+    @include mobile {
+        .election-navigation.modal-on {
+            position: absolute;
+            z-index: 100;
+        }
+        padding-top: 20px;
+    }
+}
+
+@include mobile {
+    #election-bar-content.inherit {
+        position: inherit;
+    }        
 }
 
 #election-content {
@@ -48,9 +63,9 @@
 
 .oembed-linkout { display: none; }
 
-// 280x152 - MobileWeb / iPhone
-// 600x325 - Desktop
-// 650x350 - iPad
+// 270x170 - MobileWeb / iPhone
+// 600x375 - Desktop
+// 650x405 - iPad
 
 #election-app.oembed {
     margin: 0;
@@ -59,14 +74,12 @@
     
     .elections-bar-nav { display: none; }
     
-    .balance-of-power-chart {
-        margin-top: 30px;
-    }
-    
     #election-bar-content { 
         padding-left: 20px;
         padding-top: 10px;
     }
+    
+    .elections-bar-left-col { padding: 0; }
     
     #elections-bar {
         
@@ -81,7 +94,7 @@
         .election-state-subheading { 
             font-size: 14px;
             margin-bottom: 0;
-            @include breakpoint(401) {
+            @include breakpoint(501) {
                 margin-bottom: 8px;
             }
         }
@@ -149,7 +162,32 @@
 
 }
 
-@include breakpointMax(450) {
+@include breakpointMax(350) {
+    #election-app.oembed {
+        #election-content {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        #election-bar-content { padding-left: 10px; }
+        .balance-of-power-chart { margin-top: -5px; }
+        .oembed-linkout { padding: 5px 10px; }
+    }
+}
+
+@include breakpointBetween(350, 500) {
+    #election-app.oembed {
+        .balance-of-power-chart { margin-top: 15px; }
+        #election-content { top: 0px; }
+    }
+}
+
+@includ breakpointMin(500) {
+    #election-app.oembed {
+        .balance-of-power-chart { margin-top: 30px; }
+    }
+}
+
+@include breakpointMax(500) {
     #election-app.oembed {
         
         #election-content {
@@ -157,22 +195,6 @@
         }
         
         .elections-bar-left-col { padding: 0; }
-        
-        .balance-of-power-chart { margin-top: -5px; }
-        
-        .bop-group-num .num { font-size: 20px; }
-        .bop-group-desc { 
-            font-size: 0.5em;
-            .text-left { 
-                font-size: 10px;
-                padding-top: 0;
-            }
-            .text-right { 
-                font-size: 10px;
-                padding-top: 0;
-            }
-            .name { font-size: 1.2em; }
-        }
         
         .oembed-linkout a { font-size: 10px; }
         
@@ -190,13 +212,13 @@
             height: 36px;
             min-height: 36px;
         
-            .elections-heading { margin-left: 60px; }
+            .elections-heading { margin-left: 55px; }
         
             .election-state-subheading { font-size: 10px; }
             .election-office-projection-heading { font-size: 16px; }
 
             .page-icon {
-                width: 50px;
+                width: 45px;
                 height: 30px;
 
                 .icon {
@@ -397,11 +419,6 @@
 
         height: 80px;
 
-        .election-navigation.modal-on {
-            position: absolute;
-            z-index: 100;
-        }
-
         .navbar-nav {
             margin: 0;
         }
@@ -421,7 +438,7 @@
             height: 100%;
             background: rgba(0,0,0, 0.9);
             position: fixed;
-            padding-top: 200px;
+            padding-top: 100px;
             @include vendor-prefix(border-radius, 0px);
         }
 
@@ -447,6 +464,7 @@
             top: 50px;
             left: 0px;
             width: 100%;
+            height: 50px;
         }
 
         .election-icon.election-icon-share {
@@ -615,16 +633,28 @@
         position: absolute;
         left: 0;
         top: 20px;
+        width: 100%;
     }
     #resultmap-back-btn,
-    #state-list-dropdown-btn,
-    #resultmap-swap-btn {
+    #state-list-dropdown-btn {
         background-color: #333333;
         @include vendor-prefix(border-radius, 20px);
         // display: none;
     }
     #resultmap-back-btn {
         margin-right: 8px;
+    }
+    #resultmap-swap-btn {
+        background-color: #EFEFEF;
+        color: #333;
+        border: 1px solid #DADADA;
+        font-family: "Futura Today Light";
+        font-weight: 100;
+        padding: 6px;
+        margin: 0 0 0 10px;
+        position: relative;
+        float: right;
+        border-radius: 4px;
     }
     #state-list-dropdown-btn {
 
@@ -662,11 +692,13 @@
         }
     }
     &> svg path {
-        cursor: pointer;
         &.has-data {
             &:hover, &:focus {
                 fill-opacity: 0.85;
             }
+        }
+        &.nation-level {
+            cursor: pointer;
         }
     }
 }

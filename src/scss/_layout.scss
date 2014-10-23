@@ -35,7 +35,6 @@ $result-item-bg-gradient-position-tablet: 178px;
 	.result-first-row {
 		// font-family: $font-heading-bold;
 		th {
-			padding-left: 4px;
 			font-family: $font-heading-normal;
 		}
 	}
@@ -83,11 +82,13 @@ $result-item-bg-gradient-position-tablet: 178px;
 		width: 100%;
 		display: inline-table;
 		position: relative;	
+		margin-bottom: 2px;
 	}
 
 	.result-name,
 	.result-win,
 	.result-votes,
+	.result-uncontested,
 	.result-pct {
 		font-size: 12px;
 		text-align: right;
@@ -102,7 +103,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 	.result-name,
 	.initiative-name {
 		width: 130px;
-		padding: 8px 10px 0 0;
+		padding: 5px 10px 3px 0;
 		font-family: $font-heading;
 		line-height: 140%;
 		text-align: right;
@@ -134,16 +135,16 @@ $result-item-bg-gradient-position-tablet: 178px;
 		z-index: 3;
 	}	
 
-	.candidate.democratic .result-votes {
-        background: linear-gradient(to right, $color-dem 0%, $color-dem 100%) no-repeat;
-        background-image: -webkit-linear-gradient(right, $color-dem 0%, $color-dem 100%);
+	.democratic .result-votes {
+    background: linear-gradient(to right, $color-dem 0%, $color-dem 100%) no-repeat;
+    background-image: -webkit-linear-gradient(right, $color-dem 0%, $color-dem 100%);
 		background-image:    -moz-linear-gradient(right, $color-dem 0%, $color-dem 100%);
 		background-image:      -o-linear-gradient(right, $color-dem 0%, $color-dem 100%);
 		background-image:     -ms-linear-gradient(right, $color-dem 0%, $color-dem 100%);
 		background-image:         linear-gradient(right, $color-dem 0%, $color-dem 100%);
 	}
 
-	.candidate.republican .result-votes {        
+	.republican .result-votes {        
 		background: linear-gradient(to right, $color-rep 0%, $color-rep 100%) no-repeat;
 		background-image: -webkit-linear-gradient(right, $color-rep 0%, $color-rep 100%);
 		background-image:    -moz-linear-gradient(right, $color-rep 0%, $color-rep 100%);
@@ -152,9 +153,9 @@ $result-item-bg-gradient-position-tablet: 178px;
 		background-image:         linear-gradient(right, $color-rep 0%, $color-rep 100%);
 	}	
 
-	.candidate .result-votes {
-        background: linear-gradient(to right, $color-bar-gray 0%, $color-bar-gray 100%) no-repeat;
-        background-image: -webkit-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
+	.result-votes {
+    background: linear-gradient(to right, $color-bar-gray 0%, $color-bar-gray 100%) no-repeat;
+    background-image: -webkit-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
 		background-image:    -moz-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
 		background-image:      -o-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);
 		background-image:     -ms-linear-gradient(right, $color-bar-gray 0%, $color-bar-gray 100%);

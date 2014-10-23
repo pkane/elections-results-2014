@@ -13,13 +13,16 @@ function ($, _, Backbone, config, ads) {
 
         initialize: function() {
             Backbone.View.prototype.initialize.apply(this, arguments);            
-            this.refresh();
+            ads.registerAd(this.$el.attr('id'), config.ads.unit, config.ads.sizes);
         },
 
         refresh: function() {
         	console.log('ad view refresh ', this.$el.attr('id'));
 
-        	ads.registerAd(this.$el.attr('id'), config.ads.unit, config.ads.sizes);        	
+            if (window.googletag) {
+                window.googletag.pubads().refresh();
+            }
+        	        	
         }
         
     });

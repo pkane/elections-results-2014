@@ -6,11 +6,11 @@ define(['jquery'], function ($) {
 
     return {
         appVersion: 2,
-
         isMobile: isMobile,
         pageInfo: staticInfo,
         ssts: 'news/politics/elections/results',
 
+        maxTabletWidth: 991,
 
         ads: {
             sizes: (function() { return isMobile ? [[320, 50]]: [[300, 250]];  })(),
@@ -33,7 +33,7 @@ define(['jquery'], function ($) {
                 raceByState: '2014/RaceResultsByState/{raceId}',
                 raceByCounty: '2014/StateResultsByCountyOrCd/{raceId}/{stateId}',
                 raceByCountyDetail: '2014/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
-                updates: 'DataFeedVersions/2014'
+                updates: 'DataFeedVersions/2014/'
             }
         },
 
@@ -103,7 +103,7 @@ define(['jquery'], function ($) {
         ],
 
         partyColors: {
-            default: '#e3e3e3',
+            defaultColor: '#e3e3e3',
             democraticWin: '#235468',
             democratic: '#518296',
             republicanWin: '#742b31',

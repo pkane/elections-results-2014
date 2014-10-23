@@ -13,6 +13,14 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
     var rootView = new IndexView(),
         navView = new NavView(),
         
+        oembedClickHandler = function () {
+            if (window.parent) {
+                window.parent.location.href = 'http://www.usatoday.com/pages/interactives/elections-results-2014/';
+            } else {
+                window.location.href = 'http://www.usatoday.com/pages/interactives/elections-results-2014/';
+            }
+        },
+        
         checkFeedVersion = function () {
 
             $.ajax(config.api.base + config.api.op.version, {
@@ -51,8 +59,10 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             
             if (oembed) {
                 $('#election-app').addClass('oembed');
+                $('body').on('click', oembedClickHandler);
             } else {
                 $('#election-app').removeClass('oembed');
+                $('body').off('click', oembedClickHandler);
             }
             
             rootView.useOembedTemplate = (!!oembed);
@@ -62,6 +72,7 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
             
             navView.model.currentRace = race;
             navView.model.currentState = state;
+            navView.model.currentFips = fips;
             navView.refresh();
             
             dataManager.updates.required = !oembed;
