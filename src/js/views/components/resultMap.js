@@ -296,9 +296,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 if (altSeat) {
                     for (var i = races.length - 1; i >= 0; i--) {
-                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]);
-                        $(swapBtn[i]).html("Seat " + races[i]);    
-                        if ( parseInt(races[i]) == races.indexOf(currentSeat) ) {
+                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html("Seat " + races[i]);    
+                        if ( i === races.indexOf(currentSeat) ) {
                             $(swapBtn[i]).addClass('active-race');
                         } else {
                             $(swapBtn[i]).removeClass('active-race');
