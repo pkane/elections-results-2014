@@ -254,7 +254,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.find(found.results, function(item) {
                         
-                        var isCurrentSeat = !item.seatNumber || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
+                        var isCurrentSeat = !item.seatNumber || this.model.race.id === 'h' || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
+                        
                         if (!hasState) {
                             if (item.win && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
@@ -276,7 +277,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             console.log('render nav');
             
             var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
-                currentSeat = (this.model.fips) ? this.model.fips : '0';
+                currentSeat = (this.model.fips) ? this.model.fips : (this.model.race.id === 's') ? '0' : '1';
             
             if (this.model.race) {
                 var raceKey = this.model.race.key,
