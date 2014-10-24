@@ -54,29 +54,29 @@ Release Build: ```grunt```
 
 
 ##### DataFeed Versions
-[http://www.gannett-cdn.com/ElectionsServices/Elections/DataFeedVersions/00?callback=cb_0_DataFeedVersions00](http://www.gannett-cdn.com/ElectionsServices/Elections/DataFeedVersions/00?callback=cb_0_DataFeedVersions00)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/DataFeedVersions/2014?callback=cb_0_DataFeedVersions00](http://www.gannett-cdn.com/ElectionsServices/Elections/DataFeedVersions/2014?callback=cb_0_DataFeedVersions00)
 
 
 ##### All Races
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/AllRaces?callback=cb_0_00AllRaces](http://www.gannett-cdn.com/ElectionsServices/Elections/00/AllRaces?callback=cb_0_00AllRaces)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/2014/AllRaces?callback=cb_0_00AllRaces](http://www.gannett-cdn.com/ElectionsServices/Elections/2014/AllRaces?callback=cb_0_00AllRaces)
 
 
 ##### State Results By County or CD
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00](http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/2014/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00](http://www.gannett-cdn.com/ElectionsServices/Elections/2014/StateResultsByCountyOrCd/h/00?callback=cb_0_00StateResultsByCountyOrCdh00)
 
 
 ##### Race Results by State (Governor)
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/g?callback=cb_0_00RaceResultsByStateg](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/g?callback=cb_0_00RaceResultsByStateg)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/2014/RaceResultsByState/g?callback=cb_0_00RaceResultsByStateg](http://www.gannett-cdn.com/ElectionsServices/Elections/2014/RaceResultsByState/g?callback=cb_0_00RaceResultsByStateg)
 
 
 ##### Race Results by State (Senate)
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/s?callback=cb_0_00RaceResultsByStates](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/s?callback=cb_0_00RaceResultsByStates)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/2014/RaceResultsByState/s?callback=cb_0_00RaceResultsByStates](http://www.gannett-cdn.com/ElectionsServices/Elections/2014/RaceResultsByState/s?callback=cb_0_00RaceResultsByStates)
 
 ##### Race Results by State (House)
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh](http://www.gannett-cdn.com/ElectionsServices/Elections/00/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/2014/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh](http://www.gannett-cdn.com/ElectionsServices/Elections/2014/RaceResultsByState/h?callback=cb_0_00RaceResultsByStateh)
 
 
 ##### Ballot Initiatives
-[http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateBallotInitiatives/30?callback=cb_586_00StateBallotInitiatives30](http://www.gannett-cdn.com/ElectionsServices/Elections/00/StateBallotInitiatives/30?callback=cb_586_00StateBallotInitiatives30)
+[http://www.gannett-cdn.com/ElectionsServices/Elections/2014/StateBallotInitiatives/30?callback=cb_586_00StateBallotInitiatives30](http://www.gannett-cdn.com/ElectionsServices/Elections/2014/StateBallotInitiatives/30?callback=cb_586_00StateBallotInitiatives30)
 
 
