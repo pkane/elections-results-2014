@@ -1,5 +1,7 @@
-<h3 class="updates-feed-heading">Updates</h3>
-<% _.chain(filterData(data)).first(10).each(function (item) { %>
+<% if (filtered.length > 0) { %>
+    <h3 class="updates-feed-heading">Updates</h3>
+<% } %>
+<% _.chain(filtered).first(10).each(function (item) { %>
 <div class="update-card update-card-<%= item.id %>">
     <div class="update-card-header">
         <strong>Races Called</strong>

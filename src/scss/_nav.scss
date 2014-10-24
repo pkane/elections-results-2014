@@ -71,6 +71,7 @@
     margin: 0;
     background: #fff;
     padding-bottom: 0;
+    min-height: 315px;
     
     .elections-bar-nav { display: none; }
     
@@ -164,6 +165,7 @@
 
 @include breakpointMax(350) {
     #election-app.oembed {
+        min-height: 150px;
         #election-content {
             padding-left: 10px;
             padding-right: 10px;
@@ -176,6 +178,7 @@
 
 @include breakpointBetween(350, 500) {
     #election-app.oembed {
+        min-height: 255px;
         .balance-of-power-chart { margin-top: 15px; }
         #election-content { top: 0px; }
     }

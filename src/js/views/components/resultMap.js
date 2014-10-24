@@ -12,6 +12,15 @@ define([
 function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics) {
     var IE = $('html').hasClass('lt-ie9'),
         tooltip,
+        templates = {
+            tooltip: _.template('<h4 class="map-tooltip-heading"><%= heading %></h4>'
+                + '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th class="percent">%</th></tr></thead>'
+                + '<tbody><%= listing %></tbody></table>'
+                + '<span class="muted"><%= pctReporting %></span>'),
+            tooltipItem: _.template('<tr><td><%= label %><%= win %></td>'
+                + '<td class="right"><%= votes %></td>'
+                + '<td class="right" style="text-align:right"><%= pct %></td></tr>')
+        },
         voteFormat = d3.format(','),
         view = Backbone.View.extend({
 
@@ -19,10 +28,11 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         
         template: _.template(resultMap),
 
+        mapCache: { path: 'none', places: 'none' },    
+            
         drawMap: function(geoJsonPath, geoJsonPlaces, strokeWidth) {
-
+            
             if (this.model.race) {
-                console.log('model...', this.model);
 
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
@@ -117,17 +127,12 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                                         if (d.properties.placement === 'right') return 10;
                                         if (d.properties.placement === 'left') return -10;
                                         return 0;
-                                    })
-                                    ;
-
+                                    });
 
                             }, this));
-
                          }                     
 
-                }, this)); 
-
-
+                }, this));
             }
         },
 
@@ -171,34 +176,25 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             var found = this.findItemById(d.id);
 
             if (found) {
-                var uncontested = false;
-                if (found.results.length === 1) {
-                    uncontested = true;
-                }
-                tooltip                    
-                    .html([
-
-                        '<h4 class="map-tooltip-heading">', d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''), '</h4>',
-                        '<table class="table table-condensed"><thead><tr><th>Candidate</th><th class="right">Votes</th><th class="percent">%</th></tr></thead><tbody>',
-
-                        _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
+                var uncontested = (found.results && found.results.length === 1),
+                    tooldata = {
+                        heading: d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''),
+                        pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : ''),
+                        listing: _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
+                            var itemData = {
+                                label: (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : ''),
+                                win: (item.win ? '<span class="won"></span>' : ''),
+                                votes: (!uncontested ? voteFormat(item.votes) : 'Uncontested'),
+                                pct: (!uncontested ? item.pct.toFixed(1) + '%' : '')
+                            };
                             if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
                                 memo += '<tr><td colspan="3"><hr /></td></tr>';
                             }
-                            return (memo
+                            return memo + templates.tooltipItem(itemData);
+                        }, '').value()
+                    };
 
-                                + '<tr><td>' + (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : '')
-                                + (item.win ? '<span class="won"></span>' : '')
-
-                                + '</td>'
-                                + '<td class="right">' + (!uncontested ? voteFormat(item.votes) : 'Uncontested') + '</td>'
-                                + '<td class="right" style="text-align:right">' + (!uncontested ? item.pct.toFixed(1) + '%' : '') + '</td></tr>');
-                        }, '').value(),
-
-                        '</tbody></table>',
-                        '<span class="muted">' + (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : '') + '</span>'
-                    ].join(''))
-                    ;
+                tooltip.html(templates.tooltip(tooldata));
                 
                 this.offsetTop = this.$el.offset().top;
                 this.mouseMove(d, i);
@@ -216,7 +212,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     leftOffset = mouseX - 135,
                     topOffset = mouseY + 20;
 
-                if ((this.offsetTop + mouseY + tooltipHeight) > window.innerHeight) {                    
+                if ((this.offsetTop + mouseY + tooltipHeight) > (window.innerHeight + window.scrollY)) {                    
                     topOffset = mouseY - tooltipHeight - 40;
                 }
 
@@ -232,7 +228,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             tooltip.classed('hidden', true);
         },
         
-
         fillColor: function(d) {
             var id = d.id,
                 partyColors = config.partyColors,
@@ -241,7 +236,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 found,
                 color = partyColors.defaultColor
                 ;
-
 
             if (this.model.race.id == 'h') {
                 state = id.substr(0, 2);
@@ -260,8 +254,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.find(found.results, function(item) {
                         
-                        var isCurrentSeat = !item.seatNumber || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
-
+                        var isCurrentSeat = !item.seatNumber || this.model.race.id === 'h' || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
+                        
                         if (!hasState) {
                             if (item.win && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
@@ -269,7 +263,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                             } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }
-                        } else if (item.lead || (item.win && item.pct == 0)) {
+                        } else if (isCurrentSeat && (item.lead || (item.win && item.pct == 0))) {
                            color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                         }
                     }, this);
@@ -285,7 +279,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             var swapBtn = this.$('.resultmap-swap-btn');
             
             var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
-                currentSeat = (this.model.fips) ? this.model.fips : '0';
+                currentSeat = (this.model.fips) ? this.model.fips : (this.model.race.id === 's') ? '0' : '1';
             
             if (this.model.race) {
                 var raceKey = this.model.race.key,
@@ -295,8 +289,9 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
 
                 if (altSeat) {
+
                     for (var i = races.length - 1; i >= 0; i--) {
-                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html("Seat " + races[i]);    
+                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html((races[i].seatNumber === '0') ? 'General Election' : 'Special Election');    
                         if ( i === races.indexOf(currentSeat) ) {
                             $(swapBtn[i]).addClass('active-race');
                         } else {
@@ -348,40 +343,35 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         },
 
         renderMap: function() {
-            console.log('-- render map ', this.model.race, this.model.state);
-
-            var width = this.$el.width(), 
-                height = Math.floor(width * 3 / 4),
-                scaleMultiplier = 1.0;
-                natScaleMultiplier = 1.2;
-                ;
-
-            if ($('#main-map').width() < 402) {
-                scaleMultiplier = 0.6;
-                natScaleMultiplier = 0.65;
-            } else if ($('#main-map').width() < 610) {
-                scaleMultiplier = 0.9;
-                natScaleMultiplier = 0.9;
-            }
-
-            this.svg = d3.select(this.el)
-                         .select('svg')
-                         .attr('width', width)
-                         .attr('height', height)
-                         ;
-
-            this.projection = d3.geo
-                                .albersUsa()
-                                .translate([width/2, height/2])
-                                .scale([800 * natScaleMultiplier])
-                                ;
-
             if (this.model.race) {
-                if (this.model.state) {                        
+
+                var width = this.$el.width(), 
+                    height = Math.floor(width * 3 / 4),
+                    scaleMultiplier = 1.0,
+                    natScaleMultiplier = 1.2;
+
+                if ($('#main-map').width() < 402) {
+                    scaleMultiplier = 0.6;
+                    natScaleMultiplier = 0.65;
+                } else if ($('#main-map').width() < 610) {
+                    scaleMultiplier = 0.9;
+                    natScaleMultiplier = 0.9;
+                }
+
+                this.svg = d3.select(this.el)
+                             .select('svg')
+                             .attr('width', width)
+                             .attr('height', height)
+                             ;
+
+                if (this.model.state) {
+                    console.count('-- render STATE map');
+
                     d3.json(dataManager.getGeo('states', 'centroids'), _.bind(function(json) {
 
                         var found = _.findWhere(json.features, { id: this.model.state.id });                            
 
+                        console.log('Setting projection', found.geometry.scale * scaleMultiplier);
                         this.projection = d3.geo
                                             .mercator()
                                             .translate([width/2, height/2])
@@ -398,7 +388,15 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     }, this));
 
                 } else {
+                    console.count('-- render NATIONAL map');
 
+                    console.log('Setting projection', 800 * natScaleMultiplier); 
+                    this.projection = d3.geo
+                                        .albersUsa()
+                                        .translate([width/2, height/2])
+                                        .scale(800 * natScaleMultiplier)
+                                        ;
+                    
                     if (this.model.race.id == 'h') {
                         this.drawMap(dataManager.getGeo('cds', 'simp'), '', 0.3);
                     } else {
@@ -407,10 +405,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 }
             }
-
         }
 
-        
     });
     
     return view;
