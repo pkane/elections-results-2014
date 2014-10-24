@@ -291,7 +291,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 if (altSeat) {
 
                     for (var i = races.length - 1; i >= 0; i--) {
-                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html((races[i].seatNumber === '0') ? 'General Election' : 'Special Election');    
+                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html((races[i] === '0') ? 'General Election' : 'Special Election');
                         if ( i === races.indexOf(currentSeat) ) {
                             $(swapBtn[i]).addClass('active-race');
                         } else {
