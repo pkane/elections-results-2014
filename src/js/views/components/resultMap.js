@@ -275,6 +275,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         renderNav: function() {
             console.log('render nav');
+
+            var swapBtn = this.$('.resultmap-swap-btn');
             
             var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
                 currentSeat = (this.model.fips) ? this.model.fips : (this.model.race.id === 's') ? '0' : '1';
@@ -287,8 +289,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
 
                 if (altSeat) {
-                    this.$('#resultmap-swap-btn').attr('href', '#race/' + raceKey + '-' + this.model.state.abbr + '-' + altSeat);
-                    this.$('#resultmap-swap-btn').html((altSeat === '0') ? 'View General Election Results' : 'View Special Election Results');                                
+
+                    for (var i = races.length - 1; i >= 0; i--) {
+                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html((races[i].seatNumber === '0') ? 'General Election' : 'Special Election');    
+                        if ( i === races.indexOf(currentSeat) ) {
+                            $(swapBtn[i]).addClass('active-race');
+                        } else {
+                            $(swapBtn[i]).removeClass('active-race');
+                        }
+                    };
+
                 }
 
                 this.$('.state-list-dropdown')
@@ -306,7 +316,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
             
             this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
-            this.$('#resultmap-swap-btn').css('display', races.length > 1 ? 'inline-block': 'none');
+            this.$('.resultmap-swap-btn').css('display', races.length > 1 ? 'inline-block': 'none');
+            this.$('.main-map-controls').css('width', races.length > 1 ? '100%': 'auto');
         },
 
         refresh: function() {
