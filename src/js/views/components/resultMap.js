@@ -28,11 +28,38 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         
         template: _.template(resultMap),
 
-        mapCache: { path: 'none', places: 'none' },    
+        mapCache: {},
+
+        hasMapData: function() {
+            return (!!this.model.detail && this.model.detail.length > 0) || (this.model.data.length > 0 );
+        },
+
+        allowMapDraw: function() {
+            return  (this.mapCache.race != this.model.race.id || this.mapCache.state != this.model.state);
+        },
+
+        updateMap: function() {
+            if (this.hasMapData()) {
+
+                console.log('... update map ...');
+
+                this.svg
+                    .selectAll('path')
+                    .attr('fill', _.bind(this.fillColor, this))
+                    ;    
+            }            
+        },
             
         drawMap: function(geoJsonPath, geoJsonPlaces, strokeWidth) {
             
-            if (this.model.race) {
+            console.log('... drawing map ... ', geoJsonPath);
+
+            if (this.model.race && this.allowMapDraw()) {
+
+                console.log('... allowed to draw map ... ', this.model.race, this.model.data);
+
+                this.mapCache.state = this.model.state;
+                this.mapCache.race = this.model.race.id;
 
                 d3.json(geoJsonPath, _.bind(function(json) {
                     this.svg.html('');
@@ -133,6 +160,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                          }                     
 
                 }, this));
+            } else {
+                this.updateMap();
             }
         },
 
@@ -243,12 +272,16 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             } else if (this.model.state) {
                 state = this.model.state.id;
             }
-            
+
             if (this.model.detail && this.model.detail.length > 0) {
+                //console.log('... fillColor ... detail');
                 found = _.findWhere(this.model.detail, { id: id });
             } else {
+                // console.log('... fillColor ... data ', this.model.data);
                 found = _.findWhere(this.model.data, { id: id });
             }
+
+            //console.log('... fillColor ... ', found, id, d);
 
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
@@ -270,6 +303,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 }
             }
             
+            //console.log('... fillColor ... ', id, state, color);
+
             return color;
         },
 
