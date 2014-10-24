@@ -33,7 +33,7 @@ define(['jquery'], function ($) {
                 raceByState: '2014/RaceResultsByState/{raceId}',
                 raceByCounty: '2014/StateResultsByCountyOrCd/{raceId}/{stateId}',
                 raceByCountyDetail: '2014/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
-                updates: 'DataFeedVersions/2014/'
+                updates: 'DataFeedVersions/2014'
             }
         },
 
