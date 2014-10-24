@@ -1,8 +1,8 @@
 #main-map text {
-  text-shadow: 1px 0px   4px rgba(255,255,255,0.75),
-               0px 1px   4px rgba(255,255,255,0.75),
-               -1px 0px  4px rgba(255,255,255,0.75),
-               0px -1px  4px rgba(255,255,255,0.75);
+  text-shadow: 1px 0px   0px rgba(255,255,255,0.95),
+               0px 1px   0px rgba(255,255,255,0.95),
+               -1px 0px  0px rgba(255,255,255,0.95),
+               0px -1px  0px rgba(255,255,255,0.95);
   pointer-events: none;
 }
 
@@ -81,6 +81,6 @@
     &.emli-lean-r { background-color: $color-lean-rep; }
     &.emli-safe-r { background-color: $color-rep; }
     &.emli-lean-ind { background-color: $color-lean-ind; }
-    &.emli-ind { background-color: #70B848; }
+    &.emli-ind { background-color: #999999; }
   }
 }

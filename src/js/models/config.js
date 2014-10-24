@@ -108,8 +108,8 @@ define(['jquery'], function ($) {
             democratic: '#518296',
             republicanWin: '#742b31',
             republican: '#95474e',
-            otherWin: '#70B848',
-            other: '#8dc66d',
+            otherWin: '#999999',
+            other: '#cccccc',
             tieWin: '#b8b8b8',
             tie: '#e0e0e0'
         },
