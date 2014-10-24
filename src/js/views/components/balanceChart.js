@@ -11,7 +11,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
     var isRendered = false,
         seatsHeld = { 
             s: { dem: 34, rep: 30, total: 100, was: { dem: 55, rep: 45}},
-            h: { dem: 0, rep: 0, total: 435, was: { dem: 202, rep: 233}},
+            h: { dem: 0, rep: 0, total: 435, was: { dem: 199, rep: 233}},
             g: { dem: 7, rep: 7, total: 50, was: { dem: 21, rep: 29}}
         },
         view = Backbone.View.extend({
