@@ -320,7 +320,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     }, this).join(''));
             }
             
-            this.$('.resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
+            this.$('#resultmap-back-btn').css('display', this.model.state ? 'inline-block': 'none');
             this.$('.resultmap-swap-btn').css('display', races.length > 1 ? 'inline-block': 'none');
         },
 
