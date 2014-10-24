@@ -183,7 +183,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                         _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
                             if (list[index-1] && list[index-1].seatNumber !== item.seatNumber) {
-                                memo += '<tr><td colspan="3"><hr /></td></tr>';
+                                memo += '<tr><td colspan="3"><hr /><h4 class="map-tooltip-heading">Special election</h4></td></tr>';
                             }
                             return (memo
 
