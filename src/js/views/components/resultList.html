@@ -33,7 +33,7 @@
                     <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="initiatives">
                         <td class="initiative-name"><%= item.name %></td>
-                        <td class="result-votes" style='background-size: <%= pctVotes %>% 100%;'><% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%></td>
+                        <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'><% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%></td>
                         <td class="result-pct"><%= formatPercent(item.pct/100) %></td>
                     </tr>
                 <% }); %>

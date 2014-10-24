@@ -279,7 +279,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             var swapBtn = this.$('.resultmap-swap-btn');
             
             var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
-                currentSeat = (this.model.fips) ? this.model.fips : (this.model.race.id === 's') ? '0' : '1';
+                currentSeat = (this.model.fips) ? this.model.fips : (this.model.race && this.model.race.id === 's') ? '0' : '1';
             
             if (this.model.race) {
                 var raceKey = this.model.race.key,
