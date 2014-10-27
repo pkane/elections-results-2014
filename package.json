@@ -4,6 +4,7 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-akamai-clear": "^0.1.0",
     "grunt-bower-install": "~0.7.0",
     "grunt-cli": "~0.1.13",
     "grunt-concurrent": "~0.4.0",

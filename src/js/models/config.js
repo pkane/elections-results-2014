@@ -9,6 +9,7 @@ define(['jquery'], function ($) {
         isMobile: isMobile,
         pageInfo: staticInfo,
         ssts: 'news/politics/elections/results',
+        share: 'http://www.usatoday.com/pages/interactives/elections-results-2014/',
 
         maxTabletWidth: 991,
 
