@@ -364,6 +364,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         render: function () {
             console.log('-- render --');
+            this.mapCache = {};
             this.$el.html(this.template(this.model));            
             this.renderMap();
             this.renderNav();
