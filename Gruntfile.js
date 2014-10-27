@@ -17,7 +17,6 @@ module.exports = function (grunt) {
                 user: 'ccontrol2',
                 password: 'usatoday15', // dumb, but i'm not the first one...
                 urls: [
-                    'http://static.usatoday.com/api/v1/interactive/?format=json&amp;url=/elections-results-2014/',
                     'http://www.gannett-cdn.com/GDContent/2014/election-results/css/results-style.css',
                     'http://www.gannett-cdn.com/GDContent/2014/election-results/js/main.min.js'
                 ],
