@@ -14,7 +14,15 @@ module.exports = function (grunt) {
 
         // Empties folders to start fresh
         clean: {
-            deploy: 'css',
+            deploy: {
+                files: [{
+                    src: [
+                        'css',
+                        'js'
+                    ]
+                }]
+            },
+
             options: {
                 force: true
             },
@@ -39,7 +47,8 @@ module.exports = function (grunt) {
                     cwd: '<%= config.dist %>',
                     dest: '',
                     src: [
-                        'css/*.css'
+                        'css/*.css',
+                        'js/*.js'
                     ]
                 }]
             },
@@ -111,7 +120,8 @@ module.exports = function (grunt) {
             },
             upload: {
                 files: {
-                    '/17200/GDContent/2014/election-results/': 'css/*'
+                    '/17200/GDContent/2014/election-results//': 'css/*',
+                    '/17200/GDContent/2014/election-results/': 'js/main.min.js'
                 }
             }
         },
@@ -336,7 +346,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('deploy', [
-        'copy:deploy',
+        'copy:deploy',        
         'ftp',
         'clean:deploy'
     ]);
