@@ -40,9 +40,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         updateMap: function() {
             if (this.hasMapData()) {
-
-                console.log('... update map ...');
-
                 this.svg
                     .selectAll('path')
                     .attr('fill', _.bind(this.fillColor, this))
@@ -274,14 +271,10 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
 
             if (this.model.detail && this.model.detail.length > 0) {
-                //console.log('... fillColor ... detail');
                 found = _.findWhere(this.model.detail, { id: id });
             } else {
-                // console.log('... fillColor ... data ', this.model.data);
                 found = _.findWhere(this.model.data, { id: id });
             }
-
-            //console.log('... fillColor ... ', found, id, d);
 
             if (found) {
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
@@ -302,8 +295,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                     }, this);
                 }
             }
-            
-            //console.log('... fillColor ... ', id, state, color);
 
             return color;
         },
