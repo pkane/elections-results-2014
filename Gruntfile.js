@@ -359,7 +359,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('deploy', [
-        'copy:deploy',        
+        'copy:deploy',
         'ftp',
         'clean:deploy',
         'akamai:production'
