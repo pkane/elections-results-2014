@@ -260,7 +260,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 state = id,
                 hasState = !!this.model.state,
                 found,
-                color = partyColors.defaultColor
+                color = partyColors.defaultColor,
+                stateWinner = false;
                 ;
 
             if (this.model.race.id == 'h') {
@@ -277,20 +278,38 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             }
 
             if (found) {
+                found.results.forEach(function(item) {
+                    stateWinner = item.win ? true : stateWinner;
+                })
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.find(found.results, function(item) {
                         
                         var isCurrentSeat = !item.seatNumber || this.model.race.id === 'h' || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
                         
-                        if (!hasState) {
+                        if (!hasState) { //national
                             if (item.win && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
                                 return true;
                             } else if (item.lead && isCurrentSeat) {
                                 color = partyColors[item.party.toLowerCase()] || partyColors["other"];
                             }
-                        } else if (isCurrentSeat && (item.lead || (item.win && item.pct == 0))) {
-                           color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                        } else if (this.model.race.id == 'h') { //state zoom, house
+                            if (isCurrentSeat && item.win) {
+                                color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                            }  else if (isCurrentSeat && (item.lead)) {
+                                color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            }
+                        } else { //state zoom, gov/senate
+                            if (stateWinner) {
+                                if (isCurrentSeat && (item.lead || (item.win && item.pct == 0))) {
+                                    color = partyColors[item.party.toLowerCase() + "Win"] || partyColors["otherWin"];
+                                } else if (isCurrentSeat && item.lead) {
+                                    color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                                }
+                            } else if (isCurrentSeat && item.lead) {
+                                color = partyColors[item.party.toLowerCase()] || partyColors["other"];
+                            }
+
                         }
                     }, this);
                 }
