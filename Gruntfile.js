@@ -17,8 +17,8 @@ module.exports = function (grunt) {
                 user: 'ccontrol2',
                 password: 'usatoday15', // dumb, but i'm not the first one...
                 urls: [
-                    'http://www.gannett-cdn.com/GDContent/2014/election-results/css/results-style.css',
-                    'http://www.gannett-cdn.com/GDContent/2014/election-results/js/main.min.js'
+                    'http://www.gannett-cdn.com/GDContent/2014/election-results/css/results-style.css?v1',
+                    'http://www.gannett-cdn.com/GDContent/2014/election-results/js/main.min.js?v1'
                 ],
                 notify: ['ckamsler@gannett.com']
             }
