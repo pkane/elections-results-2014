@@ -26,12 +26,20 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         model: new (Backbone.Model.extend({}))(),
         
+        events: {
+            'click .resultmap-swap-btn': 'toggleRace'            
+        },
+
         template: _.template(resultMap),
 
         mapCache: {},
             
         getCurrentSeat: function() {
             return (this.model.fips) ? this.model.fips : (this.model.race && this.model.race.id === 's') ? '0' : '1';
+        },
+
+        toggleRace: function(e) {
+            analytics.trigger('track:event', this.model.race.key + 'results2014map' + $(e.target).data('value'));
         },
 
         hasMapData: function() {
