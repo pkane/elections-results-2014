@@ -35,7 +35,7 @@ define(['jquery', 'd3'], function ($, d3) {
             key: 'api_key=mwpprad6j3da5u34cnt7prnh',
             dataFeedVersionId: 0,
             lastChecked: 0,
-            pollFrequency: 5 * 60 * 1000, // TBD            
+            pollFrequency: 2.5 * 60 * 1000, // TBD            
             op: {
                 version: 'CurrentVersion',
                 all: '2014/AllRaces',
