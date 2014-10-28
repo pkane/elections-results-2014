@@ -42,7 +42,6 @@ define(['jquery', 'd3'], function ($, d3) {
                 initiatives: '2014/BallotInitiativesByState',
                 initiativesDetail: '2014/StateBallotInitiatives/{stateId}',
                 raceByState: '2014/RaceResultsByState/{raceId}',
-                raceByCounty: '2014/StateResultsByCountyOrCd/{raceId}/{stateId}',
                 raceByCountyDetail: '2014/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
                 updates: 'DataFeedVersions/2014'
             }
@@ -51,7 +50,7 @@ define(['jquery', 'd3'], function ($, d3) {
         geoBase: (function() { return window.location.port === '9000' ? '' : '/services/webproxy/?url=http://www.gannett-cdn.com/GDContent/2014/election-results/json/'; })(),
 
         races: [
-            { id: 'h', key: 'house', display: 'House', op: 'raceByCounty', detail: 'raceByCountyDetail'},
+            { id: 'h', key: 'house', display: 'House', op: 'raceByCountyDetail', detail: 'raceByCountyDetail'},
             { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCountyDetail'},
             { id: 'g', key: 'governors', display: 'Governor', op: 'raceByState', detail: 'raceByCountyDetail'},
             { id: 'i', key: 'initiatives', display: 'Initiatives', op: 'initiatives', detail: 'initiativesDetail'},
