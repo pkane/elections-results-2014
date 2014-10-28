@@ -35,7 +35,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
         mapCache: {},
             
         getCurrentSeat: function() {
-            return (this.model.fips) ? this.model.fips : (this.model.race && this.model.race.id === 's') ? '0' : '1';
+            return (this.model.fips) ? this.model.fips : (this.model.race && this.model.race.id !== 'h') ? '0' : '1';
         },
 
         toggleRace: function(e) {
