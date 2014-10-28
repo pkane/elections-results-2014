@@ -1,7 +1,12 @@
-define(['jquery'], function ($) {
+define(['jquery', 'd3'], function ($, d3) {
 
     var staticInfo = JSON.parse($('.staticinfo').html()),
-        isMobile = staticInfo.platform === 'mobile'
+        isMobile = staticInfo.platform === 'mobile',
+        updateTime = function() {
+            var now = new Date();
+            return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+        },
+        utcTime = updateTime()
         ;
 
     return {
@@ -21,11 +26,16 @@ define(['jquery'], function ($) {
         },
 
         api: {
+            cacheTime: function(shouldUpdate) {
+                if (!!shouldUpdate) { utcTime = updateTime(); }
+                return '&cachetime=' + d3.time.minute(utcTime).getTime();
+            },
+
             base: 'http://api.gannett-cdn.com/internal/ElectionsServices/Elections/',
             key: 'api_key=mwpprad6j3da5u34cnt7prnh',
             dataFeedVersionId: 0,
             lastChecked: 0,
-            pollFrequency: 5 * 60 * 1000, // TBD
+            pollFrequency: 2.5 * 60 * 1000, // TBD            
             op: {
                 version: 'CurrentVersion',
                 all: '2014/AllRaces',
