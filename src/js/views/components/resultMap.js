@@ -26,9 +26,21 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
         model: new (Backbone.Model.extend({}))(),
         
+        events: {
+            'click .resultmap-swap-btn': 'toggleRace'            
+        },
+
         template: _.template(resultMap),
 
         mapCache: {},
+            
+        getCurrentSeat: function() {
+            return (this.model.fips) ? this.model.fips : (this.model.race && this.model.race.id === 's') ? '0' : '1';
+        },
+
+        toggleRace: function(e) {
+            analytics.trigger('track:event', this.model.race.key + 'results2014map' + $(e.target).data('value'));
+        },
 
         hasMapData: function() {
             return (!!this.model.detail && this.model.detail.length > 0) || (this.model.data.length > 0 );
@@ -284,7 +296,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 if (!this.model.state || this.model.state && state == this.model.state.id) {
                     _.find(found.results, function(item) {
                         
-                        var isCurrentSeat = !item.seatNumber || this.model.race.id === 'h' || (item.seatNumber === ((this.model.fips) ? this.model.fips : '0'));
+                        var isCurrentSeat = !item.seatNumber || this.model.race.id === 'h' || (item.seatNumber === this.getCurrentSeat());
                         
                         if (!hasState) { //national
                             if (item.win && isCurrentSeat) {
@@ -323,8 +335,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
             var swapBtn = this.$('.resultmap-swap-btn');
             
-            var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().value() : [],
-                currentSeat = (this.model.fips) ? this.model.fips : (this.model.race && this.model.race.id === 's') ? '0' : '1';
+            var races = (this.model.detail && this.model.detail.length > 0) ? _.chain(this.model.detail[0].results).pluck('seatNumber').uniq().sort().value() : [],
+                currentSeat = this.getCurrentSeat();
             
             if (this.model.race) {
                 var raceKey = this.model.race.key,
@@ -334,16 +346,8 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                 this.$('#resultmap-back-btn').attr("href", "#" + raceKey);
 
                 if (altSeat) {
-
-                    for (var i = races.length - 1; i >= 0; i--) {
-                        $(swapBtn[i]).attr("href", "#race/" + raceKey + '-' + this.model.state.abbr + '-' + races[i]).html((races[i] === '0') ? 'General Election' : 'Special Election');
-                        if ( i === races.indexOf(currentSeat) ) {
-                            $(swapBtn[i]).addClass('active-race');
-                        } else {
-                            $(swapBtn[i]).removeClass('active-race');
-                        }
-                    };
-
+                    this.labelBtn(races[0], swapBtn[1]);
+                    this.labelBtn(races[1], swapBtn[0]);
                 }
 
                 this.$('.state-list-dropdown')
@@ -451,6 +455,14 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
                 }
             }
+        },
+            
+        labelBtn: function(race, btn) {
+            var href = "#race/" + this.model.race.key + '-' + this.model.state.abbr + '-' + race,
+                label = (race === '0') ? 'General Election' : 'Special Election',
+                active = (race === this.getCurrentSeat());
+
+            $(btn).toggleClass('active-race', active).attr("href", href).html(label);
         }
 
     });
