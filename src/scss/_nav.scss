@@ -235,6 +235,12 @@
     }
 }
 
+@include breakpoint(625) {
+    #election-app.oembed {
+        min-height: 375px;
+    }
+}
+
 @include tablet-min {
     #election-app.oembed {
         .page-icon-mini {
