@@ -150,12 +150,12 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 $(progressRight).addClass('rep').removeClass('other');
                 $('.icon', progressRight).addClass('icon-rep-left');
                 
-                $('.num', numLeft).text(dem.seats + other.seats + held.dem);
+                $('.num', numLeft).text(dem.seats + held.dem);
                 $('.party-label', numLeft).text(config.isMobile ? 'Dem' : 'Democrat');
                 $('.num', numRight).text(rep.seats + held.rep);
                 $('.party-label', numRight).text(config.isMobile ? 'GOP' : 'Republican');
 
-                $(progressLeft).css('width', ((dem.seats + other.seats + held.dem) / held.total)*100 + '%');
+                $(progressLeft).css('width', ((dem.seats + held.dem) / held.total)*100 + '%');
                 $(progressRight).css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
                 
                 $('.bar-progress-left', desc).css('width', (held.was.dem / held.total)*100 + '%');
