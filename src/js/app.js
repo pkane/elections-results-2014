@@ -15,9 +15,9 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
         
         oembedClickHandler = function () {
             if (window.parent) {
-                window.parent.location.href = 'http://www.usatoday.com/pages/interactives/elections-results-2014/';
+                window.parent.location.href = navView.shareUrl();
             } else {
-                window.location.href = 'http://www.usatoday.com/pages/interactives/elections-results-2014/';
+                window.location.href = navView.shareUrl();
             }
         },
         

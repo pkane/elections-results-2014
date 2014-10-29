@@ -17,7 +17,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         
         template: _.template(templateFile),
 
-        shareUrl: function() { return config.share; },
+        shareUrl: function() {
+            var hash = '#' + this.model.currentRace.key + ((this.model.currentState) ? '-' + this.model.currentState.abbr : '');
+            return config.share + hash;
+        },
 
         text: {
             message: _.template('Latest <%- race %> race results via @USATODAY #election2014'),
