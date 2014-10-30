@@ -53,7 +53,7 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
                 return (full) ? format(full) : 0;
             },
             formatParty: function (party) {
-                return (config.partyAbbr[party]) ? config.partyAbbr[party] : party.charAt(0);
+                return (config.partyAbbr[party]) ? config.partyAbbr[party] : '(' + party.charAt(0) + ')';
             },
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');

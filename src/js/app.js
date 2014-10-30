@@ -29,13 +29,15 @@ function ($, _, Backbone, Router, IndexView, NavView, config, dataManager, analy
                 jsonpCallback: 'ping',
                 cache: true,
                 timeout: config.api.pollFrequency,
-                data: config.api.key,
+                data: (config.api.key + config.api.cacheTime(true)),
             
                 complete: function (xhr, statusCode) {
                     if (statusCode === 'success') {
                         var remoteVersion = parseInt(xhr.responseJSON);
                         
                         if (remoteVersion > config.api.dataFeedVersionId) {
+                            $('body').attr('data-version', remoteVersion);
+                            
                             config.api.dataFeedVersionId = remoteVersion;
                             App.refresh();
                         }

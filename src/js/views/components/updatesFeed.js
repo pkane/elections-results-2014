@@ -11,7 +11,8 @@ function ($, _, Backbone, d3, config, componentTemplate) {
     var view = Backbone.View.extend({
         
         model: new (Backbone.Model.extend({ 
-            data: [],            
+            data: [],
+            filtered: [],
             timeFormat: d3.time.format('%-I:%M %p %m/%d/%y'),
 
             filterData: function (dataSet) { 
@@ -62,6 +63,8 @@ function ($, _, Backbone, d3, config, componentTemplate) {
         template: _.template(componentTemplate),
         
         render: function () {
+            
+            this.model.filtered = this.model.filterData(this.model.data);
             
             this.$el.html(this.template(this.model));
             

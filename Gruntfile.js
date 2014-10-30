@@ -12,9 +12,29 @@ module.exports = function (grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        akamai: {
+            production: {
+                user: 'ccontrol2',
+                password: 'usatoday15', // dumb, but i'm not the first one...
+                urls: [
+                    'http://www.gannett-cdn.com/GDContent/2014/election-results/css/results-style.css?v1',
+                    'http://www.gannett-cdn.com/GDContent/2014/election-results/js/main.min.js?v1'
+                ],
+                notify: ['ckamsler@gannett.com']
+            }
+        },
+
         // Empties folders to start fresh
         clean: {
-            deploy: 'css',
+            deploy: {
+                files: [{
+                    src: [
+                        'css',
+                        'js'
+                    ]
+                }]
+            },
+
             options: {
                 force: true
             },
@@ -39,7 +59,8 @@ module.exports = function (grunt) {
                     cwd: '<%= config.dist %>',
                     dest: '',
                     src: [
-                        'css/*.css'
+                        'css/*.css',
+                        'js/*.js'
                     ]
                 }]
             },
@@ -111,7 +132,8 @@ module.exports = function (grunt) {
             },
             upload: {
                 files: {
-                    '/17200/GDContent/2014/election-results/': 'css/*'
+                    '/17200/GDContent/2014/election-results//': 'css/*',
+                    '/17200/GDContent/2014/election-results/': 'js/main.min.js'
                 }
             }
         },
@@ -326,6 +348,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-remove-logging');
     grunt.loadNpmTasks('grunt-ftp');
+    grunt.loadNpmTasks('grunt-akamai-clear');
 
     // Tasks
     grunt.registerTask('build', [
@@ -338,7 +361,8 @@ module.exports = function (grunt) {
     grunt.registerTask('deploy', [
         'copy:deploy',
         'ftp',
-        'clean:deploy'
+        'clean:deploy',
+        'akamai:production'
     ]);
 
     grunt.registerTask('serve', function (target) {

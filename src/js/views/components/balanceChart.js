@@ -11,7 +11,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
     var isRendered = false,
         seatsHeld = { 
             s: { dem: 34, rep: 30, total: 100, was: { dem: 55, rep: 45}},
-            h: { dem: 0, rep: 0, total: 435, was: { dem: 202, rep: 233}},
+            h: { dem: 0, rep: 0, total: 435, was: { dem: 199, rep: 233}},
             g: { dem: 7, rep: 7, total: 50, was: { dem: 21, rep: 29}}
         },
         view = Backbone.View.extend({
@@ -22,6 +22,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
 
         timeFormat: d3.time.format('%I:%M %p'),
         numFormat: d3.format(','),
+        pctFormat: d3.format('.1%'),
         
         model: new (Backbone.Model.extend({
             data: [],
@@ -67,42 +68,58 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                             return result;
                         }).first(2).value();
                 
-                if (candidate.length == 2)
-                {
+                if (candidate.length == 1) {
+                    candidate.push({ 
+                        party: ((candidate[0].party === 'Democratic') ? 'Republican' : 'Democratic'),
+                        name: 'Uncontested',
+                        votes: 0,
+                        pct: 0
+                    });
+                }
+                
+                if (candidate.length == 2) {
                     if (candidate[1].party === 'Democratic' || candidate[0].party === 'Republican') {
                         candidate.reverse();
                     }
 
-                    var pctLeft = Math.round(candidate[0].pct*10)/10,
-                        pctRight = Math.round(candidate[1].pct*10)/10;
+                    var pctLeft = this.pctFormat(candidate[0].pct/100),
+                        pctRight = this.pctFormat(candidate[1].pct/100);
 
                     this.$('.desc-all').hide();
                     this.$('.desc-individual').show();
 
                     if (candidate[0].party === 'Democratic') {
                         $(progressLeft).addClass('dem').removeClass('other');
+                        $(numLeft).addClass('dem').removeClass('other');
+                        $('.text-left', desc).addClass('dem').removeClass('other');
                         $('.icon', progressLeft).addClass('icon-dem-right');
                     } else {
                         $(progressLeft).removeClass('dem').addClass('other');
+                        $(numLeft).removeClass('dem').addClass('other');
+                        $('.text-left', desc).removeClass('dem').addClass('other');
                         $('.icon', progressLeft).removeClass('icon-dem-right dem');
                     }
 
                     if (candidate[1].party === 'Republican') {
                         $(progressRight).addClass('rep').removeClass('other');
+                        $(numRight).addClass('rep').removeClass('other');
+                        $('.text-right', desc).addClass('rep').removeClass('other');
                         $('.icon', progressRight).addClass('icon-rep-left');
                     } else {
                         $(progressRight).removeClass('rep').addClass('other');
+                        $(numRight).removeClass('rep').addClass('other');
+                        $('.text-right', desc).removeClass('rep').addClass('other');
                         $('.icon', progressRight).removeClass('icon-rep-left dem');
                     } 
 
-                    $('.num', numLeft).text(pctLeft + '%');
-                    $('.num', numRight).text(pctRight + '%');
+                    $('.num', numLeft).text(pctLeft);
+                    $('.num', numRight).text(pctRight);
                     
                     $('.party-label', numLeft).text('');
                     $('.party-label', numRight).text('');
 
-                    $(progressLeft).css('width', pctLeft + '%');
-                    $(progressRight).css('width', pctRight + '%');
+                    $(progressLeft).css('width', pctLeft);
+                    $(progressRight).css('width', pctRight);
 
                     $('.text-left .name', desc).text(candidate[0].name);
                     $('.text-right .name', desc).text(candidate[1].name);
@@ -112,8 +129,8 @@ function ($, _, Backbone, d3, config, chartTemplate) {
 
                     $('.bar-progress-left', desc).css('width', '0%');
                     $('.bar-progress-right', desc).css('width', '0%');
-                } else {
-                    console.log('Handle edge case of single candidate');
+                    
+                    this.$('.updated').text(this.pctFormat(this.model.detail.precincts.pct/100) + ' reporting');
                 }
             } else if (this.model.data.length > 0 && this.model.race.id !== 'i') {
 
@@ -133,12 +150,12 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 $(progressRight).addClass('rep').removeClass('other');
                 $('.icon', progressRight).addClass('icon-rep-left');
                 
-                $('.num', numLeft).text(dem.seats + other.seats + held.dem);
+                $('.num', numLeft).text(dem.seats + held.dem);
                 $('.party-label', numLeft).text(config.isMobile ? 'Dem' : 'Democrat');
                 $('.num', numRight).text(rep.seats + held.rep);
                 $('.party-label', numRight).text(config.isMobile ? 'GOP' : 'Republican');
 
-                $(progressLeft).css('width', ((dem.seats + other.seats + held.dem) / held.total)*100 + '%');
+                $(progressLeft).css('width', ((dem.seats + held.dem) / held.total)*100 + '%');
                 $(progressRight).css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
                 
                 $('.bar-progress-left', desc).css('width', (held.was.dem / held.total)*100 + '%');

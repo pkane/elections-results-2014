@@ -17,7 +17,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
         
         template: _.template(templateFile),
 
-        shareUrl: function() { return config.pageInfo.share_url; },
+        shareUrl: function() { return config.share; },
 
         text: {
             message: _.template('Latest <%- race %> race results via @USATODAY #election2014'),
@@ -44,7 +44,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 href = e.target.href;
                 ;
 
-            if (href.indexOf('#') !== -1 && href != window.location.href && (window.innerWidth > config.maxTabletWidth || !$parent.hasClass('selected'))) {                
+            if (href && href.indexOf('#') !== -1 && href != window.location.href && (window.innerWidth > config.maxTabletWidth || !$parent.hasClass('selected'))) {                
                 analytics.trigger('track:event', 'results2014' + $target.text().toLowerCase());
 
                 if (!config.isMobile) {
@@ -79,8 +79,6 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 }, function(response){});
                      
             }
-
-            this.shareToggle();
         },
 
         shareTwitter: function(e) {
@@ -89,14 +87,11 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             if (!config.isMobile) {
                 e.preventDefault();
                 window.open(e.target.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=550,height=420');
-            }                
-
-            this.shareToggle();
+            }
         },
 
         shareEmail: function(e) {
             analytics.trigger('track:event', 'elections2014email');
-            this.shareToggle();            
         },
         
         toggleOverlay: function() {
@@ -155,7 +150,16 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
 
             console.log("### RACE ", state);
 
-            if (race.key == "initiatives") { this.$('.election-office-projection-heading').addClass('initiatives') } else { this.$('.election-office-projection-heading').removeClass('initiatives'); }
+            if (race.key == "initiatives") { 
+                this.$('.election-office-projection-heading').addClass('initiatives') 
+            } else { 
+                this.$('.election-office-projection-heading').removeClass('initiatives'); 
+            }
+            
+            if (race.id === 's') {
+                fips = (fips === '2') ? 'Special Election' : '';
+            }
+            
             this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' ' + fips + ' Results');
 
             this.$('.nav-item').removeClass('selected');            

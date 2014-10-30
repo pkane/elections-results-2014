@@ -1,7 +1,12 @@
-define(['jquery'], function ($) {
+define(['jquery', 'd3'], function ($, d3) {
 
     var staticInfo = JSON.parse($('.staticinfo').html()),
-        isMobile = staticInfo.platform === 'mobile'
+        isMobile = staticInfo.platform === 'mobile',
+        updateTime = function() {
+            var now = new Date();
+            return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+        },
+        utcTime = updateTime()
         ;
 
     return {
@@ -9,6 +14,7 @@ define(['jquery'], function ($) {
         isMobile: isMobile,
         pageInfo: staticInfo,
         ssts: 'news/politics/elections/results',
+        share: 'http://www.usatoday.com/pages/interactives/elections-results-2014/',
 
         maxTabletWidth: 991,
 
@@ -20,27 +26,31 @@ define(['jquery'], function ($) {
         },
 
         api: {
+            cacheTime: function(shouldUpdate) {
+                if (!!shouldUpdate) { utcTime = updateTime(); }
+                return '&cachetime=' + d3.time.minute(utcTime).getTime();
+            },
+
             base: 'http://api.gannett-cdn.com/internal/ElectionsServices/Elections/',
             key: 'api_key=mwpprad6j3da5u34cnt7prnh',
             dataFeedVersionId: 0,
             lastChecked: 0,
-            pollFrequency: 5 * 60 * 1000, // TBD
+            pollFrequency: 2.5 * 60 * 1000, // TBD            
             op: {
                 version: 'CurrentVersion',
                 all: '2014/AllRaces',
                 initiatives: '2014/BallotInitiativesByState',
                 initiativesDetail: '2014/StateBallotInitiatives/{stateId}',
                 raceByState: '2014/RaceResultsByState/{raceId}',
-                raceByCounty: '2014/StateResultsByCountyOrCd/{raceId}/{stateId}',
                 raceByCountyDetail: '2014/StateResultsByCountyOrCdDetail/{raceId}/{stateId}',
-                updates: 'DataFeedVersions/2014/'
+                updates: 'DataFeedVersions/2014'
             }
         },
 
         geoBase: (function() { return window.location.port === '9000' ? '' : '/services/webproxy/?url=http://www.gannett-cdn.com/GDContent/2014/election-results/json/'; })(),
 
         races: [
-            { id: 'h', key: 'house', display: 'House', op: 'raceByCounty', detail: 'raceByCountyDetail'},
+            { id: 'h', key: 'house', display: 'House', op: 'raceByCountyDetail', detail: 'raceByCountyDetail'},
             { id: 's', key: 'senate', display: 'Senate', op: 'raceByState', detail: 'raceByCountyDetail'},
             { id: 'g', key: 'governors', display: 'Governor', op: 'raceByState', detail: 'raceByCountyDetail'},
             { id: 'i', key: 'initiatives', display: 'Initiatives', op: 'initiatives', detail: 'initiativesDetail'},
