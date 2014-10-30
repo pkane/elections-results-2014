@@ -164,14 +164,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 fips = (fips === '2') ? 'Special Election' : '';
             }
             
-            if (state) {
+            if (state && state.id) {
                 pageTitle = ((config.isMobile) ? state.abbr.toUpperCase() : state.display) + ' ' ;
             }
-            pageTitle += race.display;
-            if (race.id !== 'i') {
-                pageTitle += ' ' + fips;
-            }
-            pageTitle += ' Results';
+            pageTitle += race.display + ' ' + fips + ' Results';
             
             this.$('.election-office-projection-heading').text(pageTitle);
 
