@@ -23,6 +23,11 @@ function ($, _, Backbone, d3, config, chartTemplate) {
         timeFormat: d3.time.format('%I:%M %p'),
         numFormat: d3.format(','),
         pctFormat: d3.format('.1%'),
+            
+        sortValues: { 
+            0: ['No', 'Against', 'Reject', 'Repealed'],
+            1: ['Yes', 'For', 'Approve', 'In Favor', 'Maintained']
+        },
         
         model: new (Backbone.Model.extend({
             data: [],
@@ -80,8 +85,10 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 if (candidate.length == 2) {
                     if (candidate[1].party === 'Democratic' || candidate[0].party === 'Republican') {
                         candidate.reverse();
+                    } else if (this.model.race.id === 'i' && this.sortValues[1].indexOf(candidate[0].name) > -1) {
+                        candidate.reverse();
                     }
-
+                    
                     var pctLeft = this.pctFormat(candidate[0].pct/100),
                         pctRight = this.pctFormat(candidate[1].pct/100);
 

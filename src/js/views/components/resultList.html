@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <% _.each(value.results, function(item, index) { %>
+                <% _.each(_.sortBy(value.results, initiativeSort, sortValues), function(item, index) { %>
                     <% var pctVotes = formatPercent(item.votes, value.votes); %>
                     <tr class="initiatives <%= (index === 0) ? 'no' : 'yes' %>">
                         <td class="initiative-name"><%= item.name %></td>
