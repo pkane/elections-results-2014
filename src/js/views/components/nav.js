@@ -148,7 +148,8 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 state = this.model.currentState,
                 fips = this.model.currentFips,
                 message = escape(this.text.message({ race: race.display })),
-                url = this.shareUrl()
+                url = encodeURIComponent(this.shareUrl()),
+                pageTitle = ''
                 ;
 
             console.log("### RACE ", state);
@@ -163,7 +164,12 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 fips = (fips === '2') ? 'Special Election' : '';
             }
             
-            this.$('.election-office-projection-heading').text((state ? state.display + ' ' : '') + race.display + ' ' + fips + ' Results');
+            if (state && state.id) {
+                pageTitle = ((config.isMobile) ? state.abbr.toUpperCase() : state.display) + ' ' ;
+            }
+            pageTitle += race.display + ' ' + fips + ' Results';
+            
+            this.$('.election-office-projection-heading').text(pageTitle);
 
             this.$('.nav-item').removeClass('selected');            
             this.$('.' + race.key + '-nav-item').addClass('selected');

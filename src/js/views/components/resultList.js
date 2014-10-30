@@ -16,6 +16,18 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             detail: [],
             race: '',
             state: {},
+            
+            sortValues: { 
+                'No': 0,
+                'Yes': 1,
+                'Against': 0,
+                'For': 1,
+                'Approve': 1, 
+                'Reject': 0, 
+                'In Favor': 1, 
+                'Maintained': 1,
+                'Repealed': 0
+            },
 
             isMobile: config.isMobile,
             
@@ -54,6 +66,9 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             },
             formatParty: function (party) {
                 return (config.partyAbbr[party]) ? config.partyAbbr[party] : '(' + party.charAt(0) + ')';
+            },
+            initiativeSort: function (item) {
+                return this[item.name];
             },
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');

@@ -20,6 +20,8 @@ ul.progress-stat-bar {
         &.dem { background: $color-dem; }
         &.rep { background: $color-rep; }
         &.other { background: $color-ind; }
+        &.yes { background: $color-yes; }
+        &.no { background: $color-no; }
     }
 }
 
@@ -63,6 +65,8 @@ ul.progress-stat-bar {
         &.dem .name { color: $color-dem; }
         &.rep .name { color: $color-rep; }
         &.other .name { color: $color-ind; }
+        &.yes .name { color: $color-yes; }
+        &.no .name { color: $color-no; }
     }
     .text-center {
         padding-left: 0;
@@ -78,6 +82,9 @@ ul.progress-stat-bar {
         &.dem { color: $color-dem; }
         &.rep { color: $color-rep; }
         &.other { color: $color-ind; }
+        &.yes { color: $color-yes; }
+        &.no { color: $color-no; }
+        
         .party-label { 
             font-size: 1.25em;
             font-family: "Futura Today Light", "arial";
