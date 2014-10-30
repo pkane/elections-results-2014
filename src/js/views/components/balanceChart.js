@@ -89,28 +89,38 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                     this.$('.desc-individual').show();
 
                     if (candidate[0].party === 'Democratic') {
-                        $(progressLeft).addClass('dem').removeClass('other');
-                        $(numLeft).addClass('dem').removeClass('other');
-                        $('.text-left', desc).addClass('dem').removeClass('other');
+                        $(progressLeft).addClass('dem').removeClass('other no');
+                        $(numLeft).addClass('dem').removeClass('other no');
+                        $('.text-left', desc).addClass('dem').removeClass('other no');
                         $('.icon', progressLeft).addClass('icon-dem-right');
-                    } else {
-                        $(progressLeft).removeClass('dem').addClass('other');
-                        $(numLeft).removeClass('dem').addClass('other');
-                        $('.text-left', desc).removeClass('dem').addClass('other');
+                    } else if (!candidate[0].party) {
+                        $(progressLeft).removeClass('dem other').addClass('no');
+                        $(numLeft).removeClass('dem other').addClass('no');
+                        $('.text-left', desc).removeClass('dem other').addClass('no');
                         $('.icon', progressLeft).removeClass('icon-dem-right dem');
+                    } else {
+                        $(progressLeft).removeClass('dem no').addClass('other');
+                        $(numLeft).removeClass('dem no').addClass('other');
+                        $('.text-left', desc).removeClass('dem no').addClass('other');
+                        $('.icon', progressLeft).removeClass('icon-dem-right dem');                        
                     }
 
                     if (candidate[1].party === 'Republican') {
-                        $(progressRight).addClass('rep').removeClass('other');
-                        $(numRight).addClass('rep').removeClass('other');
-                        $('.text-right', desc).addClass('rep').removeClass('other');
+                        $(progressRight).addClass('rep').removeClass('other yes');
+                        $(numRight).addClass('rep').removeClass('other yes');
+                        $('.text-right', desc).addClass('rep').removeClass('other yes');
                         $('.icon', progressRight).addClass('icon-rep-left');
-                    } else {
-                        $(progressRight).removeClass('rep').addClass('other');
-                        $(numRight).removeClass('rep').addClass('other');
-                        $('.text-right', desc).removeClass('rep').addClass('other');
+                    } else if (!candidate[1].party) {
+                        $(progressRight).removeClass('rep other').addClass('yes');
+                        $(numRight).removeClass('rep other').addClass('yes');
+                        $('.text-right', desc).removeClass('rep other').addClass('yes');
                         $('.icon', progressRight).removeClass('icon-rep-left dem');
-                    } 
+                    } else {
+                        $(progressRight).removeClass('rep yes').addClass('other');
+                        $(numRight).removeClass('rep yes').addClass('other');
+                        $('.text-right', desc).removeClass('rep yes').addClass('other');
+                        $('.icon', progressRight).removeClass('icon-rep-left dem');
+                    }
 
                     $('.num', numLeft).text(pctLeft);
                     $('.num', numRight).text(pctRight);
@@ -144,10 +154,10 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 this.$('.desc-all').show();
                 this.$('.desc-individual').hide();
                 
-                $(progressLeft).addClass('dem').removeClass('other');
+                $(progressLeft).addClass('dem').removeClass('other no');
                 $('.icon', progressLeft).addClass('icon-dem-right');
                 
-                $(progressRight).addClass('rep').removeClass('other');
+                $(progressRight).addClass('rep').removeClass('other yes');
                 $('.icon', progressRight).addClass('icon-rep-left');
                 
                 $('.num', numLeft).text(dem.seats + held.dem);

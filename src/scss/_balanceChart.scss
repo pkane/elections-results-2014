@@ -20,6 +20,8 @@ ul.progress-stat-bar {
         &.dem { background: $color-dem; }
         &.rep { background: $color-rep; }
         &.other { background: $color-ind; }
+        &.yes { background: $color-yes; }
+        &.no { background: $color-no; }
     }
 }
 
