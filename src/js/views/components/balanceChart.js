@@ -160,6 +160,9 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 $(progressRight).addClass('rep').removeClass('other yes');
                 $('.icon', progressRight).addClass('icon-rep-left');
                 
+                $(numRight).removeClass('rep yes other');
+                $(numLeft).removeClass('dem no other');
+                
                 $('.num', numLeft).text(dem.seats + held.dem);
                 $('.party-label', numLeft).text(config.isMobile ? 'Dem' : 'Democrat');
                 $('.num', numRight).text(rep.seats + held.rep);
