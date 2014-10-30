@@ -148,7 +148,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                 state = this.model.currentState,
                 fips = this.model.currentFips,
                 message = escape(this.text.message({ race: race.display })),
-                url = this.shareUrl(),
+                url = encodeURIComponent(this.shareUrl()),
                 pageTitle = ''
                 ;
 
