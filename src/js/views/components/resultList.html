@@ -81,7 +81,7 @@
                 <tbody>
                 <% _.each(value.results, function(item) { %>
                     <% var pctVotes = formatPercent(item.votes, value.votes); %>
-                    <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
+                    <tr class="candidate <% if (item.party) { %><%= tokenizeClass(item.party) %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>
                         <% if (!uncontested) { %>
                         <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'>
@@ -125,7 +125,7 @@
             <tbody>
                 <% _.each(raceItem, function(item) { %>
                 <% var pctVotes = formatPercent(item.votes, value.votes); %>
-                    <tr class="candidate <% if (item.party) { %><%= item.party.toLowerCase() %><% } %><% if (item.win) { %> winner <% } %>">
+                    <tr class="candidate <% if (item.party) { %><%= tokenizeClass(item.party) %><% } %><% if (item.win) { %> winner <% } %>">
                         <td class="result-name"><span></span><%= item.name %> <% if (item.party) { %><%= formatParty(item.party) %><% } %></td>                    
                         <% if (!uncontested) { %>
                         <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'>
