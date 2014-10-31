@@ -73,6 +73,9 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             tokenizeHouseId: function (id) {
                 var split = id.split(' ');
                 return split[1];
+            },
+            tokenizeClass: function (str) {
+                return (str) ? str.toLowerCase().replace(/ /g, '-') : '';
             }
         }))(),
         
