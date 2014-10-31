@@ -28,7 +28,7 @@ define(['jquery', 'd3'], function ($, d3) {
         api: {
             cacheTime: function(shouldUpdate) {
                 if (!!shouldUpdate) { utcTime = updateTime(); }
-                return '&cachetime=' + d3.time.minute(utcTime).getTime();
+                return '&cachetime=' + d3.time.minute(utcTime).getTime().toString(16);
             },
 
             base: 'http://api.gannett-cdn.com/internal/ElectionsServices/Elections/',
