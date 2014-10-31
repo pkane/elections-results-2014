@@ -215,7 +215,6 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
 
             if (found) {
                 var uncontested = (found.results && found.results.length === 1),
-                    //heading = d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? (d.properties.name ? ', ' : '') + this.model.state.display : ''),
                     tooldata = {
                         heading: d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? (d.properties.name ? ', ' : '') + this.model.state.display : ''),
                         pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : ''),
