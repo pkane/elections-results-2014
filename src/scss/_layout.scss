@@ -123,7 +123,7 @@ $result-item-bg-gradient-position-tablet: 178px;
 		padding: 5px;
 	}
 
-	tr.candidate.winner .result-name > span {
+	tr.candidate.winner .result-name > span, tr.initiatives.winner .initiative-name > span {
 		position: relative;
 		bottom: 1px;
 		display: inline-block;

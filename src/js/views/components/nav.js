@@ -167,7 +167,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
             if (state && state.id) {
                 pageTitle = ((config.isMobile) ? state.abbr.toUpperCase() : state.display) + ' ' ;
             }
-            pageTitle += race.display + ' ' + fips + ' Results';
+            pageTitle += race.display + ' ' + ((race.id !== 'i') ? fips : '') + ' Results';
             
             this.$('.election-office-projection-heading').text(pageTitle);
 
