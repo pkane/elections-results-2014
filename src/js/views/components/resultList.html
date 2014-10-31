@@ -131,8 +131,8 @@
                         <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'>
                             <% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%>
                         </td>
-                        <td class="result-win"><%= formatPercent(item.votes, value.votes) %></td>
-                        <% } else { %>
+                        <td class="result-win"><%= formatPercent(item.pct/100) %></td>
+                        <% } else { %>  
                             <td class="result-uncontested" colspan="2">Uncontested</td>
                         <% } %> 
                     </tr>

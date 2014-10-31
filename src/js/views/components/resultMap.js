@@ -216,7 +216,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
             if (found) {
                 var uncontested = (found.results && found.results.length === 1),
                     tooldata = {
-                        heading: d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? ', ' + this.model.state.display : ''),
+                        heading: d.properties.name + ((this.model.state && (this.model.race.id != 'h')) ? (d.properties.name ? ', ' : '') + this.model.state.display : ''),
                         pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : ''),
                         listing: _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
                             var itemData = {
