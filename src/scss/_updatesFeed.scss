@@ -1,8 +1,14 @@
 
 .updates-feed-heading {
-    margin: 20px 0;
+    margin: 20px 0 10px;
     font-family: $font-heading;
     font-size: 26px;
+}
+
+.updates-feed-attribution {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-style: italic;
 }
 
 .update-card {

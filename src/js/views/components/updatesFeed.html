@@ -1,5 +1,6 @@
 <% if (filtered.length > 0) { %>
     <h3 class="updates-feed-heading">Updates</h3>
+    <p class="updates-feed-attribution">Data provided by The Associated Press</p>
 <% } %>
 <% _.chain(filtered).first(10).each(function (item) { %>
 <div class="update-card update-card-<%= item.id %>">
