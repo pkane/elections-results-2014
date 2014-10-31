@@ -12,10 +12,11 @@ ul.progress-stat-bar {
         height: 50px;
         text-align: right;
         
-        transition: width 1s;
+        transition: width 1s, left 1s;
         
         &.bar-progress-right { text-align: right; }
-        &.bar-progress-leftt { text-align: left; }
+        &.bar-progress-left { text-align: left; }
+        &.bar-progress-other { position: absolute; left: 50%; }
         
         &.dem { background: $color-dem; }
         &.rep { background: $color-rep; }

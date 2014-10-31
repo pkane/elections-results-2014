@@ -47,6 +47,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 numRight = this.$('.bop-group-num-right'),
                 progressLeft = this.$('.bop-group-results .bar-progress-left'),
                 progressRight = this.$('.bop-group-results .bar-progress-right'),
+                progressOther = this.$('.bop-group-results .bar-progress-other'),
                 desc = this.$('.bop-group-desc');
             
             if (this.model.detail && this.model.detail.id) {
@@ -90,7 +91,8 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                     }
                     
                     var pctLeft = this.pctFormat(candidate[0].pct/100),
-                        pctRight = this.pctFormat(candidate[1].pct/100);
+                        pctRight = this.pctFormat(candidate[1].pct/100),
+                        pctOther = 0;
 
                     this.$('.desc-all').hide();
                     this.$('.desc-individual').show();
@@ -137,6 +139,7 @@ function ($, _, Backbone, d3, config, chartTemplate) {
 
                     $(progressLeft).css('width', pctLeft);
                     $(progressRight).css('width', pctRight);
+                    $(progressOther).css('width', pctOther);
 
                     $('.text-left .name', desc).text(candidate[0].name);
                     $('.text-right .name', desc).text(candidate[1].name);
@@ -155,7 +158,8 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                     held = seatsHeld[this.model.race.id],
                     dem = _.findWhere(results.results, { party: 'Democratic' }),
                     rep = _.findWhere(results.results, { party: 'Republican' }),
-                    other = _.findWhere(results.results, { party: 'Other' })
+                    other = _.findWhere(results.results, { party: 'Other' }),
+                    leftPct = ((dem.seats + held.dem) / held.total)*100 + '%'
                     ;
                 
                 this.$('.desc-all').show();
@@ -175,8 +179,9 @@ function ($, _, Backbone, d3, config, chartTemplate) {
                 $('.num', numRight).text(rep.seats + held.rep);
                 $('.party-label', numRight).text(config.isMobile ? 'GOP' : 'Republican');
 
-                $(progressLeft).css('width', ((dem.seats + held.dem) / held.total)*100 + '%');
+                $(progressLeft).css('width', leftPct);
                 $(progressRight).css('width', ((rep.seats + held.rep) / held.total)*100 + '%');
+                $(progressOther).css('width', (other.seats / held.total)*100 + '%').css('left', leftPct);
                 
                 $('.bar-progress-left', desc).css('width', (held.was.dem / held.total)*100 + '%');
                 $('.bar-progress-right', desc).css('width', (held.was.rep / held.total)*100 + '%');
