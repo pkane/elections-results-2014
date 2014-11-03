@@ -18,15 +18,15 @@ function ($, _, Backbone, d3, config, fipsMap, resultTemplate) {
             state: {},
             
             sortValues: { 
-                'No': 0,
-                'Yes': 1,
-                'Against': 0,
-                'For': 1,
-                'Approve': 1, 
-                'Reject': 0, 
-                'In Favor': 1, 
-                'Maintained': 1,
-                'Repealed': 0
+                'No': 1,
+                'Yes': 0,
+                'Against': 1,
+                'For': 0,
+                'Approve': 0, 
+                'Reject': 1, 
+                'In Favor': 0, 
+                'Maintained': 0,
+                'Repealed': 1
             },
 
             isMobile: config.isMobile,
