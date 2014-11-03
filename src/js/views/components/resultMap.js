@@ -220,7 +220,7 @@ function ($, _, Backbone, config, dataManager, fipsMap, resultMap, D3, analytics
                         pctReporting: (!uncontested ? found.precincts.pct.toFixed(1) + '% Precincts reporting' : ''),
                         listing: _.chain(found.results).sortBy('seatNumber').reduce(function(memo, item, index, list) {
                             var itemData = {
-                                label: (item.name ? item.name : 'Other') + (((item.name != '') && item.party) ? ' (' + item.party.substr(0,1).toUpperCase() + ')' : ''),
+                                label: (item.name ? item.name : 'Other') + ' ' + (((item.name != '') && item.party) ? (config.partyAbbr[item.party] ? config.partyAbbr[item.party] : '(' + item.party.charAt(0) + ')') : ''),
                                 win: (item.win ? '<span class="won"></span>' : ''),
                                 votes: (!uncontested ? voteFormat(item.votes) : 'Uncontested'),
                                 pct: (!uncontested ? item.pct.toFixed(1) + '%' : '')
