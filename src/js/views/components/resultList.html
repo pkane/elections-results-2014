@@ -109,13 +109,7 @@
             <thead>
                 <tr class="result-first-row">
                     <th class="district-name" colspan="3">
-                        <a href="
-                        <% if (!state) { %>
-                            #<%= race.key %>-<%= getStateByName(value.name).abbr %>
-                        <% } else { %>
-                            #<%= race.key %>-<%= state.abbr %>
-                        <% } %>
-                        ">
+                        <a href="<% if (!state) { %>#<%= race.key %>-<%= getStateByName(value.name).abbr %><% } else { %>#<%= race.key %>-<%= state.abbr %><% } %>">
                         <%= value.name %><%= getCountyByFips(value.id) %><% if (index > 0) { %> Special Election<% } %>
                         </a>
                     </th>
