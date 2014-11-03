@@ -35,7 +35,7 @@
                 <tbody>
                 <% _.each(_.sortBy(value.results, initiativeSort, sortValues), function(item, index) { %>
                     <% var pctVotes = formatPercent(item.pct/100); %>
-                    <tr class="initiatives <%= (index === 0) ? 'no' : 'yes' %> <% if (item.win) { %> winner <% } %>">
+                    <tr class="initiatives <%= (index === 1) ? 'no' : 'yes' %> <% if (item.win) { %> winner <% } %>">
                         <td class="initiative-name"><span></span><%= item.name %></td>
                         <td class="result-votes" style='background-size: <%= pctVotes %> 100%;'><% if (!isMobile) { %><%= formatVotes(item.votes) %> <% };%></td>
                         <td class="result-pct"><%= pctVotes %></td>
