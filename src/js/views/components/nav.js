@@ -76,11 +76,10 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                e.preventDefault(); 
 
                window.FB.ui({
-                  method: 'share_open_graph',
-                  action_type: 'og.likes',
-                  action_properties: JSON.stringify({ object: encodeURIComponent(this.shareUrl()) })
+                  method: 'share',
+                  href: this.shareUrl()
                 }, function(response){});
-                     
+                
             }
         },
 
