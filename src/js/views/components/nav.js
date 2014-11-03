@@ -78,7 +78,7 @@ function ($, _, Backbone, NavModel, config, templateFile, analytics) {
                window.FB.ui({
                   method: 'share_open_graph',
                   action_type: 'og.likes',
-                  action_properties: JSON.stringify({ object: this.shareUrl() })
+                  action_properties: JSON.stringify({ object: encodeURIComponent(this.shareUrl()) })
                 }, function(response){});
                      
             }
